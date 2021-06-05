@@ -9,6 +9,7 @@ const routes = [
       { path: 'register', component: () => import('pages/Register.vue') },
       { path: 'add_information', component: () => import('pages/Add_information.vue') },
       { path: 'forgot_password', component: () => import('pages/Forgot_password.vue') },
+      { path: 'home', component: () => import('pages/Home.vue') },
     ]
   },
 

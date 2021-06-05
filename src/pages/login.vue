@@ -22,7 +22,7 @@
       <div class="row">
         <router-link to="/register">สมัครสมาชิก</router-link>
         <q-btn
-          to="/login"
+          to="/home"
           unelevated
           rounded
           color="green-6"

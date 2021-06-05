@@ -7,11 +7,9 @@
         style="width: 200px; height: 200px"
       />
       <h5>Payang App</h5>
-     <p>ใส่ข้อมูล</p>
-<q-btn to="/login" unelevated rounded color="green-6" label="เริ่มต้น" />
-
+      <p>ใส่ข้อมูล</p>
+      <q-btn to="/login" unelevated rounded color="green-6" label="เริ่มต้น" />
     </div>
-
 
     <!-- เพิ่มทุกอย่างหน้านี้ -->
   </q-page>

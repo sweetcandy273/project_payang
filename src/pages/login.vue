@@ -28,6 +28,8 @@
           color="green-6"
           label="เข้าสู่ระบบ"
         />
+         <router-link to="/forgot_password">ลืมรหัสผ่าน</router-link>
+        
       </div>
     </div>
   </q-page>

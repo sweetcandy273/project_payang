@@ -9,7 +9,7 @@
       <h5>Payang App</h5>
       <p>ใส่ข้อมูล</p>
       <!-- เช็คข้อมูล id password ตรงกันพาไปหน้า add_information -->
-      <q-btn to="/add_information" unelevated rounded color="green-6" label="เริ่มต้น" />
+      <q-btn to="/login" unelevated rounded color="green-6" label="เริ่มต้น" />
     </div>
 
     <!-- เพิ่มทุกอย่างหน้านี้ -->

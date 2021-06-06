@@ -7,7 +7,7 @@
         style="width: 200px; height: 200px"
       />
       <h5>Payang App</h5>
-      <p>ใส่ข้อมูล</p>
+      <p class="title">ใส่ข้อมูล</p>
       <!-- เช็คข้อมูล id password ตรงกันพาไปหน้า add_information -->
       <q-btn to="/login" unelevated rounded color="green-6" label="เริ่มต้น" />
     </div>
@@ -21,3 +21,6 @@ export default {
   name: "PageIndex",
 };
 </script>
+
+<style scoped src="../css/index.css">
+</style>

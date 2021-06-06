@@ -36,22 +36,9 @@
             <q-card-section>
               <p>ใส่ภาพ</p>
             </q-card-section>
-
             <q-separator dark inset />
             <q-card-actions>
-              <q-btn to="weather" flat>สรุปบัญชี</q-btn>
-            </q-card-actions>
-          </q-card>
-        </div>
-        <div class="col">
-          <q-card bordered class="bg-grey-9 my-card">
-            <q-card-section>
-              <p>ใส่ภาพ</p>
-            </q-card-section>
-
-            <q-separator dark inset />
-            <q-card-actions>
-              <q-btn to="weather" flat>รายได้รายจ่าย</q-btn>
+              <q-btn to="income" flat>สรุปบัญชี</q-btn>
             </q-card-actions>
           </q-card>
         </div>

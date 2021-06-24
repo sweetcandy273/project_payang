@@ -1,49 +1,16 @@
 <template>
   <q-page>
-    <!-- <div class="row q-gutter-xs">
-      <img
-        alt="Payang logo"
-        src="~assets/payang_icon.png"
-        style="width: 200px; height: 200px"
-      />
-      <h5>Payang App</h5>
-
-      <div class="row">
-        <q-input
-          color="teal"
-          filled
-          v-model="id"
-          label="เบอร์โทรศัพท์ / อีเมลล์"
-        >
-        </q-input>
-        <q-input color="teal" filled v-model="password" label="รหัสผ่าน">
-        </q-input>
-      </div>
-      <div class="row">
-        <router-link to="/register">สมัครสมาชิก</router-link>
-        เช็ค id password ก่อนเข้าหน้า home นะจ๊ะ
-        <q-btn
-          to="/home"
-          unelevated
-          rounded
-          color="green-6"
-          label="เข้าสู่ระบบ"
-        />
-         <router-link to="/forgot_password">ลืมรหัสผ่าน</router-link>
-        
-      </div>
-    </div> -->
-
     <div class="text-center">
       <div>
         <img
+        class="logo"
           alt="Payang logo"
           src="../assets/payang_icon.png"
           style="width: 200px; height: 200px"
         />
       </div>
       <div>
-        <h5>Payang App</h5>
+        <h5>เข้าสู่ระบบ</h5>
       </div>
       <div>
         <div class="q-mx-xl">
@@ -74,7 +41,6 @@
       </div>
       <div>
         <router-link to="/forgot_password">ลืมรหัสผ่าน</router-link>
-        
       </div>
     </div>
   </q-page>

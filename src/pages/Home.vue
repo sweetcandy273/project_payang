@@ -1,55 +1,55 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-    <q-page-container>
-      <h5>Home Page</h5>
-    </q-page-container>
-    <div class="q-pa-md row items-start q-gutter-md">
-      <div class="row">
-        <div class="col">
-          <q-card bordered class="bg-grey-9 my-card">
-            <q-card-section>
-              <p>ใส่ภาพ</p>
-            </q-card-section>
+  <div>
+    <q-layout
+      view="lHh lpr lFf"
+      container
+      style="height: 1000px"
+      class="shadow-2 rounded-borders"
+    >
+      <q-header>
+        <q-toolbar>
+          <q-space></q-space>
+          <q-btn flat round dense icon="search" class="q-mr-xs" />
+          <q-btn flat round dense icon="group_add" />
+        </q-toolbar>
+        <q-toolbar class="text-center row">
+          <div class="col self-center">ตั้งค่า</div>
 
-            <q-separator dark inset />
-            <q-card-actions>
-              <q-btn to="myfarm" flat>สวนของฉัน</q-btn>
-            </q-card-actions>
-          </q-card>
-        </div>
-        <div class="col">
-          <q-card bordered class="bg-grey-9 my-card">
-            <q-card-section>
-              <p>ใส่ภาพ</p>
-            </q-card-section>
+          <div class="col-6 pya">หน้าหลัก</div>
+          <div class="col self-center"></div>
+        </q-toolbar>
+      </q-header>
 
-            <q-separator dark inset />
-            <q-card-actions>
-              <q-btn to="weather" flat>สภาพอากาศ</q-btn>
-            </q-card-actions>
-          </q-card>
+      <div>
+        <div class="q-pa-md">
+          <div class="row text-center">
+            <div class="col">
+              <div class="pya">
+                Payang App
+                <q-icon name="help" />
+              </div>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col pya">คุณชนิกานต์</div>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <q-card bordered class="bg-grey-9 my-card">
-            <q-card-section>
-              <p>ใส่ภาพ</p>
-            </q-card-section>
-            <q-separator dark inset />
-            <q-card-actions>
-              <q-btn to="income" flat>สรุปบัญชี</q-btn>
-            </q-card-actions>
-          </q-card>
-        </div>
-      </div>
-    </div>
-  </q-layout>
+    </q-layout>
+  </div>
 </template>
 
 <script>
-export default {};
 </script>
 
+
+
 <style>
+/* *{
+  background: #dae5de;
+} */
+
+.pya {
+  font-size: 25px;
+}
 </style>

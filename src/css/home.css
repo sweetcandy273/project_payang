@@ -1,7 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap');
+
 .bg-py {
     background: #dae5de;
 }
-
 
 .q-toolbar {
     background-color: #4e7971;
@@ -16,4 +17,7 @@
 
 .pya{
     font-size: 25px;
+}
+*{
+    font-family: 'Kanit', sans-serif;
 }

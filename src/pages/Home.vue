@@ -1,11 +1,6 @@
 <template>
   <div>
-    <q-layout
-      view="lHh lpr lFf"
-      container
-      style="height: 1000px"
-      class="shadow-2 rounded-borders"
-    >
+    
       <q-header>
         <q-toolbar>
           <q-space></q-space>
@@ -35,21 +30,17 @@
           </div>
         </div>
       </div>
-    </q-layout>
+   
   </div>
 </template>
 
 <script>
+
 </script>
 
 
 
-<style>
-/* *{
-  background: #dae5de;
-} */
+<style scoped src="../css/home.css">
 
-.pya {
-  font-size: 25px;
-}
+
 </style>

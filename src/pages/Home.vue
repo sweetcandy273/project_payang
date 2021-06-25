@@ -41,7 +41,6 @@
         </div>
       </div>
       <div class="q-pt-md text-center font" style="font-size: 20px">ผลผลิต</div>
-
       <div class="q-py-md">
         <q-btn-toggle
           v-model="secondModel"
@@ -60,16 +59,30 @@
         />
       </div>
     </div>
+
     <div>
-      <div v-if="secondModel == 'yearly'" class="text-center">yearly</div>
-      <div v-else class="text-center">monthly</div>
+      <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
+        <ProductYearly />
+      </div>
+      <div v-else class="text-center">
+        <ProductMonthly />
+      </div>
     </div>
   </div>
 </template>
 
 
 <script>
+import ProductYearly from "../components/ProductYearly.vue";
+import ProductMonthly from "../components/ProductMonthly.vue";
+
 export default {
+  name: "yearly",
+  components: {
+    ProductYearly,
+    ProductMonthly,
+  },
+
   data() {
     return {
       model: null,

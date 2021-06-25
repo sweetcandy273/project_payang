@@ -19,7 +19,7 @@
         <div class="row text-center">
           <div class="col font" style="font-size: 25px">
             Payang App
-            <q-icon name="help" style="color: #5db075" />
+            <q-icon name="info" style="color: #5db075" />
           </div>
         </div>
         <div class="row text-center">

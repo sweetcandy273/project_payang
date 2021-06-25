@@ -1,11 +1,11 @@
 <template>
   <div>
     <q-header>
-      <q-toolbar>
+      <!-- <q-toolbar>
         <q-space></q-space>
         <q-btn flat round dense icon="search" class="q-mr-xs" />
         <q-btn flat round dense icon="group_add" />
-      </q-toolbar>
+      </q-toolbar> -->
       <q-toolbar class="text-center row">
         <div class="col self-center font">ตั้งค่า</div>
 
@@ -49,9 +49,9 @@
           no-caps
           rounded
           unelevated
-          toggle-color="primary"
-          color="white"
-          text-color="primary"
+          toggle-color="grey-8"
+          color="grey-5"
+          text-color="white"
           :options="[
             { label: 'ปี', value: 'yearly' },
             { label: 'เดือน', value: 'monthly' },

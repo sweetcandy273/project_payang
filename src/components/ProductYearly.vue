@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <div class="font" style="font-size: 30px">2021</div>
     <div class="row font q-px-md seft-center text-center">
       <div class="col-2 seft-center">
@@ -12,7 +12,7 @@
       </div>
       <div class="col">
         <div>น้ำยางสด</div>
-      <div class="product-all">0.00</div>
+        <div class="product-all">0.00</div>
 
         <div>กิโลกรัม</div>
       </div>
@@ -30,13 +30,69 @@
         />
       </div>
     </div>
+    <div class="q-pa-md font">
+      <div class="account-all-yearly q-pa-md shadow-2">
+        <div class="row">
+          <div class="col-10">
+            <div style="font-size: 25px">สรุปบัญชีรวมทั้งหมด</div>
+            <div>ประจำปี</div>
+          </div>
+          <div class="col">
+            <div>
+              <img
+                class=""
+                alt="back-right"
+                src="../assets/click.png"
+                style="width: 35px"
+              />
+            </div>
+            <div>บัญชี</div>
+          </div>
+        </div>
+        <div>กราฟ</div>
+        <div class="row items-end">
+          <div class="col text-left" style="font-size: 20px; color: #06be3b">
+            <div>รายรับ</div>
+          </div>
+          <div class="col text-right" style="font-size: 20px">
+            <div>0.00</div>
+          </div>
+          <div class="col-1 text-right" style="font-size: 19px">
+            <div>บ.</div>
+          </div>
+        </div>
+        <div class="row items-end">
+          <div class="col text-left" style="font-size: 20px; color: #b01717">
+            <div>รายจ่าย</div>
+          </div>
+          <div class="col text-right" style="font-size: 20px">
+            <div>0.00</div>
+          </div>
+          <div class="col-1 text-right" style="font-size: 19px">
+            <div>บ.</div>
+          </div>
+        </div>
+        <div class="row items-end">
+          <div class="col text-left" style="font-size: 25px">
+            <div>กำไรสุทธิ</div>
+          </div>
+          <div class="col text-right" style="font-size: 25px">
+            <div>0.00</div>
+          </div>
+          <div class="col-1 text-right" style="font-size: 19px">
+            <div>บ.</div>
+          </div>
+        
+        </div>
+        <div>
+        <hr style="height:2px;border-width:0; color:#4E7971; background-color:#4E7971">
+        </div>
+      </div>
+    </div>
   </div>
 </template>
-
 <script>
-export default {
-  name: "yearly",
-};
+export default {};
 </script>
 
 <style scoped>
@@ -54,4 +110,11 @@ export default {
   background-repeat: none;
   /* background-image: url("../img/rubber-cup.png"); */
 }
+
+.account-all-yearly {
+  background-color: #c5dba8;
+  border-radius: 20px;
+}
+
+
 </style>

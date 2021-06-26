@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-header>
+    <q-header class="shadow-2">
       <!-- <q-toolbar>
         <q-space></q-space>
         <q-btn flat round dense icon="search" class="q-mr-xs" />
@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <div class="row myfarm font">
+      <div class="row myfarm font shadow-2">
         <div class="col-6 q-pa-md self-center">
           <div style="font-size: 20px">สวนของฉัน</div>
         </div>
@@ -43,6 +43,7 @@
       <div class="q-pt-md text-center font" style="font-size: 20px">ผลผลิต</div>
       <div class="q-py-md">
         <q-btn-toggle
+          class="shadow-2"
           v-model="secondModel"
           spread
           @click="toggle(secondModel)"

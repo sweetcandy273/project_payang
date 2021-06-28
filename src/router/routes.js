@@ -13,6 +13,7 @@ const routes = [
       { path: 'myfarm', component: () => import('pages/Myfarm.vue') },
       { path: 'starter_intro1', component: () => import('pages/Starter_intro1.vue') },
       { path: 'starter', component: () => import('pages/Starter.vue') },
+      { path: 'add_income', component: () => import('pages/Add_income.vue') },
     ]
   },
 

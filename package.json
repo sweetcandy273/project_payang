@@ -14,8 +14,10 @@
     "axios": "^0.21.1",
     "chart.js": "^3.4.0",
     "core-js": "^3.6.5",
+    "fusioncharts": "^3.17.0",
     "quasar": "^1.0.0",
     "vue-chartjs": "^3.5.1",
+    "vue-fusioncharts": "^3.1.0",
     "vue.charts.css": "0.0.20"
   },
   "devDependencies": {

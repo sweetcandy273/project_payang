@@ -49,21 +49,11 @@
             <div>บัญชี</div>
           </div>
         </div>
+
+        <div>กราฟ</div>
         <div>
-          <!-- <div style="font-size: 25px">2021</div> -->
-          <div id="app">
-            <div id="chart-container">
-              <fusioncharts
-             
-                :type="type"
-                :width="width"
-                :height="height"
-                :dataformat="dataFormat"
-                :dataSource="dataSource"
-              >
-              </fusioncharts>
-            </div>
-          </div>
+          <line-chart :chart-data="datacollection"></line-chart>
+         
         </div>
 
         <div class="row items-end">
@@ -113,49 +103,43 @@
     </div>
   </div>
 </template>
+
 <script>
-import Vue from "vue";
-import VueFusionCharts from "vue-fusioncharts";
-import FusionCharts from "fusioncharts";
-import Doughnut2d from "fusioncharts/fusioncharts.charts";
-import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
-
-Vue.use(VueFusionCharts, FusionCharts, Doughnut2d, FusionTheme);
-
-const chartData = [
-  {
-    label: "รายรับ",
-    value: "100",
-  },
-  {
-    label: "รายจ่าย",
-    value: "20",
-  },
-];
-const dataSource = {
-  chart: {
-    showpercentvalues: "1",
-    defaultcenterlabel: "2021",
-    aligncaptionwithcanvas: "0",
-    captionpadding: "0",
-    decimals: "1",
-  
-    theme: "fusion",
-  },
-  data: chartData,
-};
+import LineChart from '../components/Chart.js'
 
 export default {
-  name: "app",
+  components: { LineChart },
   data() {
     return {
-      type: "doughnut2d",
-
-      width: "100%",
-      height: "300",
-      dataFormat: "json",
-      dataSource,
+      datacollection: null,
+      // loaded: false,
     };
+  },
+  mounted () {
+    this.fillData();
+  },
+  methods: {
+    fillData() {
+      this.datacollection = {
+        
+        // labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        labels: [this.getRandomInt(), this.getRandomInt()],
+        datasets: [
+          {
+              label: 'Data One',
+              backgroundColor: '#f87979',
+              data: [this.getRandomInt(), this.getRandomInt()]
+            }, {
+              label: 'Data Two',
+              backgroundColor: '#f87979',
+              data: [this.getRandomInt(), this.getRandomInt()]
+            }
+        ],
+      };
+    },
+    getRandomInt () {
+        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+      }
   },
 };
 </script>
@@ -180,5 +164,4 @@ export default {
   background-color: #c5dba8;
   border-radius: 20px;
 }
-
 </style>

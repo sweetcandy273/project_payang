@@ -7,7 +7,9 @@
         <q-btn flat round dense icon="group_add" />
       </q-toolbar> -->
       <q-toolbar class="text-center row">
-        <div class="col self-center font">ตั้งค่า</div>
+        <div class="col self-center font"
+        @click="$router.push({name:'setting'})"
+        >ตั้งค่า</div>
 
         <div class="col-6 font header-title">หน้าหลัก</div>
         <div class="col self-center"></div>
@@ -27,7 +29,7 @@
         </div>
       </div>
 
-      <div class="row myfarm font shadow-2">
+      <div class="row myfarm font shadow-2" @click="$router.push({name:'myfarm'})" >
         <div class="col-6 q-pa-md self-center">
           <div style="font-size: 20px">สวนของฉัน</div>
         </div>

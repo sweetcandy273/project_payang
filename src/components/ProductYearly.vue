@@ -50,11 +50,10 @@
           </div>
         </div>
 
-        <div>กราฟ</div>
-        <div>
-          <line-chart :chart-data="datacollection"></line-chart>
+    
          
-        </div>
+          <Doughnut-chart :chart-data="datacollection" class="q-pa-md"></Doughnut-chart>
+       
 
         <div class="row items-end">
           <div class="col text-left" style="font-size: 20px; color: #06be3b">
@@ -105,41 +104,33 @@
 </template>
 
 <script>
-import LineChart from '../components/Chart.js'
+import DoughnutChart from "../components/Chart.js";
 
 export default {
-  components: { LineChart },
+  components: { DoughnutChart },
   data() {
     return {
       datacollection: null,
       // loaded: false,
     };
   },
-  mounted () {
+  mounted() {
     this.fillData();
   },
   methods: {
     fillData() {
       this.datacollection = {
-        
-        // labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-        labels: [this.getRandomInt(), this.getRandomInt()],
+        labels: ["รายรับ", "รายจ่าย"],
+        centerlabel: 2021,
         datasets: [
           {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }, {
-              label: 'Data Two',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }
+            label: ["รายรับ", "รายจ่าย"],
+            backgroundColor: ["#06BE3B", "#B01717"],
+            data: [20,5],
+          },
         ],
       };
     },
-    getRandomInt () {
-        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-      }
   },
 };
 </script>
@@ -163,5 +154,10 @@ export default {
 .account-all-yearly {
   background-color: #c5dba8;
   border-radius: 20px;
+}
+
+.chart {
+  height:300px;
+  width: 310px;
 }
 </style>

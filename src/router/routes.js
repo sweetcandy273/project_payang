@@ -14,6 +14,7 @@ const routes = [
       { path: 'starter_intro1', component: () => import('pages/Starter_intro1.vue') },
       { path: 'starter', component: () => import('pages/Starter.vue') },
       { path: 'add_income', component: () => import('pages/Add_income.vue') },
+      { path: 'add_expenditure', component: () => import('pages/Add_expenditure.vue') },
     ]
   },
 

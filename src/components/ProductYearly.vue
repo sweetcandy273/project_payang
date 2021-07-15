@@ -35,7 +35,7 @@
         <div class="row">
           <div class="col-10">
             <div style="font-size: 25px">สรุปบัญชีรวมทั้งหมด</div>
-            <div style="font-size: 20px">ประจำปี</div>
+            <div style="font-size: 22px">ประจำปี 2021</div>
           </div>
           <div class="col">
             <div>
@@ -49,11 +49,12 @@
             <div>บัญชี</div>
           </div>
         </div>
-
-    
-         
-          <Doughnut-chart :chart-data="datacollection" class="q-pa-md"></Doughnut-chart>
-       
+        <div class="text-center">
+          <Doughnut-chart
+            :chart-data="datacollection"
+            class="q-pa-md chart"
+          ></Doughnut-chart>
+        </div>
 
         <div class="row items-end">
           <div class="col text-left" style="font-size: 20px; color: #06be3b">
@@ -121,12 +122,12 @@ export default {
     fillData() {
       this.datacollection = {
         labels: ["รายรับ", "รายจ่าย"],
-        centerlabel: 2021,
+        // centerlabel: 2021,
         datasets: [
           {
             label: ["รายรับ", "รายจ่าย"],
             backgroundColor: ["#06BE3B", "#B01717"],
-            data: [20,5],
+            data: [20, 5],
           },
         ],
       };
@@ -157,7 +158,7 @@ export default {
 }
 
 .chart {
-  height:300px;
+  /* height: 300px; */
   width: 310px;
 }
 </style>

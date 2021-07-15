@@ -38,7 +38,7 @@
         label="รายจ่าย"
       />
     </div>
-    <div>
+    <div class = "q-px-md">
       <q-input
         v-model="Event"
         filled
@@ -96,16 +96,44 @@
           />
         </div>
       </div>
-      <div class="row">
-          <!-- <q-select filled v-model="store" :options="options" label="Filled" /> -->
-          
+      <div class="stores">
+        <q-select
+          filled
+          v-model="store"
+          :options="options"
+          style="font-family: 'Kanit', sans-serif"
+          label="ร้านค้า"
+        />
+      </div>
+        <div class="share">
+          <q-checkbox
+            v-model="selectshare"
+            val="teal"
+            style="font-family: 'Kanit', sans-serif"
+            label="กนกวรรณ เป็นผู้ได้รับส่วนแบ่ง"
+          />
+        </div>
+        <div>
+          <strong>{{ selectshare }}</strong>
+        </div>
+        <div class="col">
+          <q-input
+            filled
+            v-model="note"
+            style="font-family: 'Kanit', sans-serif"
+            label="บันทึก"
+          />
+        </div>
+      
+      <div class="submit row q-gutter-sm flex-center">
+        <q-btn label="บันทึก" type="submit" style= "background: #4E7971;
+          color: white; font-family: 'Kanit', sans-serif; width: 1000px; unelevated
+        rounded "/>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { ref } from "vue";
-
 export default {
   data() {
     return {
@@ -114,8 +142,11 @@ export default {
       percent: "",
       text: "",
       price_rubber: "",
-      totalprice:"",
-    //   store:"",
+      totalprice: "",
+      store: null,
+      options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด"],
+      selectshare: ["teal"],
+      note: "",
     };
   },
 };

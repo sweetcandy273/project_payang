@@ -7,9 +7,12 @@
         <q-btn flat round dense icon="group_add" />
       </q-toolbar> -->
       <q-toolbar class="text-center row">
-        <div class="col self-center font"
-        @click="$router.push({name:'setting'})"
-        >ตั้งค่า</div>
+        <div
+          class="col self-center font"
+          @click="$router.push({ name: 'setting' })"
+        >
+          ตั้งค่า
+        </div>
 
         <div class="col-6 font header-title">หน้าหลัก</div>
         <div class="col self-center"></div>
@@ -21,7 +24,24 @@
         <div class="row text-center">
           <div class="col font" style="font-size: 25px">
             Payang App
-            <q-icon name="info" style="color: #5db075" />
+            <q-icon name="info" style="color: #5db075">
+              <q-popup-proxy :offset="[10, 10]">
+                <q-banner class="bg-while font">
+                  <div>แอปพลิเคชั่นวางแผนการเพาะปลูกสวนยาง</div>
+                  <div>วางแผนบัญชีการเงิน</div>
+                  <div class="text-right">
+                    <img
+                      class="logo"
+                      alt=""
+                      src="../assets/accounting.png"
+                      style="width: 80px"
+                    />
+                  </div>
+                </q-banner>
+              </q-popup-proxy>
+            </q-icon>
+
+            <!-- <q-icon name="info" style="color: #5db075" /> -->
           </div>
         </div>
         <div class="row text-center">
@@ -29,7 +49,10 @@
         </div>
       </div>
 
-      <div class="row myfarm font shadow-2" @click="$router.push({name:'myfarm'})" >
+      <div
+        class="row myfarm font shadow-2"
+        @click="$router.push({ name: 'myfarm' })"
+      >
         <div class="col-6 q-pa-md self-center">
           <div style="font-size: 20px">สวนของฉัน</div>
         </div>
@@ -80,7 +103,7 @@ import ProductYearly from "../components/ProductYearly.vue";
 import ProductMonthly from "../components/ProductMonthly.vue";
 
 export default {
-  name: "yearly",
+  // name: "yearly",
   components: {
     ProductYearly,
     ProductMonthly,

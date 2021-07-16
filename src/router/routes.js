@@ -12,7 +12,7 @@ const routes = [
       { path: 'myfarm',name: 'myfarm', component: () => import('pages/Myfarm.vue') },
       { path: 'starter_intro1',name: 'starter_intro1', component: () => import('pages/Starter_intro1.vue') },
       { path: 'starter',name: 'starter', component: () => import('pages/Starter.vue') },
-      { path: 'setting',name: 'setting', component: () => import('pages/Setting.vue') },
+      
     ]
   },
 

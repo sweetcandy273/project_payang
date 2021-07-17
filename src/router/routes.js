@@ -15,6 +15,9 @@ const routes = [
       { path: 'starter', component: () => import('pages/Starter.vue') },
       { path: 'add_income', component: () => import('pages/Add_income.vue') },
       { path: 'add_expenditure', component: () => import('pages/Add_expenditure.vue') },
+      { path: 'edit_income', component: () => import('pages/Edit_income.vue') },
+      { path: 'edit_expenditure', component: () => import('pages/Edit_expenditure.vue') },
+      { path: 'detail_income', component: () => import('pages/Detail_income.vue') },
     ]
   },
 

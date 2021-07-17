@@ -14,98 +14,84 @@
       </q-toolbar>
     </q-header>
 
-    <div class="row q-pa-md q-gutter-sm flex-center">
+    <div class="row q-pa-md q-gutter-sm flex-center font">
       <q-btn
         class="col"
         unelevated
         rounded
-        style="
-          background: #2d9cdb;
-          color: white;
-          font-family: 'Kanit', sans-serif;
-        "
+        style="background: #2d9cdb; color: white"
         label="รายรับ"
       />
       <q-btn
         class="col"
         unelevated
         rounded
-        style="
-          background: #f2994a;
-          color: white;
-          font-family: 'Kanit', sans-serif;
-        "
+        style="background: #f2994a; color: white"
         label="รายจ่าย"
       />
     </div>
-    <div class = "q-px-md">
-      <q-input 
-        v-model="Event"
-        filled
-        type="date"
-        style="font-family: 'Kanit', sans-serif max-width: 50%;"
-      />
+    <div class="q-px-md font">
+      <q-input v-model="Event" filled type="date" />
     </div>
-    <div class="row text-center">
-      <div class="col"></div>
-      <div class="col"></div>
+    <div class="row q-gutter-sm q-pa-md text-center">
+      <div class="col" style="background: #74D751; width: 100px">
+        <q-img class="q-pa-none" src="../assets/maintenance_sapling.png" style="width: 100px">
+          <div class="absolute-full text-subtitle2 flex flex-center">
+            <h4 class = "font">บำรุงรักษา</h4>
+          </div>
+        </q-img>
+      </div>
+      <div class="col" style="background: #EDF06E; width: 100px">
+        <q-img src="../assets/equipment_rubber-cup.png" style="width: 100px">
+          <div class="absolute-full text-subtitle2 flex flex-center">
+            <h4 class = "font">วัสดุ-อุปกรณ์</h4>
+          </div>
+        </q-img>
+      </div>
     </div>
-    <div class="q-gutter-y-md q-px-md" style="max-width: 100%">
+    <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
       <div class="row q-pt-md">
         <div class="col">
-         <q-select
-          filled
-          v-model="type"
-          :options="optionstype"
-          style="font-family: 'Kanit', sans-serif"
-          label="ตัวเลือก"
-        /> 
-      </div>
+          <q-select
+            filled
+            v-model="type"
+            :options="optionstype"
+            label="ตัวเลือก"
+          />
+        </div>
       </div>
       <div class="row">
         <div class="col">
-          <q-input
-            filled
-            v-model="totalprice"
-            style="font-family: 'Kanit', sans-serif"
-            label="รวมจำนวนเงิน"
-          />
+          <q-input filled v-model="totalprice" label="รวมจำนวนเงิน" />
         </div>
       </div>
-       <div class="stores">
-        <q-select
-          filled
-          v-model="store"
-          :options="options"
-          style="font-family: 'Kanit', sans-serif"
-          label="ร้านค้า"
+      <div class="stores">
+        <q-select filled v-model="store" :options="options" label="ร้านค้า" />
+      </div>
+      <div class="share">
+        <q-checkbox
+          v-model="selectshare"
+          val="teal"
+          style="font-size: 16px"
+          label="กนกวรรณ เป็นผู้ได้รับส่วนแบ่ง"
         />
       </div>
-        <div class="share">
-          <q-checkbox
-            v-model="selectshare"
-            val="teal"
-            style="font-family: 'Kanit', sans-serif"
-            label="กนกวรรณ เป็นผู้ได้รับส่วนแบ่ง"
-          />
-        </div>
-        <div>
-          <strong>{{ selectshare }}</strong>
-        </div>
-      
-        <div class="col">
-          <q-input
-            filled
-            v-model="note"
-            style="font-family: 'Kanit', sans-serif"
-            label="บันทึก"
-          />
-        </div>
-      
-      <div class="submit row q-gutter-sm flex-center">
-        <q-btn label="บันทึก" type="submit" style= "background: #4E7971;
-          color: white; font-family: 'Kanit', sans-serif; width: 1000px; unelevated
-        rounded "/>
+      <div>
+        <strong style="font-size: 16px">{{ selectshare }}</strong>
+      </div>
+
+      <div class="col">
+        <q-input filled v-model="note" label="บันทึก" />
+      </div>
+
+      <div class="submit row q-gutter-sm flex-center font">
+        <q-btn
+          label="บันทึก"
+          type="submit"
+          style="background: #4E7971;
+          color: white;   width: 1000px; unelevated
+        rounded "
+        />
       </div>
     </div>
   </div>
@@ -125,7 +111,7 @@ export default {
       selectshare: ["teal"],
       note: "",
       type: null,
-      optionstype: ["ปุ๋ย", "ตัดหญ้า" ,"ตัดกาฝาก"],
+      optionstype: ["ปุ๋ย", "ตัดหญ้า", "ตัดกาฝาก"],
     };
   },
 };

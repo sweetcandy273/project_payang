@@ -14,121 +14,80 @@
       </q-toolbar>
     </q-header>
 
-    <div class="row q-pa-md q-gutter-sm flex-center">
+    <div class="row q-pa-md q-gutter-sm flex-center font">
       <q-btn
         class="col"
         unelevated
         rounded
-        style="
-          background: #2d9cdb;
-          color: white;
-          font-family: 'Kanit', sans-serif;
-        "
+        style="background: #2d9cdb; color: white"
         label="รายรับ"
       />
       <q-btn
         class="col"
         unelevated
         rounded
-        style="
-          background: #f2994a;
-          color: white;
-          font-family: 'Kanit', sans-serif;
-        "
+        style="background: #f2994a; color: white"
         label="รายจ่าย"
       />
     </div>
-    <div class = "q-px-md">
-      <q-input
-        v-model="Event"
-        filled
-        type="date"
-        style="font-family: 'Kanit', sans-serif max-width: 100%;"
-      />
+    <div class="font q-px-md">
+      <q-input v-model="Event" filled type="date" />
     </div>
     <div class="text-center">
       <h4 class="font">ระบุข้อมูลน้ำยางสด</h4>
     </div>
-    <div class="q-gutter-y-md q-px-md" style="max-width: 100%">
+    <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
       <div class="row">
         <div class="col">
           <q-input
             filled
             v-model="weight_rubber"
-            style="font-family: 'Kanit', sans-serif"
             label="น้ำหนักยาง(กิโลกรัม)"
           />
         </div>
         <div class="col q-ml-md">
-          <q-input
-            filled
-            v-model="percent"
-            style="font-family: 'Kanit', sans-serif"
-            label="เปอร์เซ็น(%)"
-          />
+          <q-input filled v-model="percent" label="เปอร์เซ็น(%)" />
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <q-input
-            filled
-            v-model="text"
-            style="font-family: 'Kanit', sans-serif"
-            label="แห้ง"
-          />
+          <q-input filled v-model="text" label="แห้ง" />
         </div>
         <div class="col q-ml-md">
-          <q-input
-            filled
-            v-model="price_rubber"
-            style="font-family: 'Kanit', sans-serif"
-            label="ราคาน้ำยาง"
-          />
+          <q-input filled v-model="price_rubber" label="ราคาน้ำยาง" />
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <q-input
-            filled
-            v-model="totalprice"
-            style="font-family: 'Kanit', sans-serif"
-            label="รวมจำนวนเงิน"
-          />
+          <q-input filled v-model="totalprice" label="รวมจำนวนเงิน" />
         </div>
       </div>
       <div class="stores">
-        <q-select
-          filled
-          v-model="store"
-          :options="options"
-          style="font-family: 'Kanit', sans-serif"
-          label="ร้านค้า"
+        <q-select filled v-model="store" :options="options" label="ร้านค้า" />
+      </div>
+      <div class="share">
+        <q-checkbox
+          v-model="selectshare"
+          val="teal"
+          style="font-size: 16px"
+          label="กนกวรรณ เป็นผู้ได้รับส่วนแบ่ง"
         />
       </div>
-        <div class="share">
-          <q-checkbox
-            v-model="selectshare"
-            val="teal"
-            style="font-family: 'Kanit', sans-serif"
-            label="กนกวรรณ เป็นผู้ได้รับส่วนแบ่ง"
-          />
-        </div>
-        <div>
-          <strong>{{ selectshare }}</strong>
-        </div>
-        <div class="col">
-          <q-input
-            filled
-            v-model="note"
-            style="font-family: 'Kanit', sans-serif"
-            label="บันทึก"
-          />
-        </div>
-      
+      <div>
+        <strong style="font-size: 16px">{{ selectshare }}</strong>
+      </div>
+      <div class="col">
+        <q-input filled v-model="note" label="บันทึก" />
+      </div>
+
       <div class="submit row q-gutter-sm flex-center">
-        <q-btn label="บันทึก" type="submit" style= "background: #4E7971;
-          color: white; font-family: 'Kanit', sans-serif; width: 1000px; unelevated
-        rounded "/>
+        <q-btn
+          label="บันทึก"
+          type="submit"
+          style="background: #4E7971;
+          color: white;width: 1000px; unelevated
+        rounded "
+        />
       </div>
     </div>
   </div>

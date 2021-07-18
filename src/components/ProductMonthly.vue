@@ -10,14 +10,23 @@
           style="width: 50px"
         />
       </div>
-      <div class="col">
-        <div>น้ำยางสด</div>
-        <div class="product-all">0.00</div>
+      <div class="col" >
+        <div style="font-size: 20px;">น้ำยางสด</div>
+        <q-img src="../assets/rubber-cup.png" style="">
+          <div class="absolute-full flex flex-center text-black bg-product-all">
+            0.00
+          </div>
+        </q-img>
+
         <div>กิโลกรัม</div>
       </div>
       <div class="col">
-        <div>รายรับ</div>
-        <div class="product-all">0.00</div>
+        <div style="font-size: 20px;">รายรับ</div>
+        <q-img src="../assets/money.png" style="">
+          <div class="absolute-full flex flex-center text-black bg-product-all">
+            0.00
+          </div>
+        </q-img>
         <div>บาท</div>
       </div>
       <div class="col-2 seft-center">
@@ -30,7 +39,7 @@
       </div>
     </div>
     <div class="q-pa-md font">
-      <div class="account-all-yearly q-pa-md shadow-2">
+      <div class="account-all q-pa-md shadow-2">
         <div class="row">
           <div class="col-10">
             <div style="font-size: 25px">สรุปบัญชีรวมทั้งหมด</div>
@@ -142,16 +151,11 @@ export default {
 
 .product-all {
   font-size: 25px;
-
-  /* width: 114px;
-  height: 90px; */
-  background-size: 100%;
-
-  background-repeat: none;
-  /* background-image: url("../img/rubber-cup.png"); */
+  overflow: hidden;
+  position: relative;
 }
 
-.account-all-yearly {
+.account-all {
   background-color: #c5dba8;
   border-radius: 20px;
 }
@@ -160,4 +164,9 @@ export default {
   /* height: 300px; */
   width: 310px;
 }
+.bg-product-all {
+  background: none;
+  font-size: 25px;
+}
+
 </style>

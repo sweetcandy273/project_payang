@@ -10,7 +10,7 @@
           style="width: 50px"
         />
       </div>
-      <div class="col" style="overflow: hidden; position: relative">
+      <div class="col" >
         <div style="font-size: 20px;">น้ำยางสด</div>
         <q-img src="../assets/rubber-cup.png" style="">
           <div class="absolute-full flex flex-center text-black bg-product-all">
@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="q-pa-md font">
-      <div class="account-all-yearly q-pa-md shadow-2">
+      <div class="account-all q-pa-md shadow-2">
         <div class="row">
           <div class="col-10">
             <div style="font-size: 25px">สรุปบัญชีรวมทั้งหมด</div>
@@ -155,7 +155,7 @@ export default {
   position: relative;
 }
 
-.account-all-yearly {
+.account-all {
   background-color: #c5dba8;
   border-radius: 20px;
 }

@@ -76,8 +76,20 @@
           label="กนกวรรณ เป็นผู้ได้รับส่วนแบ่ง"
         />
       </div>
-      <div>
-        <strong style="font-size: 16px">{{ selectshare }}</strong>
+      <div class="sharemoney" v-if="selectshare">
+        <strong style="font-size: 16px">
+          <div class="row">
+            <div class="col text-center q-my-md">% การแบ่ง</div>
+            <div class="col">
+              <q-select
+                filled
+                v-model="percent"
+                :options="optionspercent"
+                label="ส่วนแบ่ง"
+              />
+            </div>
+          </div>
+        </strong>
       </div>
 
       <div class="col">
@@ -108,10 +120,11 @@ export default {
       totalprice: "",
       store: null,
       options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด"],
-      selectshare: ["teal"],
       note: "",
       type: null,
       optionstype: ["ปุ๋ย", "ตัดหญ้า", "ตัดกาฝาก"],
+      selectshare: false,
+      optionspercent: ["60:40", "55:45", "50:50"],
     };
   },
 };

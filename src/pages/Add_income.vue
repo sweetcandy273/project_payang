@@ -9,7 +9,7 @@
           <img class="close" src="../assets/close.png" style="width: 50px" />
         </div>
 
-        <div class="col-6 font header-title">เพิ่มบัญชี</div>
+        <div class="col-6 font header-title" >เพิ่มบัญชี</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -33,10 +33,26 @@
       />
     </div>
     <div class="font q-px-md">
-      <q-input v-model="Event" filled type="date" />
+     
+      <!-- <q-input v-model="Event" filled type="date" /> -->
+    <q-input filled v-model="date" mask="date" :rules="['date']">
+      <template v-slot:append>
+        <q-icon name="event" class="cursor-pointer">
+          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+            <q-date v-model="date">
+              <div class="row items-center justify-end">
+                <q-btn v-close-popup label="Close" color="primary" flat />
+              </div>
+            </q-date>
+          </q-popup-proxy>
+        </q-icon>
+      </template>
+    </q-input>
+    
     </div>
     <div class="text-center">
-      <h4 class="font">ระบุข้อมูลน้ำยางสด</h4>
+      <div class="font q-pa-md" style="font-size:25px;">ระบุข้อมูลน้ำยางสด</div>
+      
     </div>
     <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
       <div class="row">
@@ -109,6 +125,7 @@
 export default {
   data() {
     return {
+      date: "",
       Event: "",
       weight_rubber: "",
       percent: "",

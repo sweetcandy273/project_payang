@@ -12,7 +12,7 @@
       </div>
       <div class="col" >
         <div style="font-size: 20px;">น้ำยางสด</div>
-        <q-img src="../assets/rubber-cup.png" style="">
+        <q-img src="../assets/rubber-cup.png" style="" width="100px">
           <div class="absolute-full flex flex-center text-black bg-product-all">
             0.00
           </div>
@@ -22,7 +22,7 @@
       </div>
       <div class="col">
         <div style="font-size: 20px;">รายรับ</div>
-        <q-img src="../assets/money.png" style="">
+        <q-img src="../assets/money.png" style="" width="100px">
           <div class="absolute-full flex flex-center text-black bg-product-all">
             0.00
           </div>

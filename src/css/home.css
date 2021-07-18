@@ -1,6 +1,9 @@
-.bg-py {
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap');
+
+.bg {
     background: #dae5de;
 }
+
 
 
 .q-toolbar {
@@ -14,8 +17,11 @@
 
 }
 
-.my-custom-toggle{
-
-     /* border: 1px solid #000; */
+.header-title{
+    font-size: 25px;
 }
- 
+
+.font{
+    font-family: 'Kanit', sans-serif;
+    
+}

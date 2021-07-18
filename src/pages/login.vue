@@ -18,7 +18,7 @@
             color="teal"
             filled
             v-model="id"
-            label="เบอร์โทรศัพท์ / อีเมลล์"
+            label="เบอร์โทรศัพท์ / อีเมล"
           />
         </div>
         <div class="q-mt-md"></div>

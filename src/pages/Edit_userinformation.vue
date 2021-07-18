@@ -26,42 +26,90 @@
     </q-header>
     <div class="q-pa-md font">
       <q-form @submit="onSubmit" class="q-gutter-md">
-        <q-input
-          v-model="fname"
-          label="ชื่อ"
-          :rules="[(val) => (val && val.length > 0) || 'กรอกไอสัส']"
-        />
-        <q-input
-          v-model="lname"
-          label="นามสกุล"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
-        />
-        <q-input
-          v-model="phone_number"
-          label="เบอร์โทรศัพท์"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรศัพท์']"
-        />
-        <q-input v-model="email" label="อีเมล" 
-        :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอีเมล']"
-        />
-        <q-input
-          v-model="address"
-          label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
-        />
-        <q-input v-model="address_district" label="เขต/อำเภอ" 
-        :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเขต/อำเภอ']"
-        />
-        <q-input v-model="address_province" label="จังหวัด"
-        :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
-         />
-        <q-input v-model="zip_code" label="รหัสไปรษณีย์ " 
-        :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรหัสไปรษณีย์']"
-        />
+        <div>
+
+          
+          <div class="row">
+            <div class="col q-pr-md">
+              <q-input
+                v-model="fname"
+                label="ชื่อ"
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) || 'กรุณากรอกชื่อจริงของผู้ใช้งาน',
+                ]"
+              />
+            </div>
+            <div class="col q-pr-md">
+              <q-input
+                v-model="lname"
+                label="นามสกุล"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
+                ]"
+              />
+            </div>
+          </div>
+
+          <q-input
+            v-model="phone_number"
+            label="เบอร์โทรศัพท์"
+            :rules="[
+              (val) =>
+                (val && val.length > 0 && val.length == 10) ||
+                'กรุณากรอกเบอร์โทรศัพท์',
+            ]"
+          />
+          <q-input
+            v-model="email"
+            label="อีเมล"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอีเมล']"
+          />
+          <q-input
+            v-model="address"
+            label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
+          />
+
+          <div class="row">
+            <div class="col q-pr-md">
+              <q-input
+                v-model="address_district"
+                label="เขต/อำเภอ"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'กรุณากรอกเขต/อำเภอ',
+                ]"
+              />
+            </div>
+            <div class="col q-pr-md">
+              <q-input
+                v-model="address_province"
+                label="จังหวัด"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
+                ]"
+              />
+            </div>
+          </div>
+
+          <q-input
+            v-model="zip_code"
+            label="รหัสไปรษณีย์ "
+            :rules="[
+              (val) => (val && val.length > 0) || 'กรุณากรอกรหัสไปรษณีย์',
+            ]"
+          />
+        </div>
 
         <div>
-          <q-btn unelevated rounded color="primary" label="ยืนยัน" type="submit"/>
+          <q-btn
+            unelevated
+            rounded
+            label="ยืนยัน"
+            type="submit"
+            class="shadow-2 text-white"
         
+          />
         </div>
       </q-form>
     </div>
@@ -80,7 +128,7 @@ export default {
     return {
       fname: ref("ชนิกานต์"),
       lname: ref("ปิยะพงษ์"),
-      phone_number: ref("082-222-2222"),
+      phone_number: ref("0812222222"),
       email: ref("payang01@gmail.com"),
       address: ref("112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ "),
       address_district: ref("เมืองภูเก็ต"),
@@ -114,8 +162,8 @@ export default {
   font-family: "Kanit", sans-serif;
 }
 
-.q-btn{
-size: 100%;
-background-color: #4e7971;
+.q-btn {
+  width: 100%;
+  background-color: #4e7971;
 }
 </style>

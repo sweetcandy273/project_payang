@@ -75,7 +75,7 @@
         <q-select filled v-model="store" :options="options" label="ร้านค้า" />
       </div>
       <div class="share">
-        <q-checkbox
+        <q-checkbox 
           v-model="selectshare"
           val="teal"
           style="font-size: 16px"

@@ -62,7 +62,7 @@
         </div>
         <div class="row">
           <div class="col text-left"><strong>เบอร์โทรศัพท์</strong></div>
-          <div class="col text-right">081-222-2***</div>
+          <div class="col text-right">081-222-2222</div>
         </div>
 
         <div>
@@ -166,8 +166,8 @@
 
 
 <script>
-import useQuasar from "quasar";
-import ref from "vue";
+// import useQuasar from "quasar";
+// import ref from "vue";
 
 import ProductYearly from "../components/ProductYearly.vue";
 import ProductMonthly from "../components/ProductMonthly.vue";

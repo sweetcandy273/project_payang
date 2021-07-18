@@ -9,7 +9,7 @@
           <img class="close" src="../assets/close.png" style="width: 50px" />
         </div>
 
-        <div class="col-6 font header-title" >เพิ่มบัญชี</div>
+        <div class="col-6 font header-title">เพิ่มบัญชี</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -21,67 +21,77 @@
         rounded
         style="background: #2d9cdb; color: white"
         label="รายรับ"
-        @click="$router.push({ name: 'add_income' })"
       />
       <q-btn
         class="col"
         unelevated
         rounded
-        style="background: #f2994a; color: white"
+        style="background: #f2994a; color: white; opacity: 0.5"
         label="รายจ่าย"
         @click="$router.push({ name: 'add_expenditure' })"
       />
     </div>
     <div class="font q-px-md">
-     
-      <!-- <q-input v-model="Event" filled type="date" /> -->
-    <q-input filled v-model="date" mask="date" :rules="['date']">
-      <template v-slot:append>
-        <q-icon name="event" class="cursor-pointer">
-          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-            <q-date v-model="date">
-              <div class="row items-center justify-end">
-                <q-btn v-close-popup label="Close" color="primary" flat />
-              </div>
-            </q-date>
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-    </q-input>
-    
+      <q-input filled v-model="date" mask="date" :rules="['date']">
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy
+              ref="qDateProxy"
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <q-date v-model="date">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
     </div>
     <div class="text-center">
-      <div class="font q-pa-md" style="font-size:25px;">ระบุข้อมูลน้ำยางสด</div>
-      
+      <div class="font q-pa-md" style="font-size: 25px">ระบุข้อมูลน้ำยางสด</div>
     </div>
     <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
       <div class="row">
         <div class="col">
-          <q-input
-            filled
-            v-model="weight_rubber"
-            label="น้ำหนักยาง(กิโลกรัม)"
-          />
+          <q-input filled v-model="weight_rubber" label="น้ำหนักยาง" >
+             <template v-slot:prepend> กก. </template>
+          </q-input>
         </div>
         <div class="col q-ml-md">
-          <q-input filled v-model="percent" label="เปอร์เซ็น(%)" />
+          <q-input filled v-model="percent" label="เปอร์เซ็น">
+            <template v-slot:prepend> % </template>
+          </q-input>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <q-input filled v-model="text" label="แห้ง" />
+          <q-input filled v-model="dry_rubber" label="เนื้อยางแห้ง">
+            <template v-slot:prepend> ก. </template>
+          </q-input>
         </div>
         <div class="col q-ml-md">
-          <q-input filled v-model="price_rubber" label="ราคาน้ำยาง" />
+          <q-input filled v-model="price_rubber" label="ราคาน้ำยาง">
+             <template v-slot:prepend> บ./กก. </template>
+          </q-input>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <q-input filled v-model="totalprice" label="รวมจำนวนเงิน" />
+          <q-input filled v-model="totalprice" label="รวมจำนวนเงิน">
+            <template v-slot:prepend> ฿ </template>
+          </q-input>
         </div>
       </div>
       <div class="stores">
-        <q-select filled v-model="store" :options="options" label="ร้านค้า" />
+        <q-select filled v-model="store" :options="options" label="ร้านค้า">
+           <template v-slot:prepend>
+            <q-icon name="store"/>
+           </template>
+
+        </q-select>
       </div>
       <div class="share">
         <q-checkbox
@@ -111,11 +121,12 @@
 
       <div class="submit row q-gutter-sm flex-center">
         <q-btn
+          unelevated
+          rounded
           label="บันทึก"
           type="submit"
-          style="background: #4E7971;
-          color: white;width: 1000px; unelevated
-        rounded "
+          class="shadow-2 text-white"
+          style="width: 100%; background-color: #4e7971"
         />
       </div>
     </div>
@@ -125,15 +136,15 @@
 export default {
   data() {
     return {
-      date: "",
-      Event: "",
+      //ถ้าจะเอาไปใส่ Database ต้อง this.ตัวแปร
+      date: "2021/07/18",
       weight_rubber: "",
       percent: "",
-      text: "",
+      dry_rubber: "",
       price_rubber: "",
       totalprice: "",
       store: null,
-      options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด"],
+      options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด", "อื่นๆ"],
       note: "",
       selectshare: false,
       optionspercent: ["60:40", "55:45", "50:50"],

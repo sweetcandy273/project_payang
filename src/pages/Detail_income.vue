@@ -6,24 +6,23 @@
       </q-toolbar>  -->
       <q-toolbar class="text-center row">
         <div class="col self-center">
-          <img class="close" src="../assets/back-left.png" style="width: 50px" />
+          <img
+            class="close"
+            src="../assets/back-left.png"
+            style="width: 50px"
+          />
         </div>
 
         <div class="col-6 font header-title">รายละเอียด</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
-  
-        
-   
- </div>
+  </div>
 </template>
 <script>
 export default {
   data() {
-    return {
-     
-    };
+    return {};
   },
 };
 </script>

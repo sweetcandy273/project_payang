@@ -36,17 +36,21 @@
       <q-input v-model="Event" filled type="date" />
     </div>
     <div class="row q-gutter-sm q-pa-md text-center">
-      <div class="col" style="background: #74D751; width: 100px">
-        <q-img class="q-pa-none" src="../assets/maintenance_sapling.png" style="width: 100px">
+      <div class="col" style="background: #74d751; width: 100px">
+        <q-img
+          class="q-pa-none"
+          src="../assets/maintenance_sapling.png"
+          style="width: 100px"
+        >
           <div class="absolute-full text-subtitle2 flex flex-center">
-            <h4 class = "font">บำรุงรักษา</h4>
+            <h4 class="font">บำรุงรักษา</h4>
           </div>
         </q-img>
       </div>
-      <div class="col" style="background: #EDF06E; width: 100px">
+      <div class="col" style="background: #edf06e; width: 100px">
         <q-img src="../assets/equipment_rubber-cup.png" style="width: 100px">
           <div class="absolute-full text-subtitle2 flex flex-center">
-            <h4 class = "font">วัสดุ-อุปกรณ์</h4>
+            <h4 class="font">วัสดุ-อุปกรณ์</h4>
           </div>
         </q-img>
       </div>

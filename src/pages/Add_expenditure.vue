@@ -21,6 +21,7 @@
         rounded
         style="background: #2d9cdb; color: white"
         label="รายรับ"
+        @click="$router.push({ name: 'add_income' })"
       />
       <q-btn
         class="col"
@@ -28,6 +29,7 @@
         rounded
         style="background: #f2994a; color: white"
         label="รายจ่าย"
+        @click="$router.push({ name: 'add_expenditure' })"
       />
     </div>
     <div class="q-px-md font">
@@ -76,8 +78,20 @@
           label="กนกวรรณ เป็นผู้ได้รับส่วนแบ่ง"
         />
       </div>
-      <div>
-        <strong style="font-size: 16px">{{ selectshare }}</strong>
+      <div class="sharemoney" v-if="selectshare">
+        <strong style="font-size: 16px">
+          <div class="row">
+            <div class="col text-center q-my-md">% การแบ่ง</div>
+            <div class="col">
+              <q-select
+                filled
+                v-model="percent"
+                :options="optionspercent"
+                label="ส่วนแบ่ง"
+              />
+            </div>
+          </div>
+        </strong>
       </div>
 
       <div class="col">
@@ -108,10 +122,11 @@ export default {
       totalprice: "",
       store: null,
       options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด"],
-      selectshare: ["teal"],
       note: "",
       type: null,
       optionstype: ["ปุ๋ย", "ตัดหญ้า", "ตัดกาฝาก"],
+      selectshare: false,
+      optionspercent: ["60:40", "55:45", "50:50"],
     };
   },
 };

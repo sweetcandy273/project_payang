@@ -4,7 +4,7 @@
       <q-toolbar class="text-center row">
         <div
           class="col self-center font"
-          @click="$router.push({ name: 'home' })"
+          @click="$router.push({ name: 'myfarm' })"
         >
           <q-icon name="arrow_back_ios" />
         </div>

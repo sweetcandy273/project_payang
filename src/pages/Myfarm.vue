@@ -1,10 +1,10 @@
 <template>
-<div>
+<div class="text-center">
    <q-header class="shadow-2">
       <q-toolbar class="text-center row">
         <div
           class="col self-center font"
-          @click="$router.push({ name: 'Add_detail_farm' })"
+          @click="$router.push({ name: 'home' })"
         >
           <q-icon name="arrow_back_ios" />
         </div>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="row myfarm1 font shadow-2"
-        @click="$router.push({ name: 'myfarm' })">
+        @click="$router.push({ name: 'Add_detail_farm' })">
 
       <div class="col q-px-md text-center self-center">
           <img
@@ -67,12 +67,14 @@
     </div>
     
     
-    <div class="text-center">
-      <q-btn 
+    <div>
+       <q-btn 
       size="22px"
       round color="teal-9" 
       icon="add" />
+    
     </div>
+     
     
 
     

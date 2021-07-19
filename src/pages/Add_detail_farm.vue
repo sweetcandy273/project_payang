@@ -16,8 +16,6 @@
     <div class="q-pa-md font">
       <q-form @submit="onSubmit" class="q-gutter-md">
         <div>
-
-          
           <div class="row">
             <div class="col q-pr-md">
               <q-input
@@ -49,7 +47,7 @@
                 'กรุณากรอกชื่อสวน',
             ]"
           />
-        
+
           <q-input
             v-model="address"
             label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
@@ -75,16 +73,99 @@
                 ]"
               />
             </div>
-
-          
           </div>
-    <q-input
+          <q-input
             v-model="arae"
             label="เนื้อที่ปลูก(ไร่):"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกพื้นที่']"
           />
-          
         </div>
+
+        
+          <div class="q-pa-md">
+    <div class="q-gutter-sm">
+     
+        <div class="share">
+        <q-checkbox
+          v-model="selectshare"
+          style="font-size: 16px"
+          label="ผู้ดูแล"
+        />
+      </div>
+     
+    </div>
+
+    
+  
+        </div>
+
+        <div class="sharemoney" v-if="selectshare">
+
+             <div class="row">
+          <div class="col q-pr-md">
+            <q-input
+              v-model="fname_admin"
+              label="ชื่อ"
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) || 'กรุณากรอกชื่อจริงของผู้ใช้งาน',
+              ]"
+            />
+          </div>
+          <div class="col q-pr-md">
+            <q-input
+              v-model="lname_admin"
+              label="นามสกุล"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
+            />
+          </div>
+        </div>
+
+        <q-input
+            v-model="number_admin"
+            label="เบอร์โทรศัพท์"
+            :rules="[
+              (val) =>
+                (val && val.length > 0 && val.length == 10) ||
+                'กรุณากรอกเบอร์โทรศัพท์',
+            ]"
+          />
+
+           <q-input
+            v-model="number_am_admin"
+            label="เบอร์โทรศัพท์ฉุกเฉิน"
+            :rules="[
+              (val) =>
+                (val && val.length > 0 && val.length == 10) ||
+                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน',
+            ]"
+          />
+
+           <div class="row">
+            <div class="col q-pr-md">
+              <q-input
+                v-model="address_district_admin"
+                label="เขต/อำเภอ"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'กรุณากรอกเขต/อำเภอ',
+                ]"
+              />
+            </div>
+            <div class="col q-pr-md">
+              <q-input
+                v-model="address_province_admin"
+                label="จังหวัด"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
+                ]"
+              />
+            </div>
+          </div>
+
+        </div>
+
+
+       
 
         <div>
           <q-btn
@@ -93,13 +174,15 @@
             label="ยืนยัน"
             type="submit"
             class="shadow-2 text-white"
-        
           />
         </div>
       </q-form>
     </div>
   </div>
 </template>
+
+
+
 
 <script>
 import Vue from "vue";
@@ -113,22 +196,27 @@ export default {
     return {
       fname: ref("ชนิกานต์"),
       lname: ref("ปิยะพงษ์"),
-      phone_number: ref("0812222222"),
-      email: ref("payang01@gmail.com"),
+      farm_name: ref("สวนภูเก็ต"),
+      arae: ref("20"),
       address: ref("112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ "),
       address_district: ref("เมืองภูเก็ต"),
       address_province: ref("ภูเก็ต"),
-      zip_code: ref("83000"),
+      fname_admin: ref(""),
+      lname_admin: ref(""),
+      number_admin: ref(""),
+      number_am_admin: ref(""),
+      address_province_admin: ref(""),
+      selectshare: false,
     };
   },
   methods: {
     onSubmit() {
-      //บันทึกข้อมูลลง database ใช้ this.ตัวแปร น้าาา
       console.log(this.fname);
     },
   },
 };
 </script>
+
 
 <style>
 .bg {

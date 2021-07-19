@@ -1,15 +1,26 @@
 <template>
   <div>
     <q-header class="shadow-2">
+      <!-- <q-toolbar>
+        <q-space></q-space>
+        <q-btn flat round dense icon="search" class="q-mr-xs" />
+        <q-btn flat round dense icon="group_add" />
+      </q-toolbar> -->
       <q-toolbar class="text-center row">
+        <!-- <div
+          class="col self-center font"
+          @click="$router.push({ name: 'setting' })"
+        >
+          ตั้งค่า
+        </div> -->
         <div
           class="col self-center font"
           @click="$router.push({ name: 'home' })"
         >
-          <q-icon name="arrow_back_ios" />
+          กลับ
         </div>
 
-        <div class="col-6 font header-title">ข้อมูลสวน</div>
+        <div class="col-6 font header-title">ข้อมูลผู้ใช้</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -41,15 +52,19 @@
           </div>
 
           <q-input
-            v-model="farm_name"
-            label="ชื่อสวน"
+            v-model="phone_number"
+            label="เบอร์โทรศัพท์"
             :rules="[
               (val) =>
                 (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกชื่อสวน',
+                'กรุณากรอกเบอร์โทรศัพท์',
             ]"
           />
-        
+          <q-input
+            v-model="email"
+            label="อีเมล"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอีเมล']"
+          />
           <q-input
             v-model="address"
             label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
@@ -75,15 +90,15 @@
                 ]"
               />
             </div>
-
-          
           </div>
-    <q-input
-            v-model="arae"
-            label="เนื้อที่ปลูก(ไร่):"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกพื้นที่']"
+
+          <q-input
+            v-model="zip_code"
+            label="รหัสไปรษณีย์ "
+            :rules="[
+              (val) => (val && val.length > 0) || 'กรุณากรอกรหัสไปรษณีย์',
+            ]"
           />
-          
         </div>
 
         <div>

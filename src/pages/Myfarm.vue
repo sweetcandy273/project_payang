@@ -1,5 +1,6 @@
 <template>
-<div class="text-center">
+<div>
+
    <q-header class="shadow-2">
       <q-toolbar class="text-center row">
         <div
@@ -14,7 +15,7 @@
       </q-toolbar>
     </q-header>
 
-    <div>
+    
        <div class="text-center">
                     <img
                       class="logo"
@@ -24,8 +25,8 @@
                     />
                     <div class="col-6 font header-title" >สวนของฉัน</div>
         </div>
-    </div>
-
+    
+<div>
     <div class="row myfarm1 font shadow-2"
         @click="$router.push({ name: 'Add_detail_farm' })">
 
@@ -66,16 +67,14 @@
         
     </div>
     
+    </div>
     
-    <div>
-       <q-btn 
+     <div class="q-pa-md q-gutter-sm">
+      <q-btn 
       size="22px"
       round color="teal-9" 
       icon="add" />
-    
     </div>
-     
-    
 
     
 

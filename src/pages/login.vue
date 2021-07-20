@@ -20,21 +20,31 @@
           <div>
             <q-input color="teal" filled v-model="id" label="เบอร์โทร/อีเมล" />
             <div class="q-pt-md"></div>
+
             <q-input
               color="teal"
-              filled
-              type="password"
-              v-model="password"
               label="รหัสผ่าน"
-            />
+              v-model="password"
+              filled
+              :type="isPwd ? 'password' : 'text'"
+            >
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
           </div>
 
           <div class="q-pt-md">
-            <div class="text-grey">ยังไม่มีบัญชี? 
-              <router-link to="/register" class="text-grey">สมัครสมาชิก</router-link>
-             
-              
-              </div>
+            <div class="text-grey">
+              ยังไม่มีบัญชี?
+              <router-link to="/register" class="text-grey"
+                >สมัครสมาชิก</router-link
+              >
+            </div>
             <q-btn
               unelevated
               rounded
@@ -67,6 +77,7 @@ export default {
     return {
       id: ref(""),
       password: ref(""),
+      isPwd: ref(true),
     };
   },
   methods: {
@@ -78,24 +89,5 @@ export default {
 };
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap");
-
-.logo {
-  width: 100px;
-  height: 100px;
-  border-radius: 30%;
-}
-
-.font {
-  font-family: "Kanit", sans-serif;
-}
-.q-btn {
-  width: 100%;
-  background-color: #4e7971;
-}
-.payang {
-  letter-spacing: 25px;
-  font-size: 20px;
-}
+<style scoped src="../css/home.css">
 </style>

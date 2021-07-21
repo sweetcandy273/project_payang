@@ -84,14 +84,10 @@
             <q-icon name="info" style="color: #5db075">
               <q-popup-proxy :offset="[10, 10]">
                 <q-banner class="bg-while font">
-                  <div>แอปพลิเคชั่นวางแผนการเพาะปลูกสวนยาง</div>
+                  <div>วางแผนการเพาะปลูกสวนยาง</div>
                   <div>วางแผนบัญชีการเงิน</div>
                   <div class="text-right">
-                    <q-img
-                      class="logo"
-                      src="../assets/accounting.png"
-                      style="width: 80px"
-                    />
+                    <q-img src="../assets/accounting.png" style="width: 80px" />
                   </div>
                 </q-banner>
               </q-popup-proxy>
@@ -113,7 +109,7 @@
           <div style="font-size: 20px">สวนของฉัน</div>
         </div>
         <div class="col q-px-md text-right self-center">
-          <q-img class="logo" src="../assets/forest.png" style="width: 80px" />
+          <q-img src="../assets/forest.png" style="width: 80px" />
         </div>
       </div>
       <div class="q-pt-md text-center font" style="font-size: 20px">ผลผลิต</div>

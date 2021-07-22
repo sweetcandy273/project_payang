@@ -13,13 +13,13 @@
         >
           ตั้งค่า
         </div> -->
-        <div
-          class="col self-center font"
-          @click="$router.push({ name: 'login' })"
-        >
-          กลับ
+        <div class="col">
+          <img
+            src="../assets/close.png"
+            style="width: 20px; height: 20px"
+            @click="$router.push({ name: 'login' })"
+          />
         </div>
-
         <div class="col-6 font header-title">สมัครสมาชิก</div>
         <div class="col self-center"></div>
       </q-toolbar>
@@ -56,8 +56,10 @@
             v-model="phone_number"
             label="เบอร์โทรศัพท์"
             :rules="[
-              (val) => isNaN(val) == false || 'เบอร์โทรศัพท์จะต้องเป็นตัวเลขเท่านั้น',
-              (val) => val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
+              (val) =>
+                isNaN(val) == false || 'เบอร์โทรศัพท์จะต้องเป็นตัวเลขเท่านั้น',
+              (val) =>
+                val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
               (val) =>
                 (val && val.length > 0 && val.length == 10) ||
                 'กรุณากรอกเบอร์โทรศัพท์',
@@ -159,7 +161,11 @@
           />
         </div>
 
-        <q-toggle color="green" v-model="accept" label="ยินยอมให้แอปพลิเคชั่นเข้าถึงข้อมูลส่วนตัว" />
+        <q-toggle
+          color="green"
+          v-model="accept"
+          label="ยินยอมให้แอปพลิเคชั่นเข้าถึงข้อมูลส่วนตัว"
+        />
 
         <div>
           <q-btn
@@ -210,7 +216,8 @@ export default {
             color: "red-5",
             textColor: "white",
             icon: "warning",
-            message: "คุณต้องยินยอมการเปิดเผยข้อมูลกับทางแอปพลิเคชั่นจึงจะลงทะเบียนได้",
+            message:
+              "คุณต้องยินยอมการเปิดเผยข้อมูลกับทางแอปพลิเคชั่นจึงจะลงทะเบียนได้",
           });
         }
       },

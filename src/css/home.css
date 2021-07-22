@@ -25,6 +25,7 @@
 }
 
 .q-btn {
+    height: 45px;
     width: 100%;
     background-color: #4e7971;
 }
@@ -38,4 +39,8 @@
 .payang {
     letter-spacing: 25px;
     font-size: 20px;
+}
+
+.margin-box{
+    margin-top: 150px;
 }

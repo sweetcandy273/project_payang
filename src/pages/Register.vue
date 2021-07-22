@@ -159,7 +159,7 @@
           />
         </div>
 
-        <q-toggle color="green" v-model="accept" label="ฉันยินยอมให้แอปพลิเคชั่นเข้าถึงข้อมูลส่วนตัว" />
+        <q-toggle color="green" v-model="accept" label="ยินยอมให้แอปพลิเคชั่นเข้าถึงข้อมูลส่วนตัว" />
 
         <div>
           <q-btn

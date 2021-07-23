@@ -70,7 +70,7 @@
       </div>
 
       <div class="q-pa-md font text-center">
-        <q-img class="logo" src="../assets/forest.png" style="width: 80px" />
+        <q-img src="../assets/forest.png" style="width: 80px" />
         <div class="text-grey">version 0.1</div>
         ออกจากระบบ
       </div>

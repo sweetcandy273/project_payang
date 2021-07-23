@@ -13,7 +13,7 @@
       <div class="row q-pa-md text-center">
         <div class="col">
           <div class="text-md">วางแผนการเพาะปลูก</div>
-      
+
           <div class="text-lr">สวนยาง</div>
         </div>
       </div>
@@ -24,7 +24,14 @@
           <img class="" alt="" src="../assets/order.png" style="width: 100%" />
         </div>
         <div class="col self-center">
-          <div>ลูกศรขวา</div>
+          <div>
+            <img
+              class=""
+              alt="back-right"
+              src="../assets/back-right.png"
+              style="width: 100px"
+            />
+          </div>
         </div>
       </div>
     </div>

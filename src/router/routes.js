@@ -4,7 +4,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Home.vue') },
+      { path: '',name: 'home', component: () => import('pages/Home.vue') },
       { path: 'login', name: 'login', component: () => import('pages/Login.vue') },
       { path: 'register', name: 'register', component: () => import('pages/Register.vue') },
       { path: 'add_information', name: 'add_information', component: () => import('pages/Add_information.vue') },
@@ -17,6 +17,10 @@ const routes = [
       { path: 'edit_income', name: 'edit_income', component: () => import('pages/Edit_income.vue') },
       { path: 'edit_expenditure', name: 'edit_expenditure', component: () => import('pages/Edit_expenditure.vue') },
       { path: 'detail_income', name: 'detail_income', component: () => import('pages/Detail_income.vue') },
+      { path: 'edit_userinformation', name: 'edit_userinformation', component: () => import('pages/Edit_userinformation.vue') },
+     
+
+
     ]
   },
 

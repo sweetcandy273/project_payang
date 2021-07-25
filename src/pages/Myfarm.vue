@@ -52,13 +52,19 @@
     </div> 
     </div>
     
-     <div class="q-pa-md q-gutter-sm " 
+    
+       <div class="row justify-center">
+       <div class=".col-auto" 
         @click="$router.push({ name: 'Add_detail_farm' })"> 
       <q-btn 
       size="15px"
       round color="teal-9" 
       icon="add" />  
     </div>
+    </div>
+   
+   
+    
 
     
 

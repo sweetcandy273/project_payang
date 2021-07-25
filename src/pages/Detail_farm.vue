@@ -20,10 +20,11 @@
 
             <div class="back-gd .col-auto">
 
-            <div class="q-pa-md self-right" >
-              <div class="row">
+            
+              
+                <div class="row justify-end" >
                 <div
-                  class="col"
+                  class=".col-auto "
                   @click="$router.push({ name: 'Edit_detail_farm' })"
                 >
                   <q-btn 
@@ -31,7 +32,7 @@
                   round color="amber-8" 
                   icon="edit" />
                 </div>
-                <div class="col"
+                <div class=".col-auto "
                  @click="$router.push({ name: 'noti' })"
                 >
                   <q-btn 
@@ -40,7 +41,10 @@
                   icon="delete" />
                 </div>
               </div>
-            </div>
+
+              
+              
+            
 
             <div class="greeninfor">
               นางสาวสวย นามสกุล สวยที่สุด

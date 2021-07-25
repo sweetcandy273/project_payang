@@ -19,8 +19,9 @@
         class="col"
         unelevated
         rounded
-        style="background: #2d9cdb; color: white"
+        style="background: #2d9cdb; color: white; opacity:0.5"
         label="รายรับ"
+        
       />
       <q-btn
         class="col"
@@ -28,10 +29,27 @@
         rounded
         style="background: #f2994a; color: white"
         label="รายจ่าย"
+
       />
     </div>
     <div class="q-px-md font">
-      <q-input v-model="Event" filled type="date" />
+      <q-input filled v-model="date" mask="date" :rules="['date']">
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy
+              ref="qDateProxy"
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <q-date v-model="date">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
     </div>
     <div class="row q-gutter-sm q-pa-md text-center">
       <div class="col" style="background: #74d751; width: 100px">
@@ -73,7 +91,7 @@
         <q-select filled v-model="store" :options="options" label="ร้านค้า" />
       </div>
       <div class="share">
-        <q-checkbox
+        <q-checkbox 
           v-model="selectshare"
           val="teal"
           style="font-size: 16px"
@@ -101,12 +119,13 @@
       </div>
 
       <div class="submit row q-gutter-sm flex-center font">
-        <q-btn
+       <q-btn
+          unelevated
+          rounded
           label="บันทึก"
           type="submit"
-          style="background: #4E7971;
-          color: white;   width: 1000px; unelevated
-        rounded "
+          class="shadow-2 text-white"
+          style="width: 100%; background-color: #4e7971"
         />
       </div>
     </div>
@@ -116,7 +135,8 @@
 export default {
   data() {
     return {
-      Event: "",
+
+      date:"2021/07/18",
       weight_rubber: "",
       percent: "",
       text: "",

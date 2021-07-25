@@ -19,7 +19,7 @@
         class="col"
         unelevated
         rounded
-        style="background: #2d9cdb; color: white; opacity:0.5"
+        style="background: #2d9cdb; color: white; opacity: 0.5"
         label="รายรับ"
         @click="$router.push({ name: 'add_income' })"
       />
@@ -29,7 +29,6 @@
         rounded
         style="background: #f2994a; color: white"
         label="รายจ่าย"
-
       />
     </div>
     <div class="q-px-md font">
@@ -51,23 +50,16 @@
         </template>
       </q-input>
     </div>
-    <div class="row q-gutter-sm q-pa-md text-center">
-      <div class="col" style="background: #74d751; width: 100px">
-        <q-img
-          class="q-pa-none"
-          src="../assets/maintenance_sapling.png"
-          style="width: 100px"
-        >
-          <div class="absolute-full text-subtitle2 flex flex-center">
-            <h4 class="font">บำรุงรักษา</h4>
-          </div>
+    
+    <div class="row q-pa-md q-gutter-md text-center">
+      <div class="col">
+        <q-img src="../assets/maintenance_sapling.png" style="opacity: 0.5" width="100px">
+          <h4 class="font text-center" style="font-size: 20px;">บำรุงรักษา</h4>
         </q-img>
       </div>
-      <div class="col" style="background: #edf06e; width: 100px">
-        <q-img src="../assets/equipment_rubber-cup.png" style="width: 100px">
-          <div class="absolute-full text-subtitle2 flex flex-center">
-            <h4 class="font">วัสดุ-อุปกรณ์</h4>
-          </div>
+      <div class="col">
+        <q-img src="../assets/equipment_rubber-cup.png" style="" width="100px">
+           <h4 class="font text-center" style="font-size: 20px;">วัสดุ-อุปกรณ์</h4>
         </q-img>
       </div>
     </div>
@@ -91,27 +83,12 @@
         <q-select filled v-model="store" :options="options" label="ร้านค้า" />
       </div>
       <div class="share">
-        <q-checkbox 
+        <q-checkbox
           v-model="selectshare"
           val="teal"
           style="font-size: 16px"
           label="กนกวรรณ เป็นผู้ได้รับส่วนแบ่ง"
         />
-      </div>
-      <div class="sharemoney" v-if="selectshare">
-        <strong style="font-size: 16px">
-          <div class="row">
-            <div class="col text-center q-my-md">% การแบ่ง</div>
-            <div class="col">
-              <q-select
-                filled
-                v-model="percent"
-                :options="optionspercent"
-                label="ส่วนแบ่ง"
-              />
-            </div>
-          </div>
-        </strong>
       </div>
 
       <div class="col">
@@ -119,7 +96,7 @@
       </div>
 
       <div class="submit row q-gutter-sm flex-center font">
-       <q-btn
+        <q-btn
           unelevated
           rounded
           label="บันทึก"
@@ -135,8 +112,7 @@
 export default {
   data() {
     return {
-
-      date:"2021/07/18",
+      date: "2021/07/18",
       weight_rubber: "",
       percent: "",
       text: "",
@@ -154,4 +130,5 @@ export default {
 };
 </script>
 <style scoped src="../css/home.css">
+
 </style>

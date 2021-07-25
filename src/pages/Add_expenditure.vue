@@ -87,7 +87,7 @@
           v-model="selectshare"
           val="teal"
           style="font-size: 16px"
-          label="กนกวรรณ เป็นผู้ได้รับส่วนแบ่ง"
+          label="กนกวรรณ ผู้รับผิดชอบ"
         />
       </div>
 

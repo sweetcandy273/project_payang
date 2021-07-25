@@ -26,11 +26,12 @@
                     <div class="col-6 font header-title" >สวนของฉัน</div>
         </div>
     
-<div>
-    <div class="row myfarm1 font shadow-2"
-        @click="$router.push({ name: 'Add_detail_farm' })">
+<div class="col self-center font">
+    <div class="row"
+        @click="$router.push({ name: 'Detail_farm' })"
+    >
 
-      <div class="col q-px-md text-center self-center">
+      <div class="col-4 text-center">
           <img
             class="logo"
             alt="Payang logo"
@@ -38,61 +39,54 @@
             style="width: 80px"
           />
         </div>
-        <div class="col-6 q-pa-md self-center">
-          <div style="font-size: 20px">สวนภูเก็ต</div>
-         <div style="font-size: 15px"> 112/1 ซอยหล่อโรง ถนนระนอง
+        <div class="col-6">
+          <div style="font-size: 18px">สวนภูเก็ต</div>
+         <div style="font-size: 12px"> 112/1 ซอยหล่อโรง ถนนระนอง
 ตำบลตลาดเหนือ อำเภอเมืองภูเก็ต จังหวัดภูเก็ต</div>
         </div>
-
-        
-    </div>
-
-        <div class="row myfarm1 font shadow-2"
-        @click="$router.push({ name: 'myfarm' })">
-
-      <div class="col q-px-md text-center self-center">
-          <img
-            class="logo"
-            alt="Payang logo"
-            src="../assets/forest.png"
-            style="width: 80px"
-          />
+        <div class="col-2">
+            <div style="font-size: 15px">
+                1 ไร่
+            </div>
         </div>
-        <div class="col-6 q-pa-md self-center">
-          <div style="font-size: 20px">สวนภูเก็ต</div>
-         <div style="font-size: 15px"> 112/1 ซอยหล่อโรง ถนนระนอง
-ตำบลตลาดเหนือ อำเภอเมืองภูเก็ต จังหวัดภูเก็ต</div>
-        </div>
-
-        
+    </div> 
     </div>
     
-    </div>
-    
-     <div class="q-pa-md q-gutter-sm">
+     <div class="q-pa-md q-gutter-sm " 
+        @click="$router.push({ name: 'Add_detail_farm' })"> 
       <q-btn 
-      size="22px"
+      size="15px"
       round color="teal-9" 
-      icon="add" />
+      icon="add" />  
     </div>
 
     
 
 </div>
 
-
-
-  
 </template>
 
-<script>
-export default {
-name:"myfarm"
+</script>
 
+<style>
+.bg {
+  background: #dae5de;
 }
 
+.q-toolbar {
+  background-color: #4e7971;
+}
 
-</script src="https://kit.fontawesome.com/0b9f660e86.js" crossorigin="anonymous">
+.header-title {
+  font-size: 25px;
+}
 
-<style scoped src="../css/home.css">
+.font {
+  font-family: "Kanit", sans-serif;
+}
+
+.q-btn {
+  width: 100%;
+  background-color: #4e7971;
+}
 </style>

@@ -81,6 +81,10 @@
           />
         </div>
 
+         <div class="stores">
+        <q-select filled v-model="store" :options="options" label="ร้านค้า" />
+      </div>
+
         
           <div class="q-pa-md">
     <div class="q-gutter-sm">

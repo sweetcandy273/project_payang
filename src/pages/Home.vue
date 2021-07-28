@@ -67,6 +67,14 @@
           112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ อำเภอเมืองภูเก็ต จังหวัดภูเก็ต
           83000
         </div>
+        <div class="row q-mt-xl">
+          <div class="col text-left"><strong>รหัสผ่าน</strong></div>
+          <div class="col text-right">
+            <router-link to="/change_password" class="text-green">
+              เปลี่ยน</router-link
+            >
+          </div>
+        </div>
       </div>
 
       <div class="q-pa-md font text-center">

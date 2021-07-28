@@ -6,7 +6,7 @@
         <q-btn flat round dense icon="search" class="q-mr-xs" />
         <q-btn flat round dense icon="group_add" />
       </q-toolbar> -->
-      <q-toolbar class="text-center row">
+      <q-toolbar class="row">
         <!-- <div
           class="col self-center font"
           @click="$router.push({ name: 'setting' })"
@@ -14,7 +14,7 @@
           ตั้งค่า
         </div> -->
 
-        <div class="col">
+        <div class="col flex">
           <img
             src="../assets/close.png"
             style="width: 20px; height: 20px"
@@ -22,7 +22,7 @@
           />
         </div>
 
-        <div class="col-6 font header-title">ตั้งรหัสผ่านใหม่</div>
+        <div class="col-6 font header-title text-center ">ตั้งรหัสผ่านใหม่</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>

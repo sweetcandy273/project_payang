@@ -4,6 +4,12 @@
     background: #dae5de;
 }
 
+.logo-starter{
+    width: 200px;
+    height: 200px;
+    border-radius: 30px;
+}
+
 .q-toolbar {
     background-color: #4e7971;
 }

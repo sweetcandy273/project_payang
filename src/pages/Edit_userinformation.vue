@@ -155,6 +155,9 @@ export default {
     onSubmit() {
       //บันทึกข้อมูลลง database ใช้ this.ตัวแปร น้าาา
       console.log(this.fname);
+      this.$router.push({
+        path: "/",
+      });
     },
   },
 };

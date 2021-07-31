@@ -17,12 +17,12 @@
         <div class="col flex">
           <img
             src="../assets/close.png"
-            style="width: 20px; height: 20px"
+            style="width: 22px; height: 22px"
             @click="$router.push({ name: 'login' })"
           />
         </div>
 
-        <div class="col-6 font header-title text-center ">ตั้งรหัสผ่านใหม่</div>
+        <div class="col-6 font header-title text-center">ตั้งรหัสผ่านใหม่</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -36,8 +36,7 @@
             label="เบอร์โทรศัพท์หรืออีเมล"
             :rules="[
               (val) =>
-                (val && val.length > 0) ||
-                'กรุณากรอกเบอร์โทรศัพท์หรืออีเมล',
+                (val && val.length > 0) || 'กรุณากรอกเบอร์โทรศัพท์หรืออีเมล',
             ]"
           >
           </q-input>
@@ -68,7 +67,6 @@ export default {
   setup() {
     return {
       input_c: ref(""),
-      
 
       onSubmit() {
         //check ว่าใช้ email หรือ เบอร์โทรใครไหมใน py_user

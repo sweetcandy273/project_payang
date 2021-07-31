@@ -20,7 +20,8 @@ const routes = [
       { path: 'edit_userinformation', name: 'edit_userinformation', component: () => import('pages/Edit_userinformation.vue') },
       { path: 'detail_income', name: 'detail_income', component: () => import('pages/Detail_income.vue') },
       { path: 'detail_expenditure', name: 'detail_expenditure', component: () => import('pages/Detail_expenditure.vue') },
-
+      { path: 'account_calendar', name: 'account_calendar', component: () => import('pages/Account_calendar') },
+      { path: 'complete_account', name: 'complete_account', component: () => import('pages/Complete_account') },
 
     ]
   },

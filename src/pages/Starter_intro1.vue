@@ -1,63 +1,39 @@
 <template>
   <div>
-    <div class="q-pa-md">
-      <img
-        class="logo"
-        alt="Payang logo"
-        src="../assets/payang_icon.png"
-        style="width: 30%"
-      />
-    </div>
-
-    <div>
-      <div class="row q-pa-md text-center">
-        <div class="col">
-          <div class="text-md">วางแผนการเพาะปลูก</div>
-
-          <div class="text-lr">สวนยาง</div>
-        </div>
+    <!-- <q-img src="../assets/bg-starter.png" width="100%"> -->
+    <div class="text-black items-center" style="background: none">
+      <div class="q-pa-md">
+        <img class="logo" alt="Payang logo" src="../assets/payang_icon.png" />
       </div>
 
-      <div class="row q-pa-md text-center">
-        <div class="col self-center"></div>
-        <div class="col-6">
-          <img class="" alt="" src="../assets/order.png" style="width: 100%" />
-        </div>
-        <div class="col self-center">
-          <div>
-            <img
-              class=""
-              alt="back-right"
-              src="../assets/back-right.png"
-              style="width: 100px"
-            />
+      <div class="row q-pa-md">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <div class="text-center font items-center">
+            <div style="font-size: 30px">วางแผนการเพาะปลูก</div>
+            <div style="font-size: 45px">สวนยาง</div>
+            <q-img src="../assets/order.png" style="width: 50%" />
           </div>
         </div>
+        <div class="col-1 self-center">
+          <q-icon
+            @click="$router.push({ name: 'starter_intro2' })"
+            name="arrow_forward_ios"
+            size="50px"
+          ></q-icon>
+        </div>
+      </div>
+
+      <div class="fixed-bottom text-right q-pa-xl">
+        <router-link to="/login">ข้าม ></router-link>
       </div>
     </div>
-
-    <div class="fixed-bottom text-right q-pa-xl">
-      <router-link to="/login">ข้าม ></router-link>
-    </div>
+    <!-- </q-img> -->
   </div>
 </template>
 
 <script>
 </script>
 
-<style>
-* {
-  background: #dae5de;
-}
-
-.logo {
-  border-radius: 10%;
-}
-
-.text-md {
-  font-size: 35px;
-}
-.text-lr {
-  font-size: 50px;
-}
+<style scoped src="../css/home.css">
 </style>

@@ -9,9 +9,13 @@
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
-<div class="complete">
+
     
-</div>
+      
+        <div class="complete"></div>
+      
+   
+
    
   </div>
 </template>
@@ -25,4 +29,17 @@ export default {
 };
 </script>
 <style scoped src="../css/home.css">
+</style>
+<style scoped>
+.complete {
+  
+  background: #EED491;
+  border-radius: 100%;
+   position: absolute;
+    top: 100%;
+    left: 100%;
+    margin: -50% 50% 50% -50%;
+    width: 100%;
+    height: 100%;
+}
 </style>

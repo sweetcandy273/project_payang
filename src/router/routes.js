@@ -11,6 +11,7 @@ const routes = [
       { path: 'forgot_password', name: 'forgot_password', component: () => import('pages/Forgot_password.vue') },
       { path: 'myfarm', name: 'myfarm', component: () => import('pages/Myfarm.vue') },
       { path: 'starter_intro1', name: 'starter_intro1', component: () => import('pages/Starter_intro1.vue') },
+      { path: 'starter_intro2', name: 'starter_intro2', component: () => import('pages/Starter_intro2.vue') },
       { path: 'starter', name: 'starter', component: () => import('pages/Starter.vue') },
       { path: 'add_income', name: 'add_income', component: () => import('pages/Add_income.vue') },
       { path: 'add_expenditure', name: 'add_expenditure', component: () => import('pages/Add_expenditure.vue') },

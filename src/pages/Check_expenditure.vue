@@ -5,12 +5,13 @@
         <q-space></q-space>
       </q-toolbar>  -->
       <q-toolbar class="text-center row">
-        <div class="col self-center">
-          <img
-            class="close"
-            src="../assets/back-left.png"
-            style="width: 50px"
-          />
+        <div class="col flexed text-left">
+          <q-icon
+            @click="$router.push({ name: 'add_income' })"
+            name="arrow_back_ios"
+            size="30px"
+
+          ></q-icon>
         </div>
         <div class="col-6 font header-title">ตรวจสอบข้อมูล</div>
         <div class="col self-center"></div>
@@ -61,7 +62,7 @@
         </div>
       </div>
     </div>
-    <div class="row q-gutter-sm flex-center font">
+    <div class="row q-gutter-sm flex-center font q-pa-md fixed-bottom">
       <q-btn
         unelevated
         rounded

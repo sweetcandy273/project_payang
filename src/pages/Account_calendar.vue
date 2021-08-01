@@ -5,11 +5,11 @@
         <q-space></q-space>
       </q-toolbar>  -->
       <q-toolbar class="text-center row">
-        <div class="col self-center">
+        <div class="col flex">
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'account_calendar' })"
+            @click="$router.push({ name: 'myfarm' })"
           />
         </div>
 
@@ -49,7 +49,10 @@
                   5,026.00
                 </div>
               </div>
-              <div class="calendar-income q-pa-md" @click="$router.push({ name: 'edit_income' })">
+              <div
+                class="calendar-income q-pa-md"
+                @click="$router.push({ name: 'edit_income' })"
+              >
                 <div class="row font">
                   <div class="col" style="font-size: 16px">
                     ร้านดาว น้ำยางสด, แผ่น
@@ -74,14 +77,17 @@
                 </div>
               </div>
 
-              <div class="row font q-pt-md" >
+              <div class="row font q-pt-md">
                 <div class="redcircle"></div>
                 <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>
                 <div class="col text-right" style="font-size: 18px">
                   2,000.00
                 </div>
               </div>
-              <div class="calendar-expenditure q-pa-md" @click="$router.push({ name: 'edit_expenditure' })">
+              <div
+                class="calendar-expenditure q-pa-md"
+                @click="$router.push({ name: 'edit_expenditure' })"
+              >
                 <div class="row font">
                   <div class="col" style="font-size: 16px">
                     ร้านขายอุปกรณ์การช่าง
@@ -96,10 +102,6 @@
                 <div class="row font" style="font-size: 16px">กนกวรรณ</div>
               </div>
             </q-tab-panel>
-
-            
-
-            
           </q-tab-panels>
         </template>
       </q-splitter>

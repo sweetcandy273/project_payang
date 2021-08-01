@@ -6,7 +6,11 @@
       </q-toolbar>  -->
       <q-toolbar class="text-center row">
         <div class="col self-center">
-          <img class="close" src="../assets/close.png" style="width: 50px" />
+          <img
+            src="../assets/close.png"
+            style="width: 22px; height: 22px"
+            @click="$router.push({ name: 'account_calendar' })"
+          />
         </div>
 
         <div class="col-6 font header-title">บัญชี</div>
@@ -22,9 +26,7 @@
               <q-date v-model="date" :events="events" event-color="red" />
             </div>
           </div>
-          
         </template>
-        
 
         <template v-slot:after>
           <q-tab-panels
@@ -47,7 +49,7 @@
                   5,026.00
                 </div>
               </div>
-              <div class="calendar-income q-pa-md">
+              <div class="calendar-income q-pa-md" @click="$router.push({ name: 'edit_income' })">
                 <div class="row font">
                   <div class="col" style="font-size: 16px">
                     ร้านดาว น้ำยางสด, แผ่น
@@ -72,14 +74,14 @@
                 </div>
               </div>
 
-              <div class="row font q-pt-md">
+              <div class="row font q-pt-md" >
                 <div class="redcircle"></div>
                 <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>
                 <div class="col text-right" style="font-size: 18px">
                   2,000.00
                 </div>
               </div>
-              <div class="calendar-expenditure q-pa-md">
+              <div class="calendar-expenditure q-pa-md" @click="$router.push({ name: 'edit_expenditure' })">
                 <div class="row font">
                   <div class="col" style="font-size: 16px">
                     ร้านขายอุปกรณ์การช่าง
@@ -95,56 +97,22 @@
               </div>
             </q-tab-panel>
 
-            <q-tab-panel name="2019/02/05">
-              <div class="text-h4 q-mb-md">2019/02/05</div>
-              <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-                praesentium cumque magnam odio iure quidem, quod illum numquam
-                possimus obcaecati commodi minima assumenda consectetur culpa
-                fuga nulla ullam. In, libero.
-              </p>
-              <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-                praesentium cumque magnam odio iure quidem, quod illum numquam
-                possimus obcaecati commodi minima assumenda consectetur culpa
-                fuga nulla ullam. In, libero.
-              </p>
-            </q-tab-panel>
+            
 
-            <q-tab-panel name="2019/02/06">
-              <div class="text-h4 q-mb-md">2019/02/06</div>
-              <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-                praesentium cumque magnam odio iure quidem, quod illum numquam
-                possimus obcaecati commodi minima assumenda consectetur culpa
-                fuga nulla ullam. In, libero.
-              </p>
-              <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-                praesentium cumque magnam odio iure quidem, quod illum numquam
-                possimus obcaecati commodi minima assumenda consectetur culpa
-                fuga nulla ullam. In, libero.
-              </p>
-              <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-                praesentium cumque magnam odio iure quidem, quod illum numquam
-                possimus obcaecati commodi minima assumenda consectetur culpa
-                fuga nulla ullam. In, libero.
-              </p>
-            </q-tab-panel>
+            
           </q-tab-panels>
         </template>
       </q-splitter>
     </div>
-    <div class="add-account text-right q-pa-md">
-          <q-btn
-            unelevated
-            round
-            style="background: #4e7971; color: white"
-            icon="add"
-            @click="$router.push({ name: 'add_income' })"
-          />
-        </div>
+    <div class="add-account text-right fixed-bottom q-pa-md">
+      <q-btn
+        unelevated
+        round
+        style="background: #4e7971; color: white; width: 50px; height: 50px"
+        icon="add"
+        @click="$router.push({ name: 'add_income' })"
+      />
+    </div>
   </div>
 </template>
   </div>

@@ -25,6 +25,9 @@ const routes = [
       { path: 'check_income', name: 'check_income', component: () => import('pages/Check_income.vue') },
       { path: 'check_expenditure', name: 'check_expenditure', component: () => import('pages/Check_expenditure.vue') },
       { path: 'complete_account', name: 'complete_account', component: () => import('pages/Complete_account.vue') },
+      { path: 'otp', name: 'otp', component: () => import('pages/otp.vue') },
+      { path: 'change_password', name: 'change_password', component: () => import('pages/Change_password.vue') },
+      { path: 'new_password', name: 'new_password', component: () => import('pages/New_password.vue') },
 
     ]
   },

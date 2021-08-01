@@ -4,12 +4,16 @@
       <!-- <q-toolbar>
         <q-space></q-space>
       </q-toolbar>  -->
-      <q-toolbar class="text-center row">
-        <div class="col self-center">
-          <img class="close" src="../assets/close.png" style="width: 50px" />
+      <q-toolbar class="row">
+        <div class="col flex">
+          <img
+            src="../assets/close.png"
+            style="width: 22px; height: 22px"
+            @click="$router.push({ name: 'account_calendar' })"
+          />
         </div>
 
-        <div class="col-6 font header-title">เพิ่มบัญชี</div>
+        <div class="col-6 font header-title text-center">เพิ่มบัญชี</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -127,6 +131,7 @@
           type="submit"
           class="shadow-2 text-white"
           style="width: 100%; background-color: #4e7971"
+           @click="$router.push({ name: 'check_income' })"
         />
       </div>
     </div>

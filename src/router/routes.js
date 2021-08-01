@@ -19,10 +19,13 @@ const routes = [
       { path: 'edit_expenditure', name: 'edit_expenditure', component: () => import('pages/Edit_expenditure.vue') },
       { path: 'detail_income', name: 'detail_income', component: () => import('pages/Detail_income.vue') },
       { path: 'edit_userinformation', name: 'edit_userinformation', component: () => import('pages/Edit_userinformation.vue') },
-      { path: 'otp', name: 'otp', component: () => import('pages/otp.vue') },
-      { path: 'change_password', name: 'change_password', component: () => import('pages/Change_password.vue') },
-      { path: 'new_password', name: 'new_password', component: () => import('pages/New_password.vue') },
-     
+      { path: 'detail_income', name: 'detail_income', component: () => import('pages/Detail_income.vue') },
+      { path: 'detail_expenditure', name: 'detail_expenditure', component: () => import('pages/Detail_expenditure.vue') },
+      { path: 'account_calendar', name: 'account_calendar', component: () => import('pages/Account_calendar.vue') },
+      { path: 'check_income', name: 'check_income', component: () => import('pages/Check_income.vue') },
+      { path: 'check_expenditure', name: 'check_expenditure', component: () => import('pages/Check_expenditure.vue') },
+      { path: 'complete_account', name: 'complete_account', component: () => import('pages/Complete_account.vue') },
+
     ]
   },
 

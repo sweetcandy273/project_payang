@@ -6,7 +6,11 @@
       </q-toolbar>  -->
       <q-toolbar class="text-center row">
         <div class="col self-center">
-          <img class="close" src="../assets/close.png" style="width: 50px" />
+          <q-img
+            src="../assets/close.png"
+            style="width: 22px; height: 22px"
+            @click="$router.push({ name: 'account_calendar' })"
+          />
         </div>
 
         <div class="col-6 font header-title">แก้ไข</div>
@@ -19,8 +23,9 @@
         class="col"
         unelevated
         rounded
-        style="background: #2d9cdb; color: white"
+        style="background: #2d9cdb; color: white; opacity: 0.5"
         label="รายรับ"
+        @click="$router.push({ name: 'add_income' })"
       />
       <q-btn
         class="col"
@@ -31,107 +36,95 @@
       />
     </div>
     <div class="q-px-md font">
-      <q-input v-model="Event" filled type="date" />
+      <q-input filled v-model="date" mask="date" :rules="['date']">
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy
+              ref="qDateProxy"
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <q-date v-model="date">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
     </div>
-    <div class="row q-gutter-sm q-pa-md text-center">
-      <div class="col" style="background: #74d751; width: 100px">
-        <q-img
-          class="q-pa-none"
-          src="../assets/maintenance_sapling.png"
-          style="width: 100px"
-        >
-          <div class="absolute-full text-subtitle2 flex flex-center">
-            <h4 class="font">บำรุงรักษา</h4>
+
+    <div class="q-py-md text-center">
+      <q-btn-toggle
+        v-model="type_expenditure"
+        toggle-color="green"
+        toggle-text-color="black"
+        rounded
+        unelevated
+        :options="[
+          { value: 'maintenance', slot: 'maintenance' },
+          { value: 'equipment', slot: 'equipment' },
+        ]"
+      >
+        <template v-slot:maintenance>
+          <div class="row items-center no-wrap">
+            <q-img src="../assets/maintenance_sapling.png" width="100px">
+              <h4 class="font text-center" style="font-size: 20px">
+                บำรุงรักษา
+              </h4>
+            </q-img>
           </div>
-        </q-img>
-      </div>
-      <div class="col" style="background: #edf06e; width: 100px">
-        <q-img src="../assets/equipment_rubber-cup.png" style="width: 100px">
-          <div class="absolute-full text-subtitle2 flex flex-center">
-            <h4 class="font">วัสดุ-อุปกรณ์</h4>
+        </template>
+
+        <template v-slot:equipment>
+          <div class="row items-center no-wrap">
+            <q-img
+              src="../assets/equipment_rubber-cup.png"
+              style=""
+              width="100px"
+            >
+              <h4 class="font text-center" style="font-size: 20px">
+                วัสดุอุปกรณ์
+              </h4>
+            </q-img>
           </div>
-        </q-img>
-      </div>
+        </template>
+      </q-btn-toggle>
     </div>
-    <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
-      <div class="row q-pt-md">
-        <div class="col">
-          <q-select
-            filled
-            v-model="type"
-            :options="optionstype"
-            label="ตัวเลือก"
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <q-input filled v-model="totalprice" label="รวมจำนวนเงิน" />
-        </div>
-      </div>
-      <div class="stores">
-        <q-select filled v-model="store" :options="options" label="ร้านค้า" />
-      </div>
-      <div class="share">
-        <q-checkbox
-          v-model="selectshare"
-          val="teal"
-          style="font-size: 16px"
-          label="กนกวรรณ เป็นผู้ได้รับส่วนแบ่ง"
-        />
-      </div>
-      <div class="sharemoney" v-if="selectshare">
-        <strong style="font-size: 16px">
-          <div class="row">
-            <div class="col text-center q-my-md">% การแบ่ง</div>
-            <div class="col">
-              <q-select
-                filled
-                v-model="percent"
-                :options="optionspercent"
-                label="ส่วนแบ่ง"
-              />
-            </div>
-          </div>
-        </strong>
-      </div>
 
-      <div class="col">
-        <q-input filled v-model="note" label="บันทึก" />
+    <div>
+      <div
+        v-if="type_expenditure == 'maintenance'"
+        class="text-center"
+        id="maintenance"
+      >
+        <Maintenance />
       </div>
-
-      <div class="submit row q-gutter-sm flex-center font">
-        <q-btn
-          label="บันทึก"
-          type="submit"
-          style="background: #4E7971;
-          color: white;   width: 1000px; unelevated
-        rounded "
-        />
+      <div v-else class="text-center">
+        <Equipment />
       </div>
     </div>
   </div>
 </template>
 <script>
+import Maintenance from "../components/Maintenance.vue";
+import Equipment from "../components/Equipment.vue";
 export default {
+  components: {
+    Maintenance,
+    Equipment,
+  },
+
   data() {
     return {
-      Event: "",
-      weight_rubber: "",
-      percent: "",
-      text: "",
-      price_rubber: "",
+      type_expenditure: "maintenance",
+      date: "2021/07/18",
       totalprice: "",
-      store: null,
-      options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด"],
-      note: "",
-      type: null,
-      optionstype: ["ปุ๋ย", "ตัดหญ้า", "ตัดกาฝาก"],
-      selectshare: false,
-      optionspercent: ["60:40", "55:45", "50:50"],
     };
   },
 };
 </script>
+
 <style scoped src="../css/home.css">
 </style>

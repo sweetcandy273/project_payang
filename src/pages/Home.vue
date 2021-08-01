@@ -84,7 +84,7 @@
       <div class="q-pa-md font text-center">
         <q-img src="../assets/forest.png" style="width: 80px" />
         <div class="text-grey">version 0.1</div>
-        ออกจากระบบ
+        <div @click="logout()">ออกจากระบบ</div>
       </div>
     </q-drawer>
 
@@ -201,6 +201,11 @@ export default {
         .onDismiss(() => {
           // console.log('I am triggered on both OK and Cancel')
         });
+    },
+    logout() {
+      this.$router.push({
+        path: "/login",
+      });
     },
   },
 };

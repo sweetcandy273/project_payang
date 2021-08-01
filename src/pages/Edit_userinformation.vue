@@ -30,6 +30,7 @@
           <div class="row justify-between">
             <div class="col q-pr-md">
               <q-input
+                color="teal"
                 filled
                 v-model="fname"
                 label="ชื่อ"
@@ -38,6 +39,7 @@
             </div>
             <div class="col">
               <q-input
+                color="teal"
                 filled
                 v-model="lname"
                 label="นามสกุล"
@@ -49,6 +51,7 @@
           </div>
 
           <q-input
+            color="teal"
             filled
             v-model="phone_number"
             label="เบอร์โทรศัพท์"
@@ -57,14 +60,22 @@
                 (val && val.length > 0 && val.length == 10) ||
                 'กรุณากรอกเบอร์โทรศัพท์',
             ]"
-          />
+          >
+            <template v-slot:append>
+              <q-icon name="call" />
+            </template>
+          </q-input>
           <q-input
+            color="teal"
             filled
             v-model="email"
             label="อีเมล"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอีเมล']"
-          />
+          >
+            <template v-slot:append> @ </template>
+          </q-input>
           <q-input
+            color="teal"
             filled
             v-model="address"
             label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
@@ -74,6 +85,7 @@
           <div class="row">
             <div class="col q-pr-md">
               <q-input
+                color="teal"
                 filled
                 v-model="address_district"
                 label="เขต/อำเภอ"
@@ -82,6 +94,7 @@
             </div>
             <div class="col">
               <q-input
+                color="teal"
                 filled
                 v-model="address_province"
                 label="จังหวัด"
@@ -93,6 +106,7 @@
           </div>
 
           <q-input
+            color="teal"
             filled
             v-model="zip_code"
             label="รหัสไปรษณีย์ "
@@ -145,25 +159,5 @@ export default {
 };
 </script>
 
-<style>
-.bg {
-  background: #dae5de;
-}
-
-.q-toolbar {
-  background-color: #4e7971;
-}
-
-.header-title {
-  font-size: 25px;
-}
-
-.font {
-  font-family: "Kanit", sans-serif;
-}
-
-.q-btn {
-  width: 100%;
-  background-color: #4e7971;
-}
+<style scoped src="../css/home.css">
 </style>

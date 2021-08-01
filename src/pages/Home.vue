@@ -32,19 +32,12 @@
     >
       <q-toolbar class="text-center row text-white">
         <div class="col font">
-          <img
-            class=""
-            alt=""
-            src="../assets/delete-user.png"
-            style="width: 30px"
-          />
+          <q-img src="../assets/delete-user.png" style="width: 30px" />
         </div>
 
         <div class="col-6 font header-title">คุณชนิกานต์</div>
         <div class="col self-center">
-          <img
-            class=""
-            alt=""
+          <q-img
             src="../assets/pen.png"
             style="width: 30px"
             @click="$router.push({ name: 'edit_userinformation' })"
@@ -70,19 +63,16 @@
         </div>
         <div>payang01@gmail.com</div>
         <div><strong>ที่อยู่</strong></div>
-        <div>112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ อำเภอเมืองภูเก็ต จังหวัดภูเก็ต 83000</div>
+        <div>
+          112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ อำเภอเมืองภูเก็ต จังหวัดภูเก็ต
+          83000
+        </div>
       </div>
 
       <div class="q-pa-md font text-center">
-        <img
-            class="logo"
-            alt="Payang logo"
-            src="../assets/forest.png"
-            style="width: 80px"
-          />
-       <div class="text-grey">version 0.1</div>
-          ออกจากระบบ
-       
+        <q-img src="../assets/forest.png" style="width: 80px" />
+        <div class="text-grey">version 0.1</div>
+        ออกจากระบบ
       </div>
     </q-drawer>
 
@@ -94,15 +84,10 @@
             <q-icon name="info" style="color: #5db075">
               <q-popup-proxy :offset="[10, 10]">
                 <q-banner class="bg-while font">
-                  <div>แอปพลิเคชั่นวางแผนการเพาะปลูกสวนยาง</div>
+                  <div>วางแผนการเพาะปลูกสวนยาง</div>
                   <div>วางแผนบัญชีการเงิน</div>
                   <div class="text-right">
-                    <img
-                      class="logo"
-                      alt=""
-                      src="../assets/accounting.png"
-                      style="width: 80px"
-                    />
+                    <q-img src="../assets/accounting.png" style="width: 80px" />
                   </div>
                 </q-banner>
               </q-popup-proxy>
@@ -124,12 +109,7 @@
           <div style="font-size: 20px">สวนของฉัน</div>
         </div>
         <div class="col q-px-md text-right self-center">
-          <img
-            class="logo"
-            alt="Payang logo"
-            src="../assets/forest.png"
-            style="width: 80px"
-          />
+          <q-img src="../assets/forest.png" style="width: 80px" />
         </div>
       </div>
       <div class="q-pt-md text-center font" style="font-size: 20px">ผลผลิต</div>

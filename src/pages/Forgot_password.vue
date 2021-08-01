@@ -1,17 +1,83 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-    <q-page-container>
-    <h5>Forgot_password Page</h5>
-    </q-page-container>
-  </q-layout>
+  <div>
+    <q-header class="shadow-2">
+      <!-- <q-toolbar>
+        <q-space></q-space>
+        <q-btn flat round dense icon="search" class="q-mr-xs" />
+        <q-btn flat round dense icon="group_add" />
+      </q-toolbar> -->
+      <q-toolbar class="text-center row">
+        <!-- <div
+          class="col self-center font"
+          @click="$router.push({ name: 'setting' })"
+        >
+          ตั้งค่า
+        </div> -->
+
+        <div class="col">
+          <img
+            src="../assets/close.png"
+            style="width: 20px; height: 20px"
+            @click="$router.push({ name: 'login' })"
+          />
+        </div>
+
+        <div class="col-6 font header-title">ตั้งรหัสผ่านใหม่</div>
+        <div class="col self-center"></div>
+      </q-toolbar>
+    </q-header>
+    <div class="font q-pa-md margin-box">
+      <q-form @submit="onSubmit" class="q-gutter-md">
+        <div>
+          <q-input
+            color="teal"
+            filled
+            v-model="input_c"
+            label="เบอร์โทรศัพท์หรืออีเมล"
+            :rules="[
+              (val) =>
+                (val && val.length > 0) ||
+                'กรุณากรอกเบอร์โทรศัพท์หรืออีเมล',
+            ]"
+          >
+          </q-input>
+        </div>
+
+        <div>
+          <q-btn
+            unelevated
+            rounded
+            label="ยืนยัน"
+            type="submit"
+            class="shadow-2 text-white"
+          />
+        </div>
+      </q-form>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {
+import Vue from "vue";
+import VueCompositionAPI from "@vue/composition-api";
 
-}
+Vue.use(VueCompositionAPI);
+import { ref } from "@vue/composition-api";
+
+export default {
+  setup() {
+    return {
+      input_c: ref(""),
+      
+
+      onSubmit() {
+        //check ว่าใช้ email หรือ เบอร์โทรใครไหมใน py_user
+        console.log(this.input_c);
+      },
+    };
+  },
+};
 </script>
 
-<style>
-
+<style scoped src="../css/home.css">
 </style>

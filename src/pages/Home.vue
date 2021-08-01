@@ -70,7 +70,7 @@
         <div class="row q-mt-xl">
           <div class="col text-left"><strong>รหัสผ่าน</strong></div>
           <div class="col text-right">
-            <router-link to="/change_password" class="text-green">
+            <router-link to="/new_password" class="text-green">
               เปลี่ยน</router-link
             >
           </div>

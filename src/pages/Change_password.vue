@@ -22,7 +22,7 @@
           />
         </div>
 
-        <div class="col-6 font header-title text-center">กรอกรหัส OTP</div>
+        <div class="col-6 font header-title text-center">เปลี่ยนรหัสผ่าน</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>

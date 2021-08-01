@@ -25,7 +25,7 @@
         rounded
         style="background: #2d9cdb; color: white; opacity: 0.5"
         label="รายรับ"
-        @click="$router.push({ name: 'add_income' })"
+        @click="$router.push({ name: 'edit_income' })"
       />
       <q-btn
         class="col"

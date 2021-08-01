@@ -32,7 +32,11 @@
     >
       <q-toolbar class="text-center row text-white">
         <div class="col font">
-          <q-img src="../assets/delete-user.png" style="width: 30px" />
+          <q-img
+            src="../assets/delete-user.png"
+            style="width: 30px"
+            @click="confirm()"
+          />
         </div>
 
         <div class="col-6 font header-title">คุณชนิกานต์</div>
@@ -177,6 +181,30 @@ export default {
   methods: {
     toggle(data) {
       // console.log(data);
+    },
+    confirm() {
+      this.$q
+        .dialog({
+          title: "ยืนยันการลบบัญชีผู้ใช้",
+          message:
+            'ระบบจะทำการลบข้อมูลเกี่ยวกับบัญชีผู้ใช้นี้ทั้งหมด <span class="text-red font">หากลบข้อมูลบัญชีแล้วข้อมูลจะไม่สามารถกู้คืนมาได้อีก</span><br>',
+          cancel: true,
+          persistent: true,
+          html: true,
+        })
+        .onOk(() => {
+          console.log(">>>> OK");
+          this.$router.push({
+            path: "/login",
+          });
+        })
+
+        .onCancel(() => {
+          console.log(">>>> Cancel");
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
     },
   },
 };

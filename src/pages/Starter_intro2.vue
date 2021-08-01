@@ -25,7 +25,8 @@
         </div>
         <div class="col-1"></div>
       </div>
-      <div class="q-pa-md font">
+
+      <div class="q-pa-md font fixed-bottom">
         <q-btn
           to="/login"
           unelevated

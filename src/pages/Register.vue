@@ -18,7 +18,7 @@
             src="../assets/close.png"
             style="width: 22px; height: 22px"
             @click="$router.push({ name: 'login' })"
-          /> 
+          />
         </div>
         <div class="col-6 font header-title text-center">สมัครสมาชิก</div>
         <div class="col self-center"></div>
@@ -220,6 +220,10 @@ export default {
               "คุณต้องยินยอมการเปิดเผยข้อมูลกับทางแอปพลิเคชั่นจึงจะลงทะเบียนได้",
           });
         }
+
+        this.$router.push({
+          path: "/login",
+        });
       },
     };
   },

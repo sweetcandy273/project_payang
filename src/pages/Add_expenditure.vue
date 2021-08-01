@@ -6,7 +6,11 @@
       </q-toolbar>  -->
       <q-toolbar class="text-center row">
         <div class="col self-center">
-          <img class="close" src="../assets/close.png" style="width: 50px" />
+          <q-img
+            src="../assets/close.png"
+            style="width: 22px; height: 22px"
+            @click="$router.push({ name: 'account_calendar' })"
+          />
         </div>
 
         <div class="col-6 font header-title">เพิ่มบัญชี</div>
@@ -50,85 +54,77 @@
         </template>
       </q-input>
     </div>
-    
-    <div class="row q-pa-md q-gutter-md text-center">
-      <div class="col">
-        <q-img src="../assets/maintenance_sapling.png" style="opacity: 0.5" width="100px">
-          <h4 class="font text-center" style="font-size: 20px;">บำรุงรักษา</h4>
-        </q-img>
-      </div>
-      <div class="col">
-        <q-img src="../assets/equipment_rubber-cup.png" style="" width="100px">
-           <h4 class="font text-center" style="font-size: 20px;">วัสดุ-อุปกรณ์</h4>
-        </q-img>
-      </div>
+
+    <div class="q-py-md text-center">
+      <q-btn-toggle
+        v-model="type_expenditure"
+        toggle-color="green"
+        toggle-text-color="black"
+        rounded
+        unelevated
+        :options="[
+          { value: 'maintenance', slot: 'maintenance' },
+          { value: 'equipment', slot: 'equipment' },
+        ]"
+      >
+        <template v-slot:maintenance>
+          <div class="row items-center no-wrap">
+            <q-img src="../assets/maintenance_sapling.png" width="100px">
+              <h4 class="font text-center" style="font-size: 20px">
+                บำรุงรักษา
+              </h4>
+            </q-img>
+          </div>
+        </template>
+
+        <template v-slot:equipment>
+          <div class="row items-center no-wrap">
+            <q-img
+              src="../assets/equipment_rubber-cup.png"
+              style=""
+              width="100px"
+            >
+              <h4 class="font text-center" style="font-size: 20px">
+                วัสดุอุปกรณ์
+              </h4>
+            </q-img>
+          </div>
+        </template>
+      </q-btn-toggle>
     </div>
-    <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
-      <div class="row q-pt-md">
-        <div class="col">
-          <q-select
-            filled
-            v-model="type"
-            :options="optionstype"
-            label="ตัวเลือก"
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <q-input filled v-model="totalprice" label="รวมจำนวนเงิน" />
-        </div>
-      </div>
-      <div class="stores">
-        <q-select filled v-model="store" :options="options" label="ร้านค้า" />
-      </div>
-      <div class="share">
-        <q-checkbox
-          v-model="selectshare"
-          val="teal"
-          style="font-size: 16px"
-          label="กนกวรรณ ผู้รับผิดชอบ"
-        />
-      </div>
 
-      <div class="col">
-        <q-input filled v-model="note" label="บันทึก" />
+    <div>
+      <div
+        v-if="type_expenditure == 'maintenance'"
+        class="text-center"
+        id="maintenance"
+      >
+        <Maintenance />
       </div>
-
-      <div class="submit row q-gutter-sm flex-center font">
-        <q-btn
-          unelevated
-          rounded
-          label="บันทึก"
-          type="submit"
-          class="shadow-2 text-white"
-          style="width: 100%; background-color: #4e7971"
-        />
+      <div v-else class="text-center">
+        <Equipment />
       </div>
     </div>
   </div>
 </template>
 <script>
+import Maintenance from "../components/Maintenance.vue";
+import Equipment from "../components/Equipment.vue";
 export default {
+  components: {
+    Maintenance,
+    Equipment,
+  },
+
   data() {
     return {
+      type_expenditure: "maintenance",
       date: "2021/07/18",
-      weight_rubber: "",
-      percent: "",
-      text: "",
-      price_rubber: "",
       totalprice: "",
-      store: null,
-      options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด"],
-      note: "",
-      type: null,
-      optionstype: ["ปุ๋ย", "ตัดหญ้า", "ตัดกาฝาก"],
-      selectshare: false,
-      optionspercent: ["60:40", "55:45", "50:50"],
     };
   },
 };
 </script>
-<style scoped src="../css/home.css">
 
+<style scoped src="../css/home.css">
 </style>

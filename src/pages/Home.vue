@@ -130,7 +130,6 @@
           class="shadow-2"
           v-model="secondModel"
           spread
-          @click="toggle(secondModel)"
           no-caps
           rounded
           unelevated
@@ -179,15 +178,12 @@ export default {
     };
   },
   methods: {
-    toggle(data) {
-      // console.log(data);
-    },
     confirm() {
       this.$q
         .dialog({
           title: "ยืนยันการลบบัญชีผู้ใช้",
           message:
-            'ระบบจะทำการลบข้อมูลเกี่ยวกับบัญชีผู้ใช้นี้ทั้งหมด <span class="text-red font">หากลบข้อมูลบัญชีแล้วข้อมูลจะไม่สามารถกู้คืนมาได้อีก</span><br>',
+            'ระบบจะทำการลบข้อมูลเกี่ยวกับบัญชีผู้ใช้นี้ทั้งหมด <span class="text-red font"><strong>หากยืนยันการลบบัญชีผู้ใช้แล้ว ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
           cancel: true,
           persistent: true,
           html: true,

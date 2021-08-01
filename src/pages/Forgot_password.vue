@@ -71,6 +71,10 @@ export default {
       onSubmit() {
         //check ว่าใช้ email หรือ เบอร์โทรใครไหมใน py_user
         console.log(this.input_c);
+
+        this.$router.push({
+          path: "/otp",
+        });
       },
     };
   },

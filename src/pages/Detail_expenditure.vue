@@ -18,7 +18,7 @@
     </q-header>
 
     <div class="q-pa-md font">
-      <div class="detail-income q-pa-md shadow-2">
+      <div class="detail-expenditure q-pa-md shadow-2">
         <div class="row">
           <div class="col">
             <div class="row" style="font-size: 18px">
@@ -81,7 +81,7 @@ export default {
 </script>
 <style scoped src="../css/home.css"></style>
 <style scoped>
-.detail-income {
+.detail-expenditure {
   background-color: #f2984a63;
   border-radius: 20px;
 }

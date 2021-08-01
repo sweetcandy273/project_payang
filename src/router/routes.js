@@ -21,9 +21,8 @@ const routes = [
       { path: 'edit_userinformation', name: 'edit_userinformation', component: () => import('pages/Edit_userinformation.vue') },
       { path: 'otp', name: 'otp', component: () => import('pages/otp.vue') },
       { path: 'change_password', name: 'change_password', component: () => import('pages/Change_password.vue') },
+      { path: 'new_password', name: 'new_password', component: () => import('pages/New_password.vue') },
      
-
-
     ]
   },
 

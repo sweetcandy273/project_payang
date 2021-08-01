@@ -24,8 +24,8 @@
         </div>
       </div>
 
-      <div class="fixed-bottom text-right q-pa-xl">
-        <router-link to="/login">ข้าม ></router-link>
+      <div class="fixed-bottom text-right q-pa-xl font">
+        <router-link to="/login" class="text-black">ข้าม ></router-link>
       </div>
     </div>
     <!-- </q-img> -->

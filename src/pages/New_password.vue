@@ -22,17 +22,43 @@
           />
         </div>
 
-        <div class="col-6 font header-title text-center">เปลี่ยนรหัสผ่านใหม่</div>
+        <div class="col-6 font header-title text-center">เปลี่ยนรหัสผ่าน</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
     <div class="font q-pa-md">
-      <div class="text-center margin-box">
-        <div>กรอกรหัสผ่านใหม่</div>
-      </div>
-
       <q-form @submit="onSubmit" class="q-gutter-md">
+        <div class="margin-box"></div>
+
         <div>
+          <div class="text-center">
+            <div>กรอกรหัสผ่านเดิม</div>
+          </div>
+          <q-input
+            color="teal"
+            filled
+            v-model="old_password"
+            label="รหัสผ่านเดิม"
+            :rules="[
+              (val) =>
+                (val && val.length >= 6 && val.length <= 18) ||
+                'กรุณากรอกรหัสผ่าน 6-18 ตัวอักษร',
+            ]"
+            :type="isPwdo ? 'password' : 'text'"
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isPwdo ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwdo = !isPwdo"
+              />
+            </template>
+          </q-input>
+
+          <div class="text-center">
+            <div>กรอกรหัสผ่านใหม่</div>
+          </div>
+
           <q-input
             color="teal"
             filled
@@ -99,17 +125,16 @@ import { ref } from "@vue/composition-api";
 export default {
   setup() {
     return {
-      otp: ref(""),
+      old_password: ref(""),
       password: ref(""),
       con_password: ref(""),
+      isPwdo: ref(true),
       isPwd: ref(true),
       isPwd2: ref(true),
-      onSubmit() {
-        //check ว่าใช้ email หรือ เบอร์โทรใครไหมใน py_user
-        console.log(this.otp);
 
+      onSubmit() {
         this.$router.push({
-          path: "/login",
+          path: "/",
         });
       },
     };

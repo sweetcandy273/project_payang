@@ -9,7 +9,7 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'myfarm' })"
+            @click="$router.push({ name: 'home' })"
           />
         </div>
 
@@ -18,12 +18,17 @@
       </q-toolbar>
     </q-header>
 
-    <div class="q-pa-md q-mx-md">
+    <div class="">
       <q-splitter v-model="splitterModel" horizontal>
         <template v-slot:before>
-          <div class="row justify-center q-pa-md">
-            <div class="">
-              <q-date v-model="date" :events="events" event-color="red" />
+          <div class="row justify-center">
+            <div>
+              <q-date
+                color="green"
+                v-model="date"
+                :events="events"
+                event-color="red"
+              />
             </div>
           </div>
         </template>
@@ -35,9 +40,9 @@
             transition-prev="jump-up"
             transition-next="jump-up"
           >
-            <q-tab-panel name="2021/07/10">
+            <q-tab-panel name="2021/08/05" class="detail-account">
               <div class="row font">
-                <div class="col" style="font-size: 22px">2021/07/10</div>
+                <div class="col" style="font-size: 22px">{{formattedString}}</div>
                 <div class="col text-right" style="font-size: 22px">
                   สวนภูเก็ต
                 </div>
@@ -49,10 +54,7 @@
                   5,026.00
                 </div>
               </div>
-              <div
-                class="calendar-income q-pa-md"
-                @click="$router.push({ name: 'edit_income' })"
-              >
+              <div class="calendar-income q-pa-md">
                 <div class="row font">
                   <div class="col" style="font-size: 16px">
                     ร้านดาว น้ำยางสด, แผ่น
@@ -84,10 +86,7 @@
                   2,000.00
                 </div>
               </div>
-              <div
-                class="calendar-expenditure q-pa-md"
-                @click="$router.push({ name: 'edit_expenditure' })"
-              >
+              <div class="calendar-expenditure q-pa-md">
                 <div class="row font">
                   <div class="col" style="font-size: 16px">
                     ร้านขายอุปกรณ์การช่าง
@@ -106,26 +105,21 @@
         </template>
       </q-splitter>
     </div>
-    <div class="add-account text-right fixed-bottom q-pa-md">
-      <q-btn
-        unelevated
-        round
-        style="background: #4e7971; color: white; width: 50px; height: 50px"
-        icon="add"
-        @click="$router.push({ name: 'add_income' })"
-      />
-    </div>
   </div>
 </template>
   </div>
 </template>
 <script>
+import { date } from "quasar";
+const timeStamp = Date.now();
+const formattedString = date.formatDate(timeStamp, "YYYY/MM/DD");
+
 export default {
   data() {
     return {
       splitterModel: 50,
-      date: "2021/07/30",
-      events: ["2021/07/10", "2021/07/15", "2021/07/20"],
+      date: formattedString,
+      events: ["2021/08/05"],
     };
   },
 };
@@ -154,5 +148,14 @@ export default {
 .calendar-expenditure {
   background-color: #ff000059;
   border-radius: 20px;
+}
+
+.detail-account {
+  background: #dae5de;
+}
+
+.q-date {
+  width: 100%;
+  font-family: "Kanit", sans-serif;
 }
 </style>

@@ -10,8 +10,8 @@
           style="width: 50px"
         />
       </div>
-       <div class="col" >
-        <div style="font-size: 20px;">น้ำยางสด</div>
+      <div class="col">
+        <div style="font-size: 20px">น้ำยางสด</div>
         <q-img src="../assets/rubber-cup.png" style="" width="100px">
           <div class="absolute-full flex flex-center text-black bg-product-all">
             0.00
@@ -21,7 +21,7 @@
         <div>กิโลกรัม</div>
       </div>
       <div class="col">
-        <div style="font-size: 20px;">รายรับ</div>
+        <div style="font-size: 20px">รายรับ</div>
         <q-img src="../assets/money.png" style="" width="100px">
           <div class="absolute-full flex flex-center text-black bg-product-all">
             0.00
@@ -52,6 +52,7 @@
                 alt="back-right"
                 src="../assets/click.png"
                 style="width: 35px"
+                @click="$router.push({ name: 'all_account_calendar' })"
               />
             </div>
             <div>บัญชี</div>
@@ -168,5 +169,4 @@ export default {
   background: none;
   font-size: 25px;
 }
-
 </style>

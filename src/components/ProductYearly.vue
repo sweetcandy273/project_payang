@@ -52,6 +52,7 @@
                 alt="back-right"
                 src="../assets/click.png"
                 style="width: 35px"
+                @click="$router.push({ name: 'all_account_calendar' })"
               />
             </div>
             <div>บัญชี</div>

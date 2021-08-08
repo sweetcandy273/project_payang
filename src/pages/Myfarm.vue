@@ -77,7 +77,7 @@
 
 </template>
 
-</script>
+
 
 <style>
 .bg {
@@ -100,8 +100,5 @@
   width: 100%;
   background-color: #4e7971;
 }
-.stylearea{
-  font-size: 15px;
-  color: gray;
-}
+
 </style>

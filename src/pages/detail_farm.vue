@@ -1,5 +1,19 @@
 <template>
   <div>
+    <q-header class="shadow-2">
+      <q-toolbar class="text-center row">
+        <div
+          class="col self-center font"
+          @click="$router.push({ name: 'myfarm' })"
+        >
+          <q-icon name="arrow_back_ios" />
+        </div>
+
+        <div class="col-6 font header-title">ข้อมูลสวน</div>
+        <div class="col self-center"></div>
+      </q-toolbar>
+    </q-header>
+
     <div>
       <div>เจ้าของสวน : กัลย์สุตา ปิยะพงศ์</div>
       <div>สวน : ภูเก็ต</div>

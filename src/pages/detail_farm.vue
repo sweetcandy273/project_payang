@@ -23,6 +23,45 @@
         <div>ผู้ดูแล : กนกวรรณ น้ำสงวน</div>
       </div>
     </div>
+
+    <div>
+
+    </div>
+
+    <div>
+
+    </div>
+
+    <div class="q-pa-md q-gutter-sm self-center">
+        <div >
+                  
+          <q-btn
+            @click="$router.push({ name: 'account_calendar' })"
+            unelevated
+            rounded
+            label="รายละเอียดบัญชี"
+            type="submit"
+            class="shadow-2 text-white"
+            color="green-4"
+          />
+        
+        </div>
+
+        <div>
+
+            <q-btn
+            @click="$router.push({ name: 'calender_farm' })"
+            unelevated
+            rounded
+            label="เรียกดูตารางการทำงาน"
+            type="submit"
+            class="shadow-2 text-white"
+            color="light-blue-6"
+          />
+
+        </div>
+    </div>
+
   </div>
 </template>
 

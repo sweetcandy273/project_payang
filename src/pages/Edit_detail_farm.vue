@@ -97,9 +97,23 @@
           />
         </div>
       </div>
-      <div class="row justify-around">ผู้ดูแล :</div>
+      <div class="row justify-start col-4">ผู้ดูแล :</div>
 
       <div class="box_editeAdmin q-pa-md self-center"></div>
     </div>
+
+      <div class="q-pa-md q-gutter-sm self-center">
+        <q-btn
+          @click="$router.push({ name: 'calender_farm' })"
+          unelevated
+          rounded
+          label="บันทึก"
+          type="submit"
+          class="shadow-2 text-white"
+          
+        />
+      </div>
   </div>
 </template>
+<style scoped src="../css/home.css">
+</style>

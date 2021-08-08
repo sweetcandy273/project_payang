@@ -20,7 +20,7 @@
         <div class="row justify-end">
           <div class="column">
             <q-btn
-            @click="$router.push({ name: 'edite_detail_farm' })" 
+            @click="$router.push({ name: 'edit_detail_farm' })" 
             round color="orange-4" 
             icon="edit" />
           </div>

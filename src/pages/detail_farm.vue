@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="font">
     <q-header class="shadow-2">
       <q-toolbar class="text-center row">
         <div
@@ -14,12 +14,14 @@
       </q-toolbar>
     </q-header>
 
-    <div>
-      <div>เจ้าของสวน : กัลย์สุตา ปิยะพงศ์</div>
-      <div>สวน : ภูเก็ต</div>
-      <div>ที่อยู่ : 112/1</div>
-      <div>เนื้อที่ปลูก : 1.1 ไร่</div>
-      <div>ผู้ดูแล : กนกวรรณ น้ำสงวน</div>
+    <div class="q-pa-md self-center">
+      <div class="box_detail q-pa-md self-center">
+        <div>เจ้าของสวน : กัลย์สุตา ปิยะพงศ์</div>
+        <div>สวน : ภูเก็ต</div>
+        <div>ที่อยู่ : 112/1</div>
+        <div>เนื้อที่ปลูก : 1.1 ไร่</div>
+        <div>ผู้ดูแล : กนกวรรณ น้ำสงวน</div>
+      </div>
     </div>
   </div>
 </template>

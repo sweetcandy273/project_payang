@@ -30,7 +30,7 @@
   
 <div class="col self-center font">
     <div class="row justify-center"
-        @click="$router.push({ name: 'Detail_farm' })"
+        @click="$router.push({ name: 'detail_farm' })"
     >
       <div class="col-3 text-center">
           <img

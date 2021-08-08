@@ -15,7 +15,23 @@
     </q-header>
 
     <div class="q-pa-md self-center">
+
       <div class="box_detail q-pa-md self-center">
+        <div class="row justify-end">
+          <div class="column">
+            <q-btn
+            @click="$router.push({ name: 'edite_detail_farm' })" 
+            round color="orange-4" 
+            icon="edit" />
+          </div>
+          <div class="column">
+            <q-btn 
+            round color="deep-orange-13" 
+            icon="delete" 
+            />
+          </div>
+        </div>
+
         <div>เจ้าของสวน : กัลย์สุตา ปิยะพงศ์</div>
         <div>สวน : ภูเก็ต</div>
         <div>ที่อยู่ : 112/1</div>
@@ -24,44 +40,35 @@
       </div>
     </div>
 
-    <div>
+    <div></div>
 
-    </div>
-
-    <div>
-
-    </div>
+    <div></div>
 
     <div class="q-pa-md q-gutter-sm self-center">
-        <div >
-                  
-          <q-btn
-            @click="$router.push({ name: 'account_calendar' })"
-            unelevated
-            rounded
-            label="รายละเอียดบัญชี"
-            type="submit"
-            class="shadow-2 text-white"
-            color="green-4"
-          />
-        
-        </div>
+      <div>
+        <q-btn
+          @click="$router.push({ name: 'account_calendar' })"
+          unelevated
+          rounded
+          label="รายละเอียดบัญชี"
+          type="submit"
+          class="shadow-2 text-white"
+          color="green-4"
+        />
+      </div>
 
-        <div>
-
-            <q-btn
-            @click="$router.push({ name: 'calender_farm' })"
-            unelevated
-            rounded
-            label="เรียกดูตารางการทำงาน"
-            type="submit"
-            class="shadow-2 text-white"
-            color="light-blue-6"
-          />
-
-        </div>
+      <div>
+        <q-btn
+          @click="$router.push({ name: 'calender_farm' })"
+          unelevated
+          rounded
+          label="เรียกดูตารางการทำงาน"
+          type="submit"
+          class="shadow-2 text-white"
+          color="light-blue-6"
+        />
+      </div>
     </div>
-
   </div>
 </template>
 

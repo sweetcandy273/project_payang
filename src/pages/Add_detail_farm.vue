@@ -1,6 +1,6 @@
 <template>
-    <div class="font">
-         <q-header class="shadow-2">
+  <div class="font">
+    <q-header class="shadow-2">
       <q-toolbar class="text-center row">
         <div
           class="col self-center font"
@@ -14,37 +14,64 @@
       </q-toolbar>
     </q-header>
 
-    <div class="q-pa-md font"> 
-           <div class="row justify-between">
-            <div class="col q-pr-md">
-              <q-input
-                color="teal"
-                filled
-                v-model="fname"
-                label="ชื่อ"
-                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
-              />
-            </div>
-            <div class="col">
-              <q-input
-                color="teal"
-                filled
-                v-model="lname"
-                label="นามสกุล"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
-                ]"
-              />
-            </div>
-          </div>
+    <div class="q-pa-md font">
+      <div class="row justify-between">
+        <div class="col q-pr-md">
           <q-input
             color="teal"
             filled
-            v-model="email"
-            label="ชื่อสวน"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
-          >
-          </q-input>
+            v-model="fname"
+            label="ชื่อ"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
+          />
+        </div>
+        <div class="col">
+          <q-input
+            color="teal"
+            filled
+            v-model="lname"
+            label="นามสกุล"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
+          />
+        </div>
+      </div>
+      <q-input
+        color="teal"
+        filled
+        v-model="email"
+        label="ชื่อสวน"
+        :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
+      >
+      </q-input>
+
+      <q-input
+        color="teal"
+        filled
+        v-model="address"
+        label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
+        :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
+      />
+
+      <div class="row">
+        <div class="col q-pr-md">
+          <q-input
+            color="teal"
+            filled
+            v-model="address_district"
+            label="เขต/อำเภอ"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
+          />
+        </div>
+        <div class="col">
+          <q-input
+            color="teal"
+            filled
+            v-model="address_province"
+            label="จังหวัด"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
+          />
+        </div>
+      </div>
     </div>
-    </div>
+  </div>
 </template>

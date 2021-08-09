@@ -124,6 +124,25 @@
           <q-icon name="call" />
         </template>
       </q-input>
+
+              <div class="row">
+          <div class="col q-pr-md">
+            <q-input
+              color="teal"
+              filled
+              label="เขต/อำเภอ"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
+            />
+          </div>
+          <div class="col">
+            <q-input
+              color="teal"
+              filled
+              label="จังหวัด"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
+            />
+          </div>
+        </div>
     </div>
   </div>
 </template>

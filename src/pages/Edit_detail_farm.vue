@@ -23,7 +23,6 @@
               <q-input
                 color="teal"
                 filled
-                v-model="fname"
                 label="ชื่อ"
                 :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
               />
@@ -32,7 +31,6 @@
               <q-input
                 color="teal"
                 filled
-                v-model="lname"
                 label="นามสกุล"
                 :rules="[
                   (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
@@ -45,7 +43,6 @@
           <q-input
             color="teal"
             filled
-            v-model="email"
             label="ชื่อสวน"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
           >
@@ -55,7 +52,6 @@
           <q-input
             color="teal"
             filled
-            v-model="address"
             label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
           />
@@ -65,7 +61,6 @@
               <q-input
                 color="teal"
                 filled
-                v-model="address_district"
                 label="เขต/อำเภอ"
                 :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
               />
@@ -73,8 +68,6 @@
             <div class="col">
               <q-input
                 color="teal"
-                filled
-                v-model="address_province"
                 label="จังหวัด"
                 :rules="[
                   (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
@@ -87,7 +80,6 @@
           <q-input
             color="teal"
             filled
-            v-model="zip_code"
             label="เนื้อที่ปลูก"
             :rules="[
               (val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก',
@@ -105,7 +97,6 @@
             <q-input
               color="teal"
               filled
-              v-model="fname"
               label="ชื่อ"
               :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
             />
@@ -114,7 +105,6 @@
             <q-input
               color="teal"
               filled
-              v-model="lname"
               label="นามสกุล"
               :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
             />
@@ -123,7 +113,6 @@
         <q-input
           color="teal"
           filled
-          v-model="phone_number"
           label="เบอร์โทรศัพท์"
           :rules="[
             (val) =>
@@ -138,7 +127,6 @@
         <q-input
           color="teal"
           filled
-          v-model="phone_number"
           label="เบอร์โทรศัพท์ฉุกเฉิน"
           :rules="[
             (val) =>
@@ -154,7 +142,6 @@
         <q-input
           color="teal"
           filled
-          v-model="address"
           label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
         />
@@ -164,7 +151,6 @@
             <q-input
               color="teal"
               filled
-              v-model="address_district"
               label="เขต/อำเภอ"
               :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
             />
@@ -173,7 +159,6 @@
             <q-input
               color="teal"
               filled
-              v-model="address_province"
               label="จังหวัด"
               :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
             />

@@ -20,7 +20,6 @@
           <q-input
             color="teal"
             filled
-            v-model="fname"
             label="ชื่อ"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
           />
@@ -29,7 +28,6 @@
           <q-input
             color="teal"
             filled
-            v-model="lname"
             label="นามสกุล"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
           />
@@ -38,7 +36,6 @@
       <q-input
         color="teal"
         filled
-        v-model="email"
         label="ชื่อสวน"
         :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
       >
@@ -47,7 +44,6 @@
       <q-input
         color="teal"
         filled
-        v-model="address"
         label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
         :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
       />
@@ -57,7 +53,6 @@
           <q-input
             color="teal"
             filled
-            v-model="address_district"
             label="เขต/อำเภอ"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
           />
@@ -66,7 +61,6 @@
           <q-input
             color="teal"
             filled
-            v-model="address_province"
             label="จังหวัด"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
           />
@@ -75,3 +69,5 @@
     </div>
   </div>
 </template>
+<style scoped src="../css/home.css">
+</style>

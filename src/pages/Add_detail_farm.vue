@@ -4,7 +4,7 @@
       <q-toolbar class="text-center row">
         <div
           class="col self-center font"
-          @click="$router.push({ name: 'detail_farm' })"
+          @click="$router.push({ name: 'myfarm' })"
         >
           <q-icon name="close" />
         </div>
@@ -66,6 +66,21 @@
           />
         </div>
       </div>
+      เนื้อที่ปลูก(ไร่) :
+
+           <q-input
+            color="teal"
+            filled
+            v-model="zip_code"
+            label="เนื้อที่ปลูก"
+            :rules="[
+              (val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก',
+            ]"
+          />
+        </div>
+      </q-form>
+        
+
     </div>
   </div>
 </template>

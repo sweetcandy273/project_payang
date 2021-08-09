@@ -76,11 +76,12 @@
       />
 
       <div class="Admin">
-      <q-checkbox 
-      v-model="checkbox" 
-      style="font-size: 16px" 
-      label="ผู้ดูแล" />
-    </div>
+        <q-checkbox
+          v-model="checkbox"
+          style="font-size: 16px"
+          label="ผู้ดูแล"
+        />
+      </div>
 
       <div class="box_admin" v-if="checkbox">
         <div class="row justify-between">
@@ -149,6 +150,17 @@
             />
           </div>
         </div>
+      </div>
+
+      <div class="q-pa-md q-gutter-sm self-center">
+        <q-btn
+          @click="$router.push({ name: 'myfarm' })"
+          unelevated
+          rounded
+          label="บันทึก"
+          type="submit"
+          class="shadow-2 text-white"
+        />
       </div>
     </div>
   </div>

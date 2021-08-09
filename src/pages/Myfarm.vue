@@ -56,7 +56,7 @@
     
       <div class="row justify-center" style="padding-top: 100px;">
        <div class=".col-auto" 
-        @click="$router.push({ name: 'Add_detail_farm' })"> 
+        @click="$router.push({ name: 'add_detail_farm' })"> 
       <q-btn 
       size="20px"
       round color="teal-9" 

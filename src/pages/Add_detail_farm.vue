@@ -68,19 +68,33 @@
       </div>
       เนื้อที่ปลูก(ไร่) :
 
-           <q-input
+      <q-input
+        color="teal"
+        filled
+        label="เนื้อที่ปลูก"
+        :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก']"
+      />
+
+      ผู้ดูแล
+
+      <div class="row justify-between">
+        <div class="col q-pr-md">
+          <q-input
             color="teal"
             filled
-            v-model="zip_code"
-            label="เนื้อที่ปลูก"
-            :rules="[
-              (val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก',
-            ]"
+            label="ชื่อ"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
           />
         </div>
-      </q-form>
-        
-
+        <div class="col">
+          <q-input
+            color="teal"
+            filled
+            label="นามสกุล"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>

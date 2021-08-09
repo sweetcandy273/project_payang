@@ -95,6 +95,35 @@
           />
         </div>
       </div>
+
+      <q-input
+        color="teal"
+        filled
+        label="เบอร์โทรศัพท์"
+        :rules="[
+          (val) =>
+            (val && val.length > 0 && val.length == 10) ||
+            'กรุณากรอกเบอร์โทรศัพท์',
+        ]"
+      >
+        <template v-slot:append>
+          <q-icon name="call" />
+        </template>
+      </q-input>
+      <q-input
+        color="teal"
+        filled
+        label="เบอร์โทรศัพท์ฉุกเฉิน"
+        :rules="[
+          (val) =>
+            (val && val.length > 0 && val.length == 10) ||
+            'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน',
+        ]"
+      >
+        <template v-slot:append>
+          <q-icon name="call" />
+        </template>
+      </q-input>
     </div>
   </div>
 </template>

@@ -15,7 +15,7 @@
     </q-header>
 
     <div class="q-pa-md font">
-      <q-form @submit="onSubmit" class="q-gutter-md">
+      <q-form class="q-gutter-md">
         <div>
           เจ้าของสวน :
           <div class="row justify-between">
@@ -67,12 +67,11 @@
             </div>
             <div class="col">
               <q-input
-                color="teal"
-                label="จังหวัด"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
-                ]"
-              />
+              color="teal"
+              filled
+              label="จังหวัด"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
+            />
             </div>
           </div>
 
@@ -179,7 +178,6 @@
         unelevated
         rounded
         label="บันทึก"
-        type="submit"
         class="shadow-2 text-white"
       />
     </div>

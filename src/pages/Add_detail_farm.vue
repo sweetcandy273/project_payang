@@ -75,57 +75,63 @@
         :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก']"
       />
 
-      ผู้ดูแล
+      <div class="Admin">
+      <q-checkbox 
+      v-model="checkbox" 
+      style="font-size: 16px" 
+      label="ผู้ดูแล" />
+    </div>
 
-      <div class="row justify-between">
-        <div class="col q-pr-md">
-          <q-input
-            color="teal"
-            filled
-            label="ชื่อ"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
-          />
+      <div class="box_admin" v-if="checkbox">
+        <div class="row justify-between">
+          <div class="col q-pr-md">
+            <q-input
+              color="teal"
+              filled
+              label="ชื่อ"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
+            />
+          </div>
+          <div class="col">
+            <q-input
+              color="teal"
+              filled
+              label="นามสกุล"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
+            />
+          </div>
         </div>
-        <div class="col">
-          <q-input
-            color="teal"
-            filled
-            label="นามสกุล"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
-          />
-        </div>
-      </div>
 
-      <q-input
-        color="teal"
-        filled
-        label="เบอร์โทรศัพท์"
-        :rules="[
-          (val) =>
-            (val && val.length > 0 && val.length == 10) ||
-            'กรุณากรอกเบอร์โทรศัพท์',
-        ]"
-      >
-        <template v-slot:append>
-          <q-icon name="call" />
-        </template>
-      </q-input>
-      <q-input
-        color="teal"
-        filled
-        label="เบอร์โทรศัพท์ฉุกเฉิน"
-        :rules="[
-          (val) =>
-            (val && val.length > 0 && val.length == 10) ||
-            'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน',
-        ]"
-      >
-        <template v-slot:append>
-          <q-icon name="call" />
-        </template>
-      </q-input>
+        <q-input
+          color="teal"
+          filled
+          label="เบอร์โทรศัพท์"
+          :rules="[
+            (val) =>
+              (val && val.length > 0 && val.length == 10) ||
+              'กรุณากรอกเบอร์โทรศัพท์',
+          ]"
+        >
+          <template v-slot:append>
+            <q-icon name="call" />
+          </template>
+        </q-input>
+        <q-input
+          color="teal"
+          filled
+          label="เบอร์โทรศัพท์ฉุกเฉิน"
+          :rules="[
+            (val) =>
+              (val && val.length > 0 && val.length == 10) ||
+              'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน',
+          ]"
+        >
+          <template v-slot:append>
+            <q-icon name="call" />
+          </template>
+        </q-input>
 
-              <div class="row">
+        <div class="row">
           <div class="col q-pr-md">
             <q-input
               color="teal"
@@ -143,8 +149,19 @@
             />
           </div>
         </div>
+      </div>
     </div>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      checkbox: false,
+    };
+  },
+};
+</script>
+
 <style scoped src="../css/home.css">
 </style>

@@ -14,105 +14,190 @@
       </q-toolbar>
     </q-header>
 
-    <div class="q-pa-md self-center">
-      <div class="row justify-around">
-        เจ้าของสวน :
-        <div class="column">
-          <q-input
-            filled
-            v-model="name"
-            label="ชื่อ"
-            lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
-          />
+    <div class="q-pa-md font">
+      <q-form @submit="onSubmit" class="q-gutter-md">
+        <div>
+          เจ้าของสวน :
+          <div class="row justify-between">
+            <div class="col q-pr-md">
+              <q-input
+                color="teal"
+                filled
+                v-model="fname"
+                label="ชื่อ"
+                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
+              />
+            </div>
+            <div class="col">
+              <q-input
+                color="teal"
+                filled
+                v-model="lname"
+                label="นามสกุล"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
+                ]"
+              />
+            </div>
+          </div>
 
+          ชื่อสวน :
           <q-input
+            color="teal"
             filled
-            v-model="name"
-            label="นามสกุล"
-            lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
-          />
-        </div>
-      </div>
-      <div class="row justify-around">
-        ชื่อสวน :
-
-        <div class="column">
-          <q-input
-            filled
-            v-model="name"
+            v-model="email"
             label="ชื่อสวน"
-            lazy-rules
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
-          />
-        </div>
-      </div>
-      <div class="row justify-around">
-        ที่อยู่ :
-        <div class="column">
+          >
+          </q-input>
+
+          ที่อยู่ :
           <q-input
+            color="teal"
             filled
-            v-model="name"
-            label="ที่อยู่"
-            lazy-rules
+            v-model="address"
+            label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
           />
-        </div>
-       
-      </div>
 
-        <div class="row justify-around">
-            
-            <div class=".col-4">
+          <div class="row">
+            <div class="col q-pr-md">
+              <q-input
+                color="teal"
+                filled
+                v-model="address_district"
+                label="เขต/อำเภอ"
+                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
+              />
+            </div>
+            <div class="col">
+              <q-input
+                color="teal"
+                filled
+                v-model="address_province"
+                label="จังหวัด"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
+                ]"
+              />
+            </div>
+          </div>
+
+          เนื้อที่ปลูก :
+          <q-input
+            color="teal"
+            filled
+            v-model="zip_code"
+            label="เนื้อที่ปลูก"
+            :rules="[
+              (val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก',
+            ]"
+          />
+        </div>
+      </q-form>
+      ผู้ดูแล :
+    </div>
+
+    <div class="q-pa-md font">
+      <div class="box_editeAdmin">
+        <div class="row justify-between">
+          <div class="col q-pr-md">
             <q-input
+              color="teal"
               filled
-              v-model="name"
-              label="อำเภอ"
-              lazy-rules
+              v-model="fname"
+              label="ชื่อ"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
+            />
+          </div>
+          <div class="col">
+            <q-input
+              color="teal"
+              filled
+              v-model="lname"
+              label="นามสกุล"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
+            />
+          </div>
+        </div>
+        <q-input
+          color="teal"
+          filled
+          v-model="phone_number"
+          label="เบอร์โทรศัพท์"
+          :rules="[
+            (val) =>
+              (val && val.length > 0 && val.length == 10) ||
+              'กรุณากรอกเบอร์โทรศัพท์',
+          ]"
+        >
+          <template v-slot:append>
+            <q-icon name="call" />
+          </template>
+        </q-input>
+        <q-input
+          color="teal"
+          filled
+          v-model="phone_number"
+          label="เบอร์โทรศัพท์ฉุกเฉิน"
+          :rules="[
+            (val) =>
+              (val && val.length > 0 && val.length == 10) ||
+              'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน',
+          ]"
+        >
+          <template v-slot:append>
+            <q-icon name="call" />
+          </template>
+        </q-input>
+
+        <q-input
+          color="teal"
+          filled
+          v-model="address"
+          label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
+          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
+        />
+
+        <div class="row">
+          <div class="col q-pr-md">
+            <q-input
+              color="teal"
+              filled
+              v-model="address_district"
+              label="เขต/อำเภอ"
               :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
             />
           </div>
-          <div class=".col-4">
+          <div class="col">
             <q-input
+              color="teal"
               filled
-              v-model="name"
+              v-model="address_province"
               label="จังหวัด"
-              lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
             />
           </div>
-
         </div>
 
-      <div class="row justify-around">
-        เนื้อที่ปลูก :
-        <div class="column">
-          <q-input
-            filled
-            v-model="name"
-            label="เนื้อที่ปลูก"
-            lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก']"
-          />
+        <div class="row justify-center">
+          <div class="q-pa-md self-center">
+            <q-btn round color="deep-orange-13" icon="delete" />
+          </div>
         </div>
       </div>
-      <div class="row justify-start col-4">ผู้ดูแล :</div>
-
-      <div class="box_editeAdmin q-pa-md self-center"></div>
     </div>
 
-      <div class="q-pa-md q-gutter-sm self-center">
-        <q-btn
-          @click="$router.push({ name: 'calender_farm' })"
-          unelevated
-          rounded
-          label="บันทึก"
-          type="submit"
-          class="shadow-2 text-white"
-          
-        />
-      </div>
+    <div class="q-pa-md q-gutter-sm self-center">
+      <q-btn
+        @click="$router.push({ name: 'detail_farm' })"
+        unelevated
+        rounded
+        label="บันทึก"
+        type="submit"
+        class="shadow-2 text-white"
+      />
+    </div>
   </div>
 </template>
 <style scoped src="../css/home.css">

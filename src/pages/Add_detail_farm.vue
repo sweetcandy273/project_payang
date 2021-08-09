@@ -37,6 +37,14 @@
               />
             </div>
           </div>
+          <q-input
+            color="teal"
+            filled
+            v-model="email"
+            label="ชื่อสวน"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
+          >
+          </q-input>
     </div>
     </div>
 </template>

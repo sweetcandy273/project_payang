@@ -44,7 +44,9 @@
 
     <div></div>
 
-    <div></div>
+      <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
+        <ProductYearly />
+      </div>
 
     <div class="q-pa-md q-gutter-sm self-center">
       <div>
@@ -73,6 +75,23 @@
     </div>
   </div>
 </template>
+
+<script>
+import ProductYearly from "../components/ProductYearly_farm.vue";
+export default {
+  // name: "yearly",
+  components: {
+    ProductYearly,
+  },
+    data() {
+    return {
+      leftDrawerOpen: false,
+      model: null,
+      secondModel: "yearly",
+    };
+  }
+  };
+</script>
 
 <style scoped src="../css/home.css">
 </style>

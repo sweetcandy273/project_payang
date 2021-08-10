@@ -2,11 +2,13 @@
   <div class="font">
     <q-header class="shadow-2">
       <q-toolbar class="text-center row">
-        <div
-          class="col self-center font"
-          @click="$router.push({ name: 'myfarm' })"
-        >
-          <q-icon name="arrow_back_ios" />
+        
+          <div class="col flex">
+          <img
+            src="../assets/close.png"
+            style="width: 22px; height: 22px"
+            @click="$router.push({ name: 'myfarm' })"
+          />
         </div>
 
         <div class="col-6 font header-title">ข้อมูลสวน</div>

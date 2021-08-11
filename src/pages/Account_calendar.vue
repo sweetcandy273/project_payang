@@ -9,7 +9,7 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'myfarm' })"
+            @click="$router.push({ name: 'detail_farm' })"
           />
         </div>
 

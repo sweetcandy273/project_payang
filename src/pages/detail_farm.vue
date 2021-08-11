@@ -108,7 +108,12 @@ export default {
   }
   };
 </script>
-
-
 <style scoped src="../css/home.css">
+</style>
+
+<style scoped>
+.box_detail{
+  background-color: white;
+  border-radius: 10px;
+}
 </style>

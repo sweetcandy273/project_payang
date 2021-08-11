@@ -166,7 +166,11 @@
 
         <div class="row justify-center">
           <div class="q-pa-md self-center">
-            <q-btn round color="deep-orange-13" icon="delete" />
+            <q-btn 
+            round color="deep-orange-13" 
+            icon="delete" 
+             @click="showNotif"
+            />
           </div>
         </div>
       </div>
@@ -183,5 +187,26 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    showNotif () {
+      this.$q.notify({
+        message: 'ลบหรือไม่?',
+        color: 'green-9',
+       
+        actions: [
+          { label: 'ตกลง', color: 'white', handler: () => { /* ... */ } },
+          { label: 'ไม่อิ๊', color: 'white', handler: () => { /* ... */ } }
+        ]
+      })
+
+  
+    }
+  }
+}
+</script>
+
 <style scoped src="../css/home.css">
 </style>

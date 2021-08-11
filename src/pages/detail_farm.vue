@@ -29,7 +29,8 @@
           <div class="column">
             <q-btn 
             round color="deep-orange-13" 
-            icon="delete" 
+            icon="delete"
+            @click="showNotif" 
             />
           </div>
         </div>
@@ -89,9 +90,25 @@ export default {
       model: null,
       secondModel: "yearly",
     };
+  },
+    methods: {
+    showNotif () {
+      this.$q.notify({
+        message: 'ลบหรือไม่?',
+        color: 'green-9',
+       
+        actions: [
+          { label: 'ตกลง', color: 'white', handler: () => { /* ... */ } },
+          { label: 'ไม่อิ๊', color: 'white', handler: () => { /* ... */ } }
+        ]
+      })
+
+  
+    }
   }
   };
 </script>
+
 
 <style scoped src="../css/home.css">
 </style>

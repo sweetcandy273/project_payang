@@ -42,7 +42,9 @@
           >
             <q-tab-panel name="2021/08/05" class="detail-account">
               <div class="row font">
-                <div class="col" style="font-size: 22px">{{formattedString}}</div>
+                <div class="col" style="font-size: 22px">
+                  {{ formattedString }}
+                </div>
                 <div class="col text-right" style="font-size: 22px">
                   สวนภูเก็ต
                 </div>
@@ -118,7 +120,7 @@ export default {
   data() {
     return {
       splitterModel: 50,
-      date: formattedString,
+      date: [formattedString],
       events: ["2021/08/05"],
     };
   },

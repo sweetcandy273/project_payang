@@ -2,12 +2,12 @@
   <div>
     <q-header>
       <q-toolbar class="text-center row">
-        <div class="col flex">
-          <img
-            src="../assets/close.png"
-            style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'detail_farm' })"
-          />
+          <div class="col flexed text-left">
+          <q-icon
+            @click="$router.push({ name: 'add_income' })"
+            name="arrow_back_ios"
+            size="30px"
+          ></q-icon>
         </div>
 
         <div class="col-6 font header-title">สวนภูเก็ต</div>

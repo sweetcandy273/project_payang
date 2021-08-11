@@ -1,8 +1,6 @@
 <template>
-<div>
-
-
-   <q-header class="shadow-2">
+  <div>
+    <q-header class="shadow-2">
       <q-toolbar class="text-center row">
         <div
           class="col self-center font"
@@ -16,67 +14,54 @@
       </q-toolbar>
     </q-header>
 
-    
-       <div class="text-center">
-                    <img
-                      class="logo"
-                      alt=""
-                      src="../assets/forest.png"
-                      style="width: 250px"
-                    />
-                    <div class="col-6 font header-title" >สวนของฉัน</div>
-        </div>
+    <div class="q-mt-xl text-center">
+      <img
+        class="logo"
+        alt=""
+        src="../assets/forest.png"
+        style="width: 175px"
+      />
+      <div class="q-ma-md col-6 font" style="font-size: 30px">สวนของฉัน</div>
+    </div>
 
-  
-<div class="col self-center font">
-    <div class="row justify-center"
+    <div class="col  font">
+      <div
+        class="row justify-center"
         @click="$router.push({ name: 'detail_farm' })"
-    >
-      <div class="col-3 text-center">
-          <img
-            class="logo"
-            alt="Payang logo"
-            src="../assets/forest.png"
-            style="width: 60px"
-          />
+      >
+        <div class="col-3 text-center">
+          <div class="box_forest">
+            <img
+              class="logo"
+              alt="Payang logo"
+              src="../assets/forest2.png"
+              style="width: 45px"
+            />
+          </div>
         </div>
         <div class="col-7">
-          <div style="font-size: 20px ">สวนภูเก็ต</div>
-         <div style="font-size: 12px"> 112/1 ซอยหล่อโรง ถนนระนอง
-ตำบลตลาดเหนือ อำเภอเมืองภูเก็ต จังหวัดภูเก็ต</div>
+          <div style="font-size: 20px">สวนภูเก็ต</div>
+          <div style="font-size: 12px">
+            112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ อำเภอเมืองภูเก็ต
+            จังหวัดภูเก็ต
+          </div>
         </div>
         <div class="col-2 text-center">
-            <div class="stylearea">
-                1 ไร่
-            </div>
+          <div class="stylearea">1 ไร่</div>
         </div>
-    </div> 
+      </div>
     </div>
-    
-    
-      <div class="row justify-center" style="padding-top: 100px;">
-       <div class=".col-auto" 
-        @click="$router.push({ name: 'add_detail_farm' })"> 
-      <q-btn 
-      style=""
-      size="20px"
-      round color="teal-9" 
-      icon="add" />  
-    </div>
-    
-    
-    <!-- #4e7971 -->
-    </div>
-      
-    </div>
-     
-   
-   
-    
 
-    
-
-
+    <div class="add-account text-center fixed-bottom q-pa-xl">
+      <q-btn
+        unelevated
+        round
+        style="background: #4e7971; color: white; width: 50px; height: 50px"
+        icon="add"
+        @click="$router.push({ name: 'detail_farm' })"
+      />
+    </div>
+  </div>
 </template>
 
 
@@ -103,4 +88,10 @@
   background-color: #4e7971;
 }
 
+.box_forest{
+  width: 55px;
+  height: 55px;
+  background-color: white;
+  border-radius: 10px; 
+}
 </style>

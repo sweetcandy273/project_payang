@@ -46,7 +46,7 @@
     <div></div>
 
       <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
-        <grafp_farm/>
+        <graph_farm/>
       </div>
 
     <div class="q-pa-md q-gutter-sm self-center">

@@ -58,12 +58,14 @@
        <div class=".col-auto" 
         @click="$router.push({ name: 'add_detail_farm' })"> 
       <q-btn 
+      style=""
       size="20px"
       round color="teal-9" 
       icon="add" />  
     </div>
     
-
+    
+    <!-- #4e7971 -->
     </div>
       
     </div>

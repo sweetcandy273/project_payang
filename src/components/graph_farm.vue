@@ -61,16 +61,15 @@
     methods: {
       fillData () {
         this.datacollection = {
-          labels: ["ม.ค.", "ก.พ."],
+          labels: ["Jan",	"Feb",	"Mar",	"Apr",	" May",	" Jun",	"Jul", "Aug", " Sep", "Oct","Nov","Dec"],
           datasets: [
             {
-              label: 'ม.ค.',
-              backgroundColor: '#f87979',
-              data: [20]
-            }, {
-              label: 'ก.พ.',
-              backgroundColor: '#f87979',
-              data: [30]
+            label: 'น้ำยงสด : กิโลกรัม',
+              data: [600,	1150,	342,	6050,	2522,	3241,	1259,	157,	1545, 9841],
+              fill: false,
+              borderColor: '#4e7971',
+              backgroundColor: '#2554FF',
+              borderWidth: 1
             }
           ]
         }

@@ -138,4 +138,9 @@ export default {
 
 <style scoped src="../css/home.css">
 </style>
+<style scoped>
+.q-btn-dropdown{
+    background-color: #E9E9E9;
+}
+</style>
 

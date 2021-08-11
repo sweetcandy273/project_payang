@@ -50,21 +50,5 @@
 .margin-box{
     margin-top: 150px;
 }
-.box_detail{
-    background-color: #acd6c1;
-    border-radius: 15px;
-}
-.box_editeAdmin{
-    background-color: #E9E9E9;
-    border-radius: 15px;
-    padding-top: 15px;
-    padding-right: 15px;
-    padding-bottom: 5px;
-    padding-left: 15px;
-}
-.q-btn-dropdown{
-    background-color: #E9E9E9;
-}
-.box_type{
-    border-radius: 15px;
-}
+
+

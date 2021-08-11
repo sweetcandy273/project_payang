@@ -210,3 +210,20 @@ export default {
 
 <style scoped src="../css/home.css">
 </style>
+<style scoped>
+.box_editeAdmin{
+    background-color: #E9E9E9;
+    border-radius: 15px;
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+}
+</style>
+<style scoped>
+.box_detail{
+    background-color: #acd6c1;
+    border-radius: 15px;
+}
+
+</style>

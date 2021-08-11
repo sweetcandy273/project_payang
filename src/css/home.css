@@ -62,3 +62,9 @@
     padding-bottom: 5px;
     padding-left: 15px;
 }
+.q-btn-dropdown{
+    background-color: #E9E9E9;
+}
+.box_type{
+    border-radius: 15px;
+}

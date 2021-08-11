@@ -46,7 +46,7 @@
     <div></div>
 
       <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
-        <ProductYearly />
+        <grafp_farm/>
       </div>
 
     <div class="q-pa-md q-gutter-sm self-center">
@@ -78,11 +78,11 @@
 </template>
 
 <script>
-import ProductYearly from "../components/ProductYearly_farm.vue";
+import graph_farm from "../components/graph_farm.vue";
 export default {
   // name: "yearly",
   components: {
-    ProductYearly,
+    graph_farm,
   },
     data() {
     return {

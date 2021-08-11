@@ -2,11 +2,12 @@
   <div>
     <q-header class="shadow-2">
       <q-toolbar class="text-center row">
-        <div
-          class="col self-center font"
-          @click="$router.push({ name: 'home' })"
-        >
-          <q-icon name="arrow_back_ios" />
+            <div class="col flexed text-left">
+          <q-icon
+            @click="$router.push({ name: 'add_income' })"
+            name="arrow_back_ios"
+            size="30px"
+          ></q-icon>
         </div>
 
         <div class="col-6 font header-title">สวนของฉัน</div>
@@ -29,7 +30,7 @@
         class="row justify-center"
         @click="$router.push({ name: 'detail_farm' })"
       >
-        <div class="col-3 text-center">
+        <div class="col-3">
           <div class="box_forest">
             <img
               class="logo"
@@ -46,13 +47,13 @@
             จังหวัดภูเก็ต
           </div>
         </div>
-        <div class="col-2 text-center">
+        <div class="col-2">
           <div class="stylearea">1 ไร่</div>
         </div>
       </div>
     </div>
 
-    <div class="add-account text-center fixed-bottom q-pa-xl">
+    <div class="add_farm text-center fixed-bottom q-pa-xl">
       <q-btn
         unelevated
         round

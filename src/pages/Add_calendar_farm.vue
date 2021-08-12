@@ -17,41 +17,29 @@
 <div>
 
        <div class="box-droptype q-pa-md">
-        <q-select filled v-model="store" :options="options" color="teal" label="ประเภทกิจกรรม">
+        <q-select filled :options="optionsactivity" color="teal" label="ประเภทกิจกรรม">
         </q-select>
       </div>
 
-   <div class="q-pa-md">
-    <q-input filled v-model="date" color="teal">
-      <template v-slot:prepend >
-        <q-icon name="event" class="cursor-pointer" color="teal">
-          <q-popup-proxy transition-show="scale" transition-hide="scale">
-            
-            <q-date v-model="date">
-              
-              <div class="row items-center justify-end">
-                <q-btn v-close-popup label="Close" color="primary" flat />
-              </div>
-            </q-date>
-            
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-
-      <template v-slot:append>
-        <q-icon name="access_time" class="cursor-pointer" color="teal">
-          <q-popup-proxy transition-show="scale" transition-hide="scale" >
-            <q-time  v-model="date" format24h>
-              <div class="row items-center justify-end">
-                <q-btn v-close-popup label="Close" color="primary" flat />
-              </div>
-            </q-time>
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-      
-    </q-input>
-  </div>
+     <div class="q-px-md font">
+      <q-input filled v-model="date" mask="date" :rules="['date']">
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy
+              ref="qDateProxy"
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <q-date v-model="date">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+    </div>
 
     <div class="q-pa-md">
             <q-checkbox
@@ -89,30 +77,19 @@
 
 <script>
 export default {
-  setup () {
-    return {
-      
-      date: ref('2021/07/30 12:00')
 
-      
-    }
-  },
   data() {
     return {
+      date: "2021/07/18",
       checkbox: false,
-      options: ["ใส่ปุ๋ย", "ตัดหญ้า", "ตัดกากฝาก","ตัดไม้ยาง","หยอดน้ำกรด","อื่นๆ"],
+      optionsactivity : ["ใส่ปุ๋ย", "ตัดหญ้า", "ตัดกากฝาก","ตัดไม้ยาง","หยอดน้ำกรด","อื่นๆ"],
     };
   },
+  
 }
 </script>
 
-
-
 <style scoped src="../css/home.css">
 </style>
-<style scoped>
-.q-btn-dropdown{
-    background-color: #E9E9E9;
-}
-</style>
+
 

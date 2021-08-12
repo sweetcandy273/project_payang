@@ -15,58 +15,27 @@
       </q-toolbar>
     </q-header>
 <div>
-    <div class="box_drop q-pa-md">
-    <q-btn-dropdown label="ประเภทกิจกรรม">
-      <q-list>
-        <q-item clickable v-close-popup>
-          <q-item-section>
-            <q-item-label>ใส่ปุ๋ย</q-item-label>
-          </q-item-section>
-        </q-item>
 
-        <q-item clickable v-close-popup>
-          <q-item-section>
-            <q-item-label>ตัดหญ้า</q-item-label>
-          </q-item-section>
-        </q-item>
+       <div class="box-droptype q-pa-md">
+        <q-select filled v-model="store" :options="options" color="teal" label="ประเภทกิจกรรม">
+          
 
-        <q-item clickable v-close-popup >
-          <q-item-section>
-            <q-item-label>ตัดกาฝาก</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable v-close-popup >
-          <q-item-section>
-            <q-item-label>ตัดไม้ยาง</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable v-close-popup>
-          <q-item-section>
-            <q-item-label>หยอดน้ำกรด</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable v-close-popup >
-          <q-item-section>
-            <q-item-label>อื่นๆ</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-btn-dropdown>
-  </div>
+        </q-select>
+      </div>
 
    <div class="q-pa-md">
     <q-input filled v-model="date" color="teal">
       <template v-slot:prepend >
         <q-icon name="event" class="cursor-pointer" color="teal">
           <q-popup-proxy transition-show="scale" transition-hide="scale">
+            
             <q-date v-model="date">
+              
               <div class="row items-center justify-end">
                 <q-btn v-close-popup label="Close" color="primary" flat />
               </div>
             </q-date>
+            
           </q-popup-proxy>
         </q-icon>
       </template>
@@ -86,7 +55,7 @@
     </q-input>
   </div>
 
-    <div class="q-pa-md">
+    <!-- <div class="q-pa-md">
             <q-checkbox
           v-model="checkbox"
           style="font-size: 16px"
@@ -94,7 +63,9 @@
         />
       
     </div>
-    
+     -->
+
+     
 
     <div class="q-pa-md q-gutter-sm self-center">
       <q-btn
@@ -119,16 +90,19 @@
 
 
 <script>
-import { date } from 'quasar'
 export default {
   setup () {
     return {
-      date: ref('2019-02-01 12:00')
+      
+      date: ref('2021/07/30 12:00')
+
+      
     }
   },
   data() {
     return {
       checkbox: false,
+      options: ["ใส่ปุ๋ย", "ตัดหญ้า", "ตัดกากฝาก","ตัดไม้ยาง","หยอดน้ำกรด","อื่นๆ"],
     };
   },
 }

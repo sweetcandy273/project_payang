@@ -1,12 +1,14 @@
 <template>
   <div class="font">
     <q-header class="shadow-2">
-      <q-toolbar class="text-center row">
-        <div
-          class="col self-center font"
-          @click="$router.push({ name: 'detail_farm' })"
-        >
-          <q-icon name="close" />
+   <q-toolbar class="text-center row">
+        
+          <div class="col flex">
+          <img
+            src="../assets/close.png"
+            style="width: 22px; height: 22px"
+            @click="$router.push({ name: 'detail_farm' })"
+          />
         </div>
 
         <div class="col-6 font header-title">ข้อมูลสวน</div>
@@ -85,11 +87,9 @@
             ]"
           />
         </div>
-      </q-form>
-      ผู้ดูแล :
-    </div>
+      </q-form>   
 
-    <div class="q-pa-md font">
+          <div>ผู้ดูแล :</div>
       <div class="box_editeAdmin">
         <div class="row justify-between">
           <div class="col q-pr-md">
@@ -176,6 +176,8 @@
       </div>
     </div>
 
+    
+
     <div class="q-pa-md q-gutter-sm self-center">
       <q-btn
         @click="$router.push({ name: 'detail_farm' })"
@@ -204,9 +206,12 @@ export default {
 
   
     }
-  }
+  },
+    
 }
 </script>
+
+
 
 <style scoped src="../css/home.css">
 </style>

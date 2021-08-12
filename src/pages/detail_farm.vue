@@ -80,7 +80,7 @@
 <script>
 import graph_farm from "../components/graph_farm.vue";
 export default {
-  // name: "yearly",
+
   components: {
     graph_farm,
   },

@@ -160,8 +160,8 @@
 // import useQuasar from "quasar";
 // import ref from "vue";
 
-import ProductYearly from "../../components/ProductYearly.vue";
-import ProductMonthly from "../../components/ProductMonthly.vue";
+import ProductYearly from "../components/ProductYearly.vue";
+import ProductMonthly from "../components/ProductMonthly.vue";
 
 export default {
   // name: "yearly",

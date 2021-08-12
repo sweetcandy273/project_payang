@@ -5,15 +5,16 @@
         <q-space></q-space>
       </q-toolbar>  -->
       <q-toolbar class="text-center row">
-        <div class="col self-center">
-          <q-img
+        <div class="col flex">
+          <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
             @click="$router.push({ name: 'account_calendar' })"
           />
         </div>
+        
 
-        <div class="col-6 font header-title">แก้ไข</div>
+        <div class="col-6 font header-title">เพิ่มบัญชี</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -25,7 +26,7 @@
         rounded
         style="background: #2d9cdb; color: white; opacity: 0.5"
         label="รายรับ"
-        @click="$router.push({ name: 'edit_income' })"
+        @click="$router.push({ name: 'add_income' })"
       />
       <q-btn
         class="col"
@@ -108,8 +109,8 @@
   </div>
 </template>
 <script>
-import Maintenance from "../../components/Maintenance.vue";
-import Equipment from "../../components/Equipment.vue";
+import Maintenance from "../components/Maintenance.vue";
+import Equipment from "../components/Equipment.vue";
 export default {
   components: {
     Maintenance,

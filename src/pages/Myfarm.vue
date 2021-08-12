@@ -27,7 +27,7 @@
     
       <div class="row" @click="$router.push({ name: 'detail_farm' })">
         <div class="col">
-          <div class="box_forest justify-center">
+          <div class="box_forest text-center ">
             <img
               alt="Payang logo"
               src="../assets/forest2.png"
@@ -42,7 +42,7 @@
             จังหวัดภูเก็ต
           </div>
         </div>
-        <div class="col-2">
+        <div class="planting-area text-center col-2">
           <div class="stylearea">1 ไร่</div>
         </div>
       </div>
@@ -54,7 +54,7 @@
         round
         style="background: #4e7971; color: white; width: 50px; height: 50px"
         icon="add"
-        @click="$router.push({ name: 'detail_farm' })"
+        @click="$router.push({ name: 'add_detail_farm' })"
       />
     </div>
   </div>
@@ -64,9 +64,13 @@
 </style>
 
 <style scoped>
+.planting-area{
+  color: gray;
+}
 .box_forest {
-  width: 55px;
-  height: 55px;
+  margin-top: 20 px;
+  margin-left: 20px;
+  margin-right: 20px;
   background-color: white;
   border-radius: 10px;
 }

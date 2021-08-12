@@ -4,7 +4,7 @@
       <q-toolbar class="text-center row">
           <div class="col flexed text-left">
           <q-icon
-            @click="$router.push({ name: 'add_income' })"
+            @click="$router.push({ name: 'detail_farm' })"
             name="arrow_back_ios"
             size="30px"
           ></q-icon>
@@ -42,8 +42,6 @@
                 </div>
               </div>
              
-           
-
               <div class="row font q-pt-md">
                 <div class="redcircle"></div>
                 <div class="col q-ml-xs" style="font-size: 18px">08.00</div>
@@ -57,7 +55,13 @@
         </template>
       </q-splitter>
     </div>
-    <div class="add-account text-right fixed-bottom q-pa-md">
+    
+
+    
+
+
+
+    <div class="add-account text-center fixed-bottom q-pa-xl">
       <q-btn
         unelevated
         round
@@ -75,7 +79,7 @@ export default {
     return {
       splitterModel: 50,
       date: "2021/07/30",
-      events: ["2021/07/10", "2021/07/15", "2021/07/20"],
+      events: ["2021/07/10", "2021/07/15", "2021/07/31"],
     };
   },
 };

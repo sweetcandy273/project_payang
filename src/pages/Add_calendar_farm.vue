@@ -22,9 +22,9 @@
       </div>
 
      <div class="q-px-md font">
-      <q-input filled v-model="date" mask="date" :rules="['date']">
+      <q-input color="teal" filled v-model="date" mask="date" :rules="['date'] ">
         <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
+          <q-icon name="event" class="cursor-pointer" color="teal">
             <q-popup-proxy
               ref="qDateProxy"
               transition-show="scale"

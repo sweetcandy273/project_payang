@@ -93,15 +93,23 @@ export default {
   },
     methods: {
     showNotif () {
-      this.$q.notify({
-        message: 'ลบหรือไม่?',
-        color: 'green-9',
-       
-        actions: [
-          { label: 'ตกลง', color: 'white', handler: () => { /* ... */ } },
-          { label: 'ไม่อิ๊', color: 'white', handler: () => { /* ... */ } }
-        ]
+      this.$q.dialog({
+         title: 'Confirm',
+        message: 'Would you delete the data? ',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        // console.log('>>>> OK')
+      }).onOk(() => {
+        // console.log('>>>> second OK catcher')
+      }).onCancel(() => {
+        // console.log('>>>> Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
       })
+
+  return { confirm,}
+      
 
   
     }

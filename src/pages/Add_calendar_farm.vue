@@ -18,8 +18,6 @@
 
        <div class="box-droptype q-pa-md">
         <q-select filled v-model="store" :options="options" color="teal" label="ประเภทกิจกรรม">
-          
-
         </q-select>
       </div>
 
@@ -55,7 +53,7 @@
     </q-input>
   </div>
 
-    <!-- <div class="q-pa-md">
+    <div class="q-pa-md">
             <q-checkbox
           v-model="checkbox"
           style="font-size: 16px"
@@ -63,7 +61,7 @@
         />
       
     </div>
-     -->
+    
 
      
 

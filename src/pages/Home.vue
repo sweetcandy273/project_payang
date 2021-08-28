@@ -39,7 +39,7 @@
           />
         </div>
 
-        <div class="col-6 font header-title">คุณชนิกานต์</div>
+        <div class="col-6 font header-title">คุณ{{ fname }}</div>
         <div class="col self-center">
           <q-img
             src="../assets/pen.png"
@@ -51,25 +51,25 @@
       <div class="q-pa-md font">
         <div class="row">
           <div class="col text-left"><strong>ชื่อ</strong></div>
-          <div class="col text-right">ชนิกานต์</div>
+          <div class="col text-right">{{ fname }}</div>
         </div>
         <div class="row">
           <div class="col text-left"><strong>นามสกุล</strong></div>
-          <div class="col text-right">ปิยะพงษ์</div>
+          <div class="col text-right">{{ lname }}</div>
         </div>
         <div class="row">
           <div class="col text-left"><strong>เบอร์โทรศัพท์</strong></div>
-          <div class="col text-right">081-222-2222</div>
+          <div class="col text-right">{{ phone_number }}</div>
         </div>
 
         <div>
           <strong> อีเมล </strong>
         </div>
-        <div>payang01@gmail.com</div>
+        <div>{{ email }}</div>
         <div><strong>ที่อยู่</strong></div>
         <div>
-          112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ อำเภอเมืองภูเก็ต จังหวัดภูเก็ต
-          83000
+          {{ address }} {{ address_district }} {{ address_province }}
+          {{ zip_code }}
         </div>
         <div class="row q-mt-xl">
           <div class="col text-left"><strong>รหัสผ่าน</strong></div>
@@ -109,7 +109,7 @@
           </div>
         </div>
         <div class="row text-center">
-          <div class="col font" style="font-size: 24px">คุณชนิกานต์</div>
+          <div class="col font" style="font-size: 24px">คุณ{{fname}}</div>
         </div>
       </div>
 
@@ -172,6 +172,14 @@ export default {
 
   data() {
     return {
+      fname: "ชนิกานต์",
+      lname: "ปิยะพงษ์",
+      phone_number: "0822222222",
+      email: "payang01@gmail.com",
+      address: "112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ",
+      address_district: "อำเภอเมืองภูเก็ต",
+      address_province: "จังหวัดภูเก็ต",
+      zip_code: "83000",
       leftDrawerOpen: false,
       model: null,
       secondModel: "yearly",

@@ -3,18 +3,13 @@
     <div class="font" style="font-size: 30px">กรกฎาคม</div>
     <div class="row font q-px-md seft-center text-center">
       <div class="col-2 seft-center">
-        <img
-          class=""
-          alt="back-left"
-          src="../assets/back-left.png"
-          style="width: 50px"
-        />
+        <q-icon name="arrow_back_ios" size="30px" />
       </div>
       <div class="col">
         <div style="font-size: 20px">น้ำยางสด</div>
         <q-img src="../assets/rubber-cup.png" style="" width="100px">
           <div class="absolute-full flex flex-center text-black bg-product-all">
-            0.00
+            {{ monthly_rubber }}
           </div>
         </q-img>
 
@@ -24,18 +19,13 @@
         <div style="font-size: 20px">รายรับ</div>
         <q-img src="../assets/money.png" style="" width="100px">
           <div class="absolute-full flex flex-center text-black bg-product-all">
-            0.00
+            {{ monthly_income }}
           </div>
         </q-img>
         <div>บาท</div>
       </div>
       <div class="col-2 seft-center">
-        <img
-          class=""
-          alt="back-right"
-          src="../assets/back-right.png"
-          style="width: 50px"
-        />
+        <q-icon name="arrow_forward_ios" size="30px" />
       </div>
     </div>
     <div class="q-pa-md font">
@@ -69,7 +59,7 @@
             <div>รายรับ</div>
           </div>
           <div class="col text-right" style="font-size: 20px">
-            <div>0.00</div>
+            <div>{{ monthly_income }}</div>
           </div>
           <div class="col-1 text-right" style="font-size: 19px">
             <div>บ.</div>
@@ -80,7 +70,7 @@
             <div>รายจ่าย</div>
           </div>
           <div class="col text-right" style="font-size: 20px">
-            <div>0.00</div>
+            <div>{{ monthly_expenses }}</div>
           </div>
           <div class="col-1 text-right" style="font-size: 19px">
             <div>บ.</div>
@@ -91,7 +81,7 @@
             <div>กำไรสุทธิ</div>
           </div>
           <div class="col text-right" style="font-size: 25px">
-            <div>0.00</div>
+            <div>{{ monthly_profit }}</div>
           </div>
           <div class="col-1 text-right" style="font-size: 19px">
             <div>บ.</div>
@@ -114,12 +104,25 @@
 </template>
 
 <script>
+import { date } from "quasar";
+const timeStamp = Date.now();
+
+
+const date_now = date.formatDate(timeStamp, "YYYY/MM/DD");
+const month_now = date_now.slice(4, 6);
+
 import DoughnutChart from "../components/Chart.js";
 
 export default {
   components: { DoughnutChart },
   data() {
     return {
+      month_now: month_now,
+      monthly_rubber: "10.00",
+      monthly_income: "2.00",
+      monthly_expenses: "1.00",
+      monthly_profit: "1.00",
+
       datacollection: null,
       // loaded: false,
     };

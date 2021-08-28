@@ -28,6 +28,7 @@
                 v-model="date"
                 :events="events"
                 event-color="red"
+                today-btn
               />
             </div>
           </div>
@@ -42,9 +43,7 @@
           >
             <q-tab-panel name="2021/08/05" class="detail-account">
               <div class="row font">
-                <div class="col" style="font-size: 22px">
-                  {{ formattedString }}
-                </div>
+                <div class="col" style="font-size: 22px">2021/08/05</div>
                 <div class="col text-right" style="font-size: 22px">
                   สวนภูเก็ต
                 </div>
@@ -114,13 +113,14 @@
 <script>
 import { date } from "quasar";
 const timeStamp = Date.now();
-const formattedString = date.formatDate(timeStamp, "YYYY/MM/DD");
+const date_now = date.formatDate(timeStamp, "YYYY/MM/DD");
 
 export default {
   data() {
     return {
+      // model: { from: "", to: "" },
       splitterModel: 50,
-      date: [formattedString],
+      date: [date_now],
       events: ["2021/08/05"],
     };
   },

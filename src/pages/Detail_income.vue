@@ -5,12 +5,12 @@
         <q-space></q-space>
       </q-toolbar>  -->
       <q-toolbar class="text-center row">
-        <div class="col self-center">
-          <img
-            class="close"
-            src="../assets/back-left.png"
-            style="width: 50px"
-          />
+        <div class="col flexed text-left">
+          <q-icon
+            @click="$router.push({ name: 'account_calendar' })"
+            name="arrow_back_ios"
+            size="30px"
+          ></q-icon>
         </div>
         <div class="col-6 font header-title">รายละเอียด</div>
         <div class="col self-center"></div>
@@ -64,14 +64,27 @@
         <div class="q-pt-md" style="font-size: 18px">
           บันทึก : ส่วนแบ่งตามที่ตกลงกันไว้
         </div>
-        <div class="col text-right q-pt-md">
-          <q-btn
-            unelevated
-            rounded
-            style="background: #f97c09; color: white"
-            icon="edit"
-            @click="$router.push({ name: 'edit_income' })"
-          />
+        <div class="col q-pa-md self-center">
+          <div class="row">
+            <div class="col text-right">
+            <q-btn
+              unelevated
+              round
+              style="width: 50px; height: 50px"
+              color="orange-4"
+              icon="edit"
+              @click="$router.push({ name: 'edit_income' })"
+            />
+            
+            <q-btn
+              unelevated
+              round
+              style="width: 50px; height: 50px"
+              color="deep-orange-13"
+              icon="delete"
+              @click="Notidelete"
+            /></div>
+          </div>
         </div>
       </div>
     </div>
@@ -81,6 +94,31 @@
 export default {
   data() {
     return {};
+  },
+  methods: {
+    Notidelete() {
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "Would you delete the data? ",
+          cancel: true,
+          persistent: true,
+        })
+        .onOk(() => {
+          // console.log('>>>> OK')
+        })
+        .onOk(() => {
+          // console.log('>>>> second OK catcher')
+        })
+        .onCancel(() => {
+          // console.log('>>>> Cancel')
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
+
+      return { confirm };
+    },
   },
 };
 </script>

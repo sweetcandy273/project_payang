@@ -15,6 +15,7 @@ const routes = [
       { path: 'detail_farm', name: 'detail_farm', component: () => import('pages/detail_farm.vue') },
       { path: 'calender_farm', name: 'calender_farm', component: () => import('pages/Calendar_farm.vue') },
       { path: 'add_calender_farm', name: 'add_calender_farm', component: () => import('pages/Add_Calendar_farm.vue') },
+      { path: 'other', name: 'other', component: () => import('pages/Add_income.vue') },
       { path: 'starter_intro1', name: 'starter_intro1', component: () => import('pages/Starter_intro1.vue') },
       { path: 'starter_intro2', name: 'starter_intro2', component: () => import('pages/Starter_intro2.vue') },
       { path: 'starter', name: 'starter', component: () => import('pages/Starter.vue') },

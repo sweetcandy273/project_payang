@@ -2,5 +2,6 @@
   
   "vetur.experimental.templateInterpolationService": true,
   "vetur.format.enable": true,
+  "git.ignoreLimitWarning": true,
 
 }

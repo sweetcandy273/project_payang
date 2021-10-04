@@ -176,7 +176,7 @@
 
     
 
-    <div class="q-pa-md q-gutter-sm self-center">
+    <div class="q-pa-md q-gutter-sm  self-center">
       <q-btn
         @click="$router.push({ name: 'detail_farm' })"
         unelevated
@@ -233,5 +233,4 @@ export default {
     background-color: #acd6c1;
     border-radius: 15px;
 }
-
 </style>

@@ -94,7 +94,6 @@
            <template v-slot:prepend>
             <q-icon name="store"/>
            </template>
-
         </q-select>
       </div>
       <div class="share">

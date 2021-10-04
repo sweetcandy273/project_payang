@@ -15,10 +15,11 @@
       </q-toolbar>
     </q-header>
     <div>
-      <div class="box-droptype q-pa-md">
+      <div class="box-dropActivitytype q-pa-md">
         <q-select
           filled
-          :options="optionsactivity"
+          v-model="chooseActivity"
+          :options="activity_type"
           color="teal"
           label="ประเภทกิจกรรม"
         >
@@ -51,16 +52,32 @@
         </q-input>
       </div>
 
-     <div class="box-dropaddmin q-px-md">
+     <div class="box-dropAddmin q-px-md">
         <q-select
           filled
-          :options="optionsactivity"
+          v-model="chooseAdmin"
+          :options="Admin"
           color="teal"
           label="ผู้ดูแล"
         >
         </q-select>
+
+        <div class="other"  q-px-md  @click="$router.push({ name: 'add_income' })">
+        
+        <div class="row">
+        <div>มีค่าใช้จ่าย?</div>
+        <div>
+            <img
+            src="../assets/money2.png"
+            style="width: 22px; height: 22px"
+          />
+        </div>
+    </div>
       </div>
-      <div class="q-pa-md q-gutter-sm self-center">
+
+      </div>
+    
+      <div class="add-account self-center fixed-bottom q-pa-md">
         <q-btn
           @click="$router.push({ name: 'calender_farm' })"
           unelevated
@@ -81,14 +98,11 @@ export default {
     return {
       date: "2021/07/18",
       checkbox: false,
-      optionsactivity: [
-        "ใส่ปุ๋ย",
-        "ตัดหญ้า",
-        "ตัดกากฝาก",
-        "ตัดไม้ยาง",
-        "หยอดน้ำกรด",
-        "อื่นๆ",
-      ],
+      chooseAdmin:null,
+      chooseActivity:null,
+      activity_type: ["ใส่ปุ๋ย","ตัดหญ้า","ตัดกากฝาก","ตัดไม้ยาง","หยอดน้ำกรด","อื่นๆ",],
+      Admin:["นางสาว อรไท อ๋องสกุล","นางสาว กนกวรรณ น้ำสงวน",
+      ]
     };
   },
 };
@@ -96,5 +110,11 @@ export default {
 
 <style scoped src="../css/home.css">
 </style>
+<style scoped>
+.other{
+  float:right;
+}
+</style>
+
 
 

@@ -5,11 +5,11 @@
         <q-space></q-space>
       </q-toolbar>  -->
       <q-toolbar class="text-center row">
-        <div class="col self-center">
-          <q-img
+        <div class="col flex">
+          <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'account_calendar' })"
+            @click="$router.push({ name: 'detail_expenditure' })"
           />
         </div>
 

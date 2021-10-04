@@ -51,14 +51,15 @@
         </q-input>
       </div>
 
-      <div class="q-pa-md">
-        <q-checkbox
-          v-model="checkbox"
-          style="font-size: 16px"
-          label="นางสาว กนกวรรณ น้ำสงวน"
-        />
+     <div class="box-dropaddmin q-px-md">
+        <q-select
+          filled
+          :options="optionsactivity"
+          color="teal"
+          label="ผู้ดูแล"
+        >
+        </q-select>
       </div>
-
       <div class="q-pa-md q-gutter-sm self-center">
         <q-btn
           @click="$router.push({ name: 'calender_farm' })"

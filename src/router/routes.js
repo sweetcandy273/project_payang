@@ -33,6 +33,7 @@ const routes = [
       { path: 'otp', name: 'otp', component: () => import('pages/otp.vue') },
       { path: 'change_password', name: 'change_password', component: () => import('pages/Change_password.vue') },
       { path: 'new_password', name: 'new_password', component: () => import('pages/New_password.vue') },
+      { path: 'all_account_calendar', name: 'all_account_calendar', component: () => import('src/pages/All_account_calendar.vue') },
 
     ]
   },

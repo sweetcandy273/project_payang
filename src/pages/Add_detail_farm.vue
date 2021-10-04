@@ -1,6 +1,6 @@
 <template>
   <div class="font">
-          <q-header>
+    <q-header>
       <q-toolbar class="text-center row">
         <div class="col flex">
           <img
@@ -103,7 +103,6 @@
             />
           </div>
         </div>
-
         <q-input
           color="teal"
           filled

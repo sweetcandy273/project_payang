@@ -41,9 +41,9 @@
                 transition-show="scale"
                 transition-hide="scale"
               >
-                <q-date v-model="date">
+                <q-date v-model="date" color="green">
                   <div class="row items-center justify-end">
-                    <q-btn v-close-popup label="Close" color="primary" flat />
+                    <q-btn v-close-popup label="Close" color="white" flat />
                   </div>
                 </q-date>
               </q-popup-proxy>

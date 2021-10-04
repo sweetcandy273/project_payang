@@ -36,7 +36,7 @@
       />
     </div>
     <div class="font q-px-md">
-      <q-input filled v-model="date" mask="date" :rules="['date']">
+      <q-input filled v-model="date" color="teal" mask="date" :rules="['date']">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy
@@ -44,9 +44,9 @@
               transition-show="scale"
               transition-hide="scale"
             >
-              <q-date v-model="date">
+              <q-date v-model="date" color="green">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
+                  <q-btn v-close-popup label="Close" color="white" flat />
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -60,37 +60,37 @@
     <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
       <div class="row">
         <div class="col">
-          <q-input filled v-model="weight_rubber" label="น้ำหนักยาง" >
+          <q-input filled v-model="weight_rubber" color="teal" label="น้ำหนักยาง" >
              <template v-slot:prepend> กก. </template>
           </q-input>
         </div>
         <div class="col q-ml-md">
-          <q-input filled v-model="percent" label="เปอร์เซ็น">
+          <q-input filled v-model="percent" color="teal" label="เปอร์เซ็น">
             <template v-slot:prepend> % </template>
           </q-input>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <q-input filled v-model="dry_rubber" label="เนื้อยางแห้ง">
+          <q-input filled v-model="dry_rubber" color="teal" label="เนื้อยางแห้ง">
             <template v-slot:prepend> ก. </template>
           </q-input>
         </div>
         <div class="col q-ml-md">
-          <q-input filled v-model="price_rubber" label="ราคาน้ำยาง">
+          <q-input filled v-model="price_rubber" color="teal" label="ราคาน้ำยาง">
              <template v-slot:prepend> บ./กก. </template>
           </q-input>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <q-input filled v-model="totalprice" label="รวมจำนวนเงิน">
+          <q-input filled v-model="totalprice" color="teal" label="รวมจำนวนเงิน">
             <template v-slot:prepend> ฿ </template>
           </q-input>
         </div>
       </div>
       <div class="stores">
-        <q-select filled v-model="store" :options="options" label="ร้านค้า">
+        <q-select filled v-model="store" color="teal" :options="options" label="ร้านค้า">
            <template v-slot:prepend>
             <q-icon name="store"/>
            </template>
@@ -111,6 +111,7 @@
               <q-select
                 filled
                 v-model="percent"
+                color="teal"
                 :options="optionspercent"
                 label="ส่วนแบ่ง"
               />
@@ -119,7 +120,7 @@
         </strong>
       </div>
       <div class="col">
-        <q-input filled v-model="note" label="บันทึก" />
+        <q-input filled v-model="note" color="teal" label="บันทึก" />
       </div>
 
       <div class="submit row q-gutter-sm flex-center">

@@ -23,7 +23,7 @@
         <template v-slot:before>
           <div class="row justify-center q-pa-md">
             <div class="">
-              <q-date v-model="date" :events="events" event-color="red" />
+              <q-date v-model="date" color="green" :events="events" event-color="red" />
             </div>
           </div>
         </template>

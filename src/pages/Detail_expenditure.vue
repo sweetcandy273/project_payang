@@ -5,12 +5,12 @@
         <q-space></q-space>
       </q-toolbar>  -->
       <q-toolbar class="text-center row">
-        <div class="col self-center">
-          <img
-            class="close"
-            src="../assets/back-left.png"
-            style="width: 50px"
-          />
+        <div class="col flexed text-left">
+          <q-icon
+            @click="$router.push({ name: 'account_calendar' })"
+            name="arrow_back_ios"
+            size="30px"
+          ></q-icon>
         </div>
         <div class="col-6 font header-title">รายละเอียด</div>
         <div class="col self-center"></div>

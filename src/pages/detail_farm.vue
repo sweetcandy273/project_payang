@@ -94,19 +94,20 @@ export default {
     methods: {
     showNotif () {
       this.$q.dialog({
-         title: 'Confirm',
+        title: 'Confirm',
         message: 'Would you delete the data? ',
         cancel: true,
         persistent: true
-      }).onOk(() => {
-        // console.log('>>>> OK')
-      }).onOk(() => {
-        // console.log('>>>> second OK catcher')
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
       })
+      // .onOk(() => {
+      //   // console.log('>>>> OK')
+      // }).onOk(() => {
+      //   // console.log('>>>> second OK catcher')
+      // }).onCancel(() => {
+      //   // console.log('>>>> Cancel')
+      // }).onDismiss(() => {
+      //   // console.log('I am triggered on both OK and Cancel')
+      // })
 
   return { confirm,}
       

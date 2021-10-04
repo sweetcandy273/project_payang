@@ -9,7 +9,7 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'myfarm' })"
+            @click="$router.push({ name: 'detail_farm' })"
           />
         </div>
 
@@ -23,7 +23,7 @@
         <template v-slot:before>
           <div class="row justify-center q-pa-md">
             <div class="">
-              <q-date v-model="date" :events="events" event-color="red" />
+              <q-date v-model="date" color="green" :events="events" event-color="red" />
             </div>
           </div>
         </template>
@@ -51,7 +51,7 @@
               </div>
               <div
                 class="calendar-income q-pa-md"
-                @click="$router.push({ name: 'edit_income' })"
+                @click="$router.push({ name: 'detail_income' })"
               >
                 <div class="row font">
                   <div class="col" style="font-size: 16px">
@@ -86,7 +86,7 @@
               </div>
               <div
                 class="calendar-expenditure q-pa-md"
-                @click="$router.push({ name: 'edit_expenditure' })"
+                @click="$router.push({ name: 'detail_expenditure' })"
               >
                 <div class="row font">
                   <div class="col" style="font-size: 16px">

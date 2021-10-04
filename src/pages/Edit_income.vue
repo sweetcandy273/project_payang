@@ -5,14 +5,13 @@
         <q-space></q-space>
       </q-toolbar>  -->
       <q-toolbar class="text-center row">
-        <div class="col self-center">
-          <q-img
+       <div class="col flex">
+          <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'account_calendar' })"
+            @click="$router.push({ name: 'detail_income' })"
           />
         </div>
-
         <div class="col-6 font header-title">แก้ไข</div>
         <div class="col self-center"></div>
       </q-toolbar>
@@ -60,8 +59,8 @@
     <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
       <div class="row">
         <div class="col">
-          <q-input filled v-model="weight_rubber" label="น้ำหนักยาง" >
-             <template v-slot:prepend> กก. </template>
+          <q-input filled v-model="weight_rubber" label="น้ำหนักยาง">
+            <template v-slot:prepend> กก. </template>
           </q-input>
         </div>
         <div class="col q-ml-md">
@@ -78,7 +77,7 @@
         </div>
         <div class="col q-ml-md">
           <q-input filled v-model="price_rubber" label="ราคาน้ำยาง">
-             <template v-slot:prepend> บ./กก. </template>
+            <template v-slot:prepend> บ./กก. </template>
           </q-input>
         </div>
       </div>
@@ -91,27 +90,37 @@
       </div>
       <div class="stores">
         <q-select filled v-model="store" :options="options" label="ร้านค้า">
-           <template v-slot:prepend>
-            <q-icon name="store"/>
-           </template>
-
+          <template v-slot:prepend>
+            <q-icon name="store" />
+          </template>
         </q-select>
       </div>
-      <div class="share">
+       <div class="share">
         <q-checkbox
           v-model="selectshare"
           style="font-size: 16px"
-          label="กนกวรรณ เป็นผู้ได้รับส่วนแบ่ง"
+          label="ผู้รับผิดชอบ"
         />
       </div>
       <div class="sharemoney" v-if="selectshare">
         <strong>
+          <q-select
+            filled
+            v-model="employee"
+            :options="optionsemployee"
+            label="ผู้รับผิดชอบ"
+          >
+            <template v-slot:prepend>
+              <q-icon name="person" />
+            </template>
+          </q-select>
+
           <div class="row">
             <div class="col text-center q-my-md">% การแบ่ง</div>
-            <div class="col">
+            <div class="col q-my-md">
               <q-select
                 filled
-                v-model="percent"
+                v-model="share"
                 :options="optionspercent"
                 label="ส่วนแบ่ง"
               />
@@ -152,7 +161,10 @@ export default {
       options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด", "อื่นๆ"],
       note: "",
       selectshare: false,
+      share:"",
       optionspercent: ["60:40", "55:45", "50:50"],
+      employee: "",
+      optionsemployee: ["กนกวรรณ", "ชนิกานต์", "อรไท"],
     };
   },
 };

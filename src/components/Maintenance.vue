@@ -26,12 +26,17 @@
         </q-select>
       </div>
       <div class="share text-left">
-        <q-checkbox
-          v-model="selectshare"
-          val="teal"
-          style="font-size: 16px"
-          label="กนกวรรณ ผู้รับผิดชอบ"
-        />
+        <q-select
+            filled
+            v-model="employee"
+            :options="optionsemployee"
+            label="ผู้รับผิดชอบ"
+          >
+            <template v-slot:prepend>
+              <q-icon name="person" />
+            </template>
+          </q-select>
+
       </div>
 
       <div class="col">
@@ -64,6 +69,8 @@ export default {
       type: null,
       optionstype: ["ปุ๋ย", "ตัดหญ้า", "ตัดกาฝาก"],
       selectshare: false,
+      employee: "",
+      optionsemployee: ["-","กนกวรรณ", "ชนิกานต์", "อรไท"],
     };
   },
 };

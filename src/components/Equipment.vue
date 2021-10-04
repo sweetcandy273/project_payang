@@ -25,13 +25,67 @@
           </template>
         </q-select>
       </div>
+
+      <div class="row active">
+        <q-checkbox v-model="active" style="font-size: 16px" label="กิจกรรม" />
+      </div>
+      <div class="activerubber" v-if="active">
+        <strong>
+          <div class="row" v-for="(input, index) in activity" :key="index">
+            <div class="col font" style="font-size: 26px">1</div>
+            <div class="col-9 q-px-md font">
+              <q-input filled v-model="dateact" mask="date" :rules="['date']">
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy
+                      ref="qDateProxy"
+                      transition-show="scale"
+                      transition-hide="scale"
+                    >
+                      <q-date v-model="dateact">
+                        <div class="row items-center justify-end">
+                          <q-btn
+                            v-close-popup
+                            label="Close"
+                            color="primary"
+                            flat
+                          />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+            </div>
+          </div>
+          <div class="text-center">
+            <q-btn
+              unelevated
+              rounded
+              style="
+                background: #5db075;
+                color: white;
+                width: 50px;
+                height: 40px;
+              "
+              icon="add"
+              @click="addactivity"
+            />
+          </div>
+        </strong>
+      </div>
+
       <div class="share text-left">
-        <q-checkbox
-          v-model="selectshare"
-          val="teal"
-          style="font-size: 16px"
-          label="กนกวรรณ ผู้รับผิดชอบ"
-        />
+        <q-select
+          filled
+          v-model="employee"
+          :options="optionsemployee"
+          label="ผู้รับผิดชอบ"
+        >
+          <template v-slot:prepend>
+            <q-icon name="person" />
+          </template>
+        </q-select>
       </div>
 
       <div class="col">
@@ -55,6 +109,7 @@
 
 <script>
 export default {
+ 
   data() {
     return {
       totalprice: "",
@@ -70,9 +125,25 @@ export default {
         "ถังน้ำ",
         "แกลลอนใส่น้ำยาง",
       ],
+      dateact: "",
       selectshare: false,
+      employee: "",
+      optionsemployee: ["-", "กนกวรรณ", "ชนิกานต์", "อรไท"],
+      active: false,
+      activity: [
+      {
+        addactivity: "",
+      },
+    ],
     };
   },
+  methods:{
+    addactivity(){
+      this.activity.push({
+      addactivity: "",
+      })
+    }
+  }
 };
 </script>
 <style  scoped src="../css/home.css">

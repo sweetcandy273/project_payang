@@ -23,7 +23,6 @@ const routes = [
       { path: 'add_expenditure', name: 'add_expenditure', component: () => import('pages/Add_expenditure.vue') },
       { path: 'edit_income', name: 'edit_income', component: () => import('pages/Edit_income.vue') },
       { path: 'edit_expenditure', name: 'edit_expenditure', component: () => import('pages/Edit_expenditure.vue') },
-      { path: 'detail_income', name: 'detail_income', component: () => import('pages/Detail_income.vue') },
       { path: 'edit_userinformation', name: 'edit_userinformation', component: () => import('pages/Edit_userinformation.vue') },
       { path: 'detail_income', name: 'detail_income', component: () => import('pages/Detail_income.vue') },
       { path: 'detail_expenditure', name: 'detail_expenditure', component: () => import('pages/Detail_expenditure.vue') },

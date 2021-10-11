@@ -39,7 +39,7 @@
           />
         </div>
 
-        <div class="col-6 font header-title">คุณ{{ fname }}</div>
+        <div class="col-6 font header-title">คุณ{{ payang_user.fname }}</div>
         <div class="col self-center">
           <q-img
             src="../assets/pen.png"
@@ -51,25 +51,26 @@
       <div class="q-pa-md font">
         <div class="row">
           <div class="col text-left"><strong>ชื่อ</strong></div>
-          <div class="col text-right">{{ fname }}</div>
+          <div class="col text-right">{{ payang_user.fname }}</div>
         </div>
         <div class="row">
           <div class="col text-left"><strong>นามสกุล</strong></div>
-          <div class="col text-right">{{ lname }}</div>
+          <div class="col text-right">{{ payang_user.lname }}</div>
         </div>
         <div class="row">
           <div class="col text-left"><strong>เบอร์โทรศัพท์</strong></div>
-          <div class="col text-right">{{ phone_number }}</div>
+          <div class="col text-right">{{ payang_user.phone_number }}</div>
         </div>
 
         <div>
           <strong> อีเมล </strong>
         </div>
-        <div>{{ email }}</div>
+        <div>{{ payang_user.email }}</div>
         <div><strong>ที่อยู่</strong></div>
         <div>
-          {{ address }} {{ address_district }} {{ address_province }}
-          {{ zip_code }}
+          {{ payang_user.address }} อ.{{ payang_user.address_district }}
+          จ.{{ payang_user.address_province }}
+          {{ payang_user.zip_code }}
         </div>
         <div class="row q-mt-xl">
           <div class="col text-left"><strong>รหัสผ่าน</strong></div>
@@ -109,7 +110,9 @@
           </div>
         </div>
         <div class="row text-center">
-          <div class="col font" style="font-size: 24px">คุณ{{fname}}</div>
+          <div class="col font" style="font-size: 24px">
+            คุณ{{ payang_user.fname }}
+          </div>
         </div>
       </div>
 
@@ -157,8 +160,6 @@
 
 
 <script>
-// import useQuasar from "quasar";
-// import ref from "vue";
 
 import ProductYearly from "../components/ProductYearly.vue";
 import ProductMonthly from "../components/ProductMonthly.vue";
@@ -172,18 +173,20 @@ export default {
 
   data() {
     return {
-      fname: "ชนิกานต์",
-      lname: "ปิยะพงษ์",
-      phone_number: "0822222222",
-      email: "payang01@gmail.com",
-      address: "112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ",
-      address_district: "อำเภอเมืองภูเก็ต",
-      address_province: "จังหวัดภูเก็ต",
-      zip_code: "83000",
+      payang_user: [],
+
       leftDrawerOpen: false,
       model: null,
       secondModel: "yearly",
     };
+  },
+  async mounted() {
+    const axios = require("axios");
+    const { data } = await axios.get(
+      "http://localhost:3000/payang_user/list/1e4ea4af-9414-456b-922d-1463fe2b2b00"
+    );
+    this.payang_user = data.data;
+    // console.log(data.data);
   },
   methods: {
     confirm() {

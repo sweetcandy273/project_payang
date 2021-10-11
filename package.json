@@ -13,7 +13,7 @@
     "@quasar/extras": "^1.0.0",
     "@vue/composition-api": "^1.0.2",
     "apexcharts": "^3.27.1",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
     "fusioncharts": "^3.17.0",

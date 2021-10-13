@@ -22,7 +22,7 @@
         <div class="row justify-end">
           <div class="column">
             <q-btn
-            @click="$router.push({ name: 'edit_detail_farm' })" 
+            @click="$router.push({ name: 'edit_detail_farm' , query:{id:idp}})" 
             round color="orange-4" 
             icon="edit" />
           </div>
@@ -86,6 +86,7 @@ export default {
   },
     data() {
     return {
+      idp: "20c676fe-dead-48bd-a445-e5178603c041",
       leftDrawerOpen: false,
       model: null,
       secondModel: "yearly",

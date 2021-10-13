@@ -33,7 +33,7 @@
               <q-input
                 color="teal"
                 filled
-                v-model="fname"
+                v-model="payang_user.fname"
                 label="ชื่อ"
                 :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
               />
@@ -42,7 +42,7 @@
               <q-input
                 color="teal"
                 filled
-                v-model="lname"
+                v-model="payang_user.lname"
                 label="นามสกุล"
                 :rules="[
                   (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
@@ -54,7 +54,7 @@
           <q-input
             color="teal"
             filled
-            v-model="phone_number"
+            v-model="payang_user.phone_number"
             label="เบอร์โทรศัพท์"
             :rules="[
               (val) =>
@@ -69,7 +69,7 @@
           <q-input
             color="teal"
             filled
-            v-model="email"
+            v-model="payang_user.email"
             label="อีเมล"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอีเมล']"
           >
@@ -78,7 +78,7 @@
           <q-input
             color="teal"
             filled
-            v-model="address"
+            v-model="payang_user.address"
             label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
           />
@@ -88,7 +88,7 @@
               <q-input
                 color="teal"
                 filled
-                v-model="address_district"
+                v-model="payang_user.address_district"
                 label="เขต/อำเภอ"
                 :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
               />
@@ -97,7 +97,7 @@
               <q-input
                 color="teal"
                 filled
-                v-model="address_province"
+                v-model="payang_user.address_province"
                 label="จังหวัด"
                 :rules="[
                   (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
@@ -109,7 +109,7 @@
           <q-input
             color="teal"
             filled
-            v-model="zip_code"
+            v-model="payang_user.zip_code"
             label="รหัสไปรษณีย์ "
             :rules="[
               (val) => (val && val.length > 0) || 'กรุณากรอกรหัสไปรษณีย์',
@@ -132,31 +132,49 @@
 </template>
 
 <script>
-import Vue from "vue";
-import VueCompositionAPI from "@vue/composition-api";
-
-Vue.use(VueCompositionAPI);
-import { ref } from "@vue/composition-api";
+// import Vue from "vue";
+// import VueCompositionAPI from "@vue/composition-api";
+import axios from "axios";
+// Vue.use(VueCompositionAPI);
 
 export default {
-  setup() {
+  data() {
     return {
-      fname: ref("ชนิกานต์"),
-      lname: ref("ปิยะพงษ์"),
-      phone_number: ref("0812222222"),
-      email: ref("payang01@gmail.com"),
-      address: ref("112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ "),
-      address_district: ref("เมืองภูเก็ต"),
-      address_province: ref("ภูเก็ต"),
-      zip_code: ref("83000"),
+      payang_user: [],
     };
   },
+  async mounted() {
+    const { data } = await axios.get(
+      "http://localhost:3000/payang_user/" + this.$route.query.id
+    );
+    this.payang_user = data.data;
+    // console.log(data.data);
+
+    
+  },
+
   methods: {
-    onSubmit() {
-      //บันทึกข้อมูลลง database ใช้ this.ตัวแปร น้าาา
-      console.log(this.fname);
+    async onSubmit() {
+      console.log(this.payang_user.fname);
+
+      const { data } = await axios.put(
+        "http://localhost:3000/payang_user/update/" + this.$route.query.id,
+        {
+          fname: this.payang_user.fname,
+          lname: this.payang_user.lname,
+          phone_number: this.payang_user.phone_number,
+          email: this.payang_user.email,
+          address: this.payang_user.address,
+          address_district: this.payang_user.address_district,
+          address_province: this.payang_user.address_province,
+          zip_code: this.payang_user.zip_code,
+        }
+      );
+      this.payang_user = data.data;
+      // console.log(data.data);
+
       this.$router.push({
-        path: "/",
+        path: "/home",
       });
     },
   },

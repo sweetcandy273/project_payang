@@ -149,14 +149,10 @@ export default {
     );
     this.payang_user = data.data;
     // console.log(data.data);
-
-    
   },
 
   methods: {
     async onSubmit() {
-      console.log(this.payang_user.fname);
-
       const { data } = await axios.put(
         "http://localhost:3000/payang_user/update/" + this.$route.query.id,
         {

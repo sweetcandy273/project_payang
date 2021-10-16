@@ -1,6 +1,6 @@
 <template>
   <div class="font">
-          <q-header>
+    <q-header>
       <q-toolbar class="text-center row">
         <div class="col flex">
           <img
@@ -19,6 +19,7 @@
       <div class="row justify-between">
         <div class="col q-pr-md">
           <q-input
+            v-model="fname"
             color="teal"
             filled
             label="ชื่อ"
@@ -27,6 +28,7 @@
         </div>
         <div class="col">
           <q-input
+            v-model="lname"
             color="teal"
             filled
             label="นามสกุล"
@@ -35,6 +37,7 @@
         </div>
       </div>
       <q-input
+        v-model="farm_name"
         color="teal"
         filled
         label="ชื่อสวน"
@@ -43,6 +46,7 @@
       </q-input>
 
       <q-input
+        v-model="address"
         color="teal"
         filled
         label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
@@ -52,6 +56,7 @@
       <div class="row">
         <div class="col q-pr-md">
           <q-input
+            v-model="address_district"
             color="teal"
             filled
             label="เขต/อำเภอ"
@@ -60,6 +65,7 @@
         </div>
         <div class="col">
           <q-input
+            v-model="address_province"
             color="teal"
             filled
             label="จังหวัด"
@@ -70,6 +76,7 @@
       เนื้อที่ปลูก(ไร่) :
 
       <q-input
+        v-model="area"
         color="teal"
         filled
         label="เนื้อที่ปลูก"
@@ -155,7 +162,7 @@
 
       <div class="q-pa-md q-gutter-sm self-center">
         <q-btn
-          @click="$router.push({ name: 'myfarm' })"
+          @click="onSubmit()"
           unelevated
           rounded
           label="บันทึก"
@@ -167,11 +174,24 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
+      fname,
+      lname,
+      farm_name,
+      area,
+      
       checkbox: false,
     };
+  },
+  methods: {
+    onSubmit() {
+      this.$router.push({
+        path: "/myfarm",
+      });
+    },
   },
 };
 </script>

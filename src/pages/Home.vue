@@ -126,7 +126,9 @@
       <!-- ส่ง user_id -->
       <div
         class="row myfarm font shadow-2"
-        @click="$router.push({ name: 'myfarm' })"
+        @click="
+          $router.push({ name: 'myfarm', query: { id: payang_user.user_id } })
+        "
       >
         <div class="col-6 q-pa-md self-center">
           <div style="font-size: 20px">สวนของฉัน</div>
@@ -189,7 +191,6 @@ export default {
     };
   },
   async mounted() {
-  
     const { data } = await axios.get(
       "http://localhost:3000/payang_user/1e4ea4af-9414-456b-922d-1463fe2b2b00"
     );
@@ -222,6 +223,7 @@ export default {
         });
     },
     logout() {
+      //! ออกจากระบบ
       this.$router.push({
         path: "/login",
       });

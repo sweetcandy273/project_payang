@@ -44,7 +44,14 @@
           <q-img
             src="../assets/pen.png"
             style="width: 30px"
-            @click="$router.push({ name: 'edit_userinformation' })"
+            @click="
+              $router.push({
+                path: 'edit_userinformation',
+                query: {
+                  id: payang_user.user_id,
+                },
+              })
+            "
           />
         </div>
       </q-toolbar>
@@ -68,8 +75,9 @@
         <div>{{ payang_user.email }}</div>
         <div><strong>ที่อยู่</strong></div>
         <div>
-          {{ payang_user.address }} อ.{{ payang_user.address_district }}
-          จ.{{ payang_user.address_province }}
+          {{ payang_user.address }} อ.{{ payang_user.address_district }} จ.{{
+            payang_user.address_province
+          }}
           {{ payang_user.zip_code }}
         </div>
         <div class="row q-mt-xl">
@@ -115,10 +123,12 @@
           </div>
         </div>
       </div>
-
+      <!-- ส่ง user_id -->
       <div
         class="row myfarm font shadow-2"
-        @click="$router.push({ name: 'myfarm' })"
+        @click="
+          $router.push({ name: 'myfarm', query: { id: payang_user.user_id } })
+        "
       >
         <div class="col-6 q-pa-md self-center">
           <div style="font-size: 20px">สวนของฉัน</div>
@@ -160,9 +170,9 @@
 
 
 <script>
-
 import ProductYearly from "../components/ProductYearly.vue";
 import ProductMonthly from "../components/ProductMonthly.vue";
+import axios from "axios";
 
 export default {
   // name: "yearly",
@@ -181,9 +191,8 @@ export default {
     };
   },
   async mounted() {
-    const axios = require("axios");
     const { data } = await axios.get(
-      "http://localhost:3000/payang_user/list/1e4ea4af-9414-456b-922d-1463fe2b2b00"
+      "http://localhost:3000/payang_user/1e4ea4af-9414-456b-922d-1463fe2b2b00"
     );
     this.payang_user = data.data;
     // console.log(data.data);
@@ -200,20 +209,21 @@ export default {
           html: true,
         })
         .onOk(() => {
-          console.log(">>>> OK");
+          // console.log(">>>> OK");
           this.$router.push({
             path: "/login",
           });
         })
 
         .onCancel(() => {
-          console.log(">>>> Cancel");
+          // console.log(">>>> Cancel");
         })
         .onDismiss(() => {
           // console.log('I am triggered on both OK and Cancel')
         });
     },
     logout() {
+      //! ออกจากระบบ
       this.$router.push({
         path: "/login",
       });

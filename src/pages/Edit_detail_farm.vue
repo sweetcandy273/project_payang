@@ -1,9 +1,8 @@
 <template>
   <div class="font">
     <q-header class="shadow-2">
-   <q-toolbar class="text-center row">
-        
-          <div class="col flex">
+      <q-toolbar class="text-center row">
+        <div class="col flex">
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
@@ -69,11 +68,13 @@
             </div>
             <div class="col">
               <q-input
-              color="teal"
-              filled
-              label="จังหวัด"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
-            />
+                color="teal"
+                filled
+                label="จังหวัด"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
+                ]"
+              />
             </div>
           </div>
 
@@ -87,9 +88,9 @@
             ]"
           />
         </div>
-      </q-form>   
+      </q-form>
 
-          <div>ผู้ดูแล :</div>
+      <div>ผู้ดูแล :</div>
       <div class="box_editeAdmin">
         <div class="row justify-between">
           <div class="col q-pr-md">
@@ -166,19 +167,20 @@
 
         <div class="row justify-center">
           <div class="q-pa-md self-center">
-            <q-btn round color="deep-orange-13" 
-            icon="delete"  
-            @click="showNotif" />
+            <q-btn
+              round
+              color="deep-orange-13"
+              icon="delete"
+              @click="showNotif"
+            />
           </div>
         </div>
       </div>
     </div>
 
-    
-
-    <div class="q-pa-md q-gutter-sm  self-center">
+    <div class="q-pa-md q-gutter-sm self-center">
       <q-btn
-        @click="$router.push({ name: 'detail_farm' })"
+        @click="onSubmit()"
         unelevated
         rounded
         label="บันทึก"
@@ -189,29 +191,33 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   methods: {
-    showNotif () {
-      this.$q.dialog({
-        title: 'Confirm',
-        message: 'Would you delete the data? ',
-        cancel: true,
-        persistent: true
-      }).onOk(() => {
-        // console.log('>>>> OK')
-      }).onOk(() => {
-        // console.log('>>>> second OK catcher')
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
-      })
+    onSubmit() {
+      
+      // const { data } = await axios.put(
+      //   "http://localhost:3000/farm/update/" + this.$route.query.id,
+      //   {
+      //     fname: this.payang_user.fname,
+      //     lname: this.payang_user.lname,
+      //     phone_number: this.payang_user.phone_number,
+      //     email: this.payang_user.email,
+      //     address: this.payang_user.address,
+      //     address_district: this.payang_user.address_district,
+      //     address_province: this.payang_user.address_province,
+      //     zip_code: this.payang_user.zip_code,
+      //   }
+      // );
+      // this.payang_user = data.data;
+      // console.log(data.data);
 
-  return { confirm,}
-    }
+      this.$router.push({
+        path: "/home",
+      });
+    },
   },
-    
-}
+};
 </script>
 
 
@@ -219,18 +225,18 @@ export default {
 <style scoped src="../css/home.css">
 </style>
 <style scoped>
-.box_editeAdmin{
-    background-color: #E9E9E9;
-    border-radius: 15px;
-    padding-top: 15px;
-    padding-right: 15px;
-    padding-bottom: 5px;
-    padding-left: 15px;
+.box_editeAdmin {
+  background-color: #e9e9e9;
+  border-radius: 15px;
+  padding-top: 15px;
+  padding-right: 15px;
+  padding-bottom: 5px;
+  padding-left: 15px;
 }
 </style>
 <style scoped>
-.box_detail{
-    background-color: #acd6c1;
-    border-radius: 15px;
+.box_detail {
+  background-color: #acd6c1;
+  border-radius: 15px;
 }
 </style>

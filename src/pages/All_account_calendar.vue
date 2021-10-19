@@ -52,7 +52,7 @@
                 <div class="greencircle"></div>
                 <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
                 <div class="col text-right" style="font-size: 18px">
-                  5,026.00
+                  {{list_income[0].amount_net}}
                 </div>
               </div>
               <div class="calendar-income q-pa-md">
@@ -61,21 +61,21 @@
                     ร้านดาว น้ำยางสด, แผ่น
                   </div>
                   <div class="col-3 text-right" style="font-size: 16px">
-                    8,376.75
+                    {{list_income[0].amount}}
                   </div>
                 </div>
                 <div class="row font" style="font-size: 16px">
-                  น้ำยางสด 135.0 กก. 33% แห้ง 102.0
+                  น้ำยางสด {{list_income[0].weight}} กก. {{list_income[0].percen_rubber}}% แห้ง {{list_income[0].dry_rubber}}
                 </div>
                 <div class="row font" style="font-size: 16px">
-                  ราคายาง 62.05 บ./กก.
+                  ราคายาง {{list_income[0].rubber_price}} บ./กก.
                 </div>
                 <div class="row font">
                   <div class="col" style="font-size: 16px">
                     กนกวรรณ ส่วนแบ่ง 60-40
                   </div>
                   <div class="col-3 text-right" style="font-size: 16px">
-                    5,026.00
+                    {{list_income[0].amount_net}}
                   </div>
                 </div>
               </div>
@@ -112,17 +112,27 @@
 </template>
 <script>
 import { date } from "quasar";
+import axios from "axios";
 const timeStamp = Date.now();
 const date_now = date.formatDate(timeStamp, "YYYY/MM/DD");
 
 export default {
   data() {
     return {
+      list_income:[],
+
       // model: { from: "", to: "" },
       splitterModel: 50,
       date: [date_now],
       events: ["2021/08/05"],
     };
+  },
+  async mounted() {
+    const { data } = await axios.get(
+      "http://localhost:3000/income/listbyuser/a6260f89-5443-4df1-94d7-6e3e431f76b6"
+    );
+    this.list_income = data.data;
+    // console.log(data.data);
   },
 };
 </script>

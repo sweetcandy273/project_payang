@@ -113,8 +113,6 @@
                 </q-banner>
               </q-popup-proxy>
             </q-icon>
-
-            <!-- <q-icon name="info" style="color: #5db075" /> -->
           </div>
         </div>
         <div class="row text-center">
@@ -123,7 +121,7 @@
           </div>
         </div>
       </div>
-      <!-- ส่ง user_id -->
+
       <div
         class="row myfarm font shadow-2"
         @click="

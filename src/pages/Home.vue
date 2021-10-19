@@ -131,7 +131,7 @@
         "
       >
         <div class="col-6 q-pa-md self-center">
-          <div style="font-size: 20px">สวนของฉัน</div>
+          <div style="font-size: 20px">สวนของฉัน </div>
         </div>
         <div class="col q-px-md text-right self-center">
           <q-img src="../assets/forest.png" style="width: 80px" />
@@ -192,7 +192,7 @@ export default {
   },
   async mounted() {
     const { data } = await axios.get(
-      "http://localhost:3000/payang_user/1e4ea4af-9414-456b-922d-1463fe2b2b00"
+      "http://localhost:3000/payang_user/a6260f89-5443-4df1-94d7-6e3e431f76b6"
     );
     this.payang_user = data.data;
     // console.log(data.data);

@@ -42,7 +42,6 @@
         <div class="stylearea">{{ farm.area }} ไร่</div>
       </div>
     </div>
-  
 
     <div class="add_farm text-center fixed-bottom q-pa-xl">
       <!-- ส่ง params user_id -->
@@ -64,12 +63,11 @@
 
 
 <script>
-import axios from "axios";
+
 
 export default {
   data() {
     return {
-      user_has_farm: [],
       farm: [],
 
       leftDrawerOpen: false,
@@ -77,21 +75,19 @@ export default {
       secondModel: "yearly",
     };
   },
-  async mounted() {
-    // const { datauser_has_farm } = await axios.get(
-    //   "http://localhost:3000/user_has_farm/list/" + this.$router.query.id
-    // );
-    // this.user_has_farm = datauser_has_farm.data;
-    // console.log(datauser_has_farm.data);
-
-    const { data } = await axios.get(
-      "http://localhost:3000/farm/20c676fe-dead-48bd-a445-e5178603c041"
-    );
-    this.farm = data.data;
-    // console.log(data.data);
+  mounted() {
+    getFarm();
   },
 
   methods: {
+    async getFarm() {
+      const { data } = await this.$axios.get(
+        "/farm/20c676fe-dead-48bd-a445-e5178603c041"
+      );
+      this.farm = data.data;
+      // console.log(data.data);
+    },
+
     confirm() {
       this.$q
         .dialog({

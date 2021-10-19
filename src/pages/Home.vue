@@ -131,7 +131,7 @@
         "
       >
         <div class="col-6 q-pa-md self-center">
-          <div style="font-size: 20px">สวนของฉัน</div>
+          <div style="font-size: 20px">สวนของฉัน </div>
         </div>
         <div class="col q-px-md text-right self-center">
           <q-img src="../assets/forest.png" style="width: 80px" />

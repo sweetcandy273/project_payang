@@ -2,12 +2,13 @@
   <div class="font">
     <q-header class="shadow-2">
       <q-toolbar class="text-center row">
-        
-          <div class="col flex">
+        <div class="col flex">
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'myfarm' })"
+            @click="
+              $router.push({ name: 'myfarm', query: { id: farm.user_id } })
+            "
           />
         </div>
 
@@ -17,37 +18,44 @@
     </q-header>
 
     <div class="q-pa-md self-center">
-
       <div class="box_detail q-pa-md self-center">
         <div class="row justify-end">
           <div class="column">
             <q-btn
-            @click="$router.push({ name: 'edit_detail_farm' , query:{id:idp}})" 
-            round color="orange-4" 
-            icon="edit" />
+              @click="
+                $router.push({
+                  name: 'edit_detail_farm',
+                  query: { id: farm.farm_id },
+                })
+              "
+              round
+              color="orange-4"
+              icon="edit"
+            />
           </div>
           <div class="column">
-            <q-btn 
-            round color="deep-orange-13" 
-            icon="delete"
-            @click="showNotif" 
+            <q-btn
+              round
+              color="deep-orange-13"
+              icon="delete"
+              @click="showNotif"
             />
           </div>
         </div>
 
-        <div>เจ้าของสวน : กัลย์สุตา ปิยะพงศ์</div>
-        <div>สวน : ภูเก็ต</div>
-        <div>ที่อยู่ : 112/1</div>
-        <div>เนื้อที่ปลูก : 1.1 ไร่</div>
-        <div>ผู้ดูแล : กนกวรรณ น้ำสงวน</div>
+        <div>เจ้าของสวน : </div>
+        <div>สวน :</div>
+        <div>ที่อยู่ :</div>
+        <div>เนื้อที่ปลูก : ไร่</div>
+        <div>ผู้ดูแล :</div>
       </div>
     </div>
 
     <div></div>
 
-      <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
-        <graph_farm/>
-      </div>
+    <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
+      <graph_farm />
+    </div>
 
     <div class="q-pa-md q-gutter-sm self-center">
       <div>
@@ -79,12 +87,22 @@
 
 <script>
 import graph_farm from "../components/graph_farm.vue";
-export default {
+import axios from "axios";
 
+export default {
+  data() {
+    return {
+      user_has_farm: [],
+      farm: [],
+    };
+  },
+  async mounted() {
+    this.getfarm();
+  },
   components: {
     graph_farm,
   },
-    data() {
+  data() {
     return {
       idp: "20c676fe-dead-48bd-a445-e5178603c041",
       leftDrawerOpen: false,
@@ -92,37 +110,32 @@ export default {
       secondModel: "yearly",
     };
   },
-    methods: {
-    showNotif () {
+  methods: {
+    async getfarm() {
+      const { data } = await axios.get(
+        "http://localhost:3000/farm/" + this.$route.query.id
+      );
+      this.farm = data.data;
+      console.log(data.data);
+    },
+
+    showNotif() {
       this.$q.dialog({
-        title: 'Confirm',
-        message: 'Would you delete the data? ',
+        title: "Confirm",
+        message: "Would you delete the data? ",
         cancel: true,
-        persistent: true
-      })
-      // .onOk(() => {
-      //   // console.log('>>>> OK')
-      // }).onOk(() => {
-      //   // console.log('>>>> second OK catcher')
-      // }).onCancel(() => {
-      //   // console.log('>>>> Cancel')
-      // }).onDismiss(() => {
-      //   // console.log('I am triggered on both OK and Cancel')
-      // })
-
-  return { confirm,}
-      
-
-  
-    }
-  }
-  };
+        persistent: true,
+      });
+      return { confirm };
+    },
+  },
+};
 </script>
 <style scoped src="../css/home.css">
 </style>
 
 <style scoped>
-.box_detail{
+.box_detail {
   background-color: white;
   border-radius: 10px;
 }

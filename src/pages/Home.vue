@@ -48,8 +48,8 @@
               $router.push({
                 path: 'edit_userinformation',
                 query: {
-                  id: payang_user.user_id,
-                },
+                  id: payang_user.user_id
+                }
               })
             "
           />
@@ -151,7 +151,7 @@
           text-color="white"
           :options="[
             { label: 'ปี', value: 'yearly' },
-            { label: 'เดือน', value: 'monthly' },
+            { label: 'เดือน', value: 'monthly' }
           ]"
         />
       </div>
@@ -168,17 +168,15 @@
   </div>
 </template>
 
-
 <script>
 import ProductYearly from "../components/ProductYearly.vue";
 import ProductMonthly from "../components/ProductMonthly.vue";
-import axios from "axios";
 
 export default {
   // name: "yearly",
   components: {
     ProductYearly,
-    ProductMonthly,
+    ProductMonthly
   },
 
   data() {
@@ -187,17 +185,21 @@ export default {
 
       leftDrawerOpen: false,
       model: null,
-      secondModel: "yearly",
+      secondModel: "yearly"
     };
   },
-  async mounted() {
-    const { data } = await axios.get(
-      "http://localhost:3000/payang_user/a6260f89-5443-4df1-94d7-6e3e431f76b6"
-    );
-    this.payang_user = data.data;
-    // console.log(data.data);
+  mounted() {
+    this.getUser();
   },
+
   methods: {
+    async getUser() {
+      const { data } = await this.$axios.get(
+        "/payang_user/a6260f89-5443-4df1-94d7-6e3e431f76b6"
+      );
+      this.payang_user = data.data;
+      // console.log(data.data);
+    },
     confirm() {
       this.$q
         .dialog({
@@ -206,12 +208,12 @@ export default {
             'ระบบจะทำการลบข้อมูลเกี่ยวกับบัญชีผู้ใช้นี้ทั้งหมด <span class="text-red font"><strong>หากยืนยันการลบบัญชีผู้ใช้แล้ว ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
           cancel: true,
           persistent: true,
-          html: true,
+          html: true
         })
         .onOk(() => {
           // console.log(">>>> OK");
           this.$router.push({
-            path: "/login",
+            path: "/login"
           });
         })
 
@@ -225,13 +227,11 @@ export default {
     logout() {
       //! ออกจากระบบ
       this.$router.push({
-        path: "/login",
+        path: "/login"
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
-
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>

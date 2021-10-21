@@ -35,138 +35,204 @@
         @click="$router.push({ name: 'add_expenditure' })"
       />
     </div>
-    <div class="font q-px-md">
-      <q-input filled v-model="date" mask="date" :rules="['date']">
-        <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy
-              ref="qDateProxy"
-              transition-show="scale"
-              transition-hide="scale"
-            >
-              <q-date v-model="date">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-    </div>
-    <div class="text-center">
-      <div class="font q-pa-md" style="font-size: 25px">ระบุข้อมูลน้ำยางสด</div>
-    </div>
-    <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
-      <div class="row">
-        <div class="col">
-          <q-input filled v-model="weight_rubber" label="น้ำหนักยาง">
-            <template v-slot:prepend> กก. </template>
-          </q-input>
-        </div>
-        <div class="col q-ml-md">
-          <q-input filled v-model="percent" label="เปอร์เซ็น">
-            <template v-slot:prepend> % </template>
-          </q-input>
+
+    <q-form>
+      <div class="font q-px-md">
+        <q-input filled v-model="date" mask="date" :rules="['date']">
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy
+                ref="qDateProxy"
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date v-model="date">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </div>
+      <div class="text-center">
+        <div class="font q-pa-md" style="font-size: 25px">
+          ระบุข้อมูลน้ำยางสด
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <q-input filled v-model="dry_rubber" label="เนื้อยางแห้ง">
-            <template v-slot:prepend> ก. </template>
-          </q-input>
+
+      <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
+        <div class="row">
+          <div class="col">
+            <q-input filled v-model="weight_rubber" label="น้ำหนักยาง">
+              <template v-slot:prepend> กก. </template>
+            </q-input>
+          </div>
+          <div class="col q-ml-md">
+            <q-input filled v-model="percent" label="เปอร์เซ็น">
+              <template v-slot:prepend> % </template>
+            </q-input>
+          </div>
         </div>
-        <div class="col q-ml-md">
-          <q-input filled v-model="price_rubber" label="ราคาน้ำยาง">
-            <template v-slot:prepend> บ./กก. </template>
-          </q-input>
+
+        <div class="row">
+          <div class="col">
+            <q-input filled v-model="dry_rubber" label="เนื้อยางแห้ง">
+              <template v-slot:prepend> ก. </template>
+            </q-input>
+          </div>
+          <div class="col q-ml-md">
+            <q-input filled v-model="rubber_price" label="ราคาน้ำยาง">
+              <template v-slot:prepend> บ./กก. </template>
+            </q-input>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <q-input filled v-model="totalprice" label="รวมจำนวนเงิน">
-            <template v-slot:prepend> ฿ </template>
-          </q-input>
+
+        <div class="row">
+          <div class="col">
+            <q-input filled v-model="totalprice" label="รวมจำนวนเงิน">
+              <template v-slot:prepend> ฿ </template>
+            </q-input>
+          </div>
         </div>
-      </div>
-      <div class="stores">
+
+        <div class="row">
+          <div class="col">
+            <q-input filled v-model="stores" label="ชื่อร้านค้า">
+              <template v-slot:prepend> กก. </template>
+            </q-input>
+          </div>
+          <div class="col q-ml-md">
+            <q-input filled v-model="tel_stores" label="เบอร์โทรร้านค้า">
+              <template v-slot:prepend>  </template>
+            </q-input>
+          </div>
+        </div>
+
+        <!-- <div class="stores">
         <q-select filled v-model="store" :options="options" label="ร้านค้า">
           <template v-slot:prepend>
             <q-icon name="store" />
           </template>
         </q-select>
-      </div>
-      <div class="share">
-        <q-checkbox
-          v-model="selectshare"
-          style="font-size: 16px"
-          label="ผู้รับผิดชอบ"
-        />
-      </div>
-      <div class="sharemoney" v-if="selectshare">
-        <strong>
-          <q-select
-            filled
-            v-model="employee"
-            :options="optionsemployee"
+      </div> -->
+
+        <div class="share">
+          <q-checkbox
+            v-model="selectshare"
+            style="font-size: 16px"
             label="ผู้รับผิดชอบ"
-          >
-            <template v-slot:prepend>
-              <q-icon name="person" />
-            </template>
-          </q-select>
+          />
+        </div>
 
-          <div class="row">
-            <div class="col text-center q-my-md">% การแบ่ง</div>
-            <div class="col q-my-md">
-              <q-select
-                filled
-                v-model="share"
-                :options="optionspercent"
-                label="ส่วนแบ่ง"
-              />
+        <div class="sharemoney" v-if="selectshare">
+          <strong>
+            <q-select
+              filled
+              v-model="employee"
+              :options="optionsemployee"
+              label="ผู้รับผิดชอบ"
+            >
+              <template v-slot:prepend>
+                <q-icon name="person" />
+              </template>
+            </q-select>
+
+            <div class="row">
+              <div class="col text-center q-my-md">% การแบ่ง</div>
+              <div class="col q-my-md">
+                <q-select
+                  filled
+                  v-model="share"
+                  :options="optionspercent"
+                  label="ส่วนแบ่ง"
+                />
+              </div>
             </div>
-          </div>
-        </strong>
-      </div>
-      <div class="col">
-        <q-input filled v-model="note" label="บันทึก" />
-      </div>
+          </strong>
+        </div>
 
-      <div class="submit row q-gutter-sm flex-center">
-        <q-btn
-          unelevated
-          rounded
-          label="บันทึก"
-          type="submit"
-          class="shadow-2 text-white"
-          style="width: 100%; background-color: #4e7971"
-          @click="$router.push({ name: 'check_income' })"
-        />
+        <div class="col">
+          <q-input filled v-model="note" label="บันทึก" />
+        </div>
+
+        <div class="submit row q-gutter-sm flex-center">
+          <q-btn
+            unelevated
+            rounded
+            @click="onSubmit()"
+            label="บันทึก"
+            class="shadow-2 text-white"
+            style="width: 100%; background-color: #4e7971"
+          />
+        </div>
       </div>
-    </div>
+    </q-form>
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
+      
       //ถ้าจะเอาไปใส่ Database ต้อง this.ตัวแปร
       date: "2021/07/18",
       weight_rubber: "",
       percent: "",
       dry_rubber: "",
-      price_rubber: "",
+      rubber_price: "",
       totalprice: "",
-      store: null,
-      options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด", "อื่นๆ"],
+      stores: null,
+      tel_stores: "",
+      // options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด", "อื่นๆ"],
       note: "",
       selectshare: false,
-      share:"",
+      share: "",
       optionspercent: ["60:40", "55:45", "50:50"],
       employee: "",
       optionsemployee: ["กนกวรรณ", "ชนิกานต์", "อรไท"],
     };
+  },
+
+  mounted() {
+    
+  },
+  methods: {
+    onSubmit() {
+      axios.post(
+        `http://localhost:3000/income/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
+        {
+          date: this.date,
+          amount: this.totalprice,
+          amount_net: this.totalprice * 0.6,
+          weight: this.weight_rubber,
+          percen_rubber: this.percent,
+          dry_rubber: this.dry_rubber,
+          percen_split: "60",
+          rubber_price: this.rubber_price,
+          note: this.note,
+          farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
+          user_id: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
+        }
+      );
+      axios
+        .post(
+          `http://localhost:3000/store_income/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09`,
+          {
+            store: this.stores,
+            tel: this.tel_stores,
+            farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
+          }
+        )
+        .then((response) => {
+          console.log(response);
+        });
+      this.$router.push({
+        path: "/check_income",
+      });
+    },
   },
 };
 </script>

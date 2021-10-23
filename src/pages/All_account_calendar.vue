@@ -36,6 +36,7 @@
 
         <template v-slot:after>
           <div class="col font q-mx-md q-mt-md" style="font-size: 22px">{{date}}</div>
+
           <q-tab-panels
             v-model="date"
             animated
@@ -48,9 +49,16 @@
             <q-tab-panel name="2021/10/18" class="detail-account">
               <div class="row font">
                 <div class="col" style="font-size: 22px">
-                  สวนภูเก็ต{{listIncome[0].farm_id}}
+                  สวนภูเก็ต
                 </div>
               </div>
+
+
+            {{listIncome[0].farm_id}}
+
+            <!-- <div :key ="index" v-for="(listIncome,index) in listIncome" >
+
+          </div> -->
             </q-tab-panel>
               
               <!-- <div class="row font">

@@ -120,16 +120,22 @@
 
 <script>
 import {date} from "quasar";
-
+import axios from "axios";
 export default {
   name:"calendar",
   data() {
     return {
+      calendar:[],
       splitterModel: 50,
       date: "",
       events: [""],
     };
   },
+  async mounted(){
+    const { data } = await axios.get(
+      ""
+    )
+  }
 };
 </script>
 <style scoped src="../css/home.css">

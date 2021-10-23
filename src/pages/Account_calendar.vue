@@ -117,15 +117,17 @@
     </div>
   </div>
 </template>
-  </div>
-</template>
+
 <script>
+import {date} from "quasar";
+
 export default {
+  name:"calendar",
   data() {
     return {
       splitterModel: 50,
-      date: "2021/07/30",
-      events: ["2021/07/10", "2021/07/15", "2021/07/20"],
+      date: "",
+      events: [""],
     };
   },
 };

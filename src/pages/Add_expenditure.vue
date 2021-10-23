@@ -111,7 +111,6 @@
 <script>
 import Maintenance from "../components/Maintenance.vue";
 import Equipment from "../components/Equipment.vue";
-import axios from "axios";
 export default {
   components: {
     Maintenance,

@@ -111,10 +111,21 @@
 <script>
 import Maintenance from "../components/Maintenance.vue";
 import Equipment from "../components/Equipment.vue";
+import axios from "axios";
 export default {
   components: {
     Maintenance,
     Equipment,
+  },
+  methods:{
+    // typeExpen(){ 
+    //   axios.post(`http://localhost:3000/type_expenditure/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/`,
+    //     {
+    //       type: this.type_expenditure,
+    //     }
+    //   )
+    // },
+    
   },
 
   data() {

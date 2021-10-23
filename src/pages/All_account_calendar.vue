@@ -35,20 +35,25 @@
         </template>
 
         <template v-slot:after>
+          <div class="col font q-mx-md q-mt-md" style="font-size: 22px">{{date}}</div>
           <q-tab-panels
             v-model="date"
             animated
             transition-prev="jump-up"
             transition-next="jump-up"
           >
-            <q-tab-panel name="2021/08/05" class="detail-account">
+
+
+
+            <q-tab-panel name="2021/10/18" class="detail-account">
               <div class="row font">
-                <div class="col" style="font-size: 22px">2021/08/05</div>
-                <div class="col text-right" style="font-size: 22px">
-                  สวนภูเก็ต
+                <div class="col" style="font-size: 22px">
+                  สวนภูเก็ต{{listIncome[0].farm_id}}
                 </div>
               </div>
-              <div class="row font">
+            </q-tab-panel>
+              
+              <!-- <div class="row font">
                 <div class="greencircle"></div>
                 <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
                 <div class="col text-right" style="font-size: 18px">
@@ -78,9 +83,9 @@
                     5,026.00
                   </div>
                 </div>
-              </div>
+              </div> -->
 
-              <div class="row font q-pt-md">
+              <!-- <div class="row font q-pt-md">
                 <div class="redcircle"></div>
                 <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>
                 <div class="col text-right" style="font-size: 18px">
@@ -100,8 +105,8 @@
                   ซื้ออุปกรณ์ มีดกรีดยาง
                 </div>
                 <div class="row font" style="font-size: 16px">กนกวรรณ</div>
-              </div>
-            </q-tab-panel>
+              </div> -->
+           
           </q-tab-panels>
         </template>
       </q-splitter>
@@ -113,17 +118,47 @@
 <script>
 import { date } from "quasar";
 const timeStamp = Date.now();
-const date_now = date.formatDate(timeStamp, "YYYY/MM/DD");
+const date_now = date.formatDate(timeStamp, "YYYY-MM-DD");
 
 export default {
   data() {
     return {
       // model: { from: "", to: "" },
+      listIncome:[],
       splitterModel: 50,
       date: [date_now],
-      events: ["2021/08/05"],
+      events: [],
+
+
     };
   },
+  mounted() {
+    this.getListIncome();
+  },
+  methods: { 
+    async getListIncome(){
+      const { data } = await this.$axios.get(
+        "/income/listbyowner/a6260f89-5443-4df1-94d7-6e3e431f76b6"
+      );
+      this.listIncome = data.data;
+      this.date = this.formatDate(new Date());
+      this.events=data.data.map((data)=>{
+        return this.formatDate(data.date)
+      })
+      console.log(data.data);
+    },
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+
+  },
+  // watch:{
+  //   date(value){
+  //     this.listIncome =this.listIncome.filter((data)=>{
+  //       return new Date(value).getTime()==new Date(data.date).getTime()
+  //     })
+  //   }
+  // }
 };
 </script>
 <style scoped src="../css/home.css">

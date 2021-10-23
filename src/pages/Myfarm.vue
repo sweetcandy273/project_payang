@@ -20,27 +20,38 @@
       <div class="q-ma-md col-6 font" style="font-size: 30px">สวนของฉัน</div>
     </div>
 
-    <div class="row" @click="$router.push({ name: 'detail_farm' })">
-      <div class="col">
-        <div class="box_forest text-center">
-          <img
-            alt="Payang logo"
-            src="../assets/forest2.png"
-            style="width: 45px"
-          />
+    <div :key="index" v-for="(farm, index) in farms">
+      <div
+        class="row q-pt-md"
+        @click="
+          $router.push({
+            name: 'detail_farm',
+            query: { id: farm.farm_id }
+          })
+        "
+      >
+        <div class="col">
+          <div class="box_forest text-center">
+            <img
+              alt="Payang logo"
+              src="../assets/forest2.png"
+              style="width: 45px"
+            />
+          </div>
+        </div>
+        <div class="col-7">
+          <div style="font-size: 20px">{{ farm.farm_name }}</div>
+          <div style="font-size: 12px">
+            {{ farm.address }} อ.{{ farm.address_district }} จ.{{
+              farm.address_province
+            }}
+          </div>
+        </div>
+        <div class="planting-area text-center col-2">
+          <div class="stylearea">{{ farm.area }} ไร่</div>
         </div>
       </div>
-      <div class="col-7">
-        <div style="font-size: 20px">{{ farm.farm_name }}</div>
-        <div style="font-size: 12px">
-          {{ farm.address }} อ.{{ farm.address_district }} จ.{{
-            farm.address_province
-          }}
-        </div>
-      </div>
-      <div class="planting-area text-center col-2">
-        <div class="stylearea">{{ farm.area }} ไร่</div>
-      </div>
+      <hr width="250" />
     </div>
 
     <div class="add_farm text-center fixed-bottom q-pa-xl">
@@ -65,26 +76,22 @@
 export default {
   data() {
     return {
-      farm: [],
-
-      leftDrawerOpen: false,
-      model: null,
-      secondModel: "yearly"
+      user_has_farm: [],
+      farms: []
     };
   },
-  mounted() {
-    getFarm();
+  async mounted() {
+    this.getlistfarm();
   },
 
   methods: {
-    async getFarm() {
-      const { data } = await this.$axios.get(
-        "/farm/20c676fe-dead-48bd-a445-e5178603c041"
+    async getlistfarm() {
+      const { data } = await axios.get(
+        "http://localhost:3000/farm/list/" + this.$route.query.id
       );
-      this.farm = data.data;
+      this.farms = data.data;
       // console.log(data.data);
     },
-
     confirm() {
       this.$q
         .dialog({

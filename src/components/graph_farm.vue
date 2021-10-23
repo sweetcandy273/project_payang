@@ -64,7 +64,7 @@
           labels: ["Jan",	"Feb",	"Mar",	"Apr",	" May",	" Jun",	"Jul", "Aug", " Sep", "Oct","Nov","Dec"],
           datasets: [
             {
-            label: 'น้ำยงสด : กิโลกรัม',
+            label: 'น้ำยางสด : กิโลกรัม',
               data: [600,	1150,	342,	6050,	2522,	3241,	1259,	157,	1545, 9841, 155, 17],
               fill: false,
               borderColor: '#4e7971',

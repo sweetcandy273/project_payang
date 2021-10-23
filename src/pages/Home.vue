@@ -157,7 +157,7 @@
 
     <div>
       <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
-        <ProductYearly />
+        <ProductYearly :item="id" />
       </div>
       <div v-else class="text-center">
         <ProductMonthly />
@@ -171,6 +171,7 @@ import ProductYearly from "../components/ProductYearly.vue";
 import ProductMonthly from "../components/ProductMonthly.vue";
 
 export default {
+  props: {},
   // name: "yearly",
   components: {
     ProductYearly,
@@ -178,9 +179,10 @@ export default {
   },
 
   data() {
+    const id = { id: "a6260f89-5443-4df1-94d7-6e3e431f76b6" };
     return {
       payang_user: [],
-
+      id,
       leftDrawerOpen: false,
       model: null,
       secondModel: "yearly"

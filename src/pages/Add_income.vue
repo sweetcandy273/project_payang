@@ -146,7 +146,7 @@
                   filled
                   v-model="share"
                   :options="optionspercent"
-                  label="ส่วนแบ่ง"
+                  label="% ที่เจ้าของได้"
                 />
               </div>
             </div>
@@ -190,7 +190,7 @@ export default {
       note: "",
       selectshare: false,
       share: "",
-      optionspercent: ["60:40", "55:45", "50:50"],
+      optionspercent: ["60", "55", "50"],
       employee: "",
       optionsemployee: ["กนกวรรณ", "ชนิกานต์", "อรไท"],
     };

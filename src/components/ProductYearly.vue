@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="font" style="font-size: 30px">{{ year_now }}</div>
+  <div v-if="item">
+    <div class="font" style="font-size: 30px">{{ item.id }}</div>
     <div class="row font q-px-md seft-center text-center">
       <div class="col-2 seft-center">
         <q-icon name="arrow_back_ios" size="30px" />
@@ -107,13 +107,14 @@
 import { date } from "quasar";
 const timeStamp = Date.now();
 
-
 const date_now = date.formatDate(timeStamp, "YYYY/MM/DD");
 const year_now = date_now.slice(0, 4);
 
 import DoughnutChart from "../components/Chart.js";
 
 export default {
+  props: { item: { type: Object || Array } },
+
   components: { DoughnutChart },
   data() {
     return {
@@ -123,7 +124,7 @@ export default {
       yearly_expenses: "1.00",
       yearly_profit: "1.00",
 
-      datacollection: null,
+      datacollection: null
       // loaded: false,
     };
   },
@@ -139,12 +140,12 @@ export default {
           {
             label: ["รายรับ", "รายจ่าย"],
             backgroundColor: ["#06BE3B", "#B01717"],
-            data: [20, 5],
-          },
-        ],
+            data: [20, 5]
+          }
+        ]
       };
-    },
-  },
+    }
+  }
 };
 </script>
 

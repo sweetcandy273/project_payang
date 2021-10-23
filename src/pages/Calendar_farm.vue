@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <q-header>
@@ -43,8 +44,8 @@
               </div>
              
               <div class="row font q-pt-md">
-                <div class="redcircle"></div>
-                <div class="col q-ml-xs" style="font-size: 18px">08.00</div>
+                
+                
                 <div class="col text-right" style="font-size: 18px">
                   ตัดหญ้า
                 </div>
@@ -52,16 +53,9 @@
             </q-tab-panel>
           </q-tab-panels>
           </div>
-        </template>
-      </q-splitter>
-    </div>
-    
-
-    
 
 
-
-    <div class="add-account text-center fixed-bottom q-pa-xl">
+            <div class="add-account text-center fixed-bottom q-pa-xl">
       <q-btn
         unelevated
         round
@@ -70,6 +64,17 @@
         @click="$router.push({ name: 'add_calender_farm' })"
       />
     </div>
+        </template>
+      </q-splitter>
+      
+    </div>
+    
+
+    
+
+
+
+  
   </div>
 </template>
  

@@ -20,29 +20,39 @@
       <div class="q-ma-md col-6 font" style="font-size: 30px">สวนของฉัน</div>
     </div>
 
-    <div class="row" @click="$router.push({ name: 'detail_farm' })">
-      <div class="col">
-        <div class="box_forest text-center">
-          <img
-            alt="Payang logo"
-            src="../assets/forest2.png"
-            style="width: 45px"
-          />
+    <div :key="index" v-for="(farm, index) in farms">
+      <div
+        class="row q-pt-md"
+        @click="
+          $router.push({
+            name: 'detail_farm',
+            query: { id: farm.farm_id }
+          })
+        "
+      >
+        <div class="col">
+          <div class="box_forest text-center">
+            <img
+              alt="Payang logo"
+              src="../assets/forest2.png"
+              style="width: 45px"
+            />
+          </div>
+        </div>
+        <div class="col-7">
+          <div style="font-size: 20px">{{ farm.farm_name }}</div>
+          <div style="font-size: 12px">
+            {{ farm.address }} อ.{{ farm.address_district }} จ.{{
+              farm.address_province
+            }}
+          </div>
+        </div>
+        <div class="planting-area text-center col-2">
+          <div class="stylearea">{{ farm.area }} ไร่</div>
         </div>
       </div>
-      <div class="col-7">
-        <div style="font-size: 20px">{{ farm.farm_name }}</div>
-        <div style="font-size: 12px">
-          {{ farm.address }} อ.{{ farm.address_district }} จ.{{
-            farm.address_province
-          }}
-        </div>
-      </div>
-      <div class="planting-area text-center col-2">
-        <div class="stylearea">{{ farm.area }} ไร่</div>
-      </div>
+      <hr width="250" />
     </div>
-  
 
     <div class="add_farm text-center fixed-bottom q-pa-xl">
       <!-- ส่ง params user_id -->
@@ -54,7 +64,7 @@
         @click="
           $router.push({
             name: 'add_detail_farm',
-            query: { id: $route.query.id },
+            query: { id: $route.query.id }
           })
         "
       />
@@ -62,36 +72,27 @@
   </div>
 </template>
 
-
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
       user_has_farm: [],
-      farm: [],
-
-      leftDrawerOpen: false,
-      model: null,
-      secondModel: "yearly",
+      farms: []
     };
   },
   async mounted() {
-    // const { datauser_has_farm } = await axios.get(
-    //   "http://localhost:3000/user_has_farm/list/" + this.$router.query.id
-    // );
-    // this.user_has_farm = datauser_has_farm.data;
-    // console.log(datauser_has_farm.data);
-
-    const { data } = await axios.get(
-      "http://localhost:3000/farm/20c676fe-dead-48bd-a445-e5178603c041"
-    );
-    this.farm = data.data;
-    // console.log(data.data);
+    this.getlistfarm();
   },
 
   methods: {
+    async getlistfarm() {
+      const { data } = await axios.get(
+        "http://localhost:3000/farm/list/" + this.$route.query.id
+      );
+      this.farms = data.data;
+      // console.log(data.data);
+    },
     confirm() {
       this.$q
         .dialog({
@@ -100,12 +101,12 @@ export default {
             'ระบบจะทำการลบข้อมูลเกี่ยวกับบัญชีผู้ใช้นี้ทั้งหมด <span class="text-red font"><strong>หากยืนยันการลบบัญชีผู้ใช้แล้ว ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
           cancel: true,
           persistent: true,
-          html: true,
+          html: true
         })
         .onOk(() => {
           console.log(">>>> OK");
           this.$router.push({
-            path: "/login",
+            path: "/login"
           });
         })
 
@@ -118,14 +119,13 @@ export default {
     },
     logout() {
       this.$router.push({
-        path: "/login",
+        path: "/login"
       });
-    },
-  },
+    }
+  }
 };
 </script>
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>
 
 <style scoped>
 .planting-area {

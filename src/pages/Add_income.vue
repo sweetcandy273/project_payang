@@ -71,12 +71,6 @@
         </div>
       </div>
       <div class="row">
-        <div class="col">
-          <q-input filled v-model="dry_rubber" color="teal" label="เนื้อยางแห้ง">
-            <template v-slot:prepend> ก. </template>
-          </q-input>
-        </div>
-
         <div class="row">
           <div class="col">
             <q-input filled v-model="dry_rubber" label="เนื้อยางแห้ง">
@@ -92,81 +86,76 @@
       </div>
       <div class="row">
         <div class="col">
-          <q-input filled v-model="totalprice" color="teal" label="รวมจำนวนเงิน">
+          <q-input
+            filled
+            v-model="totalprice"
+            color="teal"
+            label="รวมจำนวนเงิน"
+          >
             <template v-slot:prepend> ฿ </template>
           </q-input>
         </div>
-
-        <div class="row">
-          <div class="col">
-            <q-input filled v-model="stores" label="ชื่อร้านค้า">
-              <template v-slot:prepend> กก. </template>
-            </q-input>
-          </div>
-          <div class="col q-ml-md">
-            <q-input filled v-model="tel_stores" label="เบอร์โทรร้านค้า">
-              <template v-slot:prepend>  </template>
-            </q-input>
-          </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <q-input filled v-model="stores" label="ชื่อร้านค้า">
+            <template v-slot:prepend> กก. </template>
+          </q-input>
         </div>
+        <div class="col q-ml-md">
+          <q-input filled v-model="tel_stores" label="เบอร์โทรร้านค้า">
+            <template v-slot:prepend> </template>
+          </q-input>
+        </div>
+      </div>
 
-        <!-- <div class="stores">
-        <q-select filled v-model="store" :options="options" label="ร้านค้า">
-          <template v-slot:prepend>
-            <q-icon name="store" />
-          </template>
-        </q-select>
-      </div> -->
+      <div class="share">
+        <q-checkbox
+          v-model="selectshare"
+          style="font-size: 16px"
+          label="ผู้รับผิดชอบ"
+        />
+      </div>
 
-        <div class="share">
-          <q-checkbox
-            v-model="selectshare"
-            style="font-size: 16px"
+      <div class="sharemoney" v-if="selectshare">
+        <strong>
+          <q-select
+            filled
+            v-model="employee"
+            :options="optionsemployee"
             label="ผู้รับผิดชอบ"
-          />
-        </div>
+          >
+            <template v-slot:prepend>
+              <q-icon name="person" />
+            </template>
+          </q-select>
 
-        <div class="sharemoney" v-if="selectshare">
-          <strong>
-            <q-select
-              filled
-              v-model="employee"
-              :options="optionsemployee"
-              label="ผู้รับผิดชอบ"
-            >
-              <template v-slot:prepend>
-                <q-icon name="person" />
-              </template>
-            </q-select>
-
-            <div class="row">
-              <div class="col text-center q-my-md">% การแบ่ง</div>
-              <div class="col q-my-md">
-                <q-select
-                  filled
-                  v-model="share"
-                  :options="optionspercent"
-                  label="% ที่เจ้าของได้"
-                />
-              </div>
+          <div class="row">
+            <div class="col text-center q-my-md">% การแบ่ง</div>
+            <div class="col q-my-md">
+              <q-select
+                filled
+                v-model="share"
+                :options="optionspercent"
+                label="% ที่เจ้าของได้"
+              />
             </div>
-          
+          </div>
         </strong>
       </div>
       <div class="col">
         <q-input filled v-model="note" color="teal" label="บันทึก" />
       </div>
 
-        <div class="submit row q-gutter-sm flex-center">
-          <q-btn
-            unelevated
-            rounded
-            @click="onSubmit()"
-            label="บันทึก"
-            class="shadow-2 text-white"
-            style="width: 100%; background-color: #4e7971"
-          />
-        </div>
+      <div class="submit row q-gutter-sm flex-center">
+        <q-btn
+          unelevated
+          rounded
+          @click="onSubmit()"
+          label="บันทึก"
+          class="shadow-2 text-white"
+          style="width: 100%; background-color: #4e7971"
+        />
       </div>
     </div>
   </div>

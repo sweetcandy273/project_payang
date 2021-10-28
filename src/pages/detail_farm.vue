@@ -1,5 +1,5 @@
 <template>
-  <div class="font">
+  <div class="font" v-if="farm">
     <q-header class="shadow-2">
       <q-toolbar class="text-center row">
         <div class="col flex">
@@ -43,11 +43,13 @@
           </div>
         </div>
 
-        <div>เจ้าของสวน : </div>
-        <div>สวน :</div>
-        <div>ที่อยู่ :</div>
-        <div>เนื้อที่ปลูก : ไร่</div>
-        <div>ผู้ดูแล :</div>
+        <div>เจ้าของสวน : {{farm.fname}} {{farm.lname}} </div>
+        <div>สวน : {{farm.farm_name}} </div>
+        <div>ที่อยู่ : {{ farm.address }} อ.{{ farm.address_district }} จ.{{
+              farm.address_province
+            }} </div>
+        <div>เนื้อที่ปลูก : {{ farm.area }} ไร่</div>
+        <div>ผู้ดูแล : </div>
       </div>
     </div>
 
@@ -90,12 +92,7 @@ import graph_farm from "../components/graph_farm.vue";
 import axios from "axios";
 
 export default {
-  data() {
-    return {
-      user_has_farm: [],
-      farm: [],
-    };
-  },
+
   async mounted() {
     this.getfarm();
   },
@@ -108,6 +105,9 @@ export default {
       leftDrawerOpen: false,
       model: null,
       secondModel: "yearly",
+      farm : null,
+      user_has_farm: [],
+      
     };
   },
   methods: {

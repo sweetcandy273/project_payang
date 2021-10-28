@@ -196,21 +196,7 @@ export default {
   methods: {
     onSubmit() {
       
-      // const { data } = await axios.put(
-      //   "http://localhost:3000/farm/update/" + this.$route.query.id,
-      //   {
-      //     fname: this.payang_user.fname,
-      //     lname: this.payang_user.lname,
-      //     phone_number: this.payang_user.phone_number,
-      //     email: this.payang_user.email,
-      //     address: this.payang_user.address,
-      //     address_district: this.payang_user.address_district,
-      //     address_province: this.payang_user.address_province,
-      //     zip_code: this.payang_user.zip_code,
-      //   }
-      // );
-      // this.payang_user = data.data;
-      // console.log(data.data);
+
 
       this.$router.push({
         path: "/home",

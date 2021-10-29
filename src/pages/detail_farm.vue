@@ -60,7 +60,7 @@
     <div class="q-pa-md q-gutter-sm self-center">
       <div>
         <q-btn
-          @click="$router.push({ name: 'account_calendar' })"
+          @click="$router.push({ name: 'account_calendar'})"
           unelevated
           rounded
           label="รายละเอียดบัญชี"
@@ -113,7 +113,7 @@ export default {
   methods: {
     async getfarm() {
       const { data } = await axios.get(
-        "http://localhost:3000/farm/" + this.$route.query.id
+        "http://localhost:3000/farm/a07f9bfa-e8b2-4125-8036-acf3d7048e09"
       );
       this.farm = data.data;
       console.log(data.data);

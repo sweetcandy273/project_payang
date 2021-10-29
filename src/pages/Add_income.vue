@@ -166,7 +166,7 @@ export default {
   data() {
     return {
       //ถ้าจะเอาไปใส่ Database ต้อง this.ตัวแปร
-      date: "2021/07/18",
+      date: "",
       weight_rubber: "",
       percent: "",
       dry_rubber: "",
@@ -190,7 +190,7 @@ export default {
       axios.post(
         `http://localhost:3000/income/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
         {
-          date: this.date,
+          date: this.date_income,
           amount: this.totalprice,
           amount_net: this.totalprice * 0.6,
           weight: this.weight_rubber,

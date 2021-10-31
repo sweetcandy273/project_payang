@@ -60,7 +60,7 @@
             <div>รายรับ</div>
           </div>
           <div class="col text-right" style="font-size: 20px">
-            <div>{{ yearly_income }}</div>
+            <div>{{ incomeyearly }}</div>
           </div>
           <div class="col-1 text-right" style="font-size: 19px">
             <div>บ.</div>
@@ -71,7 +71,7 @@
             <div>รายจ่าย</div>
           </div>
           <div class="col text-right" style="font-size: 20px">
-            <div>{{ yearly_expenses }}</div>
+            <div>{{ expenyearly }}</div>
           </div>
           <div class="col-1 text-right" style="font-size: 19px">
             <div>บ.</div>
@@ -82,7 +82,7 @@
             <div>กำไรสุทธิ</div>
           </div>
           <div class="col text-right" style="font-size: 25px">
-            <div>{{ yearly_profit }}</div>
+            <div>{{ profit }}</div>
           </div>
           <div class="col-1 text-right" style="font-size: 19px">
             <div>บ.</div>
@@ -118,6 +118,12 @@ export default {
   components: { DoughnutChart },
   data() {
     return {
+      owner: "",
+      incomeyearly: {},
+      expenyearly: {},
+      income: 0,
+      expen: 0,
+      profit: 0,
       year_now: year_now,
       yearly_rubber: "10.00",
       yearly_income: "2.00",
@@ -128,10 +134,37 @@ export default {
       // loaded: false,
     };
   },
-  mounted() {
-    this.fillData();
+  async mounted() {
+    this.owner = this.item.id;
+    await this.getincome();
+    await this.getexpen();
+    await this.calprofit();
+    await this.fillData();
   },
   methods: {
+    async getincome() {
+      const { data } = await this.$axios.get(
+        "/income/listyearly/" + this.owner
+      );
+      this.incomeyearly = data.data;
+      this.income = Number(this.incomeyearly);
+      console.log(this.income);
+    },
+    async getexpen() {
+      const { data } = await this.$axios.get(
+        "/expenditure/listyearly/" + this.owner
+      );
+      this.expenyearly = data.data;
+      this.expen = Number(this.expenyearly);
+      console.log(this.expen);
+    },
+
+    calprofit() {
+      // console.log(this.income, this.expen);
+      this.profit = this.income - this.expen;
+      console.log(this.profit);
+    },
+
     fillData() {
       this.datacollection = {
         labels: ["รายรับ", "รายจ่าย"],

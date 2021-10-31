@@ -71,31 +71,44 @@
         </div>
       </div>
       <div class="row">
-        <div class="col">
-          <q-input filled v-model="dry_rubber" color="teal" label="เนื้อยางแห้ง">
-            <template v-slot:prepend> ก. </template>
-          </q-input>
+        <div class="row">
+          <div class="col">
+            <q-input filled v-model="dry_rubber" label="เนื้อยางแห้ง">
+              <template v-slot:prepend> ก. </template>
+            </q-input>
+          </div>
+          <div class="col q-ml-md">
+            <q-input filled v-model="rubber_price" label="ราคาน้ำยาง">
+              <template v-slot:prepend> บ./กก. </template>
+            </q-input>
+          </div>
         </div>
-        <div class="col q-ml-md">
-          <q-input filled v-model="price_rubber" label="ราคาน้ำยาง">
-            <template v-slot:prepend> บ./กก. </template>
+      </div>
+      <div class="row">
+        <div class="col">
+          <q-input
+            filled
+            v-model="totalprice"
+            color="teal"
+            label="รวมจำนวนเงิน"
+          >
+            <template v-slot:prepend> ฿ </template>
           </q-input>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <q-input filled v-model="totalprice" color="teal" label="รวมจำนวนเงิน">
-            <template v-slot:prepend> ฿ </template>
+          <q-input filled v-model="stores" label="ชื่อร้านค้า">
+            <template v-slot:prepend> กก. </template>
+          </q-input>
+        </div>
+        <div class="col q-ml-md">
+          <q-input filled v-model="tel_stores" label="เบอร์โทรร้านค้า">
+            <template v-slot:prepend> </template>
           </q-input>
         </div>
       </div>
-      <div class="stores">
-        <q-select filled v-model="store" :options="options" label="ร้านค้า">
-          <template v-slot:prepend>
-            <q-icon name="store" />
-          </template>
-        </q-select>
-      </div>
+
       <div class="share">
         <q-checkbox
           v-model="selectshare"
@@ -103,6 +116,7 @@
           label="ผู้รับผิดชอบ"
         />
       </div>
+
       <div class="sharemoney" v-if="selectshare">
         <strong>
           <q-select
@@ -123,7 +137,7 @@
                 filled
                 v-model="share"
                 :options="optionspercent"
-                label="ส่วนแบ่ง"
+                label="% ที่เจ้าของได้"
               />
             </div>
           </div>
@@ -137,36 +151,74 @@
         <q-btn
           unelevated
           rounded
+          @click="onSubmit()"
           label="บันทึก"
-          type="submit"
           class="shadow-2 text-white"
           style="width: 100%; background-color: #4e7971"
-          @click="$router.push({ name: 'check_income' })"
         />
       </div>
     </div>
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       //ถ้าจะเอาไปใส่ Database ต้อง this.ตัวแปร
-      date: "2021/07/18",
+      date: "",
       weight_rubber: "",
       percent: "",
       dry_rubber: "",
-      price_rubber: "",
+      rubber_price: "",
       totalprice: "",
-      store: null,
-      options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด", "อื่นๆ"],
+      stores: null,
+      tel_stores: "",
+      // options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด", "อื่นๆ"],
       note: "",
       selectshare: false,
-      share:"",
-      optionspercent: ["60:40", "55:45", "50:50"],
+      share: "",
+      optionspercent: ["60", "55", "50"],
       employee: "",
       optionsemployee: ["กนกวรรณ", "ชนิกานต์", "อรไท"],
     };
+  },
+
+  mounted() {},
+  methods: {
+    onSubmit() {
+      axios.post(
+        `http://localhost:3000/income/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
+        {
+          date: this.date_income,
+          amount: this.totalprice,
+          amount_net: this.totalprice * 0.6,
+          weight: this.weight_rubber,
+          percen_rubber: this.percent,
+          dry_rubber: this.dry_rubber,
+          percen_split: "60",
+          rubber_price: this.rubber_price,
+          note: this.note,
+          farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
+          user_id: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
+        }
+      );
+      axios
+        .post(
+          `http://localhost:3000/store_income/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09`,
+          {
+            store: this.stores,
+            tel: this.tel_stores,
+            farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
+          }
+        )
+        .then((response) => {
+          console.log(response);
+        });
+      this.$router.push({
+        path: "/check_income",
+      });
+    },
   },
 };
 </script>

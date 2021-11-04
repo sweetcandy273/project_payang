@@ -1,12 +1,14 @@
 <template>
-  <div class="font">
+  <div class="font" v-if="farm">
     <q-header class="shadow-2">
       <q-toolbar class="text-center row">
         <div class="col flex">
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'detail_farm' })"
+            @click="
+              $router.push({ name: 'detail_farm', query: { id: farm.user_id } })
+            "
           />
         </div>
 
@@ -16,7 +18,7 @@
     </q-header>
 
     <div class="q-pa-md font">
-      <q-form class="q-gutter-md">
+      <q-form @submit="onSubmit" class="q-gutter-md">
         <div>
           เจ้าของสวน :
           <div class="row justify-between">
@@ -24,6 +26,7 @@
               <q-input
                 color="teal"
                 filled
+                v-model="farm.fname"
                 label="ชื่อ"
                 :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
               />
@@ -32,6 +35,7 @@
               <q-input
                 color="teal"
                 filled
+                v-model="farm.lname"
                 label="นามสกุล"
                 :rules="[
                   (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
@@ -44,6 +48,7 @@
           <q-input
             color="teal"
             filled
+            v-model="farm.farm_name"
             label="ชื่อสวน"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
           >
@@ -53,6 +58,7 @@
           <q-input
             color="teal"
             filled
+            v-model="farm.address"
             label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
           />
@@ -62,6 +68,7 @@
               <q-input
                 color="teal"
                 filled
+                v-model="farm.address_district"
                 label="เขต/อำเภอ"
                 :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
               />
@@ -70,6 +77,7 @@
               <q-input
                 color="teal"
                 filled
+                v-model="farm.address_province"
                 label="จังหวัด"
                 :rules="[
                   (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
@@ -82,16 +90,17 @@
           <q-input
             color="teal"
             filled
+            v-model="farm.area"
             label="เนื้อที่ปลูก"
             :rules="[
               (val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก',
             ]"
           />
         </div>
-      </q-form>
 
       <div>ผู้ดูแล :</div>
-      <div class="box_editeAdmin">
+
+            <div class="box_editeAdmin">
         <div class="row justify-between">
           <div class="col q-pr-md">
             <q-input
@@ -176,32 +185,90 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="q-pa-md q-gutter-sm self-center">
+
+
+      <div>
       <q-btn
-        @click="onSubmit()"
         unelevated
         rounded
         label="บันทึก"
+        type="submit"
         class="shadow-2 text-white"
       />
     </div>
+      </q-form>
+
+      
+  
+    </div>
+    
+  
+    
   </div>
+  
 </template>
 
 <script>
 import axios from "axios";
 export default {
+  async mounted() {
+    this.getfarm();
+  },
+
+  data() {
+    return {
+      farm: null,
+      user_has_farm: [],
+      payang_user: [],
+    };
+  },
   methods: {
-    onSubmit() {
-      
+    async getfarm() {
+      const { data } = await axios.get(
+        "http://localhost:3000/farm/a07f9bfa-e8b2-4125-8036-acf3d7048e09"
+      );
+      this.farm = data.data;
+      console.log(data.data);
+    },
 
+    showNotif() {
+      this.$q.dialog({
+        title: "Confirm",
+        message: "Would you delete the data? ",
+        cancel: true,
+        persistent: true,
+      });
+      return { confirm };
+    },
 
+    async onSubmit() {
+      const { data } = await axios.put(
+        "http://localhost:3000/farm/update/" + this.$route.query.id,
+        {
+          fname: this.farm.fname,
+          lname: this.farm.lname,
+          phone_number: this.farm.phone_number,
+          // farm_name: this.farm.farm_name,
+          // email: this.farm.email,
+          address: this.farm.address,
+          address_district: this.farm.address_district,
+          address_province: this.farm.address_province,
+          // area: this.farm.area,
+          // zip_code: this.farm.zip_code,
+        }
+      );
+      this.farm = data.data;
       this.$router.push({
         path: "/home",
       });
     },
+
+    // onSubmit() {
+    //   this.$router.push({
+    //     path: "/home",
+    //   });
+    // },
   },
 };
 </script>

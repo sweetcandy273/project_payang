@@ -93,6 +93,7 @@ export default {
       this.farms = data.data;
       // console.log(data.data);
     },
+     
     confirm() {
       this.$q
         .dialog({

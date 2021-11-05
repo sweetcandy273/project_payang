@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="font" style="font-size: 30px">กรกฎาคม</div>
+    <div class="font" style="font-size: 30px">{{ month_th }}</div>
     <div class="row font q-px-md seft-center text-center">
       <div class="col-2 seft-center">
-        <q-icon name="arrow_back_ios" size="30px" />
+        <q-icon name="arrow_back_ios" size="30px" @click="clickback()" />
       </div>
       <div class="col">
         <div style="font-size: 20px">น้ำยางสด</div>
@@ -25,7 +25,9 @@
         <div>บาท</div>
       </div>
       <div class="col-2 seft-center">
-        <q-icon name="arrow_forward_ios" size="30px" />
+        <div v-if="this.month < this.month_now">
+          <q-icon name="arrow_forward_ios" size="30px" @click="clicknext()" />
+        </div>
       </div>
     </div>
     <div class="q-pa-md font">
@@ -33,7 +35,7 @@
         <div class="row">
           <div class="col-10">
             <div style="font-size: 25px">สรุปบัญชีรวมทั้งหมด</div>
-            <div style="font-size: 22px">ประจำเดือน กรกฎาคม</div>
+            <div style="font-size: 22px">ประจำเดือน {{ month_th }}</div>
           </div>
           <div class="col">
             <div>
@@ -107,9 +109,25 @@
 import { date } from "quasar";
 const timeStamp = Date.now();
 
+const date_now = date.formatDate(timeStamp, "YYYY-MM-DD");
+const month_now = date_now.slice(5, 7);
 
-const date_now = date.formatDate(timeStamp, "YYYY/MM/DD");
-const month_now = date_now.slice(4, 6);
+const months_th = [
+  { month: "01", name: "มกราคม" },
+  { month: "02", name: "กุมภาพันธ์" },
+  { month: "03", name: "มีนาคม" },
+  { month: "04", name: "เมษายน" },
+  { month: "05", name: "พฤษภาคม" },
+  { month: "06", name: "มิถุนายน" },
+  { month: "07", name: "กรกฎาคม" },
+  { month: "08", name: "สิงหาคม" },
+  { month: "09", name: "กันยายน" },
+  { month: "10", name: "ตุลาคม" },
+  { month: "11", name: "พฤศจิกายน" },
+  { month: "12", name: "ธันวาคม" }
+];
+
+const month_th = months_th.find(m => m.month == month_now).name;
 
 import DoughnutChart from "../components/Chart.js";
 
@@ -118,12 +136,14 @@ export default {
   data() {
     return {
       month_now: month_now,
+      month: month_now,
+      month_th: month_th,
       monthly_rubber: "10.00",
       monthly_income: "2.00",
       monthly_expenses: "1.00",
       monthly_profit: "1.00",
 
-      datacollection: null,
+      datacollection: null
       // loaded: false,
     };
   },
@@ -131,6 +151,21 @@ export default {
     this.fillData();
   },
   methods: {
+    setmonth() {
+      this.month_th = months_th.find(m => m.month == this.month).name;
+    },
+
+    clickback() {
+      this.month = this.month - 1;
+      this.setmonth();
+    },
+    clicknext() {
+      if (this.month < this.month_now) {
+        this.month = this.month + 1;
+        this.setmonth();
+      }
+    },
+
     fillData() {
       this.datacollection = {
         labels: ["รายรับ", "รายจ่าย"],
@@ -139,12 +174,12 @@ export default {
           {
             label: ["รายรับ", "รายจ่าย"],
             backgroundColor: ["#06BE3B", "#B01717"],
-            data: [20, 5],
-          },
-        ],
+            data: [20, 5]
+          }
+        ]
       };
-    },
-  },
+    }
+  }
 };
 </script>
 

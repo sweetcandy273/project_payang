@@ -43,7 +43,7 @@
           $router.push({
             path: 'detail_income',
             query: {
-              id: data.in_id
+              id: data.in_id,
             },
           })
         "
@@ -82,7 +82,14 @@
       </div>
       <div
         class="calendar-expenditure q-pa-md"
-        @click="$router.push({ name: 'detail_expenditure' })"
+        @click="
+          $router.push({
+            path: 'detail_expenditure',
+            query: {
+              id: data.expen_id,
+            },
+          })
+        "
       >
         <div class="row font">
           <div class="col" style="font-size: 16px">ร้านขายอุปกรณ์การช่าง</div>

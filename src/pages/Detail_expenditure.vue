@@ -22,10 +22,10 @@
         <div class="row">
           <div class="col">
             <div class="row" style="font-size: 18px">
-              เจ้าของสวน : กัลย์สุดา
+              เจ้าของสวน : 
             </div>
             <div class="row q-pb-md" style="font-size: 18px">
-              สวน : สวนภูเก็ต
+              สวน : 
             </div>
           </div>
           <div class="col-4 text-right">
@@ -41,13 +41,13 @@
         <div class="row q-py-md">
           <div class="col" style="font-size: 30px">ซื้ออุปกรณ์</div>
           <div class="col text-right q-pt-md" style="font-size: 18px">
-            15/06/2564
+            {{expenditures.date_expenditure}}
           </div>
         </div>
         <div class="row" style="font-size: 18px">
-          มีดกรีดยาง
+          {{expenditures.note}}
         </div>
-        <div class="text-right" style="font-size: 30px">2,000.00</div>
+        <div class="text-right" style="font-size: 30px">{{ expenditures.amount }}</div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-pt-md" style="font-size: 18px">
           ร้าน : ขายอุปกรณ์การช่าง
@@ -86,11 +86,28 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   data() {
-    return {};
+    return {
+      expenditures: {},
+    };
+  },
+  mounted() {
+    this.getExpen();
+    // this.getfarm();
   },
   methods: {
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+    async getExpen() {
+      const { data } = await axios.get(
+        `http://localhost:3000/expenditure/${this.$route.query.id}`
+      );
+      this.expenditures = data.data;
+      console.log(data);
+    },
     Notidelete() {
       this.$q
         .dialog({

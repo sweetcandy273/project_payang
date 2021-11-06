@@ -1,15 +1,17 @@
 <template>
-  <div>
+  <div v-if="item">
     <div class="font" style="font-size: 30px">{{ month_th }}</div>
     <div class="row font q-px-md seft-center text-center">
       <div class="col-2 seft-center">
-        <q-icon name="arrow_back_ios" size="30px" @click="clickback()" />
+        <div v-if="this.month > 1">
+          <q-icon name="arrow_back_ios" size="30px" @click="clickback()" />
+        </div>
       </div>
       <div class="col">
         <div style="font-size: 20px">น้ำยางสด</div>
         <q-img src="../assets/rubber-cup.png" style="" width="100px">
           <div class="absolute-full flex flex-center text-black bg-product-all">
-            {{ monthly_rubber }}
+            {{ this.product }}
           </div>
         </q-img>
 
@@ -19,7 +21,7 @@
         <div style="font-size: 20px">รายรับ</div>
         <q-img src="../assets/money.png" style="" width="100px">
           <div class="absolute-full flex flex-center text-black bg-product-all">
-            {{ monthly_income }}
+            {{ this.income }}
           </div>
         </q-img>
         <div>บาท</div>
@@ -50,18 +52,24 @@
             <div>บัญชี</div>
           </div>
         </div>
-
-        <Doughnut-chart
-          :chart-data="datacollection"
-          class="q-pa-md chart"
-        ></Doughnut-chart>
+        <div v-if="this.profit != 0">
+          <Doughnut-chart
+            :chart-data="datacollection"
+            class="q-pa-md chart"
+          ></Doughnut-chart>
+        </div>
+        <div v-else>
+          <div class="q-ma-lg text-red" style="font-size: 25px">
+            กำไรสุทธิของเดือนนี้เป็น {{ this.profit }} บาท
+          </div>
+        </div>
 
         <div class="row items-end">
           <div class="col text-left" style="font-size: 20px; color: #06be3b">
             <div>รายรับ</div>
           </div>
           <div class="col text-right" style="font-size: 20px">
-            <div>{{ monthly_income }}</div>
+            <div>{{ this.income }}</div>
           </div>
           <div class="col-1 text-right" style="font-size: 19px">
             <div>บ.</div>
@@ -72,7 +80,7 @@
             <div>รายจ่าย</div>
           </div>
           <div class="col text-right" style="font-size: 20px">
-            <div>{{ monthly_expenses }}</div>
+            <div>{{ this.expen }}</div>
           </div>
           <div class="col-1 text-right" style="font-size: 19px">
             <div>บ.</div>
@@ -83,7 +91,7 @@
             <div>กำไรสุทธิ</div>
           </div>
           <div class="col text-right" style="font-size: 25px">
-            <div>{{ monthly_profit }}</div>
+            <div>{{ this.profit }}</div>
           </div>
           <div class="col-1 text-right" style="font-size: 19px">
             <div>บ.</div>
@@ -132,25 +140,105 @@ const month_th = months_th.find(m => m.month == month_now).name;
 import DoughnutChart from "../components/Chart.js";
 
 export default {
+  props: { item: { type: Object || Array } },
   components: { DoughnutChart },
   data() {
     return {
+      owner: "",
+      date_now,
       month_now: month_now,
       month: month_now,
+      monthget: "",
       month_th: month_th,
-      monthly_rubber: "10.00",
-      monthly_income: "2.00",
-      monthly_expenses: "1.00",
-      monthly_profit: "1.00",
+
+      incomemonthly: {},
+      expenmonthly: {},
+      productmonthly: {},
+
+      income: 0.0,
+      expen: 0.0,
+      profit: 0.0,
+      product: 0.0,
 
       datacollection: null
       // loaded: false,
     };
   },
-  mounted() {
-    this.fillData();
+  async mounted() {
+    this.owner = this.item.id;
+    await this.getincome();
+    await this.getexpen();
+    await this.getproductmonthly();
+    await this.fillData(this.income, this.expen);
   },
   methods: {
+    async getincome() {
+      if (this.month < 10) {
+        this.monthget = "0" + this.month.toString();
+      } else {
+        this.monthget = this.month;
+      }
+
+      const { data } = await this.$axios.get(
+        "/income/amountmonthly/" + this.monthget + "/" + this.owner
+      );
+      this.incomemonthly = data.data;
+
+      if (this.incomemonthly === "NaN") {
+        this.income = parseFloat(Number(0.0)).toFixed(2);
+      } else {
+        this.income = new Intl.NumberFormat("th-TH", {
+          style: "currency",
+          currency: "THB"
+        }).format(Number(this.incomemonthly));
+
+        this.income = parseFloat(Number(this.incomemonthly)).toFixed(2);
+      }
+      this.calprofit();
+      this.fillData(this.income, this.expen);
+    },
+
+    async getexpen() {
+      if (this.month < 10) {
+        this.monthget = "0" + this.month.toString();
+      } else {
+        this.monthget = this.month;
+      }
+      const { data } = await this.$axios.get(
+        "/expenditure/amountmonthly/" + this.monthget + "/" + this.owner
+      );
+      this.expenmonthly = data.data;
+
+      if (this.expenmonthly === "NaN") {
+        this.expen = parseFloat(Number(0.0)).toFixed(2);
+      } else {
+        this.expen = parseFloat(Number(this.expenmonthly)).toFixed(2);
+      }
+      this.calprofit();
+      this.fillData(this.income, this.expen);
+    },
+    async getproductmonthly() {
+      if (this.month < 10) {
+        this.monthget = "0" + this.month.toString();
+      } else {
+        this.monthget = this.month;
+      }
+      const { data } = await this.$axios.get(
+        "/income/productmonthly/" + this.monthget + "/" + this.owner
+      );
+      this.productmonthly = data.data;
+
+      if (this.productmonthly === "NaN") {
+        this.product = parseFloat(Number(0.0)).toFixed(2);
+      } else {
+        this.product = parseFloat(Number(this.productmonthly)).toFixed(2);
+      }
+    },
+    calprofit() {
+      this.profit = 0.0;
+      this.profit = parseFloat(Number(this.income - this.expen)).toFixed(2);
+    },
+
     setmonth() {
       this.month_th = months_th.find(m => m.month == this.month).name;
     },
@@ -158,15 +246,22 @@ export default {
     clickback() {
       this.month = this.month - 1;
       this.setmonth();
+
+      this.getincome();
+      this.getexpen();
+      this.getproductmonthly();
     },
     clicknext() {
       if (this.month < this.month_now) {
         this.month = this.month + 1;
         this.setmonth();
+        this.getincome();
+        this.getexpen();
+        this.getproductmonthly();
       }
     },
 
-    fillData() {
+    fillData(income, expen) {
       this.datacollection = {
         labels: ["รายรับ", "รายจ่าย"],
         // centerlabel: 2021,
@@ -174,7 +269,7 @@ export default {
           {
             label: ["รายรับ", "รายจ่าย"],
             backgroundColor: ["#06BE3B", "#B01717"],
-            data: [20, 5]
+            data: [income, expen]
           }
         ]
       };

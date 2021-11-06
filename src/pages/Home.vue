@@ -160,7 +160,7 @@
         <ProductYearly :item="id" />
       </div>
       <div v-else class="text-center">
-        <ProductMonthly />
+        <ProductMonthly :item="id" />
       </div>
     </div>
   </div>
@@ -194,9 +194,7 @@ export default {
 
   methods: {
     async getUser() {
-      const { data } = await this.$axios.get(
-        "/payang_user/a6260f89-5443-4df1-94d7-6e3e431f76b6"
-      );
+      const { data } = await this.$axios.get("/payang_user/" + this.id.id);
       this.payang_user = data.data;
       // console.log(data.data);
     },

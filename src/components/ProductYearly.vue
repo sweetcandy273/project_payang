@@ -3,7 +3,9 @@
     <div class="font" style="font-size: 30px">{{ year }}</div>
     <div class="row font q-px-md seft-center text-center">
       <div class="col-2 seft-center">
-        <q-icon name="arrow_back_ios" size="30px" @click="clickback()" />
+        <div v-if="this.year >= this.year_now - 10">
+          <q-icon name="arrow_back_ios" size="30px" @click="clickback()" />
+        </div>
       </div>
       <div class="col">
         <div style="font-size: 20px">น้ำยางสด</div>
@@ -50,11 +52,17 @@
             <div>บัญชี</div>
           </div>
         </div>
-        <div class="text-center">
+
+        <div v-if="this.profit != 0">
           <Doughnut-chart
             :chart-data="datacollection"
             class="q-pa-md chart"
           ></Doughnut-chart>
+        </div>
+        <div v-else>
+          <div class="q-ma-lg text-red" style="font-size: 25px">
+            กำไรสุทธิของปีนี้เป็น {{ this.profit }} บาท
+          </div>
         </div>
 
         <div class="row items-end">
@@ -109,7 +117,7 @@
 import { date } from "quasar";
 const timeStamp = Date.now();
 
-const date_now = date.formatDate(timeStamp, "YYYY/MM/DD");
+const date_now = date.formatDate(timeStamp, "YYYY-MM-DD");
 const year_now = date_now.slice(0, 4);
 
 import DoughnutChart from "../components/Chart.js";
@@ -121,16 +129,18 @@ export default {
   data() {
     return {
       owner: "",
+
+      year: year_now,
+      year_now: year_now,
+
       incomeyearly: {},
       expenyearly: {},
       productyearly: {},
-      income: 0,
-      expen: 0,
-      profit: 0,
-      product: 0,
-      year: year_now,
-      year_now: year_now,
-      yearly_rubber: "10.00",
+
+      income: 0.0,
+      expen: 0.0,
+      profit: 0.0,
+      product: 0.0,
 
       datacollection: null
       // loaded: false,
@@ -141,7 +151,6 @@ export default {
     await this.getincome();
     await this.getexpen();
     await this.getproductyearly();
-    // await this.calprofit();
     await this.fillData(this.income, this.expen);
   },
   methods: {
@@ -193,7 +202,6 @@ export default {
     },
     calprofit() {
       this.profit = 0.0;
-
       this.profit = parseFloat(Number(this.income - this.expen)).toFixed(2);
     },
 

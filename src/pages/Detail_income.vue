@@ -20,9 +20,7 @@
       <div class="detail-income q-pa-md shadow-2">
         <div class="row">
           <div class="col">
-            <div class="row" style="font-size: 18px">
-              เจ้าของสวน : 
-            </div>
+            <div class="row" style="font-size: 18px">เจ้าของสวน :</div>
 
             <div class="row q-pb-md" style="font-size: 18px">
               สวน : {{ farms.farm_name }}
@@ -76,7 +74,14 @@
               style="width: 50px; height: 50px"
               color="orange-4"
               icon="edit"
-              @click="$router.push({ name: 'edit_income' })"
+              @click="
+                $router.push({
+                  path: 'edit_income',
+                  query: {
+                    id: incomes.in_id,
+                  },
+                })
+              "
             />
 
             <q-btn
@@ -101,7 +106,7 @@ export default {
   data() {
     return {
       incomes: {},
-      farms:{},
+      farms: {},
     };
   },
   mounted() {

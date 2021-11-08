@@ -36,7 +36,7 @@
       />
     </div>
     <div class="font q-px-md">
-      <q-input filled v-model="date" color="teal" mask="date" :rules="['date']">
+      <q-input filled v-model="date_income" color="teal" mask="date" :rules="['date']">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy
@@ -44,7 +44,7 @@
               transition-show="scale"
               transition-hide="scale"
             >
-              <q-date v-model="date" color="green">
+              <q-date v-model="date_income" color="green">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="white" flat />
                 </div>
@@ -54,6 +54,7 @@
         </template>
       </q-input>
     </div>
+    
     <div class="text-center">
       <div class="font q-pa-md" style="font-size: 25px">ระบุข้อมูลน้ำยางสด</div>
     </div>
@@ -166,7 +167,7 @@ export default {
   data() {
     return {
       //ถ้าจะเอาไปใส่ Database ต้อง this.ตัวแปร
-      date: "",
+      date_income: "",
       weight_rubber: "",
       percent: "",
       dry_rubber: "",
@@ -190,7 +191,7 @@ export default {
       axios.post(
         `http://localhost:3000/income/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
         {
-          date: this.date_income,
+          date_income: this.date_income,
           amount: this.totalprice,
           amount_net: this.totalprice * 0.6,
           weight: this.weight_rubber,
@@ -216,7 +217,7 @@ export default {
           console.log(response);
         });
       this.$router.push({
-        path: "/check_income",
+        path: "/account_calendar",
       });
     },
   },

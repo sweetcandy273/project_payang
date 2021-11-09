@@ -92,20 +92,19 @@
             filled
             v-model="farm.area"
             label="เนื้อที่ปลูก"
-            :rules="[
-              (val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก',
-            ]"
+           
           />
         </div>
 
       <div>ผู้ดูแล :</div>
 
-            <div class="box_editeAdmin">
+            <div class="box_editeAdmin" v-if="name_employee">
         <div class="row justify-between">
           <div class="col q-pr-md">
             <q-input
               color="teal"
               filled
+              v-model="name_employee.fname"
               label="ชื่อ"
               :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
             />
@@ -114,6 +113,7 @@
             <q-input
               color="teal"
               filled
+              v-model="name_employee.lname"
               label="นามสกุล"
               :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
             />
@@ -122,6 +122,7 @@
         <q-input
           color="teal"
           filled
+          v-model="name_employee.phone_number"
           label="เบอร์โทรศัพท์"
           :rules="[
             (val) =>
@@ -136,6 +137,7 @@
         <q-input
           color="teal"
           filled
+          v-model="name_employee.e_number"
           label="เบอร์โทรศัพท์ฉุกเฉิน"
           :rules="[
             (val) =>
@@ -151,6 +153,7 @@
         <q-input
           color="teal"
           filled
+          v-model="name_employee.address"
           label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
         />
@@ -160,6 +163,7 @@
             <q-input
               color="teal"
               filled
+              v-model="name_employee.address_district"
               label="เขต/อำเภอ"
               :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
             />
@@ -168,6 +172,7 @@
             <q-input
               color="teal"
               filled
+              v-model="name_employee.address_province"
               label="จังหวัด"
               :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
             />
@@ -214,23 +219,43 @@ import axios from "axios";
 export default {
   async mounted() {
     this.getfarm();
+    this.getemployee();
+    this.getname_employee();
   },
 
   data() {
     return {
       farm: null,
-      user_has_farm: [],
       payang_user: [],
+      name_employee : null,
+      employee : [],
+      user_has_farm: [],
     };
   },
   methods: {
     async getfarm() {
       const { data } = await axios.get(
-        "http://localhost:3000/farm/a07f9bfa-e8b2-4125-8036-acf3d7048e09"
+        "http://localhost:3000/farm/" + this.$route.query.id
       );
       this.farm = data.data;
       console.log(data.data);
     },
+      async getemployee() {
+      const { data } = await axios.get( 
+        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
+      );
+      this.employee = data.data;
+      // console.log(data.data);
+    },
+      async getname_employee() {
+       console.log(this.employee.user_id);
+      const { data } = await axios.get(
+        "http://localhost:3000/payang_user/" + this.$route.query.id
+      );
+      this.name_employee = data.data;
+      console.log(data.data);
+    },
+  
 
     showNotif() {
       this.$q.dialog({

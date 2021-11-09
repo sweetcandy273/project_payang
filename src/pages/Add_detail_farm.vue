@@ -6,7 +6,7 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'myfarm' })"
+            @click="$router.push({ name: 'myfarm', query: { id: farm.user_id } })"
           />
         </div>
 
@@ -19,7 +19,6 @@
       <div class="row justify-between">
         <div class="col q-pr-md">
           <q-input
-            v-model="fname"
             color="teal"
             filled
             label="ชื่อ"
@@ -28,7 +27,6 @@
         </div>
         <div class="col">
           <q-input
-            v-model="lname"
             color="teal"
             filled
             label="นามสกุล"
@@ -37,7 +35,6 @@
         </div>
       </div>
       <q-input
-        v-model="farm_name"
         color="teal"
         filled
         label="ชื่อสวน"
@@ -46,7 +43,6 @@
       </q-input>
 
       <q-input
-        v-model="address"
         color="teal"
         filled
         label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
@@ -56,7 +52,6 @@
       <div class="row">
         <div class="col q-pr-md">
           <q-input
-            v-model="address_district"
             color="teal"
             filled
             label="เขต/อำเภอ"
@@ -65,7 +60,6 @@
         </div>
         <div class="col">
           <q-input
-            v-model="address_province"
             color="teal"
             filled
             label="จังหวัด"
@@ -76,22 +70,21 @@
       เนื้อที่ปลูก(ไร่) :
 
       <q-input
-        v-model="area"
         color="teal"
         filled
         label="เนื้อที่ปลูก"
         :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก']"
       />
 
-      <div class="Admin">
+      <div class="add_employee">
         <q-checkbox
-          v-model="checkbox"
+          v-model="add_employee"
           style="font-size: 16px"
           label="ผู้ดูแล"
         />
       </div>
 
-      <div class="box_admin" v-if="checkbox">
+      <div class="box_admin" v-if="add_employee">
         <div class="row justify-between">
           <div class="col q-pr-md">
             <q-input
@@ -175,18 +168,32 @@
 <script>
 import axios from "axios";
 export default {
+  async mounted() {
+  },
   data() {
     return {
-      fname,
-      lname,
-      farm_name,
-      area,
-      
-      checkbox: false,
+      farm: null,
+      add_employee: false,
+        name_employee : null,
+      employee : [],
+      user_has_farm: [],
     };
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
+      const { data } = await axios.put(
+        "http://localhost:3000/farm/update/" + this.$route.query.id,
+        {
+          fname: this.farm.fname,
+          lname: this.farm.lname,
+          phone_number: this.farm.phone_number,
+          address: this.farm.address,
+          address_district: this.farm.address_district,
+          address_province: this.farm.address_province,
+         
+        }
+      );
+      this.farm = data.data;
       this.$router.push({
         path: "/myfarm",
       });

@@ -49,13 +49,13 @@
               farm.address_province
             }} </div>
         <div>เนื้อที่ปลูก : {{ farm.area }} ไร่</div>
-        <div>ผู้ดูแล : </div>
+        <div v-if="name_employee">ผู้ดูแล : {{name_employee.fname}} {{name_employee.lname}} </div>
       </div>
     </div>
 
     <div></div>
 
-    <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
+    <div v-if="secondModel == 'graph_farm'" class="text-center" id="yearly">
       <graph_farm />
     </div>
 
@@ -95,29 +95,49 @@ export default {
 
   async mounted() {
     this.getfarm();
+    this.getemployee();
+    this.getname_employee();
   },
   components: {
     graph_farm,
   },
   data() {
     return {
-      idp: "20c676fe-dead-48bd-a445-e5178603c041",
       leftDrawerOpen: false,
       model: null,
-      secondModel: "yearly",
+      secondModel: "graph_farm",
       farm : null,
+      name_employee : null,
+      employee : [],
+      payang_user: [] ,
       user_has_farm: [],
-      
     };
   },
   methods: {
     async getfarm() {
       const { data } = await axios.get(
-        "http://localhost:3000/farm/a07f9bfa-e8b2-4125-8036-acf3d7048e09"
+        "http://localhost:3000/farm/" + this.$route.query.id
       );
       this.farm = data.data;
+      // console.log(data.data);
+    },
+     async getemployee() {
+      const { data } = await axios.get( 
+        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
+      );
+      this.employee = data.data;
+      // console.log(data.data);
+    },
+     async getname_employee() {
+       console.log(this.employee.user_id);
+      const { data } = await axios.get(
+        "http://localhost:3000/payang_user/4da0b5f4-3ce8-4951-891d-d7c9ee233671"
+      );
+      this.name_employee = data.data;
       console.log(data.data);
     },
+  
+
 
     showNotif() {
       this.$q.dialog({

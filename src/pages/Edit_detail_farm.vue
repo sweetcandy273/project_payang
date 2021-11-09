@@ -98,7 +98,7 @@
 
       <div>ผู้ดูแล :</div>
 
-            <div class="box_editeAdmin" v-if="name_employee">
+        <div class="box_editeAdmin" v-if="name_employee">
         <div class="row justify-between">
           <div class="col q-pr-md">
             <q-input
@@ -268,32 +268,26 @@ export default {
     },
 
     async onSubmit() {
-      const { data } = await axios.put(
-        "http://localhost:3000/farm/update/" + this.$route.query.id,
-        {
-          fname: this.farm.fname,
-          lname: this.farm.lname,
-          phone_number: this.farm.phone_number,
-          // farm_name: this.farm.farm_name,
-          // email: this.farm.email,
-          address: this.farm.address,
-          address_district: this.farm.address_district,
-          address_province: this.farm.address_province,
-          // area: this.farm.area,
-          // zip_code: this.farm.zip_code,
-        }
-      );
-      this.farm = data.data;
+      // const { data } = await axios.put(
+      //   "http://localhost:3000/farm/update/" + this.$route.query.id,
+      //   {
+      //     fname: this.farm.fname,
+      //     lname: this.farm.lname,
+      //     phone_number: this.farm.phone_number,
+      //     // farm_name: this.farm.farm_name,
+      //     // email: this.farm.email,
+      //     address: this.farm.address,
+      //     address_district: this.farm.address_district,
+      //     address_province: this.farm.address_province,
+      //     // area: this.farm.area,
+      //     // zip_code: this.farm.zip_code,
+      //   }
+      // );
+      // this.farm = data.data;
       this.$router.push({
         path: "/home",
       });
     },
-
-    // onSubmit() {
-    //   this.$router.push({
-    //     path: "/home",
-    //   });
-    // },
   },
 };
 </script>

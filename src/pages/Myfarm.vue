@@ -26,7 +26,7 @@
         @click="
           $router.push({
             name: 'detail_farm',
-            query: { id: farm.farm_id },
+            query: { id: farm.farm_id }
           })
         "
       >
@@ -64,7 +64,7 @@
         @click="
           $router.push({
             name: 'add_detail_farm',
-            query: { id: $route.query.id },
+            query: { id: $route.query.id }
           })
         "
       />
@@ -72,15 +72,13 @@
   </div>
 </template>
 
-
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
       user_has_farm: [],
-      farms: [],
+      farms: []
     };
   },
   async mounted() {
@@ -103,12 +101,12 @@ export default {
             'ระบบจะทำการลบข้อมูลเกี่ยวกับบัญชีผู้ใช้นี้ทั้งหมด <span class="text-red font"><strong>หากยืนยันการลบบัญชีผู้ใช้แล้ว ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
           cancel: true,
           persistent: true,
-          html: true,
+          html: true
         })
         .onOk(() => {
           console.log(">>>> OK");
           this.$router.push({
-            path: "/login",
+            path: "/login"
           });
         })
 
@@ -121,14 +119,13 @@ export default {
     },
     logout() {
       this.$router.push({
-        path: "/login",
+        path: "/login"
       });
-    },
-  },
+    }
+  }
 };
 </script>
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>
 
 <style scoped>
 .planting-area {

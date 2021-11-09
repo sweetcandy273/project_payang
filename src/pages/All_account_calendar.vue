@@ -35,52 +35,61 @@
         </template>
 
         <template v-slot:after>
+          <div class="col font q-mx-md q-mt-md" style="font-size: 22px">
+            {{ date }}
+          </div>
+
           <q-tab-panels
             v-model="date"
             animated
             transition-prev="jump-up"
             transition-next="jump-up"
           >
-            <q-tab-panel name="2021/08/05" class="detail-account">
+            <q-tab-panel name="2021/10/18" class="detail-account">
               <div class="row font">
-                <div class="col" style="font-size: 22px">2021/08/05</div>
-                <div class="col text-right" style="font-size: 22px">
-                  สวนภูเก็ต
-                </div>
-              </div>
-              <div class="row font">
-                <div class="greencircle"></div>
-                <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
-                <div class="col text-right" style="font-size: 18px">
-                  {{list_income[0].amount_net}}
-                </div>
-              </div>
-              <div class="calendar-income q-pa-md">
-                <div class="row font">
-                  <div class="col" style="font-size: 16px">
-                    ร้านดาว น้ำยางสด, แผ่น
-                  </div>
-                  <div class="col-3 text-right" style="font-size: 16px">
-                    {{list_income[0].amount}}
-                  </div>
-                </div>
-                <div class="row font" style="font-size: 16px">
-                  น้ำยางสด {{list_income[0].weight}} กก. {{list_income[0].percen_rubber}}% แห้ง {{list_income[0].dry_rubber}}
-                </div>
-                <div class="row font" style="font-size: 16px">
-                  ราคายาง {{list_income[0].rubber_price}} บ./กก.
-                </div>
-                <div class="row font">
-                  <div class="col" style="font-size: 16px">
-                    กนกวรรณ ส่วนแบ่ง 60-40
-                  </div>
-                  <div class="col-3 text-right" style="font-size: 16px">
-                    {{list_income[0].amount_net}}
-                  </div>
-                </div>
+                <div class="col" style="font-size: 22px">สวนภูเก็ต</div>
               </div>
 
-              <div class="row font q-pt-md">
+              <div :key="index" v-for="(listIncome, index) in listIncomes">
+                {{ listIncome.farm_id }}
+
+                <div class="row font">
+                  <div class="greencircle"></div>
+                  <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
+                  <div class="col text-right" style="font-size: 18px">
+                    {{ listIncome.amount_net }}
+                  </div>
+                </div>
+                <div class="calendar-income q-pa-md">
+                  <div class="row font">
+                    <div class="col" style="font-size: 16px">
+                      ร้านดาว น้ำยางสด, แผ่น
+                    </div>
+                    <div class="col-3 text-right" style="font-size: 16px">
+                      {{ listIncome.amount }}
+                    </div>
+                  </div>
+                  <div class="row font" style="font-size: 16px">
+                    น้ำยางสด {{ listIncome.weight }} กก.
+                    {{ listIncome.percen_rubber }}% แห้ง
+                    {{ listIncome.dry_rubber }}
+                  </div>
+                  <div class="row font" style="font-size: 16px">
+                    ราคายาง {{listIncome.rubber_price}} บ./กก.
+                  </div>
+                  <div class="row font">
+                    <div class="col" style="font-size: 16px">
+                      กนกวรรณ ส่วนแบ่ง {{listIncome.percen_split}}
+                    </div>
+                    <div class="col-3 text-right" style="font-size: 16px">
+                    {{ listIncome.amount_net }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </q-tab-panel>
+
+            <!-- <div class="row font q-pt-md">
                 <div class="redcircle"></div>
                 <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>
                 <div class="col text-right" style="font-size: 18px">
@@ -100,8 +109,7 @@
                   ซื้ออุปกรณ์ มีดกรีดยาง
                 </div>
                 <div class="row font" style="font-size: 16px">กนกวรรณ</div>
-              </div>
-            </q-tab-panel>
+              </div> -->
           </q-tab-panels>
         </template>
       </q-splitter>
@@ -112,9 +120,8 @@
 </template>
 <script>
 import { date } from "quasar";
-import axios from "axios";
-const timeStamp = Date.now();
-const date_now = date.formatDate(timeStamp, "YYYY/MM/DD");
+// const timeStamp = Date.now();
+// const date_now = date.formatDate(timeStamp, "YYYY/MM/DD");
 
 export default {
   data() {
@@ -122,18 +129,41 @@ export default {
       list_income:[],
 
       // model: { from: "", to: "" },
+   
+      listIncomes: [],
+      listAllIncome:[],
+
       splitterModel: 50,
-      date: [date_now],
-      events: ["2021/08/05"],
+      date: "",
+      events: [],
     };
   },
-  async mounted() {
-    const { data } = await axios.get(
-      "http://localhost:3000/income/listbyuser/a6260f89-5443-4df1-94d7-6e3e431f76b6"
-    );
-    this.list_income = data.data;
-    // console.log(data.data);
+  mounted() {
+    this.getListIncome();
   },
+  methods: {
+    async getListIncome() {
+      const { data } = await this.$axios.get(
+        "/income/listbyowner/a6260f89-5443-4df1-94d7-6e3e431f76b6"
+      );
+      this.listAllIncome = data.data;
+      this.date = this.formatDate(new Date());
+      this.events = data.data.map((data) => {
+        return this.formatDate(data.date);
+      });
+     
+    },
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+  },
+  watch:{
+    date(value){
+      this.incomes =this.listAllIncome.filter((data)=>{
+        return new Date(value).getTime()==new Date(data.date).getTime()
+      })
+    }
+  }
 };
 </script>
 <style scoped src="../css/home.css">

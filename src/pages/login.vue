@@ -20,9 +20,16 @@
 
       <div class="q-pa-md q-mt-xl" style="font-size: 30px">เข้าสู่ระบบ</div>
       <div class="q-pa-md">
-        <q-form @submit="onSubmit" class="q-gutter-md">
+        <q-form @submit.prevent="Login" class="q-gutter-md">
           <div>
-            <q-input color="teal" filled v-model="id" label="เบอร์โทร/อีเมล" />
+            <q-input
+              color="teal"
+              filled
+              v-model="email"
+              type="text"
+              placeholder="Email"
+              label="เบอร์โทร/อีเมล"
+            />
             <div class="q-pt-md"></div>
 
             <q-input
@@ -30,6 +37,7 @@
               label="รหัสผ่าน"
               v-model="password"
               filled
+              placeholder="password"
               :type="isPwd ? 'password' : 'text'"
             >
               <template v-slot:append>
@@ -54,6 +62,7 @@
               rounded
               label="เข้าสู่ระบบ"
               type="submit"
+              value="Login"
               class="shadow-2 text-white"
             />
             <div
@@ -77,25 +86,39 @@ import VueCompositionAPI from "@vue/composition-api";
 Vue.use(VueCompositionAPI);
 import { ref } from "@vue/composition-api";
 
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import { getAuth } from "firebase/auth";
+
 export default {
   setup() {
     return {
-      id: ref(""),
-      password: ref(""),
+      email: "",
+      password: "",
       isPwd: ref(true),
+
+      email: "",
+      uid: ""
     };
   },
   methods: {
-    onSubmit() {
-      //บันทึกข้อมูลลง database ใช้ this.ตัวแปร น้าาา
-      console.log(this.id, this.password);
-      this.$router.push({
-        path: "/",
-      });
-    },
-  },
+    Login() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(userCredential => {
+          const user = userCredential.user;
+          this.uid = user.uid;
+          console.log(this.uid),
+            this.$router.push({
+              path: "/home",
+              query: { id: this.uid }
+            });
+        })
+        .catch(err => alert(err.message));
+    }
+  }
 };
 </script>
 
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>

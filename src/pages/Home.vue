@@ -1,18 +1,7 @@
 <template>
   <div>
     <q-header class="shadow-2">
-      <!-- <q-toolbar>
-        <q-space></q-space>
-        <q-btn flat round dense icon="search" class="q-mr-xs" />
-        <q-btn flat round dense icon="group_add" />
-      </q-toolbar> -->
       <q-toolbar class="row flex">
-        <!-- <div
-          class="col self-center font"
-          @click="$router.push({ name: 'setting' })"
-        >
-          ตั้งค่า
-        </div> -->
         <div
           class="col self-center font"
           @click="leftDrawerOpen = !leftDrawerOpen"
@@ -170,6 +159,10 @@
 import ProductYearly from "../components/ProductYearly.vue";
 import ProductMonthly from "../components/ProductMonthly.vue";
 
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import { getAuth, signOut } from "firebase/auth";
+
 export default {
   props: {},
   // name: "yearly",
@@ -179,10 +172,10 @@ export default {
   },
 
   data() {
-    const id = { id: "a6260f89-5443-4df1-94d7-6e3e431f76b6" };
     return {
+      id: { id: this.$route.query.id },
       payang_user: [],
-      id,
+
       leftDrawerOpen: false,
       model: null,
       secondModel: "yearly"
@@ -194,7 +187,9 @@ export default {
 
   methods: {
     async getUser() {
-      const { data } = await this.$axios.get("/payang_user/" + this.id.id);
+      const { data } = await this.$axios.get(
+        "/payang_user/" + this.$route.query.id
+      );
       this.payang_user = data.data;
       // console.log(data.data);
     },
@@ -223,10 +218,18 @@ export default {
         });
     },
     logout() {
-      //! ออกจากระบบ
-      this.$router.push({
-        path: "/login"
-      });
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          this.$router.push({ path: "/login" });
+        })
+        .catch(err => alert(err.message));
+
+      // firebase
+      //   .auth()
+      //   .signOut()
+      //   .then(() => this.$router.push({ path: "/login" }))
+      //   .catch(err => alert(err.message));
     }
   }
 };

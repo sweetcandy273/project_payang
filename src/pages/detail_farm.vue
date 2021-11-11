@@ -49,14 +49,14 @@
               farm.address_province
             }} </div>
         <div>เนื้อที่ปลูก : {{ farm.area }} ไร่</div>
-        <div v-if="name_employee">ผู้ดูแล : {{name_employee.fname}} {{name_employee.lname}} </div>
+        <div v-if="nameEmployee">ผู้ดูแล : {{nameEmployee.fname}} {{nameEmployee.lname}} </div>
       </div>
     </div>
 
     <div></div>
 
-    <div v-if="secondModel == 'graph_farm'" class="text-center" id="yearly">
-      <graph_farm />
+    <div v-if="secondModel == 'graph_farm'" class="text-center" id="graph_farm">
+      <graph_farm :item="id" />
     </div>
 
     <div class="q-pa-md q-gutter-sm self-center">
@@ -74,7 +74,7 @@
 
       <div>
         <q-btn
-          @click="$router.push({ name: 'calender_farm' })"
+          @click="$router.push({ name: 'calender_farm' ,  })"
           unelevated
           rounded
           label="เรียกดูตารางการทำงาน"
@@ -96,21 +96,23 @@ export default {
   async mounted() {
     this.getfarm();
     this.getemployee();
-    this.getname_employee();
+    this.getnameEmployee();
   },
   components: {
     graph_farm,
   },
   data() {
+    const id = { id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09" };
     return {
       leftDrawerOpen: false,
       model: null,
       secondModel: "graph_farm",
-      farm : null,
-      name_employee : null,
+      farm : {},
+      nameEmployee : [],
       employee : [],
       payang_user: [] ,
       user_has_farm: [],
+      id,
     };
   },
   methods: {
@@ -128,13 +130,12 @@ export default {
       this.employee = data.data;
       // console.log(data.data);
     },
-     async getname_employee() {
-       console.log(this.employee.user_id);
+     async getnameEmployee() {
       const { data } = await axios.get(
         "http://localhost:3000/payang_user/4da0b5f4-3ce8-4951-891d-d7c9ee233671"
       );
-      this.name_employee = data.data;
-      console.log(data.data);
+      this.nameEmployee = data.data;
+      // console.log(data.data);
     },
   
 

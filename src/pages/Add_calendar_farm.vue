@@ -6,7 +6,7 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'calender_farm' })"
+            @click="$router.push({ name: 'calender_farm' , query: { id: $route.query.id } })"
           />
         </div>
 

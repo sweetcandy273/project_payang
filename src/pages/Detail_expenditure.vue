@@ -7,7 +7,10 @@
       <q-toolbar class="text-center row">
         <div class="col flexed text-left">
           <q-icon
-            @click="$router.push({ name: 'account_calendar' })"
+            @click="$router.push({ path: 'account_calendar',
+            query: {
+                  id: expenditures.expen_id,
+                }, })"
             name="arrow_back_ios"
             size="30px"
           ></q-icon>
@@ -39,13 +42,13 @@
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-py-md">
-          <div class="col" style="font-size: 30px">ซื้ออุปกรณ์</div>
+          <div class="col" style="font-size: 30px"> {{ expenditures.date_expenditure }}</div>
           <div class="col text-right q-pt-md" style="font-size: 18px">
-            {{expenditures.date_expenditure}}
+           
           </div>
         </div>
         <div class="row" style="font-size: 18px">
-          {{expenditures.note}}
+          {{ expenditures.note }}
         </div>
         <div class="text-right" style="font-size: 30px">{{ expenditures.amount }}</div>
         <q-separator style="background: #000000; height: 2px" />
@@ -88,6 +91,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "expenditures",
   data() {
     return {
       expenditures: {},

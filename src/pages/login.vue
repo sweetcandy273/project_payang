@@ -28,7 +28,7 @@
               v-model="email"
               type="text"
               placeholder="Email"
-              label="เบอร์โทร/อีเมล"
+              label="อีเมล"
             />
             <div class="q-pt-md"></div>
 
@@ -88,7 +88,6 @@ import { ref } from "@vue/composition-api";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import { getAuth } from "firebase/auth";
 
 export default {
   setup() {
@@ -97,7 +96,6 @@ export default {
       password: "",
       isPwd: ref(true),
 
-      email: "",
       uid: ""
     };
   },
@@ -115,7 +113,14 @@ export default {
               query: { id: this.uid }
             });
         })
-        .catch(err => alert(err.message));
+        .catch(error => {
+          const errorCode = error.code;
+          if (errorCode == "auth/invalid-email") {
+            alert("Email ไม่ถูกต้องตามหลัก");
+          } else if (errorCode == "auth/user-not-found") {
+            alert("ไม่มีข้อมูล Email ในระบบ กรุณาสมัครสมาชิก");
+          }
+        });
     }
   }
 };

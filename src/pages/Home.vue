@@ -164,7 +164,7 @@
 <script>
 import ProductYearly from "../components/ProductYearly.vue";
 import ProductMonthly from "../components/ProductMonthly.vue";
-
+import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import {
   getAuth,
@@ -191,26 +191,11 @@ export default {
   },
   async mounted() {
     await this.getUser();
-    await this.checkAuthFirebase();
   },
 
   methods: {
-    checkAuthFirebase() {
-      const auth = getAuth();
-      onAuthStateChanged(auth, user => {
-        if (user) {
-        } else {
-          this.$router.push({
-            path: "/login"
-          });
-        }
-      });
-    },
-
     async getUser() {
-      const { data } = await this.$axios.get(
-        "/payang_user/" + this.$route.query.id
-      );
+      const { data } = await this.$axios.get("/payang_user/" + this.id.id);
       this.payang_user = data.data;
       // console.log(data.data);
     },

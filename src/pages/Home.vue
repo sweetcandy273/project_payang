@@ -179,7 +179,7 @@ export default {
   },
 
   data() {
-    const id = { id: "a6260f89-5443-4df1-94d7-6e3e431f76b6" };
+    const id = { id: "4b9baivvJQVwqsd1pfXxZOrz8eC3" };
     return {
       payang_user: [],
       id,
@@ -195,7 +195,7 @@ export default {
   methods: {
     async getUser() {
       const { data } = await this.$axios.get(
-        "/payang_user/a6260f89-5443-4df1-94d7-6e3e431f76b6"
+        "/payang_user/4b9baivvJQVwqsd1pfXxZOrz8eC3"
       );
       this.payang_user = data.data;
       // console.log(data.data);

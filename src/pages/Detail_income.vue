@@ -7,7 +7,14 @@
       <q-toolbar class="text-center row">
         <div class="col flexed text-left">
           <q-icon
-            @click="$router.push({ name: 'account_calendar' })"
+            @click="
+              $router.push({
+                path: 'account_calendar',
+                query: {
+                  id: incomes.in_id,
+                },
+              })
+            "
             name="arrow_back_ios"
             size="30px"
           ></q-icon>
@@ -36,62 +43,67 @@
             />
           </div>
         </div>
-      </div>
-      <q-separator style="background: #000000; height: 2px" />
-      <div class="row q-py-md">
-        <div class="col" style="font-size: 30px">ขายน้ำยาง</div>
-        <div class="col text-right q-pt-md" style="font-size: 18px">
-          {{ incomes.date_income }}
-        </div>
-      </div>
-      <div class="row" style="font-size: 18px">
-        น้ำหนัก {{ incomes.weight }} กก. {{ incomes.percen_rubber }}% แห้ง
-        {{ incomes.dry_rubber }} ราคายาง {{ incomes.rubber_price }} บ./กก.
-      </div>
-      <div class="text-right" style="font-size: 30px">{{ incomes.amount }}</div>
-      <q-separator style="background: #000000; height: 2px" />
-      <div class="row q-pt-md" style="font-size: 18px">
-        ร้าน : ดาว น้ำยางสด,แผ่น
-      </div>
-      <div class="row" style="font-size: 18px">ผู้ได้รับส่วนแบ่ง : กนกวรรณ</div>
-      <div class="row" style="font-size: 18px">%ส่วนแบ่ง : 60-40</div>
-      <div class="row">
-        <div class="col q-pt-md" style="font-size: 18px">รวมรายรับสุทธิ</div>
-        <div class="text-right" style="font-size: 30px">
-          {{ incomes.amount_net }}
-        </div>
-      </div>
-      <q-separator style="background: #000000; height: 2px" />
-      <div class="q-pt-md" style="font-size: 18px">
-        บันทึก : ส่วนแบ่งตามที่ตกลงกันไว้
-      </div>
-      <div class="col q-pa-md self-center">
-        <div class="row">
-          <div class="col text-right">
-            <q-btn
-              unelevated
-              round
-              style="width: 50px; height: 50px"
-              color="orange-4"
-              icon="edit"
-              @click="
-                $router.push({
-                  path: 'edit_income',
-                  query: {
-                    id: incomes.in_id,
-                  },
-                })
-              "
-            />
 
-            <q-btn
-              unelevated
-              round
-              style="width: 50px; height: 50px"
-              color="deep-orange-13"
-              icon="delete"
-              @click="Notidelete"
-            />
+        <q-separator style="background: #000000; height: 2px" />
+        <div class="row q-py-md">
+          <div class="col" style="font-size: 30px">ขายน้ำยาง</div>
+          <div class="col text-right q-pt-md" style="font-size: 18px">
+            {{ formatDate(incomes.date_income) }}
+          </div>
+        </div>
+        <div class="row" style="font-size: 18px">
+          น้ำหนัก {{ incomes.weight }} กก. {{ incomes.percen_rubber }}% แห้ง
+          {{ incomes.dry_rubber }} ราคายาง {{ incomes.rubber_price }} บ./กก.
+        </div>
+        <div class="text-right" style="font-size: 30px">
+          {{ incomes.amount }}
+        </div>
+        <q-separator style="background: #000000; height: 2px" />
+        <div class="row q-pt-md" style="font-size: 18px">
+          ร้าน : ดาว น้ำยางสด,แผ่น
+        </div>
+        <div class="row" style="font-size: 18px">
+          ผู้ได้รับส่วนแบ่ง : กนกวรรณ
+        </div>
+        <div class="row" style="font-size: 18px">%ส่วนแบ่ง : 60-40</div>
+        <div class="row">
+          <div class="col q-pt-md" style="font-size: 18px">รวมรายรับสุทธิ</div>
+          <div class="text-right" style="font-size: 30px">
+            {{ incomes.amount_net }}
+          </div>
+        </div>
+        <q-separator style="background: #000000; height: 2px" />
+        <div class="q-pt-md" style="font-size: 18px">
+          บันทึก : ส่วนแบ่งตามที่ตกลงกันไว้
+        </div>
+        <div class="col q-pa-md self-center">
+          <div class="row">
+            <div class="col text-right">
+              <q-btn
+                unelevated
+                round
+                style="width: 50px; height: 50px"
+                color="orange-4"
+                icon="edit"
+                @click="
+                  $router.push({
+                    path: 'edit_income',
+                    query: {
+                      id: incomes.in_id,
+                    },
+                  })
+                "
+              />
+
+              <q-btn
+                unelevated
+                round
+                style="width: 50px; height: 50px"
+                color="deep-orange-13"
+                icon="delete"
+                @click="Notidelete"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -100,6 +112,7 @@
 </template> 
 <script>
 import axios from "axios";
+import { date } from "quasar";
 export default {
   name: "incomes",
   name: "farms",
@@ -122,7 +135,14 @@ export default {
         `http://localhost:3000/income/findincome/${this.$route.query.id}`
       );
       this.incomes = data.data;
+
       console.log(data);
+    },
+    async deleteIncome(){
+      const { data } = await axios.delete(
+        `http://localhost:3000/income/delete/${this.$route.query.id}`
+      );
+      this.incomes = data.data;
     },
 
     // async getfarm() {
@@ -132,6 +152,7 @@ export default {
     //   this.farms = data.data;
     // },
     Notidelete() {
+      
       this.$q
         .dialog({
           title: "Confirm",
@@ -153,6 +174,14 @@ export default {
         });
 
       return { confirm };
+    },
+  },
+  watch: {
+    date(value) {
+      this.incomes = this.listAllincome.filter((data) => {
+        // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
+        return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
+      });
     },
   },
 };

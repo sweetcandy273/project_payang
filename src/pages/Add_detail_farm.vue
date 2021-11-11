@@ -102,7 +102,7 @@
           </template>
         </q-input>
 
-        <div>พันธุ์ยาง :</div>
+        <!-- <div>พันธุ์ยาง :</div>
         <q-select
           filled
           v-model="rubber_varieties_id"
@@ -116,7 +116,7 @@
               <q-item-section class="text-grey"> ไม่มีผลลัพธ์ </q-item-section>
             </q-item>
           </template>
-        </q-select>
+        </q-select> -->
 
         <div>เนื้อที่ปลูก(ไร่) :</div>
 
@@ -229,26 +229,21 @@
 </template>
 <script>
 import axios from "axios";
-
-const stringOptions = [
-  "ใส่ปุ๋ย",
-  "ตัดหญ้า",
-  "ตัดกากฝาก",
-  "ตัดไม้ยาง",
-  "หยอดน้ำกรด",
-  "อื่นๆ",
-];
+import { date } from "quasar";
 
 export default {
   async mounted() {
     // this.setup();
     // this.filterFn();
+    this.getday();
   },
   data() {
     return {
-
-      date: "2021/07/18",
+      splitterModel: 50,
+      date: "",
+      events: [],
       farm: [],
+      data:[],
 
       add_employee: false,
 
@@ -281,6 +276,14 @@ export default {
     //       options.value = stringOptions.filter(v => v.toLowerCase().indexOf(needle) > -1)
     //     })
     // },
+
+    async getday(){this.date = this.formatDate(new Date());},
+    
+
+
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
 
     async getfarm() {
       const { data } = await axios.get(
@@ -338,6 +341,8 @@ export default {
       });
     },
   },
+
+
 };
 </script>
 

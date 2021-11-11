@@ -72,9 +72,15 @@
         <div class="row q-mt-xl">
           <div class="col text-left"><strong>รหัสผ่าน</strong></div>
           <div class="col text-right">
-            <router-link to="/new_password" class="text-green">
+            <q-btn
+              flat
+              style="color: #FFFFFF"
+              label="เปลี่ยน"
+              @click="this.$route.path"
+            />
+            <!-- <router-link to="/forgot_password" class="text-green">
               เปลี่ยน</router-link
-            >
+            > -->
           </div>
         </div>
       </div>
@@ -159,13 +165,15 @@
 import ProductYearly from "../components/ProductYearly.vue";
 import ProductMonthly from "../components/ProductMonthly.vue";
 
-import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import { getAuth, signOut } from "firebase/auth";
+import {
+  getAuth,
+  signOut,
+  onAuthStateChanged,
+  deleteUser
+} from "firebase/auth";
 
 export default {
-  props: {},
-  // name: "yearly",
   components: {
     ProductYearly,
     ProductMonthly
@@ -181,11 +189,24 @@ export default {
       secondModel: "yearly"
     };
   },
-  mounted() {
-    this.getUser();
+  async mounted() {
+    await this.getUser();
+    await this.checkAuthFirebase();
   },
 
   methods: {
+    checkAuthFirebase() {
+      const auth = getAuth();
+      onAuthStateChanged(auth, user => {
+        if (user) {
+        } else {
+          this.$router.push({
+            path: "/login"
+          });
+        }
+      });
+    },
+
     async getUser() {
       const { data } = await this.$axios.get(
         "/payang_user/" + this.$route.query.id
@@ -204,32 +225,35 @@ export default {
           html: true
         })
         .onOk(() => {
-          // console.log(">>>> OK");
+          const auth = getAuth();
+          const user = auth.currentUser;
+
+          deleteUser(user)
+            .then(() => {
+              this.$router.push({
+                name: "starter"
+              });
+            })
+
+            .catch(error => {
+              alert("พบปัญหาระหว่างการกระทำ:" + error);
+            });
+
           this.$router.push({
             path: "/login"
           });
         })
 
-        .onCancel(() => {
-          // console.log(">>>> Cancel");
-        })
-        .onDismiss(() => {
-          // console.log('I am triggered on both OK and Cancel')
-        });
+        .onCancel(() => {})
+        .onDismiss(() => {});
     },
     logout() {
       const auth = getAuth();
       signOut(auth)
         .then(() => {
-          this.$router.push({ path: "/login" });
+          this.$router.push({ name: "login" });
         })
         .catch(err => alert(err.message));
-
-      // firebase
-      //   .auth()
-      //   .signOut()
-      //   .then(() => this.$router.push({ path: "/login" }))
-      //   .catch(err => alert(err.message));
     }
   }
 };

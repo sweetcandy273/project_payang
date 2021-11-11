@@ -109,7 +109,7 @@ export default {
           this.uid = user.uid;
 
           this.$router.push({
-            path: "/home",
+            name: "home",
             query: { id: this.uid }
           });
         })

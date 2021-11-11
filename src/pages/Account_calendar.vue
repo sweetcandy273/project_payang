@@ -21,7 +21,7 @@
           v-model="date"
           color="green"
           :events="events"
-          :event-color="(date) => (date[9] % 2 === 0 ? 'teal' : 'red')"
+          :event-color="(date) => (date[9] % 2 === 0 ? 'teal' : 'green')"
         />
       </div>
     </q-splitter>
@@ -72,7 +72,7 @@
       </div>
     </div>
 
-    <div :key="index + 1000" v-for="(data, index) in expenditures">
+    <div :key="index" v-for="(data, index) in expenditures">
       <div class="row font q-pt-md">
         <div class="redcircle"></div>
         <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>

@@ -107,11 +107,11 @@ export default {
         .then(userCredential => {
           const user = userCredential.user;
           this.uid = user.uid;
-          console.log(this.uid),
-            this.$router.push({
-              path: "/home",
-              query: { id: this.uid }
-            });
+
+          this.$router.push({
+            path: "/home",
+            query: { id: this.uid }
+          });
         })
         .catch(error => {
           const errorCode = error.code;

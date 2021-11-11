@@ -7,7 +7,7 @@
             src="../assets/close.png"
             style="width: 22px; height: 22px"
             @click="
-              $router.push({ name: 'detail_farm', query: { id: farm.user_id } })
+              $router.push({ name: 'detail_farm', query: { id: farm.farm_id } })
             "
           />
         </div>
@@ -92,126 +92,120 @@
             filled
             v-model="farm.area"
             label="เนื้อที่ปลูก"
-           
           />
         </div>
 
-      <div>ผู้ดูแล :</div>
+        <div>ผู้ดูแล :</div>
 
         <div class="box_editeAdmin" v-if="name_employee">
-        <div class="row justify-between">
-          <div class="col q-pr-md">
-            <q-input
-              color="teal"
-              filled
-              v-model="name_employee.fname"
-              label="ชื่อ"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
-            />
+          <div class="row justify-between">
+            <div class="col q-pr-md">
+              <q-input
+                color="teal"
+                filled
+                v-model="name_employee.fname"
+                label="ชื่อ"
+                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
+              />
+            </div>
+            <div class="col">
+              <q-input
+                color="teal"
+                filled
+                v-model="name_employee.lname"
+                label="นามสกุล"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
+                ]"
+              />
+            </div>
           </div>
-          <div class="col">
-            <q-input
-              color="teal"
-              filled
-              v-model="name_employee.lname"
-              label="นามสกุล"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
-            />
+          <q-input
+            color="teal"
+            filled
+            v-model="name_employee.phone_number"
+            label="เบอร์โทรศัพท์"
+            :rules="[
+              (val) =>
+                (val && val.length > 0 && val.length == 10) ||
+                'กรุณากรอกเบอร์โทรศัพท์',
+            ]"
+          >
+            <template v-slot:append>
+              <q-icon name="call" />
+            </template>
+          </q-input>
+          <q-input
+            color="teal"
+            filled
+            v-model="name_employee.e_number"
+            label="เบอร์โทรศัพท์ฉุกเฉิน"
+            :rules="[
+              (val) =>
+                (val && val.length > 0 && val.length == 10) ||
+                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน',
+            ]"
+          >
+            <template v-slot:append>
+              <q-icon name="call" />
+            </template>
+          </q-input>
+
+          <q-input
+            color="teal"
+            filled
+            v-model="name_employee.address"
+            label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
+          />
+
+          <div class="row">
+            <div class="col q-pr-md">
+              <q-input
+                color="teal"
+                filled
+                v-model="name_employee.address_district"
+                label="เขต/อำเภอ"
+                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
+              />
+            </div>
+            <div class="col">
+              <q-input
+                color="teal"
+                filled
+                v-model="name_employee.address_province"
+                label="จังหวัด"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
+                ]"
+              />
+            </div>
+          </div>
+
+          <div class="row justify-center">
+            <div class="q-pa-md self-center">
+              <q-btn
+                round
+                color="deep-orange-13"
+                icon="delete"
+                @click="showNotif"
+              />
+            </div>
           </div>
         </div>
-        <q-input
-          color="teal"
-          filled
-          v-model="name_employee.phone_number"
-          label="เบอร์โทรศัพท์"
-          :rules="[
-            (val) =>
-              (val && val.length > 0 && val.length == 10) ||
-              'กรุณากรอกเบอร์โทรศัพท์',
-          ]"
-        >
-          <template v-slot:append>
-            <q-icon name="call" />
-          </template>
-        </q-input>
-        <q-input
-          color="teal"
-          filled
-          v-model="name_employee.e_number"
-          label="เบอร์โทรศัพท์ฉุกเฉิน"
-          :rules="[
-            (val) =>
-              (val && val.length > 0 && val.length == 10) ||
-              'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน',
-          ]"
-        >
-          <template v-slot:append>
-            <q-icon name="call" />
-          </template>
-        </q-input>
 
-        <q-input
-          color="teal"
-          filled
-          v-model="name_employee.address"
-          label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
-        />
-
-        <div class="row">
-          <div class="col q-pr-md">
-            <q-input
-              color="teal"
-              filled
-              v-model="name_employee.address_district"
-              label="เขต/อำเภอ"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
-            />
-          </div>
-          <div class="col">
-            <q-input
-              color="teal"
-              filled
-              v-model="name_employee.address_province"
-              label="จังหวัด"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
-            />
-          </div>
+        <div>
+          <q-btn
+            unelevated
+            rounded
+            label="บันทึก"
+            type="submit"
+            class="shadow-2 text-white"
+          />
         </div>
-
-        <div class="row justify-center">
-          <div class="q-pa-md self-center">
-            <q-btn
-              round
-              color="deep-orange-13"
-              icon="delete"
-              @click="showNotif"
-            />
-          </div>
-        </div>
-      </div>
-
-
-
-      <div>
-      <q-btn
-        unelevated
-        rounded
-        label="บันทึก"
-        type="submit"
-        class="shadow-2 text-white"
-      />
-    </div>
       </q-form>
-
-      
-  
     </div>
-    
-  
-    
   </div>
-  
 </template>
 
 <script>
@@ -227,8 +221,8 @@ export default {
     return {
       farm: null,
       payang_user: [],
-      name_employee : null,
-      employee : [],
+      name_employee: null,
+      employee: [],
       user_has_farm: [],
     };
   },
@@ -238,24 +232,23 @@ export default {
         "http://localhost:3000/farm/" + this.$route.query.id
       );
       this.farm = data.data;
-      console.log(data.data);
+      // console.log(data.data);
     },
-      async getemployee() {
-      const { data } = await axios.get( 
+    async getemployee() {
+      const { data } = await axios.get(
         "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
       );
       this.employee = data.data;
       // console.log(data.data);
     },
-      async getname_employee() {
-       console.log(this.employee.user_id);
+    async getname_employee() {
+      console.log(this.employee.user_id);
       const { data } = await axios.get(
-        "http://localhost:3000/payang_user/" + this.$route.query.id
+        "http://localhost:3000/payang_user/4da0b5f4-3ce8-4951-891d-d7c9ee233671"
       );
       this.name_employee = data.data;
-      console.log(data.data);
+      // console.log(data.data);
     },
-  
 
     showNotif() {
       this.$q.dialog({
@@ -268,24 +261,23 @@ export default {
     },
 
     async onSubmit() {
-      // const { data } = await axios.put(
-      //   "http://localhost:3000/farm/update/" + this.$route.query.id,
-      //   {
-      //     fname: this.farm.fname,
-      //     lname: this.farm.lname,
-      //     phone_number: this.farm.phone_number,
-      //     // farm_name: this.farm.farm_name,
-      //     // email: this.farm.email,
-      //     address: this.farm.address,
-      //     address_district: this.farm.address_district,
-      //     address_province: this.farm.address_province,
-      //     // area: this.farm.area,
-      //     // zip_code: this.farm.zip_code,
-      //   }
-      // );
-      // this.farm = data.data;
+      const { data } = await axios.put(
+        "http://localhost:3000/farm/update/" + this.$route.query.id,
+        {
+          farm_name : this.farm.farm_name,
+          fname : this.farm.fname,
+          lname : this.farm.lname,
+          area : this.farm.area,
+          rubber_varieties_id: this.farm.rubber_varieties_id,  
+          planing_date: this.farm.planing_date,
+          address: this.farm.address,
+          address_district: this.farm.address_district,
+          address_province: this.farm.address_province,
+        }
+      );
+      this.farm = data.data;
       this.$router.push({
-        path: "/home",
+        path: "/detail_farm" , query: { id: this.farm.farm_id } ,
       });
     },
   },

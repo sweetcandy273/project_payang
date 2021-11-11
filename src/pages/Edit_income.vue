@@ -128,14 +128,14 @@
       </div>
       <div class="row">
         <div class="col">
-          <q-input filled v-model="incomes.stores" label="ชื่อร้านค้า">
+          <q-input filled v-model="stores.store" label="ชื่อร้านค้า">
             <template v-slot:prepend> กก. </template>
           </q-input>
         </div>
         <div class="col q-ml-md">
           <q-input
             filled
-            v-model="incomes.tel_stores"
+            v-model="stores.tel"
             label="เบอร์โทรร้านค้า"
           >
             <template v-slot:prepend> </template>
@@ -201,54 +201,65 @@
 </template>
 <script>
 import axios from "axios";
-
+import { date } from "quasar";
 export default {
   data() {
     return {
       //ถ้าจะเอาไปใส่ Database ต้อง this.ตัวแปร
-
       selectshare: false,
-
       optionspercent: ["60", "55", "50"],
-
       optionsemployee: ["กนกวรรณ", "ชนิกานต์", "อรไท"],
       edit_income: {},
       incomes:{},
+      stores:{},
     };
   },
   mounted() {
     this.getIncome();
+    // this.getStore();
   },
 
   methods: {
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
     async getIncome() {
       const { data } = await axios.get(
         `http://localhost:3000/income/findincome/${this.$route.query.id}`
       );
       this.incomes = data.data;
+      this.incomes.date_income = this.formatDate(this.incomes.date_income)
     },
+    // async getStore() {
+    //   const { data } = await axios.get(
+    //     `http://localhost:3000/store_income/list/${this.$route.query.id}`
+    //   );
+    //   this.stores = data.data;
+    // },
     async onSubmit() {
+      console.log(this.incomes.date_income);
       const { data } = await axios.put(
         "http://localhost:3000/income/update/" + this.$route.query.id,
         {
-          date_income: this.date_income,
-          amount: this.totalprice,
-          amount_net: this.totalprice * 0.6,
-          weight: this.weight_rubber,
-          percen_rubber: this.percent,
-          dry_rubber: this.dry_rubber,
-          percen_split: "60",
-          rubber_price: this.rubber_price,
-          note: this.note,
+          date_income: this.incomes.date_income,
+          amount: this.incomes.amount,
+          weight: this.incomes.weight,
+          percen_rubber: this.incomes.percen_rubber,
+          dry_rubber: this.incomes.dry_rubber,
+          percen_split: this.incomes.percen_split,
+          rubber_price: this.incomes.rubber_price,
+          note: this.incomes.note,
           farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
           user_id: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
         }
       );
       this.incomes = data.data;
       // console.log(data.data);
-
       this.$router.push({
-        path: "/account_calendar",
+        path: '/account_calendar',
+        query:{
+          id: this.incomes.in_id,
+        },
       });
     },
   },

@@ -5,7 +5,7 @@
       <q-toolbar class="text-center row">
           <div class="col flexed text-left">
           <q-icon
-            @click="$router.push({ name: 'detail_farm' })"
+            @click="$router.push({ name: 'detail_farm'  })"
             name="arrow_back_ios"
             size="30px"
           ></q-icon>

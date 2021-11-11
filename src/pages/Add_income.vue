@@ -36,7 +36,13 @@
       />
     </div>
     <div class="font q-px-md">
-      <q-input filled v-model="date_income" color="teal" mask="date" :rules="['date']">
+      <q-input
+        filled
+        v-model="date_income"
+        color="teal"
+        mask="date"
+        :rules="['date']"
+      >
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy
@@ -54,7 +60,7 @@
         </template>
       </q-input>
     </div>
-    
+
     <div class="text-center">
       <div class="font q-pa-md" style="font-size: 25px">ระบุข้อมูลน้ำยางสด</div>
     </div>
@@ -181,12 +187,49 @@ export default {
       share: "",
       optionspercent: ["60", "55", "50"],
       employee: "",
-      optionsemployee: ["กนกวรรณ", "ชนิกานต์", "อรไท"],
+      optionsemployee: [],
+      employees: [],
+      getlistemployee: [],
+      name: "",
+      listemployeename: {},
     };
   },
 
-  mounted() {},
+  mounted() {
+    this.getemployee();
+  },
   methods: {
+    async getemployee() {
+      const { data } = await axios.get(
+        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
+      );
+      this.employees = data.data;
+
+      const listemployee = this.employees.map((data) => {
+        const obj = {};
+        obj["user_id"] = data.user_id;
+
+        this.name = this.getempname(data.user_id);
+
+
+        Promise.all(this.name);
+
+        
+        // console.log(this.name);
+        obj["fname"] = this.name;
+        return obj;
+      });
+
+      console.log(listemployee);
+    },
+    async getempname(user_id) {
+      const { data } = await axios.get(
+        "http://localhost:3000/payang_user/" + user_id
+      );
+      this.listemployeename = data.data;
+      console.log(this.listemployeename.fname);
+      return this.listemployeename.fname;
+    },
     onSubmit() {
       axios.post(
         `http://localhost:3000/income/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,

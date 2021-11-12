@@ -152,7 +152,7 @@ export default {
         .onOk(() => {
           // console.log(">>>> OK");
           this.$router.push({
-            path: "/Myfarm",
+            path: "/Myfarm" , 
           });
         });
     },

@@ -141,13 +141,20 @@ export default {
 
 
     showNotif() {
-      this.$q.dialog({
-        title: "Confirm",
-        message: "Would you delete the data? ",
-        cancel: true,
-        persistent: true,
-      });
-      return { confirm };
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "Would you delete the data? ",
+          cancel: true,
+          persistent: true,
+          html: true,
+        })
+        .onOk(() => {
+          // console.log(">>>> OK");
+          this.$router.push({
+            path: "/Myfarm",
+          });
+        });
     },
   },
 };

@@ -17,7 +17,7 @@
       </q-toolbar>
     </q-header>
 
-    <div class="q-pa-md font">
+    <div class="q-pa-md font" >
       <q-form @submit="onSubmit" class="q-gutter-md">
         <div class="row justify-between">
           <div class="col q-pr-md">
@@ -77,11 +77,11 @@
           </div>
         </div>
 
-        <div>วันที่ปลูกยาง :</div>
+        <!-- <div>วันที่ปลูกยาง :</div>
         <q-input
           color="teal"
           filled
-          v-model="date"
+          v-model="planing_date"
           mask="date"
           :rules="['date']"
         >
@@ -92,7 +92,7 @@
                 transition-show="scale"
                 transition-hide="scale"
               >
-                <q-date v-model="date" color="green">
+                <q-date v-model="planing_date" color="green">
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="white" flat />
                   </div>
@@ -100,7 +100,7 @@
               </q-popup-proxy>
             </q-icon>
           </template>
-        </q-input>
+        </q-input> -->
 
         <!-- <div>พันธุ์ยาง :</div>
         <q-select
@@ -128,7 +128,7 @@
           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก']"
         />
 
-        <div class="add_employee">
+        <!-- <div class="add_employee">
           <q-checkbox
             v-model="add_employee"
             style="font-size: 16px"
@@ -212,7 +212,7 @@
               />
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div>
           <q-btn
@@ -229,115 +229,113 @@
 </template>
 <script>
 import axios from "axios";
-import { date } from "quasar";
+// import { date } from "quasar";
 
 export default {
   async mounted() {
-    // this.setup();
-    // this.filterFn();
-    this.getday();
+    // this.getday();
+    this.createfarm();
   },
   data() {
     return {
-      splitterModel: 50,
-      date: "",
-      events: [],
-      farm: [],
-      data:[],
+      // splitterModel: 50,
+      // date: "",
+      // farm: [],
+      // data:[],
 
-      add_employee: false,
+      // add_employee: false,
 
-      farm_name: null,
-      fname: null,
-      lname: null,
-      area: null,
-      address: null,
-      address_district: null,
-      address_province: null,
-      rubber_varieties_id: [],
-      planing_date: null,
+      farm_name: [],
+      fname: [],
+      lname: [],
+      area: [],
+      address: [],
+      address_district:[],
+      address_province: [],
 
-      fname_emp: null,
-      lname_emp: null,
-      phone_number_emp: null,
-      e_number_emp: null,
-      address_district_emp: null,
-      address_province_emp: null,
+     
+      // rubber_varieties_id: [],
+      // planing_date: [],
+      create_farm: [],
+
+      // fname_emp: null,
+      // lname_emp: null,
+      // phone_number_emp: null,
+      // e_number_emp: null,
+      // address_district_emp: null,
+      // address_province_emp: null,
     };
   },
   methods: {
-    // async setup(){
-    //   const rubber_varieties_id = {stringOptions}
+    // async getday()
+    // {
+    //   this.planing_date = this.formatDate(new Date());
     // },
 
-    // async filterFn (val, update, abort) {
-    //   update(() => {
-    //       const needle = val.toLowerCase()
-    //       options.value = stringOptions.filter(v => v.toLowerCase().indexOf(needle) > -1)
-    //     })
+    // formatDate(dateString) 
+    // {
+    //   return date.formatDate(dateString, "YYYY/MM/DD");
     // },
 
-    async getday(){this.date = this.formatDate(new Date());},
+    // async getfarm() {
+    //   const { data } = await axios.get(
+    //     "http://localhost:3000/farm/list" + this.$route.query.id
+    //   );
+    //   this.farm = data.data;
+    // },
+
+    // async getrubber_var_id() {
+    //   const { data } = await axios.get(
+    //     "http://localhost:3000/rubber_variaties/" + this.$route.query.id
+    //   );
+    //   this.getrubber = data.data;
+    // },
+
+    // async createemployee() {
+    //   const { data } = await axios.post(
+    //     "http://localhost:3000/create_emp/create/" + this.$route.query.id,
+    //     {
+    //       fname: this.create_emp.fname_emp,
+    //       lname: this.create_emp.lname_emp,
+    //       // email: this.create_emp.email,
+    //       phone_number: this.create_emp.phone_number_emp,
+    //       e_number: this.create_emp.e_number_emp,
+    //       address: this.create_emp.address,
+    //       address_district: this.create_emp.address_district_emp,
+    //       address_province: this.create_emp.address_province_emp,
+    //       // zip_code: this.create_emp.zip_code,
+    //     }
+    //   );
+    //   this.create_emp = data.data;
+    // },
+
     
 
-
-    formatDate(dateString) {
-      return date.formatDate(dateString, "YYYY/MM/DD");
-    },
-
-    async getfarm() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm/list" + this.$route.query.id
-      );
-      this.farm = data.data;
-    },
-
-    async getrubber_var_id() {
-      const { data } = await axios.get(
-        "http://localhost:3000/rubber_variaties/" + this.$route.query.id
-      );
-      this.getrubber = data.data;
-    },
-
-    async createemployee() {
-      const { data } = await axios.post(
-        "http://localhost:3000/create_emp/create/" + this.$route.query.id,
-        {
-          fname: this.create_emp.fname,
-          lname: this.create_emp.lname,
-          email: this.create_emp.email,
-          phone_number: this.create_emp.phone_number,
-          e_number: this.create_emp.email,
-          address: this.create_emp.address,
-          address_district: this.create_emp.address_district,
-          address_province: this.create_emp.address_province,
-          zip_code: this.create_emp.zip_code,
-        }
-      );
-      this.create_emp = data.data;
-    },
-
     async createfarm() {
-      const { data } = await axios.post(
+         const { data } = await axios.post(
         "http://localhost:3000/farm/create/" + this.$route.query.id,
         {
-          farm_name: this.create_farm.farm_name,
-          fname: this.create_farm.fname,
-          lname: this.create_farm.lname,
-          area: this.create_farm.area,
-          rubber_varieties_id: this.create_farm.rubber_varieties_id,
-          planing_date: this.create_farm.planing_date,
-          address: this.create_farm.address,
-          address_district: this.create_farm.address_district,
-          address_province: this.create_farm.address_province,
+          farm_name: this.farm_name,
+          fname: this.fname,
+          lname: this.lname,
+          area: this.area,
+          // rubber_varieties_id: this.create_farm.rubber_varieties_id,
+          // planing_date: this.create_farm.planing_date,
+          address: this.address,
+          address_district: this.address_district,
+          address_province: this.address_province,
         }
       );
       this.create_farm = data.data;
+      console.log(data.data);
     },
 
     async onSubmit() {
+      // this.createemployee(),
+       
+
       this.$router.push({
-        path: "/myfarm",
+        path: "/Myfarm"   , query: { id: this.create_farm.user_id } 
       });
     },
   },

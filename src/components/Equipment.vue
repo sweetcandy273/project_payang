@@ -173,7 +173,7 @@ export default {
           console.log(response);
         });
       this.$router.push({
-        path: "/check_income",
+        path: "/account_calendar",
       });
     },
   }

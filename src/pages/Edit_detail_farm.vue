@@ -251,24 +251,31 @@ export default {
     },
 
     showNotif() {
-      this.$q.dialog({
-        title: "Confirm",
-        message: "Would you delete the data? ",
-        cancel: true,
-        persistent: true,
-      });
-      return { confirm };
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "Would you delete the data? ",
+          cancel: true,
+          persistent: true,
+          html: true,
+        })
+        .onOk(() => {
+          // console.log(">>>> OK");
+          this.$router.push({
+            path: "/Myfarm",
+          });
+        });
     },
-
+    
     async onSubmit() {
       const { data } = await axios.put(
         "http://localhost:3000/farm/update/" + this.$route.query.id,
         {
-          farm_name : this.farm.farm_name,
-          fname : this.farm.fname,
-          lname : this.farm.lname,
-          area : this.farm.area,
-          rubber_varieties_id: this.farm.rubber_varieties_id,  
+          farm_name: this.farm.farm_name,
+          fname: this.farm.fname,
+          lname: this.farm.lname,
+          area: this.farm.area,
+          rubber_varieties_id: this.farm.rubber_varieties_id,
           planing_date: this.farm.planing_date,
           address: this.farm.address,
           address_district: this.farm.address_district,
@@ -277,7 +284,8 @@ export default {
       );
       this.farm = data.data;
       this.$router.push({
-        path: "/detail_farm" , query: { id: this.farm.farm_id } ,
+        path: "/detail_farm",
+        query: { id: this.farm.farm_id },
       });
     },
   },

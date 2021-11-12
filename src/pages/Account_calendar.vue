@@ -21,78 +21,88 @@
           v-model="date"
           color="green"
           :events="events"
-          :event-color="(date) => (date[9] % 2 === 0 ? 'teal' : 'red')"
+          :event-color="(date) => (date[9] % 2 === 0 ? 'teal' : 'green')"
         />
       </div>
-     </q-splitter>
+    </q-splitter>
 
-      <div class="col font q-mx-md q-mt-md" style="font-size: 22px">
-        {{ date }}
+    <div class="col font q-mx-md q-mt-md" style="font-size: 22px">
+      {{ date }}
+    </div>
+    <div :key="index" v-for="(data, index) in incomes">
+      <div class="row font q-pt-md">
+        <div class="greencircle"></div>
+        <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
+        <div class="col text-right" style="font-size: 18px">
+          {{ data.amount }}
+        </div>
       </div>
-        <div :key="index" v-for="(data, index) in incomes">
-          <div class="row font q-pt-md">
-            <div class="redcircle"></div>
-            <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
-            <div class="col text-right" style="font-size: 18px">
-              {{ data.amount }}
-            </div>
-            <div
-              class="income-income q-pa-md"
-              @click="$router.push({ name: 'detail_income' })"
-            >
-            <div class="row font">
-              <div class="col" style="font-size: 16px">
-                ร้านดาว น้ำยางสด, แผ่น
-              </div>
-              <div class="col-3 text-right" style="font-size: 16px">
-                {{ data.amount }}
-              </div>
-            </div>
-            <div class="row font" style="font-size: 16px">
-              น้ำยางสด {{ data.weight }} กก. {{ data.percen_rubber }} % แห้ง
-              {{ data.dry_rubber }}
-            </div>
-            <div class="row font" style="font-size: 16px">
-              ราคายาง {{ data.rubber_price }} บ./กก.
-            </div>
-            <div class="row font">
-              <div class="col" style="font-size: 16px">
-                {{ data.employee }} ส่วนแบ่ง {{ data.percen_split }}
-              </div>
-              <div class="col-3 text-right" style="font-size: 16px">
-                {{ data.amount_net }}
-              </div>
-            </div>
-            </div>
+      <div
+        class="calendar-income q-pa-md"
+        @click="
+          $router.push({
+            path: 'detail_income',
+            query: {
+              id: data.in_id,
+            },
+          })
+        "
+      >
+        <div class="row font">
+          <div class="col" style="font-size: 16px">ร้านดาว น้ำยางสด, แผ่น</div>
+          <div class="col-3 text-right" style="font-size: 16px">
+            {{ data.amount }}
           </div>
         </div>
+        <div class="row font" style="font-size: 16px">
+          น้ำยางสด {{ data.weight }} กก. {{ data.percen_rubber }} % แห้ง
+          {{ data.dry_rubber }}
+        </div>
+        <div class="row font" style="font-size: 16px">
+          ราคายาง {{ data.rubber_price }} บ./กก.
+        </div>
+        <div class="row font">
+          <div class="col" style="font-size: 16px">
+            {{ data.employee }} ส่วนแบ่ง {{ data.percen_split }}
+          </div>
+          <div class="col-3 text-right" style="font-size: 16px">
+            {{ data.amount_net }}
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <div :key="index+1000" v-for="(data, index) in expenditures">
-          <div class="row font q-pt-md">
-            <div class="redcircle"></div>
-            <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>
-            <div class="col text-right" style="font-size: 18px">
-              {{ data.amount }}
-            </div>
-            <div
-              class="calendar-expenditure q-pa-md"
-              @click="$router.push({ name: 'detail_expenditure' })"
-            >
-              <div class="row font">
-                <div class="col" style="font-size: 16px">
-                  ร้านขายอุปกรณ์การช่าง
-                </div>
-                <div class="col-3 text-right" style="font-size: 16px">
-                  {{ data.amount }}
-                </div>
-              </div>
-              <div class="row font" style="font-size: 16px">
-                {{ data.note }}
-              </div>
-              <div class="row font" style="font-size: 16px">กนกวรรณ</div>
-            </div>
+    <div :key="index" v-for="(data, index) in expenditures">
+      <div class="row font q-pt-md">
+        <div class="redcircle"></div>
+        <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>
+        <div class="col text-right" style="font-size: 18px">
+          {{ data.amount }}
+        </div>
+      </div>
+      <div
+        class="calendar-expenditure q-pa-md"
+        @click="
+          $router.push({
+            path: 'detail_expenditure',
+            query: {
+              id: data.expen_id,
+            },
+          })
+        "
+      >
+        <div class="row font">
+          <div class="col" style="font-size: 16px">ร้านขายอุปกรณ์การช่าง</div>
+          <div class="col-3 text-right" style="font-size: 16px">
+            {{ data.amount }}
           </div>
         </div>
+        <div class="row font" style="font-size: 16px">
+          {{ data.note }}
+        </div>
+        <div class="row font" style="font-size: 16px">กนกวรรณ</div>
+      </div>
+    </div>
 
     <div class="add-account text-right fixed-bottom q-pa-md">
       <q-btn
@@ -121,7 +131,7 @@ export default {
       date: " ",
       events: [],
       listAllincome: [],
-      listAllexpenditure:[],
+      listAllexpenditure: [],
     };
   },
   mounted() {
@@ -150,7 +160,7 @@ export default {
       );
       this.listAllexpenditure = data.data;
       this.date = this.formatDate(new Date());
-      const listEvent= data.data.map((data) => {
+      const listEvent = data.data.map((data) => {
         return this.formatDate(data.date_expenditure);
       });
       this.events.push(...listEvent);
@@ -160,11 +170,10 @@ export default {
     date(value) {
       this.incomes = this.listAllincome.filter((data) => {
         // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
-        return date.formatDate(value,"YYYY-MM-DD") == data.date_income
-
+        return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
       });
       this.expenditures = this.listAllexpenditure.filter((data) => {
-        return  date.formatDate(value,"YYYY-MM-DD") == data.date_expenditure
+        return date.formatDate(value, "YYYY-MM-DD") == data.date_expenditure;
       });
     },
   },

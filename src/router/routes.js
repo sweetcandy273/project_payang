@@ -134,6 +134,11 @@ const routes = [
         path: "all_account_calendar",
         name: "all_account_calendar",
         component: () => import("pages/All_account_calendar.vue")
+      },
+      {
+        path: "change_password",
+        name: "change_password",
+        component: () => import("pages/change_password.vue")
       }
     ]
   },

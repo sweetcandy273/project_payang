@@ -35,7 +35,7 @@
             style="width: 30px"
             @click="
               $router.push({
-                path: 'edit_userinformation',
+                name: 'edit_userinformation',
                 query: {
                   id: payang_user.user_id
                 }
@@ -76,11 +76,8 @@
               flat
               style="color: #FFFFFF"
               label="เปลี่ยน"
-              @click="this.$route.path"
+              @click="changePassword()"
             />
-            <!-- <router-link to="/forgot_password" class="text-green">
-              เปลี่ยน</router-link
-            > -->
           </div>
         </div>
       </div>
@@ -148,14 +145,22 @@
           ]"
         />
       </div>
-    </div>
-
-    <div>
-      <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
-        <ProductYearly :item="id" />
+      <div v-if="secondModel == ''" class="text-center font">
+        เลือกรูปแบบการดูผลผลิต
+        <div style="font-size:20px">
+          เลือกดูรายรับ รายจ่าย กำไร และผลผลิตเป็นรายปีหรือรายเดือน
+        </div>
+        <div class="q-mt-lg">
+          <q-img src="../assets/forest.png" width="40%"> </q-img>
+        </div>
       </div>
-      <div v-else class="text-center">
-        <ProductMonthly :item="id" />
+      <div v-else>
+        <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
+          <ProductYearly :item="id" />
+        </div>
+        <div v-else class="text-center">
+          <ProductMonthly :item="id" />
+        </div>
       </div>
     </div>
   </div>
@@ -166,12 +171,7 @@ import ProductYearly from "../components/ProductYearly.vue";
 import ProductMonthly from "../components/ProductMonthly.vue";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import {
-  getAuth,
-  signOut,
-  onAuthStateChanged,
-  deleteUser
-} from "firebase/auth";
+import { getAuth, signOut, deleteUser } from "firebase/auth";
 
 export default {
   components: {
@@ -181,23 +181,47 @@ export default {
 
   data() {
     return {
-      id: { id: this.$route.query.id },
+      uid: "",
+
+      id: { id: this.uid },
       payang_user: [],
 
       leftDrawerOpen: false,
       model: null,
-      secondModel: "yearly"
+      secondModel: ""
     };
   },
   async mounted() {
-    await this.getUser();
+    await this.checkauth();
+    // await this.getUser();
   },
 
   methods: {
     async getUser() {
-      const { data } = await this.$axios.get("/payang_user/" + this.id.id);
+      const { data } = await this.$axios.get("/payang_user/" + this.uid);
       this.payang_user = data.data;
+      this.id = { id: this.uid };
       // console.log(data.data);
+    },
+
+    changePassword() {
+      firebase
+        .auth()
+        .sendPasswordResetEmail(this.payang_user.email)
+        .then(() => {
+          alert("Email สำหรับการเปลี่ยนรหัสผ่านได้ถูกส่งไปแล้ว");
+          this.$router.push({
+            name: "login"
+          });
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          if (errorCode == "auth/invalid-email") {
+            alert("Email ไม่ถูกต้องตามหลัก");
+          } else if (errorCode == "auth/user-not-found") {
+            alert("ไม่มีข้อมูล Email ในระบบ");
+          }
+        });
     },
     confirm() {
       this.$q
@@ -225,7 +249,7 @@ export default {
             });
 
           this.$router.push({
-            path: "/login"
+            name: "login"
           });
         })
 
@@ -239,6 +263,20 @@ export default {
           this.$router.push({ name: "login" });
         })
         .catch(err => alert(err.message));
+    },
+
+    checkauth() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.uid = user.uid;
+          this.id = { id: user.uid };
+          this.getUser();
+        } else {
+          this.$router.push({
+            name: "starter"
+          });
+        }
+      });
     }
   }
 };

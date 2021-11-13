@@ -62,7 +62,7 @@
     <div class="q-pa-md q-gutter-sm self-center">
       <div>
         <q-btn
-          @click="$router.push({ name: 'account_calendar',query:{id:farm.farm_id}})"
+          @click="$router.push({ name: 'account_calendar', query:{ id:farm.farm_id}})"
           unelevated
           rounded
           label="รายละเอียดบัญชี"
@@ -74,7 +74,7 @@
 
       <div>
         <q-btn
-          @click="$router.push({ name: 'calender_farm' ,  })"
+          @click="$router.push({ name: 'calender_farm' , query:{ id:farm.farm_id}  })"
           unelevated
           rounded
           label="เรียกดูตารางการทำงาน"
@@ -152,7 +152,7 @@ export default {
         .onOk(() => {
           // console.log(">>>> OK");
           this.$router.push({
-            path: "/Myfarm" , 
+            path: "/Myfarm" , query: { id: farm.user_id }  , 
           });
         });
     },

@@ -126,6 +126,8 @@ import { date } from "quasar";
 export default {
   data() {
     return {
+      list_income:[],
+
       // model: { from: "", to: "" },
    
       listIncomes: [],

@@ -3,9 +3,14 @@
   <div>
     <q-header>
       <q-toolbar class="text-center row">
-          <div class="col flexed text-left">
+        <div class="col flexed text-left">
           <q-icon
-            @click="$router.push({ name: 'detail_farm'  })"
+            @click="
+              $router.push({
+                name: 'detail_farm',
+                query: { id: $route.query.id },
+              })
+            "
             name="arrow_back_ios"
             size="30px"
           ></q-icon>
@@ -21,60 +26,62 @@
         <template v-slot:before>
           <div class="row justify-center q-pa-md">
             <div class="">
-              <q-date v-model="date" color="green" :events="events" event-color="red" />
+              <q-date
+                v-model="date"
+                color="green"
+                :events="events"
+                :event-color="(date) => (date[9] % 2 === 0 ? 'teal' : 'green')"
+              />
             </div>
           </div>
         </template>
 
         <template v-slot:after>
-
           <div class="box_type">
-          <q-tab-panels
-            v-model="date"
-            animated
-            transition-prev="jump-up"
-            transition-next="jump-up"
-          >
-            <q-tab-panel name="2021/07/10">
-              <div class="row font">
-                <div class="col" style="font-size: 22px">2021/07/10</div>
-                <div>
-                 <q-icon name="create" class="text-teal" style="font-size: 2rem;" />
+            <q-tab-panels
+              v-model="date"
+              animated
+              transition-prev="jump-up"
+              transition-next="jump-up"
+            >
+              <q-tab-panel name="2021/07/10">
+                <div class="row font">
+                  <div class="col" style="font-size: 22px">2021/07/10</div>
+                  <div>
+                    <q-icon
+                      name="create"
+                      class="text-teal"
+                      style="font-size: 2rem"
+                    />
+                  </div>
                 </div>
-              </div>
-             
-              <div class="row font q-pt-md">
-                
-                
-                <div class="col text-right" style="font-size: 18px">
-                  ตัดหญ้า
+
+                <div class="row font q-pt-md">
+                  <div class="col text-right" style="font-size: 18px">
+                    ตัดหญ้า
+                  </div>
                 </div>
-              </div>
-            </q-tab-panel>
-          </q-tab-panels>
+              </q-tab-panel>
+            </q-tab-panels>
           </div>
 
-
-            <div class="add-account text-center fixed-bottom q-pa-xl">
-      <q-btn
-        unelevated
-        round
-        style="background: #4e7971; color: white; width: 50px; height: 50px"
-        icon="add"
-        @click="$router.push({ name: 'add_calender_farm' })"
-      />
-    </div>
+          <div class="add-account text-center fixed-bottom q-pa-xl">
+            <q-btn
+              unelevated
+              round
+              style="
+                background: #4e7971;
+                color: white;
+                width: 50px;
+                height: 50px;
+              "
+              icon="add"
+              @click="$router.push({ name: 'add_calender_farm' })"
+            />
+          </div>
         </template>
       </q-splitter>
-      
     </div>
-    
-
-    
-
-
-
-  
   </div>
 </template>
  
@@ -86,9 +93,15 @@ export default {
   data() {
     return {
       splitterModel: 50,
-      date: "2021/07/30",
-      events: ["2021/07/10", "2021/07/15", "2021/07/31"],
+      date: "",
+      events:[],
     };
+  },
+  mounted() {},
+  methods: {
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
   },
 };
 </script>

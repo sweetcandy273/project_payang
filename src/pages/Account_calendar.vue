@@ -144,7 +144,7 @@ export default {
     },
     async getIncome() {
       const { data } = await axios.get(
-        `http://localhost:3000/income/a07f9bfa-e8b2-4125-8036-acf3d7048e09`
+        `http://localhost:3000/income/` + this.$route.query.id,
       );
 
       this.listAllincome = data.data;

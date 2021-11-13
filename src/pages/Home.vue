@@ -260,7 +260,7 @@ export default {
       const auth = getAuth();
       signOut(auth)
         .then(() => {
-          this.$router.push({ name: "login" });
+          this.$router.push({ name: "starter" });
         })
         .catch(err => alert(err.message));
     },

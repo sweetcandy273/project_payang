@@ -1,18 +1,7 @@
 <template>
   <div>
     <q-header class="shadow-2">
-      <!-- <q-toolbar>
-        <q-space></q-space>
-        <q-btn flat round dense icon="search" class="q-mr-xs" />
-        <q-btn flat round dense icon="group_add" />
-      </q-toolbar> -->
       <q-toolbar class="row flex">
-        <!-- <div
-          class="col self-center font"
-          @click="$router.push({ name: 'setting' })"
-        >
-          ตั้งค่า
-        </div> -->
         <div
           class="col self-center font"
           @click="leftDrawerOpen = !leftDrawerOpen"
@@ -46,7 +35,7 @@
             style="width: 30px"
             @click="
               $router.push({
-                path: 'edit_userinformation',
+                name: 'edit_userinformation',
                 query: {
                   id: payang_user.user_id
                 }
@@ -83,9 +72,12 @@
         <div class="row q-mt-xl">
           <div class="col text-left"><strong>รหัสผ่าน</strong></div>
           <div class="col text-right">
-            <router-link to="/new_password" class="text-green">
-              เปลี่ยน</router-link
-            >
+            <q-btn
+              flat
+              style="color: #FFFFFF"
+              label="เปลี่ยน"
+              @click="changePassword()"
+            />
           </div>
         </div>
       </div>
@@ -153,14 +145,22 @@
           ]"
         />
       </div>
-    </div>
-
-    <div>
-      <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
-        <ProductYearly :item="id" />
+      <div v-if="secondModel == ''" class="text-center font">
+        เลือกรูปแบบการดูผลผลิต
+        <div style="font-size:20px">
+          เลือกดูรายรับ รายจ่าย กำไร และผลผลิตเป็นรายปีหรือรายเดือน
+        </div>
+        <div class="q-mt-lg">
+          <q-img src="../assets/forest.png" width="40%"> </q-img>
+        </div>
       </div>
-      <div v-else class="text-center">
-        <ProductMonthly :item="id" />
+      <div v-else>
+        <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
+          <ProductYearly :item="id" />
+        </div>
+        <div v-else class="text-center">
+          <ProductMonthly :item="id" />
+        </div>
       </div>
     </div>
   </div>
@@ -169,34 +169,59 @@
 <script>
 import ProductYearly from "../components/ProductYearly.vue";
 import ProductMonthly from "../components/ProductMonthly.vue";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import { getAuth, signOut, deleteUser } from "firebase/auth";
 
 export default {
-  props: {},
-  // name: "yearly",
   components: {
     ProductYearly,
     ProductMonthly
   },
 
   data() {
-    const id = { id: "4b9baivvJQVwqsd1pfXxZOrz8eC3" };
     return {
+      uid: "",
+
+      id: { id: this.uid },
       payang_user: [],
-      id,
+
       leftDrawerOpen: false,
       model: null,
-      secondModel: "yearly"
+      secondModel: ""
     };
   },
-  mounted() {
-    this.getUser();
+  async mounted() {
+    await this.checkauth();
+    // await this.getUser();
   },
 
   methods: {
     async getUser() {
-      const { data } = await this.$axios.get("/payang_user/" + this.id.id);
+      const { data } = await this.$axios.get("/payang_user/" + this.uid);
       this.payang_user = data.data;
+      this.id = { id: this.uid };
       // console.log(data.data);
+    },
+
+    changePassword() {
+      firebase
+        .auth()
+        .sendPasswordResetEmail(this.payang_user.email)
+        .then(() => {
+          alert("Email สำหรับการเปลี่ยนรหัสผ่านได้ถูกส่งไปแล้ว");
+          this.$router.push({
+            name: "login"
+          });
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          if (errorCode == "auth/invalid-email") {
+            alert("Email ไม่ถูกต้องตามหลัก");
+          } else if (errorCode == "auth/user-not-found") {
+            alert("ไม่มีข้อมูล Email ในระบบ");
+          }
+        });
     },
     confirm() {
       this.$q
@@ -209,23 +234,48 @@ export default {
           html: true
         })
         .onOk(() => {
-          // console.log(">>>> OK");
+          const auth = getAuth();
+          const user = auth.currentUser;
+
+          deleteUser(user)
+            .then(() => {
+              this.$router.push({
+                name: "starter"
+              });
+            })
+
+            .catch(error => {
+              alert("พบปัญหาระหว่างการกระทำ:" + error);
+            });
+
           this.$router.push({
-            path: "/login"
+            name: "login"
           });
         })
 
-        .onCancel(() => {
-          // console.log(">>>> Cancel");
-        })
-        .onDismiss(() => {
-          // console.log('I am triggered on both OK and Cancel')
-        });
+        .onCancel(() => {})
+        .onDismiss(() => {});
     },
     logout() {
-      //! ออกจากระบบ
-      this.$router.push({
-        path: "/login"
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          this.$router.push({ name: "starter" });
+        })
+        .catch(err => alert(err.message));
+    },
+
+    checkauth() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.uid = user.uid;
+          this.id = { id: user.uid };
+          this.getUser();
+        } else {
+          this.$router.push({
+            name: "starter"
+          });
+        }
       });
     }
   }

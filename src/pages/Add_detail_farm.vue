@@ -17,7 +17,7 @@
       </q-toolbar>
     </q-header>
 
-    <div class="q-pa-md font" >
+    <div class="q-pa-md font">
       <q-form @submit="onSubmit" class="q-gutter-md">
         <div class="row justify-between">
           <div class="col q-pr-md">
@@ -77,7 +77,7 @@
           </div>
         </div>
 
-        <!-- <div>วันที่ปลูกยาง :</div>
+        <div>วันที่ปลูกยาง :</div>
         <q-input
           color="teal"
           filled
@@ -100,7 +100,7 @@
               </q-popup-proxy>
             </q-icon>
           </template>
-        </q-input> -->
+        </q-input>
 
         <!-- <div>พันธุ์ยาง :</div>
         <q-select
@@ -128,7 +128,7 @@
           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก']"
         />
 
-        <!-- <div class="add_employee">
+        <div class="add_employee">
           <q-checkbox
             v-model="add_employee"
             style="font-size: 16px"
@@ -137,7 +137,7 @@
         </div>
 
         <div class="box_admin" v-if="add_employee">
-          <div class="row justify-between">
+          <div class="row justify-between" >
             <div class="col q-pr-md">
               <q-input
                 color="teal"
@@ -212,7 +212,7 @@
               />
             </div>
           </div>
-        </div> -->
+        </div>
 
         <div>
           <q-btn
@@ -229,90 +229,54 @@
 </template>
 <script>
 import axios from "axios";
-// import { date } from "quasar";
+import { date } from "quasar";
 
 export default {
   async mounted() {
-    // this.getday();
-    this.createfarm();
+    this.getday();
+    this.cratefarm();
+    this.createEmp();
   },
   data() {
     return {
-      // splitterModel: 50,
-      // date: "",
-      // farm: [],
-      // data:[],
+      splitterModel: 50,
+      date: "",
+      data: [],
 
-      // add_employee: false,
+      add_employee: false,
 
-      farm_name: [],
-      fname: [],
-      lname: [],
-      area: [],
-      address: [],
-      address_district:[],
-      address_province: [],
+      farm_name: "",
+      fname: "",
+      lname: "",
+      area: "",
+      address: "",
+      address_district: "",
+      address_province: "",
 
-     
-      // rubber_varieties_id: [],
-      // planing_date: [],
+      rubber_varieties_id: [],
+      planing_date: "",
       create_farm: [],
 
-      // fname_emp: null,
-      // lname_emp: null,
-      // phone_number_emp: null,
-      // e_number_emp: null,
-      // address_district_emp: null,
-      // address_province_emp: null,
+      fname_emp: "",
+      lname_emp: "",
+      phone_number_emp: "",
+      e_number_emp: "",
+      address_district_emp: "",
+      address_province_emp: "",
+      create_emp:[],
     };
   },
   methods: {
-    // async getday()
-    // {
-    //   this.planing_date = this.formatDate(new Date());
-    // },
+    async getday() {
+      this.planing_date = this.formatDate(new Date());
+    },
 
-    // formatDate(dateString) 
-    // {
-    //   return date.formatDate(dateString, "YYYY/MM/DD");
-    // },
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
 
-    // async getfarm() {
-    //   const { data } = await axios.get(
-    //     "http://localhost:3000/farm/list" + this.$route.query.id
-    //   );
-    //   this.farm = data.data;
-    // },
-
-    // async getrubber_var_id() {
-    //   const { data } = await axios.get(
-    //     "http://localhost:3000/rubber_variaties/" + this.$route.query.id
-    //   );
-    //   this.getrubber = data.data;
-    // },
-
-    // async createemployee() {
-    //   const { data } = await axios.post(
-    //     "http://localhost:3000/create_emp/create/" + this.$route.query.id,
-    //     {
-    //       fname: this.create_emp.fname_emp,
-    //       lname: this.create_emp.lname_emp,
-    //       // email: this.create_emp.email,
-    //       phone_number: this.create_emp.phone_number_emp,
-    //       e_number: this.create_emp.e_number_emp,
-    //       address: this.create_emp.address,
-    //       address_district: this.create_emp.address_district_emp,
-    //       address_province: this.create_emp.address_province_emp,
-    //       // zip_code: this.create_emp.zip_code,
-    //     }
-    //   );
-    //   this.create_emp = data.data;
-    // },
-
-    
-
-    async createfarm() {
-         const { data } = await axios.post(
+    async cratefarm() {
+      const { data } = await axios.post(
         "http://localhost:3000/farm/create/" + this.$route.query.id,
         {
           farm_name: this.farm_name,
@@ -320,27 +284,43 @@ export default {
           lname: this.lname,
           area: this.area,
           // rubber_varieties_id: this.create_farm.rubber_varieties_id,
-          // planing_date: this.create_farm.planing_date,
+          planing_date: this.create_farm.planing_date,
           address: this.address,
           address_district: this.address_district,
           address_province: this.address_province,
         }
       );
       this.create_farm = data.data;
+      // console.log(data.data);
+    },
+    async createEmp() {
+      const { data } = await axios.post(
+        "http://localhost:3000/payang_user/create_emp/" ,
+        {
+          fname_emp: this.fname_emp,
+          lname_emp: this.lname_emp,
+          // email: this.create_emp.email,
+          phone_number_emp: this.phone_number_emp,
+          e_number_emp: this.e_number_emp,
+          address_emp: this.address_emp,
+          address_district_emp: this.address_district_emp,
+          address_province_emp: this.address_province_emp,
+          // zip_code: this.create_emp.zip_code,
+        }
+      );
+      this.create_emp = data.data;
       console.log(data.data);
     },
 
     async onSubmit() {
-      // this.createemployee(),
-       
-
-      this.$router.push({
-        path: "/Myfarm"   , query: { id: this.create_farm.user_id } 
+      this.cratefarm(),
+      this.createEmp(),
+      this.$router.push({   
+        path: "/Myfarm",
+        query: { id: this.create_farm.id },
       });
     },
   },
-
-
 };
 </script>
 

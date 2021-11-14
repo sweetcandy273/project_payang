@@ -1,5 +1,7 @@
 <template>
   <div>
+    
+
     <q-form>
     <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
       <div class="row q-pt-md">
@@ -32,54 +34,7 @@
           </div>
         </div>
 
-      <div class="row active">
-        <q-checkbox v-model="active" style="font-size: 16px" label="กิจกรรม" />
-      </div>
-      <div class="activerubber" v-if="active">
-        <strong>
-          <div class="row" v-for="(input, index) in activity" :key="index">
-            <div class="col font" style="font-size: 26px">1</div>
-            <div class="col-9 q-px-md font">
-              <q-input filled v-model="dateact" mask="date" :rules="['date']">
-                <template v-slot:append>
-                  <q-icon name="event" class="cursor-pointer">
-                    <q-popup-proxy
-                      ref="qDateProxy"
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
-                      <q-date v-model="dateact">
-                        <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            label="Close"
-                            color="primary"
-                            flat
-                          />
-                        </div>
-                      </q-date>
-                    </q-popup-proxy>
-                  </q-icon>
-                </template>
-              </q-input>
-            </div>
-          </div>
-          <div class="text-center">
-            <q-btn
-              unelevated
-              rounded
-              style="
-                background: #5db075;
-                color: white;
-                width: 50px;
-                height: 40px;
-              "
-              icon="add"
-              @click="addactivity"
-            />
-          </div>
-        </strong>
-      </div>
+
 
       <div class="share text-left">
         <q-select
@@ -130,18 +85,13 @@ export default {
         "ถังน้ำ",
         "แกลลอนใส่น้ำยาง",
       ],
-      dateact: "",
+     
       selectshare: false,
       employee: "",
       stores: null,
       tel_stores: "",
       optionsemployee: ["-", "กนกวรรณ", "ชนิกานต์", "อรไท"],
-      active: false,
-      activity: [
-      {
-        addactivity: "",
-      },
-    ],
+      
     };
   },
   methods:{
@@ -151,9 +101,10 @@ export default {
       })
     },
     submitExpen(){
+       console.log(this.date_expenditure);
       axios.post(`http://localhost:3000/expenditure/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
         {
-          date: this.date,
+          date_expenditure: this.date_expenditure,
           amount: this.totalprice,
           note: this.note,
           type_expen_id: "1",

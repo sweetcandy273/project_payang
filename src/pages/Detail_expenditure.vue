@@ -80,7 +80,7 @@
               style="width: 50px; height: 50px"
               color="deep-orange-13"
               icon="delete"
-              @click="Notidelete"
+              @click="Notidelete()"
             /></div>
           </div>
         </div>
@@ -113,27 +113,13 @@ export default {
       console.log(data);
     },
     Notidelete() {
-      this.$q
-        .dialog({
-          title: "Confirm",
-          message: "Would you delete the data? ",
-          cancel: true,
-          persistent: true,
-        })
-        .onOk(() => {
-          // console.log('>>>> OK')
-        })
-        .onOk(() => {
-          // console.log('>>>> second OK catcher')
-        })
-        .onCancel(() => {
-          // console.log('>>>> Cancel')
-        })
-        .onDismiss(() => {
-          // console.log('I am triggered on both OK and Cancel')
-        });
-
-      return { confirm };
+      axios.delete(
+        `http://localhost:3000/expenditure/delete/${this.$route.query.id}`
+      );
+      this.$router.push({
+        path: "/account_calendar",
+      });
+      
     },
   },
 };

@@ -156,7 +156,7 @@ export default {
     },
     async getExpenditure() {
       const { data } = await axios.get(
-        "http://localhost:3000/expenditure/listbyfarm/a07f9bfa-e8b2-4125-8036-acf3d7048e09"
+        "http://localhost:3000/listbyfarm/a07f9bfa-e8b2-4125-8036-acf3d7048e09"
       );
       this.listAllexpenditure = data.data;
       this.date = this.formatDate(new Date());

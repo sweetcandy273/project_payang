@@ -79,7 +79,7 @@ export default {
   async mounted() {
     this.farm_id = this.item.id;
     // console.log(this.farm_id);
-    await this.getproductyearly();
+    // await this.getproductyearly();
     await this.fillData
     (this.Jan,
     this.Feb,
@@ -106,18 +106,18 @@ export default {
       }
     },
 
-    async getproductyearly() {
-      const { data } = await this.$axios.get(
-        "/income/productyearlybyfarm/" + this.year + "/" + this.farm_id
-      );
-      this.productyearly = data.data;
-      console.log(data.data);
-      if (this.productyearly === "NaN") {
-        this.product = parseFloat(Number(0.0)).toFixed(2);
-      } else {
-        this.product = parseFloat(Number(this.productyearly)).toFixed(2);
-      }
-    },
+    // async getproductyearly() {
+    //   const { data } = await this.$axios.get(
+    //     "/income/productyearlybyfarm/" + this.year + "/" + this.farm_id
+    //   );
+    //   this.productyearly = data.data;
+    //   console.log(data.data);
+    //   if (this.productyearly === "NaN") {
+    //     this.product = parseFloat(Number(0.0)).toFixed(2);
+    //   } else {
+    //     this.product = parseFloat(Number(this.productyearly)).toFixed(2);
+    //   }
+    // },
  
     fillData() {
       this.datacollection = {

@@ -102,10 +102,14 @@
           </template>
         </q-input>
 
-        <!-- <div>พันธุ์ยาง :</div>
+        <div>พันธุ์ยาง :</div>
         <q-select
           filled
           v-model="rubber_varieties_id"
+          :options="rubberOption"
+          @filter="filterRubber"
+          map-options
+          emit-value
           use-input
           hide-selected
           fill-input
@@ -116,7 +120,7 @@
               <q-item-section class="text-grey"> ไม่มีผลลัพธ์ </q-item-section>
             </q-item>
           </template>
-        </q-select> -->
+        </q-select>
 
         <div>เนื้อที่ปลูก(ไร่) :</div>
 
@@ -137,7 +141,7 @@
         </div>
 
         <div class="box_admin" v-if="add_employee">
-          <div class="row justify-between" >
+          <div class="row justify-between">
             <div class="col q-pr-md">
               <q-input
                 color="teal"
@@ -236,13 +240,15 @@ export default {
     this.getday();
     this.cratefarm();
     this.createEmp();
+    this.getrubber_var();
   },
   data() {
     return {
       splitterModel: 50,
       date: "",
       data: [],
-
+      rubberList: [],
+      rubberOption: [],
       add_employee: false,
 
       farm_name: "",
@@ -263,10 +269,26 @@ export default {
       e_number_emp: "",
       address_district_emp: "",
       address_province_emp: "",
-      create_emp:[],
+      create_emp: [],
     };
   },
   methods: {
+    filterRubber(val, update) {
+      if (val === "") {
+        update(() => {
+          this.rubberOption = this.rubberList;
+          // here you have access to "ref" which
+          // is the Vue reference of the QSelect
+        });
+        return;
+      }
+      update(() => {
+        const rubber_varieties_id = val.toLowerCase();
+        this.rubberOption = this.rubberList.filter(
+          (v) => v.label.toLowerCase().indexOf(rubber_varieties_id) > -1
+        );
+      });
+    },
     async getday() {
       this.planing_date = this.formatDate(new Date());
     },
@@ -295,30 +317,41 @@ export default {
     },
     async createEmp() {
       const { data } = await axios.post(
-        "http://localhost:3000/payang_user/create_emp/" ,
+        "http://localhost:3000/payang_user/create_emp/",
         {
-          fname_emp: this.fname_emp,
-          lname_emp: this.lname_emp,
+          fname: this.fname_emp,
+          lname: this.lname_emp,
           // email: this.create_emp.email,
-          phone_number_emp: this.phone_number_emp,
-          e_number_emp: this.e_number_emp,
-          address_emp: this.address_emp,
-          address_district_emp: this.address_district_emp,
-          address_province_emp: this.address_province_emp,
+          phone_number: this.phone_number_emp,
+          e_number: this.e_number_emp,
+          address: this.address_emp,
+          address_district: this.address_district_emp,
+          address_province: this.address_province_emp,
           // zip_code: this.create_emp.zip_code,
         }
       );
       this.create_emp = data.data;
       console.log(data.data);
     },
+    async getrubber_var() {
+      const { data } = await axios.get(
+        "http://localhost:3000/rubber_varieties"
+      );
+      console.log(data);
+      this.rubberList = data.data.map(rubber=>({
+        label: rubber.varieties,
+        value: rubber.rubber_varieties_id,
+      }))
+    },
 
     async onSubmit() {
-      this.cratefarm(),
-      this.createEmp(),
-      this.$router.push({   
-        path: "/Myfarm",
-        query: { id: this.create_farm.id },
-      });
+      this.cratefarm()
+        this.createEmp()
+
+        this.$router.push({
+          path: "/Myfarm",
+          query: { id: $route.query.id },
+        });
     },
   },
 };

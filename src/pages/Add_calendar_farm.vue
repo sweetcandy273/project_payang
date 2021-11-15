@@ -96,8 +96,8 @@
 export default {
   data() {
     return {
-      date: "2021/07/18",
-      checkbox: false,
+      date: " ",
+      events: [],
       chooseAdmin:null,
       chooseActivity:null,
       activity_type: ["ใส่ปุ๋ย","ตัดหญ้า","ตัดกากฝาก","ตัดไม้ยาง","หยอดน้ำกรด","อื่นๆ",],

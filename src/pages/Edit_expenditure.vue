@@ -99,21 +99,21 @@
         class="text-center"
         id="maintenance"
       >
-        <Maintenance />
+        <Editmaintenance />
       </div>
       <div v-else class="text-center">
-        <Equipment />
+        <Editequipment />
       </div>
     </div>
   </div>
 </template>
 <script>
-import Maintenance from "../components/Maintenance.vue";
-import Equipment from "../components/Equipment.vue";
+import Editmaintenance from "../components/Editmaintenance.vue";
+import Editequipment from "../components/Editequipment.vue";
 export default {
   components: {
-    Maintenance,
-    Equipment,
+    Editmaintenance,
+    Editequipment,
   },
 
   data() {

@@ -60,7 +60,7 @@
     <div class="q-pa-md q-gutter-sm self-center">
       <div>
         <q-btn
-          @click="$router.push({ name: 'account_calendar',query:{id:farm.farm_id}})"
+          @click="$router.push({ name: 'account_calendar'})"
           unelevated
           rounded
           label="รายละเอียดบัญชี"

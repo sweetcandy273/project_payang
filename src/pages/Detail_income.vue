@@ -60,12 +60,12 @@
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-pt-md" style="font-size: 18px">
-          ร้าน : ดาว น้ำยางสด,แผ่น
+          ร้าน : {{incomes.store_in}}
         </div>
         <div class="row" style="font-size: 18px">
           ผู้ได้รับส่วนแบ่ง : กนกวรรณ
         </div>
-        <div class="row" style="font-size: 18px">%ส่วนแบ่ง : 60-40</div>
+        <div class="row" style="font-size: 18px">%ส่วนแบ่ง : {{incomes.percen_split}}</div>
         <div class="row">
           <div class="col q-pt-md" style="font-size: 18px">รวมรายรับสุทธิ</div>
           <div class="text-right" style="font-size: 30px">
@@ -74,7 +74,7 @@
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="q-pt-md" style="font-size: 18px">
-          บันทึก : ส่วนแบ่งตามที่ตกลงกันไว้
+          บันทึก : {{incomes.note}}
         </div>
         <div class="col q-pa-md self-center">
           <div class="row">

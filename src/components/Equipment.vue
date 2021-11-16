@@ -3,13 +3,38 @@
     
 
     <q-form>
+      <div class="font q-px-md">
+      <q-input
+        filled
+        v-model="date_expenditure"
+        color="teal"
+        mask="date"
+        :rules="['date']"
+      >
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy
+              ref="qDateProxy"
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <q-date v-model="date_expenditure" color="green">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="white" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+    </div>
     <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
       <div class="row q-pt-md">
         <div class="col">
           <q-select
             filled
-            v-model="type"
-            :options="optionstype"
+            v-model="title"
+            :options="titleoption"
             label="ตัวเลือก"
           />
         </div>
@@ -23,12 +48,12 @@
       </div>
       <div class="row">
           <div class="col">
-            <q-input filled v-model="stores" label="ชื่อร้านค้า">
+            <q-input filled v-model="store_expen" label="ชื่อร้านค้า">
               <template v-slot:prepend> กก. </template>
             </q-input>
           </div>
           <div class="col q-ml-md">
-            <q-input filled v-model="tel_stores" label="เบอร์โทรร้านค้า">
+            <q-input filled v-model="telstore_expen" label="เบอร์โทรร้านค้า">
               <template v-slot:prepend>  </template>
             </q-input>
           </div>
@@ -70,14 +95,16 @@
 
 <script>
 import axios from "axios";
+import { date } from "quasar";
 export default {
  
   data() {
     return {
+      date_expenditure:"",
       totalprice: "",
       note: "",
-      type: null,
-      optionstype: [
+      title:"",
+      titleoption: [
         "ต้นยางพารา",
         "น้ำกรด",
         "มีดกรีดยาง",
@@ -85,39 +112,33 @@ export default {
         "ถังน้ำ",
         "แกลลอนใส่น้ำยาง",
       ],
-     
       selectshare: false,
       employee: "",
-      stores: null,
-      tel_stores: "",
+      store_expen: "",
+      telstore_expen: "",
       optionsemployee: ["-", "กนกวรรณ", "ชนิกานต์", "อรไท"],
       
     };
   },
   methods:{
-    addactivity(){
-      this.activity.push({
-      addactivity: "",
-      })
+     formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
     },
     submitExpen(){
        console.log(this.date_expenditure);
       axios.post(`http://localhost:3000/expenditure/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
         {
-          date_expenditure: this.date_expenditure,
+           date_expenditure: this.date_expenditure,
           amount: this.totalprice,
           note: this.note,
-          type_expen_id: "1",
+          type:"Equipment",
+          title_type:this.title,
           farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
           user_id: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
-          store_expen_id : "1",
-        }
-      );
-      axios.post(`http://localhost:3000/type_expenditure/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/`,
-        {
-          title: this.type,
-          type: "Equipment",
-          farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
+          employee:"",
+          store_expen :this.store_expen ,
+          telstore_expen:this.telstore_expen,
+          
         }
       )
        .then((response) => {

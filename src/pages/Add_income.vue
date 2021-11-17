@@ -251,32 +251,31 @@ export default {
     
     onSubmit() {
      
-      console.log(this.optionspercent);
-      // axios.post(
-      //   `http://localhost:3000/income/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
-      //   {
-      //     date_income: this.date_income,
-      //     amount: this.totalprice,
-      //     amount_net: this.totalprice * 0.6,
-      //     weight: this.weight_rubber,
-      //     percen_rubber: this.percent,
-      //     dry_rubber: this.dry_rubber,
-      //     percen_split: "60",
-      //     rubber_price: this.rubber_price,
-      //     note: this.note,
-      //     farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
-      //     user_id: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
-      //     store_in: this.store_in,
-      //     telstore_in: this.telstore_in
-      //   }
-      // )
+      axios.post(
+        `http://localhost:3000/income/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
+        {
+          date_income: this.date_income,
+          amount: this.totalprice,
+          amount_net: this.totalprice * 0.6,
+          weight: this.weight_rubber,
+          percen_rubber: this.percent,
+          dry_rubber: this.dry_rubber,
+          percen_split: this.percen_split,
+          rubber_price: this.rubber_price,
+          note: this.note,
+          farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
+          user_id: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
+          store_in: this.store_in,
+          telstore_in: this.telstore_in
+        }
+      )
       
-      //   .then((response) => {
-      //     console.log(response);
-      //   });
-      // this.$router.push({
-      //   path: "/account_calendar",
-      // });
+        .then((response) => {
+          console.log(response);
+        });
+      this.$router.push({
+        path: "/account_calendar",
+      });
     },
   },
 };

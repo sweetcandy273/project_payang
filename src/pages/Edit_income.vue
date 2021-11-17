@@ -220,7 +220,7 @@ export default {
       optionsemployee: ["กนกวรรณ", "ชนิกานต์", "อรไท"],
       edit_income: {},
       incomes:{},
-      stores:{},
+     
     };
   },
   mounted() {

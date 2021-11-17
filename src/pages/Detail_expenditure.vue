@@ -74,7 +74,10 @@
               style="width: 50px; height: 50px"
               color="orange-4"
               icon="edit"
-              @click="$router.push({ name: 'edit_expenditure' })"
+              @click="$router.push({ path: 'edit_expenditure',
+              query:{
+                 id: expenditures.expen_id,
+              } })"
             />
             
             <q-btn

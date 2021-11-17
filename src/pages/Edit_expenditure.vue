@@ -45,11 +45,11 @@
         rounded
         unelevated
         :options="[
-          { value: 'maintenance', slot: 'maintenance' },
-          { value: 'equipment', slot: 'equipment' },
+          { value: 'Maintenance', slot: 'Maintenance' },
+          { value: 'Equipment', slot: 'Equipment' },
         ]"
       >
-        <template v-slot:maintenance>
+        <template v-slot:Maintenance>
           <div class="row items-center no-wrap">
             <q-img src="../assets/maintenance_sapling.png" width="100px">
               <h4 class="font text-center" style="font-size: 20px">
@@ -59,7 +59,7 @@
           </div>
         </template>
 
-        <template v-slot:equipment>
+        <template v-slot:Equipment>
           <div class="row items-center no-wrap">
             <q-img
               src="../assets/equipment_rubber-cup.png"
@@ -77,7 +77,7 @@
 
     <div>
       <div
-        v-if="type == 'Editmaintenance'"
+        v-if="type == 'Maintenance'"
         class="text-center"
         id="Editmaintenance"
       >
@@ -90,6 +90,7 @@
   </div>
 </template>
 <script>
+// import axios from "axios";
 import { date } from "quasar";
 import Editmaintenance from "../components/Editmaintenance.vue";
 import Editequipment from "../components/Editequipment.vue";
@@ -98,6 +99,7 @@ export default {
     return{
       date_expenditure:"",
       type:"",
+      // expens:{},
     };
   },
   components: {
@@ -106,9 +108,18 @@ export default {
   },
  
   methods:{
+   
      formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
+    // async getExpen() {
+    //   const { data } = await axios.get(
+    //     `http://localhost:3000/expenditure/${this.$route.query.id}`
+    //   );
+    //   this.expens = data.data;
+    //   console.log(this.expens.type);
+      
+    // },
 },
 };
 </script>

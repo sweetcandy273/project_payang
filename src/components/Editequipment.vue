@@ -31,7 +31,7 @@
           <div class="col">
             <q-select
               filled
-              v-model="expens.title"
+              v-model="expens.title_type"
               :options="titleoption"
               label="ตัวเลือก"
             />
@@ -108,7 +108,7 @@ export default {
         "ถังน้ำ",
         "แกลลอนใส่น้ำยาง",
       ],
-      dateact: "",
+      
       selectshare: false,
       employee: "",
      
@@ -120,7 +120,7 @@ export default {
   },
   mounted() {
     this.getExpen();
-    this.getType();
+    
     // this.getfarm();
   },
   methods: {
@@ -143,9 +143,9 @@ export default {
           amount: this.expens.totalprice,
           note: this.expens.note,
           type: "Equipment",
-          title_type: this.expens.title,
+          title_type: this.expens.title_type,
           farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
-          user_id: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
+          owner: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
           employee: "",
           store_expen: this.expens.store_expen,
           telstore_expen: this.expens.telstore_expen,

@@ -92,13 +92,16 @@
         "
       >
         <div class="row font">
-          <div class="col" style="font-size: 16px">ร้านขายอุปกรณ์การช่าง</div>
+          <div class="col" style="font-size: 16px"> ร้าน:  {{ data.store_expen }}</div>
           <div class="col-3 text-right" style="font-size: 16px">
             {{ data.amount }}
           </div>
         </div>
         <div class="row font" style="font-size: 16px">
-          {{ data.note }}
+          ส่วน:  {{data.type}}   
+        </div>
+        <div class="row font" style="font-size: 16px">
+          กิจกรรม:  {{data.title_type}}   
         </div>
         <div class="row font" style="font-size: 16px">กนกวรรณ</div>
       </div>
@@ -121,8 +124,7 @@ import axios from "axios";
 import { date } from "quasar";
 
 export default {
-  name: "income",
-  name: "expenditure",
+ 
   data() {
     return {
       incomes: [],

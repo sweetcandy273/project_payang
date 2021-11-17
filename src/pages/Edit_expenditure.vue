@@ -9,11 +9,12 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'detail_expenditure' })"
+            @click="$router.push({ name: 'account_calendar' })"
           />
         </div>
+        
 
-        <div class="col-6 font header-title">แก้ไข</div>
+        <div class="col-6 font header-title">แก้ไขบัญชี</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -25,7 +26,6 @@
         rounded
         style="background: #2d9cdb; color: white; opacity: 0.5"
         label="รายรับ"
-        @click="$router.push({ name: 'edit_income' })"
       />
       <q-btn
         class="col"
@@ -35,29 +35,11 @@
         label="รายจ่าย"
       />
     </div>
-    <div class="q-px-md font">
-      <q-input filled v-model="date" mask="date" :rules="['date']">
-        <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy
-              ref="qDateProxy"
-              transition-show="scale"
-              transition-hide="scale"
-            >
-              <q-date v-model="date">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-    </div>
+    
 
     <div class="q-py-md text-center">
       <q-btn-toggle
-        v-model="type_expenditure"
+        v-model="type"
         toggle-color="green"
         toggle-text-color="black"
         rounded
@@ -95,9 +77,9 @@
 
     <div>
       <div
-        v-if="type_expenditure == 'maintenance'"
+        v-if="type == 'Editmaintenance'"
         class="text-center"
-        id="maintenance"
+        id="Editmaintenance"
       >
         <Editmaintenance />
       </div>
@@ -108,21 +90,26 @@
   </div>
 </template>
 <script>
+import { date } from "quasar";
 import Editmaintenance from "../components/Editmaintenance.vue";
 import Editequipment from "../components/Editequipment.vue";
 export default {
-  components: {
-    Editmaintenance,
-    Editequipment,
-  },
-
-  data() {
-    return {
-      type_expenditure: "maintenance",
-      date: "2021/07/18",
-      totalprice: "",
+  data(){
+    return{
+      date_expenditure:"",
+      type:"",
     };
   },
+  components: {
+    Editequipment,
+    Editmaintenance,
+  },
+ 
+  methods:{
+     formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+},
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="font">
+  <div class="font" v-if="farm">
     <q-header class="shadow-2">
       <q-toolbar class="text-center row">
         <div class="col flex">
@@ -43,24 +43,26 @@
           </div>
         </div>
 
-        <div>เจ้าของสวน : </div>
-        <div>สวน :</div>
-        <div>ที่อยู่ :</div>
-        <div>เนื้อที่ปลูก : ไร่</div>
-        <div>ผู้ดูแล :</div>
+        <div>เจ้าของสวน : {{farm.fname}} {{farm.lname}} </div>
+        <div>สวน : {{farm.farm_name}} </div>
+        <div>ที่อยู่ : {{ farm.address }} อ.{{ farm.address_district }} จ.{{
+              farm.address_province
+            }} </div>
+        <div>เนื้อที่ปลูก : {{ farm.area }} ไร่</div>
+        <div v-if="nameEmployee">ผู้ดูแล : {{nameEmployee.fname}} {{nameEmployee.lname}} </div>
       </div>
     </div>
 
     <div></div>
 
-    <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
-      <graph_farm />
+    <div v-if="secondModel == 'graph_farm'" class="text-center" id="graph_farm">
+      <graph_farm :item="id" />
     </div>
 
     <div class="q-pa-md q-gutter-sm self-center">
       <div>
         <q-btn
-          @click="$router.push({ name: 'account_calendar',query:{id:farm.farm_id}})"
+          @click="$router.push({ name: 'account_calendar', query:{ id:farm.farm_id}})"
           unelevated
           rounded
           label="รายละเอียดบัญชี"
@@ -72,7 +74,7 @@
 
       <div>
         <q-btn
-          @click="$router.push({ name: 'calender_farm' })"
+          @click="$router.push({ name: 'calender_farm' , query:{ id:farm.farm_id}  })"
           unelevated
           rounded
           label="เรียกดูตารางการทำงาน"
@@ -90,43 +92,69 @@ import graph_farm from "../components/graph_farm.vue";
 import axios from "axios";
 
 export default {
-  data() {
-    return {
-      user_has_farm: [],
-      farm: [],
-    };
-  },
+
   async mounted() {
     this.getfarm();
+    this.getemployee();
+    this.getnameEmployee();
   },
   components: {
     graph_farm,
   },
   data() {
+    const id = { id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09" };
     return {
-      idp: "20c676fe-dead-48bd-a445-e5178603c041",
       leftDrawerOpen: false,
       model: null,
-      secondModel: "yearly",
+      secondModel: "graph_farm",
+      farm : {},
+      nameEmployee : [],
+      employee : [],
+      payang_user: [] ,
+      user_has_farm: [],
+      id,
     };
   },
   methods: {
     async getfarm() {
       const { data } = await axios.get(
-        "http://localhost:3000/farm/a07f9bfa-e8b2-4125-8036-acf3d7048e09"
+        "http://localhost:3000/farm/" + this.$route.query.id
       );
       this.farm = data.data;
-      console.log(data.data);
+      // console.log(data.data);
     },
+     async getemployee() {
+      const { data } = await axios.get( 
+        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
+      );
+      this.employee = data.data;
+      // console.log(data.data);
+    },
+     async getnameEmployee() {
+      const { data } = await axios.get(
+        "http://localhost:3000/payang_user/4da0b5f4-3ce8-4951-891d-d7c9ee233671"
+      );
+      this.nameEmployee = data.data;
+      // console.log(data.data);
+    },
+  
+
 
     showNotif() {
-      this.$q.dialog({
-        title: "Confirm",
-        message: "Would you delete the data? ",
-        cancel: true,
-        persistent: true,
-      });
-      return { confirm };
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "Would you delete the data? ",
+          cancel: true,
+          persistent: true,
+          html: true,
+        })
+        .onOk(() => {
+          // console.log(">>>> OK");
+          this.$router.push({
+            path: "/Myfarm" , query: { id: farm.user_id }  , 
+          });
+        });
     },
   },
 };

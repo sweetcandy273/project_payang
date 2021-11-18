@@ -1,7 +1,5 @@
 <template>
   <div>
-    
-
     <q-form>
     <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
       <div class="row q-pt-md">
@@ -34,8 +32,55 @@
           </div>
         </div>
 
+      <div class="row active">
+        <q-checkbox v-model="active" style="font-size: 16px" label="กิจกรรม" />
+      </div>
+      <div class="activerubber" v-if="active">
+        <strong>
+          <div class="row" v-for="(input, index) in activity" :key="index">
+            <div class="col font" style="font-size: 26px">1</div>
+            <div class="col-9 q-px-md font">
+              <q-input filled v-model="date" mask="date" :rules="['date']">
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy
+                      ref="qDateProxy"
+                      transition-show="scale"
+                      transition-hide="scale"
+                    >
+                      <q-date v-model="date">
+                        <div class="row items-center justify-end">
+                          <q-btn
+                            v-close-popup
+                            label="Close"
+                            color="primary"
+                            flat
+                          />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+            </div>
+          </div>
 
-
+          <div class="text-center">
+            <q-btn
+              unelevated
+              rounded
+              style="
+                background: #5db075;
+                color: white;
+                width: 50px;
+                height: 40px;
+              "
+              icon="add"
+              @click="addactivity"
+            />
+          </div>
+        </strong>
+      </div>
       <div class="share text-left">
         <q-select
           filled
@@ -71,40 +116,36 @@
 <script>
 import axios from "axios";
 export default {
- 
   data() {
     return {
-      totalprice: "",
+      totalprice: "",    
       note: "",
       type: null,
-      optionstype: [
-        "ต้นยางพารา",
-        "น้ำกรด",
-        "มีดกรีดยาง",
-        "ถ้วยรองน้ำยาง",
-        "ถังน้ำ",
-        "แกลลอนใส่น้ำยาง",
-      ],
-     
-      selectshare: false,
-      employee: "",
       stores: null,
       tel_stores: "",
+      optionstype: ["ปุ๋ย", "ตัดหญ้า", "ตัดกาฝาก"],
+      selectshare: false,
+      employee: "",
       optionsemployee: ["-", "กนกวรรณ", "ชนิกานต์", "อรไท"],
-      
+      active: false,
+      date: "2021/07/18",
+      activity: [
+        {
+          addactivity: "",
+        },
+      ],
     };
   },
-  methods:{
-    addactivity(){
+  methods: {
+    addactivity() {
       this.activity.push({
-      addactivity: "",
-      })
+        addactivity: "",
+      });
     },
     submitExpen(){
-       console.log(this.date_expenditure);
       axios.post(`http://localhost:3000/expenditure/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
         {
-          date_expenditure: this.date_expenditure,
+          date: this.date,
           amount: this.totalprice,
           note: this.note,
           type_expen_id: "1",
@@ -116,7 +157,7 @@ export default {
       axios.post(`http://localhost:3000/type_expenditure/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/`,
         {
           title: this.type,
-          type: "Equipment",
+          type: "Maintenance",
           farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
         }
       )
@@ -126,8 +167,9 @@ export default {
       this.$router.push({
         path: "/account_calendar",
       });
+      
     },
-  }
+  },
 };
 </script>
 <style  scoped src="../css/home.css">

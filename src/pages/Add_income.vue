@@ -99,7 +99,7 @@
         <div class="col">
           <q-input
             filled
-            v-model="totalprice"
+            v-model="amount"
             color="teal"
             label="รวมจำนวนเงิน"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']"
@@ -146,18 +146,13 @@
           </q-select>
 
           <div class="row">
-            <div class="col text-center q-my-md">% การแบ่ง</div>
+            <div class="col text-center q-my-md" style="font-size: 20px">% การแบ่ง</div>
             <div class="col q-my-md">
               <q-select
                 filled
                 v-model="percen_split"
                 :options="optionspercent"
-                map-options
-                emit-value
-                use-input
-                hide-selected
-                fill-input
-                input-debounce="0"
+                
                 label="% ที่เจ้าของได้"
               />
             </div>
@@ -193,7 +188,7 @@ export default {
       percent: "",
       dry_rubber: "",
       rubber_price: "",
-      totalprice: "",
+      amount: "",
       store_in: "",
       telstore_in: "",
       note: "",
@@ -248,15 +243,29 @@ export default {
       console.log(this.listemployeename.fname);
       return this.listemployeename.fname;
     },
+    sharemoney:function(amount,percen_split){
+      // console.warn("amount : "+amount)
+      // console.warn("percen_split : "+percen_split)
+      var amount_net = 0;
+      if(percen_split == 60){
+        amount_net = amount * 0.6;
+      } else if (percen_split == 55){
+        amount_net = amount * 0.55;
+      } else {
+        amount_net = amount * 0.5;
+      }
+      // console.warn("amount_net : "+amount_net)
+      return amount_net;
+    },
     
     onSubmit() {
-     
+      this.amount_net = this.sharemoney(this.amount,this.percen_split)
       axios.post(
         `http://localhost:3000/income/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
         {
           date_income: this.date_income,
-          amount: this.totalprice,
-          amount_net: this.totalprice * 0.6,
+          amount: this.amount,
+          amount_net: this.amount_net,
           weight: this.weight_rubber,
           percen_rubber: this.percent,
           dry_rubber: this.dry_rubber,
@@ -277,6 +286,7 @@ export default {
         path: "/account_calendar",
       });
     },
+    
   },
 };
 </script>

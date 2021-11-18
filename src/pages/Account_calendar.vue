@@ -34,7 +34,7 @@
         <div class="greencircle"></div>
         <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
         <div class="col text-right" style="font-size: 18px">
-          {{ data.amount }}
+          {{ data.amount_net }}
         </div>
       </div>
       <div
@@ -49,25 +49,24 @@
         "
       >
         <div class="row font">
-          <div class="col" style="font-size: 16px">ร้านดาว น้ำยางสด, แผ่น</div>
-          <div class="col-3 text-right" style="font-size: 16px">
-            {{ data.amount }}
+          <div class="col" style="font-size: 16px">
+            ร้าน: {{ data.store_in }}
           </div>
         </div>
         <div class="row font" style="font-size: 16px">
-          น้ำยางสด {{ data.weight }} กก. {{ data.percen_rubber }} % แห้ง
-          {{ data.dry_rubber }}
+          น้ำยางสด: {{ data.weight }} กก. เปอร์เซ็น {{ data.percen_rubber }}%
+          แห้ง {{ data.dry_rubber }}
         </div>
         <div class="row font" style="font-size: 16px">
-          ราคายาง {{ data.rubber_price }} บ./กก.
+          ราคายาง: {{ data.rubber_price }} บ./กก.
         </div>
         <div class="row font">
           <div class="col" style="font-size: 16px">
-            {{ data.employee }} ส่วนแบ่ง {{ data.percen_split }}
+            ผู้รับผิดชอบ: {{ data.employee }} ส่วนแบ่ง: {{ data.percen_split }}
           </div>
-          <div class="col-3 text-right" style="font-size: 16px">
-            {{ data.amount_net }}
-          </div>
+        </div>
+        <div class="row font" style="font-size: 16px">
+          จำนวนเงินทั้งหมด: {{ data.amount }}
         </div>
       </div>
     </div>
@@ -92,16 +91,18 @@
         "
       >
         <div class="row font">
-          <div class="col" style="font-size: 16px"> ร้าน:  {{ data.store_expen }}</div>
+          <div class="col" style="font-size: 16px">
+            ร้าน: {{ data.store_expen }}
+          </div>
           <div class="col-3 text-right" style="font-size: 16px">
             {{ data.amount }}
           </div>
         </div>
         <div class="row font" style="font-size: 16px">
-          ส่วน:  {{data.type}}   
+          ส่วน: {{ data.type }}
         </div>
         <div class="row font" style="font-size: 16px">
-          กิจกรรม:  {{data.title_type}}   
+          กิจกรรม: {{ data.title_type }}
         </div>
         <div class="row font" style="font-size: 16px">กนกวรรณ</div>
       </div>
@@ -124,7 +125,6 @@ import axios from "axios";
 import { date } from "quasar";
 
 export default {
- 
   data() {
     return {
       incomes: [],

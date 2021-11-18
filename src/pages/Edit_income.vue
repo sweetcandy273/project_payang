@@ -174,7 +174,7 @@
           </q-select>
 
           <div class="row">
-            <div class="col text-center q-my-md">% การแบ่ง</div>
+            <div class="col text-center q-my-md" style="font-size: 20px">% การแบ่ง</div>
             <div class="col q-my-md">
               <q-select
                 filled
@@ -239,20 +239,30 @@ export default {
       this.incomes = data.data;
       this.incomes.date_income = this.formatDate(this.incomes.date_income)
     },
-    // async getStore() {
-    //   const { data } = await axios.get(
-    //     `http://localhost:3000/store_income/list/${this.$route.query.id}`
-    //   );
-    //   this.stores = data.data;
-    // },
+    sharemoney:function(amount,percen_split){
+      // console.warn("amount : "+amount)
+      // console.warn("percen_split : "+percen_split)
+      var amount_net = 0;
+      if(percen_split == 60){
+        amount_net = amount * 0.6;
+      } else if (percen_split == 55){
+        amount_net = amount * 0.55;
+      } else {
+        amount_net = amount * 0.5;
+      }
+      // console.warn("amount_net : "+amount_net)
+      return amount_net;
+    },
+    
     async onSubmit() {
+       this.incomes.amount_net = this.sharemoney(this.incomes.amount,this.incomes.percen_split)
       console.log(this.incomes.date_income);
       const { data } = await axios.put(
         "http://localhost:3000/income/update/" + this.$route.query.id,
         {
           date_income: this.incomes.date_income,
           amount: this.incomes.amount,
-          amount_net: this.incomes.amount * 0.6,
+          amount_net: this.incomes.amount_net,
           weight: this.incomes.weight,
           percen_rubber: this.incomes.percen_rubber,
           dry_rubber: this.incomes.dry_rubber,

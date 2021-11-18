@@ -243,14 +243,9 @@ export default {
                 name: "starter"
               });
             })
-
             .catch(error => {
               alert("พบปัญหาระหว่างการกระทำ:" + error);
             });
-
-          this.$router.push({
-            name: "login"
-          });
         })
 
         .onCancel(() => {})
@@ -260,7 +255,7 @@ export default {
       const auth = getAuth();
       signOut(auth)
         .then(() => {
-          this.$router.push({ name: "starter" });
+          this.$forceUpdate();
         })
         .catch(err => alert(err.message));
     },

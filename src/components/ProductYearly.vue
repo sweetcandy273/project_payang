@@ -1,6 +1,6 @@
 <template>
   <div v-if="item">
-    <div class="font" style="font-size: 30px">{{ year }}</div>
+    <div class="font text-center" style="font-size: 30px">{{ year }}</div>
     <div class="row font q-px-md seft-center text-center">
       <div class="col-2 seft-center">
         <div v-if="this.year >= this.year_now - 10">
@@ -35,7 +35,7 @@
     <div class="q-pa-md font">
       <div class="account-all q-pa-md shadow-2">
         <div class="row">
-          <div class="col-10">
+          <div class="col-10 text-center">
             <div style="font-size: 25px">สรุปบัญชีรวมทั้งหมด</div>
             <div style="font-size: 22px">ประจำปี {{ year }}</div>
           </div>

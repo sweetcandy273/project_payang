@@ -162,7 +162,7 @@
 
       <div class="sharemoney" v-if="selectshare">
         <strong>
-          <q-select
+          <!-- <q-select
             filled
             v-model="incomes.employee"
             :options="optionsemployee"
@@ -171,7 +171,7 @@
             <template v-slot:prepend>
               <q-icon name="person" />
             </template>
-          </q-select>
+          </q-select> -->
 
           <div class="row">
             <div class="col text-center q-my-md" style="font-size: 20px">% การแบ่ง</div>

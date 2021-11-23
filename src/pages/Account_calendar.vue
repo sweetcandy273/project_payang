@@ -54,15 +54,15 @@
           </div>
         </div>
         <div class="row font" style="font-size: 16px">
-          น้ำยางสด: {{ data.weight }} กก. เปอร์เซ็น {{ data.percen_rubber }}%
-          แห้ง {{ data.dry_rubber }}
+          น้ำยางสด: {{ data.weight }} กก. เปอร์เซ็น: {{ data.percen_rubber }}%
+          แห้ง: {{ data.dry_rubber }}
         </div>
         <div class="row font" style="font-size: 16px">
           ราคายาง: {{ data.rubber_price }} บ./กก.
         </div>
         <div class="row font">
           <div class="col" style="font-size: 16px">
-            ผู้รับผิดชอบ: {{ data.employee }} ส่วนแบ่ง: {{ data.percen_split }}
+          ส่วนแบ่ง: {{ data.percen_split }}
           </div>
         </div>
         <div class="row font" style="font-size: 16px">

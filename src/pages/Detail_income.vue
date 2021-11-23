@@ -28,7 +28,6 @@
         <div class="row">
           <div class="col">
             <div class="row" style="font-size: 18px">เจ้าของสวน :</div>
-
             <div class="row q-pb-md" style="font-size: 18px">
               สวน : {{ farms.farm_name }}
             </div>

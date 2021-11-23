@@ -1,9 +1,6 @@
 <template>
-  <div>
+  <q-page>
     <q-header>
-      <!-- <q-toolbar>
-        <q-space></q-space>
-      </q-toolbar>  -->
       <q-toolbar class="text-center row">
         <div class="col flex">
           <img
@@ -18,94 +15,99 @@
       </q-toolbar>
     </q-header>
 
-    <div class="q-pa-md q-mx-md">
-      <q-splitter v-model="splitterModel" horizontal>
-        <template v-slot:before>
-          <div class="row justify-center q-pa-md">
-            <div class="">
-              <q-date v-model="date" color="green" :events="events" event-color="red" />
-            </div>
-          </div>
-        </template>
+    <q-splitter v-model="splitterModel" horizontal>
+      <div class="row justify-center q-pa-md">
+        <q-date
+          v-model="date"
+          color="green"
+          :events="events"
+          :event-color="(date) => (date[9] % 2 === 0 ? 'teal' : 'green')"
+        />
+      </div>
+    </q-splitter>
 
-        <template v-slot:after>
-          <q-tab-panels
-            v-model="date"
-            animated
-            transition-prev="jump-up"
-            transition-next="jump-up"
-          >
-            <q-tab-panel name="2021/07/10">
-              <div class="row font">
-                <div class="col" style="font-size: 22px">2021/07/10</div>
-                <div class="col text-right" style="font-size: 22px">
-                  สวนภูเก็ต
-                </div>
-              </div>
-              <div class="row font">
-                <div class="greencircle"></div>
-                <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
-                <div class="col text-right" style="font-size: 18px">
-                  5,026.00
-                </div>
-              </div>
-              <div
-                class="calendar-income q-pa-md"
-                @click="$router.push({ name: 'detail_income' })"
-              >
-                <div class="row font">
-                  <div class="col" style="font-size: 16px">
-                    ร้านดาว น้ำยางสด, แผ่น
-                  </div>
-                  <div class="col-3 text-right" style="font-size: 16px">
-                    8,376.75
-                  </div>
-                </div>
-                <div class="row font" style="font-size: 16px">
-                  น้ำยางสด 135.0 กก. 33% แห้ง 102.0
-                </div>
-                <div class="row font" style="font-size: 16px">
-                  ราคายาง 62.05 บ./กก.
-                </div>
-                <div class="row font">
-                  <div class="col" style="font-size: 16px">
-                    กนกวรรณ ส่วนแบ่ง 60-40
-                  </div>
-                  <div class="col-3 text-right" style="font-size: 16px">
-                    5,026.00
-                  </div>
-                </div>
-              </div>
-
-              <div class="row font q-pt-md">
-                <div class="redcircle"></div>
-                <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>
-                <div class="col text-right" style="font-size: 18px">
-                  2,000.00
-                </div>
-              </div>
-              <div
-                class="calendar-expenditure q-pa-md"
-                @click="$router.push({ name: 'detail_expenditure' })"
-              >
-                <div class="row font">
-                  <div class="col" style="font-size: 16px">
-                    ร้านขายอุปกรณ์การช่าง
-                  </div>
-                  <div class="col-3 text-right" style="font-size: 16px">
-                    2,000.00
-                  </div>
-                </div>
-                <div class="row font" style="font-size: 16px">
-                  ซื้ออุปกรณ์ มีดกรีดยาง
-                </div>
-                <div class="row font" style="font-size: 16px">กนกวรรณ</div>
-              </div>
-            </q-tab-panel>
-          </q-tab-panels>
-        </template>
-      </q-splitter>
+    <div class="col font q-mx-md q-mt-md" style="font-size: 22px">
+      {{ date }}
     </div>
+    <div :key="index" v-for="(data, index) in incomes">
+      <div class="row font q-pt-md">
+        <div class="greencircle"></div>
+        <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
+        <div class="col text-right" style="font-size: 18px">
+          {{ data.amount_net }}
+        </div>
+      </div>
+      <div
+        class="calendar-income q-pa-md"
+        @click="
+          $router.push({
+            path: 'detail_income',
+            query: {
+              id: data.in_id,
+            },
+          })
+        "
+      >
+        <div class="row font">
+          <div class="col" style="font-size: 16px">
+            ร้าน: {{ data.store_in }}
+          </div>
+        </div>
+        <div class="row font" style="font-size: 16px">
+          น้ำยางสด: {{ data.weight }} กก. เปอร์เซ็น: {{ data.percen_rubber }}%
+          แห้ง: {{ data.dry_rubber }}
+        </div>
+        <div class="row font" style="font-size: 16px">
+          ราคายาง: {{ data.rubber_price }} บ./กก.
+        </div>
+        <div class="row font">
+          <div class="col" style="font-size: 16px">
+          ส่วนแบ่ง: {{ data.percen_split }}
+          </div>
+        </div>
+        <div class="row font" style="font-size: 16px">
+          จำนวนเงินทั้งหมด: {{ data.amount }}
+        </div>
+      </div>
+    </div>
+
+    <div :key="index" v-for="(data, index) in expenditures">
+      <div class="row font q-pt-md">
+        <div class="redcircle"></div>
+        <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>
+        <div class="col text-right" style="font-size: 18px">
+          {{ data.amount }}
+        </div>
+      </div>
+      <div
+        class="calendar-expenditure q-pa-md"
+        @click="
+          $router.push({
+            path: 'detail_expenditure',
+            query: {
+              id: data.expen_id,
+            },
+          })
+        "
+      >
+        <div class="row font">
+          <div class="col" style="font-size: 16px">
+            ร้าน: {{ data.store_expen }}
+          </div>
+          <div class="col-3 text-right" style="font-size: 16px">
+            {{ data.amount }}
+          </div>
+        </div>
+        <div class="row font" style="font-size: 16px">
+          ส่วน: {{ data.type }}
+        </div>
+        <div class="row font" style="font-size: 16px">
+          กิจกรรม: {{ data.title_type }}
+        </div>
+        <div class="row font" style="font-size: 16px">กนกวรรณ</div>
+      </div>
+    </div>
+
     <div class="add-account text-right fixed-bottom q-pa-md">
       <q-btn
         unelevated
@@ -115,18 +117,67 @@
         @click="$router.push({ name: 'add_income' })"
       />
     </div>
-  </div>
+  </q-page>
 </template>
-  </div>
-</template>
+
 <script>
+import axios from "axios";
+import { date } from "quasar";
+
 export default {
   data() {
     return {
+      incomes: [],
+      expenditures: [],
       splitterModel: 50,
-      date: "2021/07/30",
-      events: ["2021/07/10", "2021/07/15", "2021/07/20"],
+      date: " ",
+      events: [],
+      listAllincome: [],
+      listAllexpenditure: [],
     };
+  },
+  mounted() {
+    this.getIncome();
+    this.getExpenditure();
+  },
+  methods: {
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+    async getIncome() {
+      const { data } = await axios.get(
+        `http://localhost:3000/income/a07f9bfa-e8b2-4125-8036-acf3d7048e09`
+      );
+
+      this.listAllincome = data.data;
+      this.date = this.formatDate(new Date());
+      const listEvent = data.data.map((data) => {
+        return this.formatDate(data.date_income);
+      });
+      this.events.push(...listEvent);
+    },
+    async getExpenditure() {
+      const { data } = await axios.get(
+        "http://localhost:3000/expenditure/listbyfarm/a07f9bfa-e8b2-4125-8036-acf3d7048e09"
+      );
+      this.listAllexpenditure = data.data;
+      this.date = this.formatDate(new Date());
+      const listEvent = data.data.map((data) => {
+        return this.formatDate(data.date_expenditure);
+      });
+      this.events.push(...listEvent);
+    },
+  },
+  watch: {
+    date(value) {
+      this.incomes = this.listAllincome.filter((data) => {
+        // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
+        return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
+      });
+      this.expenditures = this.listAllexpenditure.filter((data) => {
+        return date.formatDate(value, "YYYY-MM-DD") == data.date_expenditure;
+      });
+    },
   },
 };
 </script>

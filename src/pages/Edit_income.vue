@@ -5,11 +5,18 @@
         <q-space></q-space>
       </q-toolbar>  -->
       <q-toolbar class="text-center row">
-       <div class="col flex">
+        <div class="col flex">
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'detail_income' })"
+            @click="
+              $router.push({
+                path: 'detail_income',
+                query: {
+                  id: incomes.in_id,
+                },
+              })
+            "
           />
         </div>
         <div class="col-6 font header-title">แก้ไข</div>
@@ -35,7 +42,12 @@
       />
     </div>
     <div class="font q-px-md">
-      <q-input filled v-model="date" mask="date" :rules="['date']">
+      <q-input
+        filled
+        v-model="incomes.date_income"
+        color="teal"
+       
+      >
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy
@@ -43,9 +55,9 @@
               transition-show="scale"
               transition-hide="scale"
             >
-              <q-date v-model="date">
+              <q-date v-model="incomes.date_income" color="green">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
+                  <q-btn v-close-popup label="Close" color="white" flat />
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -53,119 +65,225 @@
         </template>
       </q-input>
     </div>
+
     <div class="text-center">
       <div class="font q-pa-md" style="font-size: 25px">ระบุข้อมูลน้ำยางสด</div>
     </div>
     <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
       <div class="row">
         <div class="col">
-          <q-input filled v-model="weight_rubber" label="น้ำหนักยาง">
+          <q-input
+            filled
+            v-model="incomes.weight"
+            label="น้ำหนักยาง"
+            
+          >
             <template v-slot:prepend> กก. </template>
           </q-input>
         </div>
         <div class="col q-ml-md">
-          <q-input filled v-model="percent" label="เปอร์เซ็น">
+          <q-input
+            filled
+            v-model="incomes.percen_rubber"
+            color="teal"
+            label="เปอร์เซ็น"
+            
+          >
             <template v-slot:prepend> % </template>
           </q-input>
         </div>
       </div>
       <div class="row">
-        <div class="col">
-          <q-input filled v-model="dry_rubber" label="เนื้อยางแห้ง">
-            <template v-slot:prepend> ก. </template>
-          </q-input>
+        <div class="row">
+          <div class="col">
+            <q-input
+              filled
+              v-model="incomes.dry_rubber"
+              label="เนื้อยางแห้ง"
+              
+            >
+              <template v-slot:prepend> ก. </template>
+            </q-input>
+          </div>
+          <div class="col q-ml-md">
+            <q-input
+              filled
+              v-model="incomes.rubber_price"
+              label="ราคาน้ำยาง"
+              
+            >
+              <template v-slot:prepend> บ./กก. </template>
+            </q-input>
+          </div>
         </div>
-        <div class="col q-ml-md">
-          <q-input filled v-model="price_rubber" label="ราคาน้ำยาง">
-            <template v-slot:prepend> บ./กก. </template>
+      </div>
+      <div class="row">
+        <div class="col">
+          <q-input
+            filled
+            v-model="incomes.amount"
+            color="teal"
+            label="รวมจำนวนเงิน"
+            
+          >
+            <template v-slot:prepend> ฿ </template>
           </q-input>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <q-input filled v-model="totalprice" label="รวมจำนวนเงิน">
-            <template v-slot:prepend> ฿ </template>
+          <q-input filled v-model="incomes.store_in" label="ชื่อร้านค้า"
+          
+          >
+            <template v-slot:prepend> กก. </template>
+          </q-input>
+        </div>
+        <div class="col q-ml-md">
+          <q-input
+            filled
+            v-model="incomes.telstore_in"
+            label="เบอร์โทรร้านค้า"
+            mask= "###-###-####"
+         
+          >
+          
+            <template v-slot:prepend> </template>
           </q-input>
         </div>
       </div>
-      <div class="stores">
-        <q-select filled v-model="store" :options="options" label="ร้านค้า">
-          <template v-slot:prepend>
-            <q-icon name="store" />
-          </template>
-        </q-select>
-      </div>
-       <div class="share">
+
+      <div class="share">
         <q-checkbox
           v-model="selectshare"
           style="font-size: 16px"
           label="ผู้รับผิดชอบ"
         />
       </div>
+
       <div class="sharemoney" v-if="selectshare">
         <strong>
-          <q-select
+          <!-- <q-select
             filled
-            v-model="employee"
+            v-model="incomes.employee"
             :options="optionsemployee"
             label="ผู้รับผิดชอบ"
           >
             <template v-slot:prepend>
               <q-icon name="person" />
             </template>
-          </q-select>
+          </q-select> -->
 
           <div class="row">
-            <div class="col text-center q-my-md">% การแบ่ง</div>
+            <div class="col text-center q-my-md" style="font-size: 20px">% การแบ่ง</div>
             <div class="col q-my-md">
               <q-select
                 filled
-                v-model="share"
+                v-model="incomes.percen_split"
                 :options="optionspercent"
-                label="ส่วนแบ่ง"
+                label="% ที่เจ้าของได้"
               />
             </div>
           </div>
         </strong>
       </div>
       <div class="col">
-        <q-input filled v-model="note" label="บันทึก" />
+        <q-input
+          filled
+          v-model="incomes.note"
+          color="teal"
+          label="บันทึก"
+        />
       </div>
 
       <div class="submit row q-gutter-sm flex-center">
         <q-btn
           unelevated
           rounded
+          @click="onSubmit()"
           label="บันทึก"
-          type="submit"
           class="shadow-2 text-white"
           style="width: 100%; background-color: #4e7971"
-          @click="$router.push({ name: 'check_income' })"
         />
       </div>
     </div>
   </div>
 </template>
 <script>
+import axios from "axios";
+import { date } from "quasar";
 export default {
   data() {
     return {
       //ถ้าจะเอาไปใส่ Database ต้อง this.ตัวแปร
-      date: "2021/07/18",
-      weight_rubber: "",
-      percent: "",
-      dry_rubber: "",
-      price_rubber: "",
-      totalprice: "",
-      store: null,
-      options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด", "อื่นๆ"],
-      note: "",
       selectshare: false,
-      share:"",
-      optionspercent: ["60:40", "55:45", "50:50"],
-      employee: "",
+      optionspercent: ["60", "55", "50"],
       optionsemployee: ["กนกวรรณ", "ชนิกานต์", "อรไท"],
+      edit_income: {},
+      incomes:{},
+     
     };
+  },
+  mounted() {
+    this.getIncome();
+    // this.getStore();
+  },
+
+  methods: {
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+    async getIncome() {
+      const { data } = await axios.get(
+        `http://localhost:3000/income/findincome/${this.$route.query.id}`
+      );
+      this.incomes = data.data;
+      this.incomes.date_income = this.formatDate(this.incomes.date_income)
+    },
+    sharemoney:function(amount,percen_split){
+      // console.warn("amount : "+amount)
+      // console.warn("percen_split : "+percen_split)
+      var amount_net = 0;
+      if(percen_split == 60){
+        amount_net = amount * 0.6;
+      } else if (percen_split == 55){
+        amount_net = amount * 0.55;
+      } else {
+        amount_net = amount * 0.5;
+      }
+      // console.warn("amount_net : "+amount_net)
+      return amount_net;
+    },
+    
+    async onSubmit() {
+       this.incomes.amount_net = this.sharemoney(this.incomes.amount,this.incomes.percen_split)
+      console.log(this.incomes.date_income);
+      const { data } = await axios.put(
+        "http://localhost:3000/income/update/" + this.$route.query.id,
+        {
+          date_income: this.incomes.date_income,
+          amount: this.incomes.amount,
+          amount_net: this.incomes.amount_net,
+          weight: this.incomes.weight,
+          percen_rubber: this.incomes.percen_rubber,
+          dry_rubber: this.incomes.dry_rubber,
+          percen_split: this.incomes.percen_split,
+          rubber_price: this.incomes.rubber_price,
+          note: this.incomes.note,
+          farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
+          user_id: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
+          store_in: this.incomes.store_in,
+          telstore_in: this.incomes.telstore_in
+        }
+      );
+      this.incomes = data.data;
+      // console.log(data.data);
+      this.$router.push({
+        path: '/account_calendar',
+        query:{
+          id: this.incomes.in_id,
+        },
+      });
+    },
   },
 };
 </script>

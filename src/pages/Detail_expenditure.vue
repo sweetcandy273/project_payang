@@ -7,7 +7,10 @@
       <q-toolbar class="text-center row">
         <div class="col flexed text-left">
           <q-icon
-            @click="$router.push({ name: 'account_calendar' })"
+            @click="$router.push({ path: 'account_calendar',
+            query: {
+                  id: expenditures.expen_id,
+                }, })"
             name="arrow_back_ios"
             size="30px"
           ></q-icon>
@@ -22,10 +25,10 @@
         <div class="row">
           <div class="col">
             <div class="row" style="font-size: 18px">
-              เจ้าของสวน : กัลย์สุดา
+              เจ้าของสวน : 
             </div>
             <div class="row q-pb-md" style="font-size: 18px">
-              สวน : สวนภูเก็ต
+              สวน : 
             </div>
           </div>
           <div class="col-4 text-right">
@@ -39,25 +42,28 @@
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-py-md">
-          <div class="col" style="font-size: 30px">ซื้ออุปกรณ์</div>
+          <div class="col" style="font-size: 30px"> {{ expenditures.date_expenditure }}</div>
           <div class="col text-right q-pt-md" style="font-size: 18px">
-            15/06/2564
+           
           </div>
         </div>
-        <div class="row" style="font-size: 18px">
-          มีดกรีดยาง
+        <div class="row" style="font-size: 20px">
+        ส่วน:  {{expenditures.type}}   
         </div>
-        <div class="text-right" style="font-size: 30px">2,000.00</div>
+        <div class="row" style="font-size: 18px">
+        กิจกรรม:  {{ expenditures.title_type }}
+        </div>
+        <div class="text-right" style="font-size: 28px">จำนวนเงิน:  {{ expenditures.amount }}</div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-pt-md" style="font-size: 18px">
-          ร้าน : ขายอุปกรณ์การช่าง
+          ร้าน :   {{ expenditures.store_expen }}
         </div>
         <div class="row q-pb-md" style="font-size: 18px">
           ผู้รับผิดชอบ : กนกวรรณ
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="q-pt-md" style="font-size: 18px">
-          บันทึก : 
+          บันทึก :  {{ expenditures.note }}
         </div>
         <div class="col q-pa-md self-center">
           <div class="row">
@@ -68,7 +74,10 @@
               style="width: 50px; height: 50px"
               color="orange-4"
               icon="edit"
-              @click="$router.push({ name: 'edit_expenditure' })"
+              @click="$router.push({ path: 'edit_expenditure',
+              query:{
+                 id: expenditures.expen_id,
+              } })"
             />
             
             <q-btn
@@ -77,7 +86,7 @@
               style="width: 50px; height: 50px"
               color="deep-orange-13"
               icon="delete"
-              @click="Notidelete"
+              @click="Notidelete()"
             /></div>
           </div>
         </div>
@@ -86,33 +95,37 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
+  name: "expenditures",
   data() {
-    return {};
+    return {
+      expenditures: {},
+    };
+  },
+  mounted() {
+    this.getExpen();
+    // this.getfarm();
   },
   methods: {
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+    async getExpen() {
+      const { data } = await axios.get(
+        `http://localhost:3000/expenditure/${this.$route.query.id}`
+      );
+      this.expenditures = data.data;
+      console.log(data);
+    },
     Notidelete() {
-      this.$q
-        .dialog({
-          title: "Confirm",
-          message: "Would you delete the data? ",
-          cancel: true,
-          persistent: true,
-        })
-        .onOk(() => {
-          // console.log('>>>> OK')
-        })
-        .onOk(() => {
-          // console.log('>>>> second OK catcher')
-        })
-        .onCancel(() => {
-          // console.log('>>>> Cancel')
-        })
-        .onDismiss(() => {
-          // console.log('I am triggered on both OK and Cancel')
-        });
-
-      return { confirm };
+      axios.delete(
+        `http://localhost:3000/expenditure/delete/${this.$route.query.id}`
+      );
+      this.$router.push({
+        path: "/account_calendar",
+      });
+      
     },
   },
 };

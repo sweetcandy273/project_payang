@@ -36,29 +36,11 @@
         label="รายจ่าย"
       />
     </div>
-    <div class="q-px-md font">
-      <q-input filled v-model="date" mask="date" :rules="['date']">
-        <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy
-              ref="qDateProxy"
-              transition-show="scale"
-              transition-hide="scale"
-            >
-              <q-date v-model="date">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-    </div>
+    
 
     <div class="q-py-md text-center">
       <q-btn-toggle
-        v-model="type_expenditure"
+        v-model="type"
         toggle-color="green"
         toggle-text-color="black"
         rounded
@@ -96,7 +78,7 @@
 
     <div>
       <div
-        v-if="type_expenditure == 'maintenance'"
+        v-if="type == 'maintenance'"
         class="text-center"
         id="maintenance"
       >
@@ -109,21 +91,26 @@
   </div>
 </template>
 <script>
+import { date } from "quasar";
 import Maintenance from "../components/Maintenance.vue";
 import Equipment from "../components/Equipment.vue";
 export default {
+  data(){
+    return{
+      date_expenditure:"",
+      type:"",
+    };
+  },
   components: {
     Maintenance,
     Equipment,
   },
-
-  data() {
-    return {
-      type_expenditure: "maintenance",
-      date: "2021/07/18",
-      totalprice: "",
-    };
-  },
+ 
+  methods:{
+     formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+},
 };
 </script>
 

@@ -4,7 +4,7 @@
       <div class="font q-px-md">
         <q-input
           filled
-          v-model="date_expenditure"
+          v-model="expens.date_expenditure"
           color="teal"
           mask="date"
           :rules="['date']"
@@ -16,7 +16,7 @@
                 transition-show="scale"
                 transition-hide="scale"
               >
-                <q-date v-model="date_expenditure" color="green">
+                <q-date v-model="expens.date_expenditure" color="green">
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="white" flat />
                   </div>
@@ -31,7 +31,7 @@
           <div class="col">
             <q-select
               filled
-              v-model="title"
+              v-model="expens.title_type"
               :options="titleoption"
               label="ตัวเลือก"
             />
@@ -39,25 +39,29 @@
         </div>
         <div class="row">
           <div class="col">
-            <q-input filled v-model="totalprice" label="รวมจำนวนเงิน">
+            <q-input filled v-model="expens.amount" label="รวมจำนวนเงิน">
               <template v-slot:prepend> ฿ </template>
             </q-input>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <q-input filled v-model="store_expen" label="ชื่อร้านค้า">
-              <template v-slot:prepend> กก. </template>
+            <q-input filled v-model="expens.store_expen" label="ชื่อร้านค้า">
+              <template v-slot:prepend> Bann </template>
             </q-input>
           </div>
           <div class="col q-ml-md">
-            <q-input filled v-model="telstore_expen" label="เบอร์โทรร้านค้า">
+            <q-input
+              filled
+              v-model="expens.telstore_expen"
+              label="เบอร์โทรร้านค้า"
+            >
               <template v-slot:prepend> </template>
             </q-input>
           </div>
         </div>
-
-        <!-- <div class="share text-left">
+<!-- 
+        <div class="share text-left">
           <q-select
             filled
             v-model="employee"
@@ -71,7 +75,7 @@
         </div> -->
 
         <div class="col">
-          <q-input filled v-model="note" label="บันทึก" />
+          <q-input filled v-model="expens.note" label="บันทึก" />
         </div>
 
         <div class="submit row q-gutter-sm flex-center font">
@@ -81,7 +85,7 @@
             label="บันทึก"
             class="shadow-2 text-white"
             style="width: 100%; background-color: #4e7971"
-            @click="submitExpen()"
+            @click="onSubmit()"
           />
         </div>
       </div>
@@ -91,13 +95,10 @@
 
 <script>
 import axios from "axios";
-import { date } from "quasar";
 export default {
   data() {
     return {
-      date_expenditure: "",
-      totalprice: "",
-      note: "",
+     
       title: "",
       titleoption: [
         "ต้นยางพารา",
@@ -107,40 +108,56 @@ export default {
         "ถังน้ำ",
         "แกลลอนใส่น้ำยาง",
       ],
+      
       selectshare: false,
       employee: "",
-      store_expen: "",
-      telstore_expen: "",
+     
       optionsemployee: ["-", "กนกวรรณ", "ชนิกานต์", "อรไท"],
+
+      expens: {},
+     
     };
+  },
+  mounted() {
+    this.getExpen();
+    
+    // this.getfarm();
   },
   methods: {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
-    submitExpen() {
-      console.log(this.date_expenditure);
-      axios
-        .post(
-          `http://localhost:3000/expenditure/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
-          {
-            date_expenditure: this.date_expenditure,
-            amount: this.totalprice,
-            note: this.note,
-            type: "Equipment",
-            title_type: this.title,
-            farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
-            user_id: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
-            employee: "",
-            store_expen: this.store_expen,
-            telstore_expen: this.telstore_expen,
-          }
-        )
-        .then((response) => {
-          console.log(response);
-        });
+    async getExpen() {
+      const { data } = await axios.get(
+        `http://localhost:3000/expenditure/${this.$route.query.id}`
+      );
+      this.expens = data.data;
+      
+    },
+
+    async onSubmit() {
+      const { data } = await axios.put(
+        "http://localhost:3000/expenditure/update/" + this.$route.query.id,
+        {
+          date_expenditure: this.expens.date_expenditure,
+          amount: this.expens.totalprice,
+          note: this.expens.note,
+          type: "Equipment",
+          title_type: this.expens.title_type,
+          farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
+          owner: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
+          employee: "",
+          store_expen: this.expens.store_expen,
+          telstore_expen: this.expens.telstore_expen,
+        }
+      );
+      this.expens = data.data;
+      // console.log(data.data);
       this.$router.push({
         path: "/account_calendar",
+        query: {
+          id: this.expens.expen_id,
+        },
       });
     },
   },

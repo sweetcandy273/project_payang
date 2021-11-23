@@ -57,7 +57,7 @@
           </div>
         </div>
 
-      <div class="share text-left">
+      <!-- <div class="share text-left">
         <q-select
           filled
           v-model="employee"
@@ -68,7 +68,7 @@
             <q-icon name="person" />
           </template>
         </q-select>
-      </div>
+      </div> -->
 
       <div class="col">
         <q-input filled v-model="expens.note" label="บันทึก" />

@@ -154,13 +154,15 @@
           <q-img src="../assets/forest.png" width="40%"> </q-img>
         </div>
       </div>
-      <div v-else>
-        <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
-          <ProductYearly :item="id" />
-        </div>
-        <div v-else class="text-center">
-          <ProductMonthly :item="id" />
-        </div>
+      <div v-else-if="secondModel == 'yearly'" id="yearly">
+        <ProductYearly :item="id" />
+      </div>
+      <div
+        v-else-if="secondModel == 'monthly'"
+        id="monthly"
+        class="text-center"
+      >
+        <ProductMonthly :item="id" />
       </div>
     </div>
   </div>

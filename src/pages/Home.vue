@@ -94,6 +94,7 @@
         <div class="row text-center">
           <div class="col font" style="font-size: 25px">
             Payang App
+            <div hidden>{{ user_id }}</div>
             <q-icon name="info" style="color: #5db075">
               <q-popup-proxy :offset="[10, 10]">
                 <q-banner class="bg-while font">
@@ -180,12 +181,35 @@ export default {
     ProductYearly,
     ProductMonthly
   },
+  computed: {
+    user_id() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.currentId = user.uid;
+          this.id = { id: user.uid };
+        }
+      });
+
+      this.currentId = this.$route.query.id;
+      this.id = { id: this.$route.query.id };
+
+      return this.$route.query.id;
+    }
+  },
+
+  watch: {
+    currentId(val) {
+      if (val) {
+        this.getUser();
+      }
+    }
+  },
 
   data() {
     return {
-      uid: "",
+      currentId: "",
 
-      id: { id: this.uid },
+      id: { id: this.$route.query.id },
       payang_user: [],
 
       leftDrawerOpen: false,
@@ -193,17 +217,20 @@ export default {
       secondModel: ""
     };
   },
-  async mounted() {
-    await this.checkauth();
-    // await this.getUser();
-  },
 
   methods: {
     async getUser() {
-      const { data } = await this.$axios.get("/payang_user/" + this.uid);
-      this.payang_user = data.data;
-      this.id = { id: this.uid };
-      // console.log(data.data);
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          "/payang_user/" + this.currentId
+        );
+        this.payang_user = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
 
     changePassword() {
@@ -257,23 +284,12 @@ export default {
       const auth = getAuth();
       signOut(auth)
         .then(() => {
-          this.$forceUpdate();
+          // this.$forceUpdate();
+          this.$router.push({
+            name: "login"
+          });
         })
         .catch(err => alert(err.message));
-    },
-
-    checkauth() {
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          this.uid = user.uid;
-          this.id = { id: user.uid };
-          this.getUser();
-        } else {
-          this.$router.push({
-            name: "starter"
-          });
-        }
-      });
     }
   }
 };

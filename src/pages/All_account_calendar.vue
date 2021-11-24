@@ -25,17 +25,19 @@
           today-btn
         />
       </div>
+      <div hidden>{{ user_id }}</div>
     </q-splitter>
 
     <div class="col font q-mx-md q-mt-md" style="font-size: 22px">
       {{ date }}
     </div>
     <div :key="index" v-for="(data, index) in incomes">
-      <div v-if="data.farm_id != null">
-        {{ getFarmName(data.farm_id) }}
+      <div class="text-right">
+        <div class="font" style="font-size: 20px">
+          {{ data.farm.farm_name }}
+        </div>
       </div>
-
-      <div class="row font q-pt-md">
+      <div class="row font">
         <div class="greencircle"></div>
         <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
         <div class="col text-right" style="font-size: 18px">
@@ -67,8 +69,13 @@
       </div>
     </div>
 
-    <div :key="index" v-for="(data, index) in expenditures">
-      <div class="row font q-pt-md">
+    <div :key="index + 10000" v-for="(data, index) in expenditures">
+      <div class="text-right">
+        <div class="font" style="font-size: 20px">
+          {{ data.farm.farm_name }}
+        </div>
+      </div>
+      <div class="row font">
         <div class="redcircle"></div>
         <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>
         <div class="col text-right" style="font-size: 18px">
@@ -100,76 +107,39 @@ import "firebase/compat/auth";
 export default {
   name: "income",
   name: "expenditure",
+
   data() {
     return {
-      owner: "",
       incomes: [],
       expenditures: [],
       splitterModel: 50,
-      date: " ",
+      date: "",
       events: [],
       listAllincome: [],
       listAllexpenditure: [],
-      farm: {}
+      farm_name: "",
+      currentId: ""
     };
   },
-  mounted() {
-    this.checkauth();
-  },
-  methods: {
-    checkauth() {
+  computed: {
+    user_id() {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          this.owner = user.uid;
-          this.getIncome();
-          this.getExpenditure();
-        } else {
-          this.$router.push({
-            name: "starter"
-          });
+          this.currentId = user.uid;
         }
       });
-    },
-    async getFarmName(farm_id) {
-      console.log(farm_id);
-      const { data } = await this.$axios.get("/farm/" + farm_id);
-
-      this.farm = data.data;
-      console.log(this.farm.farm_name);
-      return farm_id;
-    },
-
-    formatDate(dateString) {
-      return date.formatDate(dateString, "YYYY/MM/DD");
-    },
-    async getIncome() {
-      const { data } = await this.$axios.get(
-        "/income/listbyowner/" + this.owner
-      );
-
-      this.listAllincome = data.data;
-      this.date = this.formatDate(new Date());
-      const listEvent = data.data.map(data => {
-        return this.formatDate(data.date_income);
-      });
-      this.events.push(...listEvent);
-      // console.log(data.farm_id);
-      // getFarmName(data.farm_id);
-    },
-
-    async getExpenditure() {
-      const { data } = await this.$axios.get(
-        "/expenditure/listbyowner/" + this.owner
-      );
-      this.listAllexpenditure = data.data;
-      this.date = this.formatDate(new Date());
-      const listEvent = data.data.map(data => {
-        return this.formatDate(data.date_expenditure);
-      });
-      this.events.push(...listEvent);
+      this.currentId = this.$route.query.id;
+      return this.$route.query.id;
     }
   },
+
   watch: {
+    currentId(val) {
+      if (val) {
+        this.getIncome();
+        this.getExpenditure();
+      }
+    },
     date(value) {
       this.incomes = this.listAllincome.filter(data => {
         // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
@@ -178,6 +148,52 @@ export default {
       this.expenditures = this.listAllexpenditure.filter(data => {
         return date.formatDate(value, "YYYY-MM-DD") == data.date_expenditure;
       });
+    }
+  },
+
+  methods: {
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+    async getIncome() {
+      try {
+        this.$q.loading.show();
+
+        const { data } = await this.$axios.get(
+          "/income/listbyowner/" + this.currentId
+        );
+
+        this.listAllincome = data.data;
+
+        this.date = this.formatDate(new Date());
+        const listEvent = data.data.map(data => {
+          return this.formatDate(data.date_income);
+        });
+        this.events.push(...listEvent);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
+    },
+
+    async getExpenditure() {
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          "/expenditure/listbyowner/" + this.currentId
+        );
+        this.listAllexpenditure = data.data;
+        this.date = this.formatDate(new Date());
+        const listEvent = data.data.map(data => {
+          return this.formatDate(data.date_expenditure);
+        });
+        this.events.push(...listEvent);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     }
   }
 };

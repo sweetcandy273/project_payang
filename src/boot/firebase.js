@@ -16,8 +16,16 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-console.log(firebase);
+
+const onAuthStateChanged = async () => {
+  return await new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      unsubscribe();
+      resolve(user);
+    }, reject);
+  });
+};
 const auth = firebase.auth();
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
-export { auth };
+export { auth, onAuthStateChanged };

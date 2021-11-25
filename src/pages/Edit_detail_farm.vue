@@ -1,5 +1,5 @@
 <template>
-  <div class="font" v-if="farm">
+  <div class="font">
     <q-header class="shadow-2">
       <q-toolbar class="text-center row">
         <div class="col flex">
@@ -17,93 +17,128 @@
       </q-toolbar>
     </q-header>
 
-    <div class="q-pa-md font">
-      <q-form @submit="onSubmit" class="q-gutter-md">
-        <div>
-          เจ้าของสวน :
-          <div class="row justify-between">
-            <div class="col q-pr-md">
-              <q-input
-                color="teal"
-                filled
-                v-model="farm.fname"
-                label="ชื่อ"
-                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
-              />
-            </div>
-            <div class="col">
-              <q-input
-                color="teal"
-                filled
-                v-model="farm.lname"
-                label="นามสกุล"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
-                ]"
-              />
-            </div>
+    <q-form @submit="onSubmit" class="q-gutter-md">
+      <div class="q-pa-md font" v-if="farm">
+        <div>เจ้าของสวน :</div>
+        <div class="row justify-between">
+          <div class="col q-pr-md">
+            <q-input
+              color="teal"
+              filled
+              v-model="farm.fname"
+              label="ชื่อ"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
+            />
           </div>
-
-          ชื่อสวน :
-          <q-input
-            color="teal"
-            filled
-            v-model="farm.farm_name"
-            label="ชื่อสวน"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
-          >
-          </q-input>
-
-          ที่อยู่ :
-          <q-input
-            color="teal"
-            filled
-            v-model="farm.address"
-            label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
-          />
-
-          <div class="row">
-            <div class="col q-pr-md">
-              <q-input
-                color="teal"
-                filled
-                v-model="farm.address_district"
-                label="เขต/อำเภอ"
-                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
-              />
-            </div>
-            <div class="col">
-              <q-input
-                color="teal"
-                filled
-                v-model="farm.address_province"
-                label="จังหวัด"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
-                ]"
-              />
-            </div>
+          <div class="col">
+            <q-input
+              color="teal"
+              filled
+              v-model="farm.lname"
+              label="นามสกุล"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
+            />
           </div>
-
-          เนื้อที่ปลูก :
-          <q-input
-            color="teal"
-            filled
-            v-model="farm.area"
-            label="เนื้อที่ปลูก"
-          />
         </div>
 
+        <div>ชื่อสวน :</div>
+        <q-input
+          color="teal"
+          filled
+          v-model="farm.farm_name"
+          label="ชื่อสวน"
+          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
+        >
+        </q-input>
+
+        <div>ที่อยู่ :</div>
+        <q-input
+          color="teal"
+          filled
+          v-model="farm.address"
+          label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
+          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
+        />
+        <div class="row">
+          <div class="col q-pr-md">
+            <q-input
+              color="teal"
+              filled
+              v-model="farm.address_district"
+              label="เขต/อำเภอ"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
+            />
+          </div>
+          <div class="col">
+            <q-input
+              color="teal"
+              filled
+              v-model="farm.address_province"
+              label="จังหวัด"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
+            />
+          </div>
+        </div>
+
+        <div>วันที่ปลูกยาง :</div>
+        <q-input
+          color="teal"
+          filled
+          v-model="farm.planing_date"
+          mask="date"
+          :rules="['date']"
+        >
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer" color="teal">
+              <q-popup-proxy
+                ref="qDateProxy"
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date v-model="planing_date" color="green">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="white" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+
+        <div>พันธุ์ยาง :</div>
+        <q-select
+          filled
+          v-model="farm.rubber_varieties_id"
+          :options="rubberOption"
+          @filter="filterRubber"
+          map-options
+          emit-value
+          use-input
+          hide-selected
+          fill-input
+          input-debounce="0"
+        >
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey"> ไม่มีผลลัพธ์ </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+
+        <div>เนื้อที่ปลูก :</div>
+        <q-input color="teal" filled v-model="farm.area" label="เนื้อที่ปลูก" />
+      </div>
+
+      <div class="q-pa-md font" v-if="nameEmployee">
         <div>ผู้ดูแล :</div>
 
-        <div class="box_editeAdmin" v-if="name_employee">
+        <div class="box_editeAdmin q-pa-md font">
           <div class="row justify-between">
             <div class="col q-pr-md">
               <q-input
                 color="teal"
+                v-model="nameEmployee.fname"
                 filled
-                v-model="name_employee.fname"
                 label="ชื่อ"
                 :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
               />
@@ -111,8 +146,8 @@
             <div class="col">
               <q-input
                 color="teal"
+                v-model="nameEmployee.lname"
                 filled
-                v-model="name_employee.lname"
                 label="นามสกุล"
                 :rules="[
                   (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
@@ -123,7 +158,7 @@
           <q-input
             color="teal"
             filled
-            v-model="name_employee.phone_number"
+            v-model="nameEmployee.phone_number"
             label="เบอร์โทรศัพท์"
             :rules="[
               (val) =>
@@ -138,7 +173,7 @@
           <q-input
             color="teal"
             filled
-            v-model="name_employee.e_number"
+            v-model="nameEmployee.e_number"
             label="เบอร์โทรศัพท์ฉุกเฉิน"
             :rules="[
               (val) =>
@@ -154,7 +189,7 @@
           <q-input
             color="teal"
             filled
-            v-model="name_employee.address"
+            v-model="nameEmployee.address"
             label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
           />
@@ -164,7 +199,7 @@
               <q-input
                 color="teal"
                 filled
-                v-model="name_employee.address_district"
+                v-model="nameEmployee.address_district"
                 label="เขต/อำเภอ"
                 :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
               />
@@ -173,7 +208,7 @@
               <q-input
                 color="teal"
                 filled
-                v-model="name_employee.address_province"
+                v-model="nameEmployee.address_province"
                 label="จังหวัด"
                 :rules="[
                   (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
@@ -181,52 +216,87 @@
               />
             </div>
           </div>
-
-          <div class="row justify-center">
-            <div class="q-pa-md self-center">
-              <q-btn
-                round
-                color="deep-orange-13"
-                icon="delete"
-                @click="showNotif"
-              />
-            </div>
-          </div>
         </div>
+      </div>
 
-        <div>
-          <q-btn
-            unelevated
-            rounded
-            label="บันทึก"
-            type="submit"
-            class="shadow-2 text-white"
-          />
-        </div>
-      </q-form>
-    </div>
+      <div class="q-pa-md font">
+        <q-btn
+          unelevated
+          rounded
+          label="บันทึก"
+          type="submit"
+          class="shadow-2 text-white"
+        />
+      </div>
+    </q-form>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import { date } from "quasar";
+
 export default {
   async mounted() {
     this.getfarm();
+    this.getnameEmployee();
     this.getemployee();
-    this.getname_employee();
+    this.getrubber_var();
+    this.updateEmp();
+    this.updateFarm();
   },
 
   data() {
     return {
-      farm: null,
+      farm: [],
       payang_user: [],
-      name_employee: null,
+      nameEmployee: [],
       employee: [],
       user_has_farm: [],
+      planing_date: " ",
+      
+      rubberList: [],
+      rubberOption: [],
+      rubber_varieties_id: [],
     };
   },
+
   methods: {
+    filterRubber(val, update) {
+      if (val === "") {
+        update(() => {
+          this.rubberOption = this.rubberList;
+          // here you have access to "ref" which
+          // is the Vue reference of the QSelect
+        });
+        return;
+      }
+      update(() => {
+        const rubber_varieties_id = val.toLowerCase();
+        this.rubberOption = this.rubberList.filter(
+          (v) => v.label.toLowerCase().indexOf(rubber_varieties_id) > -1
+        );
+      });
+    },
+    async getday() {
+      this.planing_date = this.formatDate(new Date());
+    },
+
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+
+    async getrubber_var() {
+      const { data } = await axios.get(
+        "http://localhost:3000/rubber_varieties"
+      );
+      // console.log(data);
+      this.rubberList = data.data.map((rubber) => ({
+        label: rubber.varieties,
+        value: rubber.rubber_varieties_id,
+      }));
+    },
+
     async getfarm() {
       const { data } = await axios.get(
         "http://localhost:3000/farm/" + this.$route.query.id
@@ -241,33 +311,30 @@ export default {
       this.employee = data.data;
       // console.log(data.data);
     },
-    async getname_employee() {
-      console.log(this.employee.user_id);
+
+    async getnameEmployee() {
       const { data } = await axios.get(
-        "http://localhost:3000/payang_user/4da0b5f4-3ce8-4951-891d-d7c9ee233671"
+        "http://localhost:3000/payang_user/" + this.$route.query.idu
       );
-      this.name_employee = data.data;
+      this.nameEmployee = data.data;
       // console.log(data.data);
     },
-
-    showNotif() {
-      this.$q
-        .dialog({
-          title: "Confirm",
-          message: "Would you delete the data? ",
-          cancel: true,
-          persistent: true,
-          html: true,
-        })
-        .onOk(() => {
-          // console.log(">>>> OK");
-          this.$router.push({
-            path: "/Myfarm",
-          });
-        });
+    async updateEmp() {
+      const { data } = await axios.put(
+        "http://localhost:3000/payang_user/update/" + this.$route.query.idu,
+        {
+          fname: this.nameEmployee.fname,
+          lname: this.nameEmployee.lname,
+          phone_number: this.nameEmployee.phone_number,
+          e_number: this.nameEmployee.e_number,
+          address: this.nameEmployee.address,
+          address_district: this.nameEmployee.address_district,
+          address_province: this.nameEmployee.address_province,
+        }
+      );
     },
-    
-    async onSubmit() {
+
+    async updateFarm() {
       const { data } = await axios.put(
         "http://localhost:3000/farm/update/" + this.$route.query.id,
         {
@@ -282,7 +349,12 @@ export default {
           address_province: this.farm.address_province,
         }
       );
-      this.farm = data.data;
+    },
+
+    async onSubmit() {
+      await this.updateEmp();
+      await this.updateFarm();
+
       this.$router.push({
         path: "/detail_farm",
         query: { id: this.farm.farm_id },

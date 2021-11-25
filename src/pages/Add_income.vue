@@ -68,13 +68,13 @@
       <div class="row">
         <div class="col">
           <q-input filled v-model="weight_rubber" label="น้ำหนักยาง"
-           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกน้ำหนักยาง']">
+           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกน้ำหนักยาง']" mask="####">
             <template v-slot:prepend> กก. </template>
           </q-input>
         </div>
         <div class="col q-ml-md">
           <q-input filled v-model="percent" color="teal" label="เปอร์เซ็น"
-           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเปอร์เซ็น']">
+           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเปอร์เซ็น']" mask="##" >
             <template v-slot:prepend> % </template>
           </q-input>
         </div>
@@ -83,13 +83,13 @@
         <div class="row">
           <div class="col">
             <q-input filled v-model="dry_rubber" label="เนื้อยางแห้ง"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อยางแห้ง']">
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อยางแห้ง']" mask="###">
               <template v-slot:prepend> ก. </template>
             </q-input>
           </div>
           <div class="col q-ml-md">
             <q-input filled v-model="rubber_price" label="ราคาน้ำยาง"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกราคาน้ำยาง']">
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกราคาน้ำยาง']" mask="####">
               <template v-slot:prepend> บ./กก. </template>
             </q-input>
           </div>
@@ -102,7 +102,7 @@
             v-model="amount"
             color="teal"
             label="รวมจำนวนเงิน"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']" mask="#####.##"
           >
             <template v-slot:prepend> ฿ </template>
           </q-input>

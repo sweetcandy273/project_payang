@@ -189,7 +189,7 @@ export default {
     },
     async getExpenditure() {
       const { data } = await axios.get(
-        "http://localhost:3000/income/listbyfarm/"+ this.$route.query.id
+        "http://localhost:3000/expenditure/listbyfarm/"+ this.$route.query.id
       );
       this.listAllexpenditure = data.data;
       this.date = this.formatDate(new Date());

@@ -43,7 +43,7 @@
           </div>
         </div>
 
-        <div>เจ้าของสวน : </div>
+        <div>เจ้าของสวน :</div>
         <div>สวน :</div>
         <div>ที่อยู่ :</div>
         <div>เนื้อที่ปลูก : ไร่</div>
@@ -60,7 +60,12 @@
     <div class="q-pa-md q-gutter-sm self-center">
       <div>
         <q-btn
-          @click="$router.push({ name: 'account_calendar'})"
+          @click="
+            $router.push({
+              name: 'account_calendar',
+              query: { id: farm.farm_id },
+            })
+          "
           unelevated
           rounded
           label="รายละเอียดบัญชี"

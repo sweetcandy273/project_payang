@@ -1,9 +1,6 @@
 <template>
   <div>
     <q-header>
-      <!-- <q-toolbar>
-        <q-space></q-space>
-      </q-toolbar>  -->
       <q-toolbar class="text-center row">
         <div class="col flexed text-left">
           <q-icon
@@ -11,8 +8,8 @@
               $router.push({
                 path: 'account_calendar',
                 query: {
-                  id: incomes.in_id,
-                },
+                  id: incomes.farm_id
+                }
               })
             "
             name="arrow_back_ios"
@@ -27,9 +24,11 @@
       <div class="detail-income q-pa-md shadow-2">
         <div class="row">
           <div class="col">
-            <div class="row" style="font-size: 18px">เจ้าของสวน :</div>
+            <div class="row" style="font-size: 18px">
+              เจ้าของสวน : {{ incomes.farm.fname }}
+            </div>
             <div class="row q-pb-md" style="font-size: 18px">
-              สวน : {{ farms.farm_name }}
+              สวน : {{ incomes.farm.farm_name }}
             </div>
           </div>
 
@@ -59,11 +58,9 @@
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-pt-md" style="font-size: 18px">
-          ร้าน : {{incomes.store_in}}
+          ร้าน : {{ incomes.store_in }}
         </div>
-        <div class="row" style="font-size: 18px">
-          ผู้ได้รับส่วนแบ่ง : กนกวรรณ
-        </div>
+        
         <div class="row" style="font-size: 18px">%ส่วนแบ่ง : {{incomes.percen_split}}</div>
         <div class="row">
           <div class="col q-pt-md" style="font-size: 18px">รวมรายรับสุทธิ</div>
@@ -73,7 +70,7 @@
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="q-pt-md" style="font-size: 18px">
-          บันทึก : {{incomes.note}}
+          บันทึก : {{ incomes.note }}
         </div>
         <div class="col q-pa-md self-center">
           <div class="row">
@@ -86,10 +83,10 @@
                 icon="edit"
                 @click="
                   $router.push({
-                    path: 'edit_income',
+                    path: 'edit_income', 
                     query: {
-                      id: incomes.in_id,
-                    },
+                      id: incomes.in_id
+                    }
                   })
                 "
               />
@@ -108,7 +105,7 @@
       </div>
     </div>
   </div>
-</template> 
+</template>
 <script>
 import axios from "axios";
 import { date } from "quasar";
@@ -117,8 +114,10 @@ export default {
   name: "farms",
   data() {
     return {
-      incomes: {},
-      farms: {},
+      incomes: {
+        farm:{}
+      },
+     
     };
   },
   mounted() {
@@ -135,9 +134,8 @@ export default {
       );
       this.incomes = data.data;
 
-      console.log(data);
+      console.log(data.data);
     },
-   
 
     // async getfarm() {
     //   const { data} = await axios.get(
@@ -146,23 +144,22 @@ export default {
     //   this.farms = data.data;
     // },
     Notidelete() {
-     axios.delete(
+      axios.delete(
         `http://localhost:3000/income/delete/${this.$route.query.id}`
       );
       this.$router.push({
-        path: "/account_calendar",
+        path: "/account_calendar"
       });
-      
-    },
+    }
   },
   watch: {
     date(value) {
-      this.incomes = this.listAllincome.filter((data) => {
+      this.incomes = this.listAllincome.filter(data => {
         // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
         return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped src="../css/home.css"></style>

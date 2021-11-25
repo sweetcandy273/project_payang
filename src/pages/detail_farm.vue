@@ -1,18 +1,16 @@
 <template>
-  <div class="font">
+  <div class="font" v-if="farm">
     <q-header class="shadow-2">
       <q-toolbar class="text-center row">
         <div class="col flex">
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="
-              $router.push({ name: 'myfarm', query: { id: farm.user_id } })
-            "
+            @click="$router.push({ name: 'myfarm', query: { id: farm.owner } })"
           />
         </div>
 
-        <div class="col-6 font header-title">ข้อมูลสวน</div>
+        <div class="col-6 font header-title">ข้อมูลสวน </div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -25,7 +23,7 @@
               @click="
                 $router.push({
                   name: 'edit_detail_farm',
-                  query: { id: farm.farm_id },
+                  query: { id: farm.farm_id, idu: employee[0].owner },
                 })
               "
               round
@@ -38,29 +36,48 @@
               round
               color="deep-orange-13"
               icon="delete"
-              @click="showNotif"
+              @click="
+                DeleteFarm();
+                $router.push({
+                  name: 'myfarm',
+                  query: { id: farm.owner },
+                });
+              "
             />
           </div>
         </div>
 
-        <div>เจ้าของสวน : </div>
-        <div>สวน :</div>
-        <div>ที่อยู่ :</div>
-        <div>เนื้อที่ปลูก : ไร่</div>
-        <div>ผู้ดูแล :</div>
+        <div>เจ้าของสวน : {{ farm.fname }} {{ farm.lname }}</div>
+        <div>สวน : {{ farm.farm_name }}</div>
+        <div>
+          ที่อยู่ : {{ farm.address }} อ.{{ farm.address_district }} จ.{{
+            farm.address_province
+          }}
+        </div>
+        <div>วันที่ปลูกยาง : {{ formatDate(farm.planing_date) }}</div>
+        <div>พันธุ์ยาง : {{ farm.rubber_variety.varieties }}</div>
+        <div>เนื้อที่ปลูก : {{ farm.area }} ไร่</div>
+        <div v-if="nameEmployee">
+          ผู้ดูแล : {{ nameEmployee.fname }} {{ nameEmployee.lname }}
+        </div>
       </div>
     </div>
 
     <div></div>
 
-    <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
-      <graph_farm />
+    <div v-if="secondModel == 'graph_farm'" class="text-center" id="graph_farm">
+      <graph_farm :item="id" />
     </div>
 
     <div class="q-pa-md q-gutter-sm self-center">
       <div>
         <q-btn
-          @click="$router.push({ name: 'account_calendar'})"
+          @click="
+            $router.push({
+              name: 'account_calendar',
+              query: { id: farm.farm_id, owner: farm.owner },
+            })
+          "
           unelevated
           rounded
           label="รายละเอียดบัญชี"
@@ -72,7 +89,9 @@
 
       <div>
         <q-btn
-          @click="$router.push({ name: 'calender_farm' })"
+          @click="
+            $router.push({ name: 'calender_farm', query: { id: farm.farm_id } })
+          "
           unelevated
           rounded
           label="เรียกดูตารางการทำงาน"
@@ -88,55 +107,105 @@
 <script>
 import graph_farm from "../components/graph_farm.vue";
 import axios from "axios";
+import { date } from "quasar";
 
 export default {
-  data() {
-    return {
-      user_has_farm: [],
-      farm: [],
-    };
-  },
   async mounted() {
-    this.getfarm();
+    await this.getfarm();
+    await this.getemployee();
+    await this.getnameEmployee();
+    // await this.deletemp();
+    
+    //  this.DeleteEvent();
+    // await this.getrubber_var();
   },
   components: {
     graph_farm,
   },
   data() {
+    const id = { id: this.$route.query.id };
     return {
-      idp: "20c676fe-dead-48bd-a445-e5178603c041",
       leftDrawerOpen: false,
       model: null,
-      secondModel: "yearly",
+      secondModel: "graph_farm",
+      farm: {
+        rubber_variety: {},
+      },
+      nameEmployee: [],
+      employee: [],
+      payang_user: [],
+      user_has_farm: [],
+      id,
+      allrubber: {},
+      date: " ",
     };
   },
   methods: {
-    async getfarm() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm/a07f9bfa-e8b2-4125-8036-acf3d7048e09"
-      );
-      this.farm = data.data;
-      console.log(data.data);
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
     },
 
-    showNotif() {
-      this.$q.dialog({
-        title: "Confirm",
-        message: "Would you delete the data? ",
-        cancel: true,
-        persistent: true,
-      });
-      return { confirm };
+    async getfarm() {
+      const { data } = await axios.get(
+        "http://localhost:3000/farm/" + this.$route.query.id
+      );
+      this.farm = data.data;
+      // console.log(data.data);
+    },
+    async getemployee() {
+      const { data } = await axios.get(
+        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
+      );
+      this.employee = data.data;
+      // console.log(data.data);
+    },
+    async getnameEmployee() {
+      const { data } = await axios.get(
+        "http://localhost:3000/payang_user/" + this.employee[0].employee
+      );
+      this.nameEmployee = data.data;
+      // console.log(employee[0].employee);
+    },
+
+    // async deletemp() {
+    //   axios.delete(
+    //     "http://localhost:3000/payang_user/delete/" + this.employee[0].employee
+    //   );
+    // },
+    async DeleteFarm() {
+      axios.delete("http://localhost:3000/farm/delete/" + this.employee[0].farm_id);
+      // await this.deletemp();
     },
   },
+
+  // async DeleteEvent() {
+  //   this.$q
+  //     .dialog({
+  //       title: "Confirm",
+  //       message: "Would you delete the data? ",
+  //       cancel: true,
+  //       persistent: true,
+  //       html: true,
+  //     })
+  //     .onOk(() => {
+  //       axios.delete(
+  //         "http://localhost:3000/farm/delete/" + this.$route.query.id
+  //       );
+  //     });
+  //     this.$router.push({
+  //     path: "/myfarm",
+  //     query: {
+  //       id: farm.user_id
+  //     },
+  //   });
+  // },
 };
 </script>
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>
 
 <style scoped>
 .box_detail {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 </style>

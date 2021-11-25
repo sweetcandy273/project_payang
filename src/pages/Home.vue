@@ -1,18 +1,7 @@
 <template>
   <div>
     <q-header class="shadow-2">
-      <!-- <q-toolbar>
-        <q-space></q-space>
-        <q-btn flat round dense icon="search" class="q-mr-xs" />
-        <q-btn flat round dense icon="group_add" />
-      </q-toolbar> -->
       <q-toolbar class="row flex">
-        <!-- <div
-          class="col self-center font"
-          @click="$router.push({ name: 'setting' })"
-        >
-          ตั้งค่า
-        </div> -->
         <div
           class="col self-center font"
           @click="leftDrawerOpen = !leftDrawerOpen"
@@ -46,7 +35,7 @@
             style="width: 30px"
             @click="
               $router.push({
-                path: 'edit_userinformation',
+                name: 'edit_userinformation',
                 query: {
                   id: payang_user.user_id
                 }
@@ -83,9 +72,12 @@
         <div class="row q-mt-xl">
           <div class="col text-left"><strong>รหัสผ่าน</strong></div>
           <div class="col text-right">
-            <router-link to="/new_password" class="text-green">
-              เปลี่ยน</router-link
-            >
+            <q-btn
+              flat
+              style="color: #FFFFFF"
+              label="เปลี่ยน"
+              @click="changePassword()"
+            />
           </div>
         </div>
       </div>
@@ -102,6 +94,7 @@
         <div class="row text-center">
           <div class="col font" style="font-size: 25px">
             Payang App
+            <div hidden>{{ user_id }}</div>
             <q-icon name="info" style="color: #5db075">
               <q-popup-proxy :offset="[10, 10]">
                 <q-banner class="bg-while font">
@@ -153,13 +146,23 @@
           ]"
         />
       </div>
-    </div>
-
-    <div>
-      <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
+      <div v-if="secondModel == ''" class="text-center font">
+        เลือกรูปแบบการดูผลผลิต
+        <div style="font-size:20px">
+          เลือกดูรายรับ รายจ่าย กำไร และผลผลิตเป็นรายปีหรือรายเดือน
+        </div>
+        <div class="q-mt-lg">
+          <q-img src="../assets/forest.png" width="40%"> </q-img>
+        </div>
+      </div>
+      <div v-else-if="secondModel == 'yearly'" id="yearly">
         <ProductYearly :item="id" />
       </div>
-      <div v-else class="text-center">
+      <div
+        v-else-if="secondModel == 'monthly'"
+        id="monthly"
+        class="text-center"
+      >
         <ProductMonthly :item="id" />
       </div>
     </div>
@@ -169,34 +172,85 @@
 <script>
 import ProductYearly from "../components/ProductYearly.vue";
 import ProductMonthly from "../components/ProductMonthly.vue";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import { getAuth, signOut, deleteUser } from "firebase/auth";
 
 export default {
-  props: {},
-  // name: "yearly",
   components: {
     ProductYearly,
     ProductMonthly
   },
+  computed: {
+    user_id() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.currentId = user.uid;
+          this.id = { id: user.uid };
+        }
+      });
+
+      this.currentId = this.$route.query.id;
+      this.id = { id: this.$route.query.id };
+
+      return this.$route.query.id;
+    }
+  },
+
+  watch: {
+    currentId(val) {
+      if (val) {
+        this.getUser();
+      }
+    }
+  },
 
   data() {
-    const id = { id: "4b9baivvJQVwqsd1pfXxZOrz8eC3" };
     return {
+      currentId: "",
+
+      id: { id: this.$route.query.id },
       payang_user: [],
-      id,
+
       leftDrawerOpen: false,
       model: null,
-      secondModel: "yearly"
+      secondModel: ""
     };
-  },
-  mounted() {
-    this.getUser();
   },
 
   methods: {
     async getUser() {
-      const { data } = await this.$axios.get("/payang_user/" + this.id.id);
-      this.payang_user = data.data;
-      // console.log(data.data);
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          "/payang_user/" + this.currentId
+        );
+        this.payang_user = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
+    },
+
+    changePassword() {
+      firebase
+        .auth()
+        .sendPasswordResetEmail(this.payang_user.email)
+        .then(() => {
+          alert("Email สำหรับการเปลี่ยนรหัสผ่านได้ถูกส่งไปแล้ว");
+          this.$router.push({
+            name: "login"
+          });
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          if (errorCode == "auth/invalid-email") {
+            alert("Email ไม่ถูกต้องตามหลัก");
+          } else if (errorCode == "auth/user-not-found") {
+            alert("ไม่มีข้อมูล Email ในระบบ");
+          }
+        });
     },
     confirm() {
       this.$q
@@ -209,24 +263,33 @@ export default {
           html: true
         })
         .onOk(() => {
-          // console.log(">>>> OK");
-          this.$router.push({
-            path: "/login"
-          });
+          const auth = getAuth();
+          const user = auth.currentUser;
+
+          deleteUser(user)
+            .then(() => {
+              this.$router.push({
+                name: "starter"
+              });
+            })
+            .catch(error => {
+              alert("พบปัญหาระหว่างการกระทำ:" + error);
+            });
         })
 
-        .onCancel(() => {
-          // console.log(">>>> Cancel");
-        })
-        .onDismiss(() => {
-          // console.log('I am triggered on both OK and Cancel')
-        });
+        .onCancel(() => {})
+        .onDismiss(() => {});
     },
     logout() {
-      //! ออกจากระบบ
-      this.$router.push({
-        path: "/login"
-      });
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          // this.$forceUpdate();
+          this.$router.push({
+            name: "login"
+          });
+        })
+        .catch(err => alert(err.message));
     }
   }
 };

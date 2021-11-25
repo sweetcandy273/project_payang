@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <q-img src="../assets/bg-starter.png"> -->
     <div class="text-black" style="background: none">
       <div class="q-pa-md">
         <img class="logo" alt="Payang logo" src="../assets/payang_icon.png" />
@@ -36,12 +35,9 @@
         />
       </div>
     </div>
-    <!-- </q-img> -->
   </div>
 </template>
 
-<script>
-</script>
+<script></script>
 
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>

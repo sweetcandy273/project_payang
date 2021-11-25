@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <q-img src="../assets/bg-starter.png" width="100%"> -->
     <div class="text-black items-center" style="background: none">
       <div class="q-pa-md">
         <img class="logo" alt="Payang logo" src="../assets/payang_icon.png" />
@@ -28,12 +27,9 @@
         <router-link to="/login" class="text-black">ข้าม ></router-link>
       </div>
     </div>
-    <!-- </q-img> -->
   </div>
 </template>
 
-<script>
-</script>
+<script></script>
 
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>

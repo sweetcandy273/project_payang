@@ -38,12 +38,13 @@
         rounded
         style="background: #f2994a; color: white; opacity: 0.5"
         label="รายจ่าย"
-        @click="$router.push({ name: 'edit_expenditure' })"
+
       />
     </div>
     <div class="font q-px-md">
       <q-input
         filled
+        readonly
         v-model="incomes.date_income"
         color="teal"
        

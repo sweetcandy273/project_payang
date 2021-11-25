@@ -32,10 +32,10 @@
         </div>
       </div>
     </div>
-    <div class="q-pa-md font">
+    <div class="q-pa-md font ">
       <div class="account-all q-pa-md shadow-2">
         <div class="row">
-          <div class="col-10">
+          <div class="col-10 text-center">
             <div style="font-size: 25px">สรุปบัญชีรวมทั้งหมด</div>
             <div style="font-size: 22px">ประจำเดือน {{ month_th }}</div>
           </div>
@@ -118,6 +118,7 @@ import { date } from "quasar";
 const timeStamp = Date.now();
 
 const date_now = date.formatDate(timeStamp, "YYYY-MM-DD");
+const year_now = date_now.slice(0, 4);
 const month_now = date_now.slice(5, 7);
 
 const months_th = [
@@ -150,6 +151,7 @@ export default {
       month: month_now,
       monthget: "",
       month_th: month_th,
+      year_now: year_now,
 
       incomemonthly: {},
       expenmonthly: {},
@@ -224,7 +226,12 @@ export default {
         this.monthget = this.month;
       }
       const { data } = await this.$axios.get(
-        "/income/productmonthly/" + this.monthget + "/" + this.owner
+        "/income/productmonthly/" +
+          this.year_now +
+          "/" +
+          this.monthget +
+          "/" +
+          this.owner
       );
       this.productmonthly = data.data;
 
@@ -234,6 +241,7 @@ export default {
         this.product = parseFloat(Number(this.productmonthly)).toFixed(2);
       }
     },
+
     calprofit() {
       this.profit = 0.0;
       this.profit = parseFloat(Number(this.income - this.expen)).toFixed(2);

@@ -8,9 +8,7 @@
         <div class="col flexed text-left">
           <q-icon
             @click="$router.push({ path: 'account_calendar',
-            query: {
-                  id: expenditures.expen_id,
-                }, })"
+            })"
             name="arrow_back_ios"
             size="30px"
           ></q-icon>
@@ -25,10 +23,10 @@
         <div class="row">
           <div class="col">
             <div class="row" style="font-size: 18px">
-              เจ้าของสวน : 
+              เจ้าของสวน : {{ expenditures.farm.fname }}
             </div>
             <div class="row q-pb-md" style="font-size: 18px">
-              สวน : 
+              สวน : {{ expenditures.farm.farm_name }}
             </div>
           </div>
           <div class="col-4 text-right">
@@ -42,25 +40,26 @@
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-py-md">
-          <div class="col" style="font-size: 30px"> {{ expenditures.date_expenditure }}</div>
+          <div class="col-8" style="font-size: 28px">{{ expenditures.title_type }} </div>
           <div class="col text-right q-pt-md" style="font-size: 18px">
-           
+           {{ expenditures.date_expenditure }}
           </div>
         </div>
-        <div class="row" style="font-size: 18px">
-          {{ expenditures.note }}
+        <div class="row" style="font-size: 20px">
+        ส่วน:  {{expenditures.type}}   
         </div>
-        <div class="text-right" style="font-size: 30px">{{ expenditures.amount }}</div>
+      
+        <div class="text-right" style="font-size: 28px">{{ expenditures.amount }}</div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-pt-md" style="font-size: 18px">
-          ร้าน : ขายอุปกรณ์การช่าง
+          ร้าน :   {{ expenditures.store_expen }}
         </div>
         <div class="row q-pb-md" style="font-size: 18px">
           ผู้รับผิดชอบ : กนกวรรณ
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="q-pt-md" style="font-size: 18px">
-          บันทึก : 
+          บันทึก :  {{ expenditures.note }}
         </div>
         <div class="col q-pa-md self-center">
           <div class="row">
@@ -71,7 +70,8 @@
               style="width: 50px; height: 50px"
               color="orange-4"
               icon="edit"
-              @click="$router.push({ name: 'edit_expenditure' })"
+              @click="$router.push({ path: 'edit_expenditure',
+               })"
             />
             
             <q-btn
@@ -107,10 +107,10 @@ export default {
     },
     async getExpen() {
       const { data } = await axios.get(
-        `http://localhost:3000/expenditure/${this.$route.query.id}`
+        `http://localhost:3000/expenditure/show/${this.$route.query.id}`
       );
       this.expenditures = data.data;
-      console.log(data);
+      console.log(data.data);
     },
     Notidelete() {
       axios.delete(

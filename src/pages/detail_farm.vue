@@ -25,7 +25,7 @@
               @click="
                 $router.push({
                   name: 'edit_detail_farm',
-                  query: { id: farm.farm_id },
+                  query: { id: farm.farm_id }
                 })
               "
               round
@@ -43,13 +43,17 @@
           </div>
         </div>
 
-        <div>เจ้าของสวน : {{farm.fname}} {{farm.lname}} </div>
-        <div>สวน : {{farm.farm_name}} </div>
-        <div>ที่อยู่ : {{ farm.address }} อ.{{ farm.address_district }} จ.{{
-              farm.address_province
-            }} </div>
+        <div>เจ้าของสวน : {{ farm.fname }} {{ farm.lname }}</div>
+        <div>สวน : {{ farm.farm_name }}</div>
+        <div>
+          ที่อยู่ : {{ farm.address }} อ.{{ farm.address_district }} จ.{{
+            farm.address_province
+          }}
+        </div>
         <div>เนื้อที่ปลูก : {{ farm.area }} ไร่</div>
-        <div v-if="nameEmployee">ผู้ดูแล : {{nameEmployee.fname}} {{nameEmployee.lname}} </div>
+        <div v-if="nameEmployee">
+          ผู้ดูแล : {{ nameEmployee.fname }} {{ nameEmployee.lname }}
+        </div>
       </div>
     </div>
 
@@ -62,7 +66,7 @@
     <div class="q-pa-md q-gutter-sm self-center">
       <div>
         <q-btn
-          @click="$router.push({ name: 'account_calendar', query:{ id:farm.farm_id}})"
+          @click="$router.push({ name: 'account_calendar' })"
           unelevated
           rounded
           label="รายละเอียดบัญชี"
@@ -74,7 +78,9 @@
 
       <div>
         <q-btn
-          @click="$router.push({ name: 'calender_farm' , query:{ id:farm.farm_id}  })"
+          @click="
+            $router.push({ name: 'calender_farm', query: { id: farm.farm_id } })
+          "
           unelevated
           rounded
           label="เรียกดูตารางการทำงาน"
@@ -92,14 +98,13 @@ import graph_farm from "../components/graph_farm.vue";
 import axios from "axios";
 
 export default {
-
   async mounted() {
     this.getfarm();
     this.getemployee();
     this.getnameEmployee();
   },
   components: {
-    graph_farm,
+    graph_farm
   },
   data() {
     const id = { id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09" };
@@ -107,12 +112,12 @@ export default {
       leftDrawerOpen: false,
       model: null,
       secondModel: "graph_farm",
-      farm : {},
-      nameEmployee : [],
-      employee : [],
-      payang_user: [] ,
+      farm: {},
+      nameEmployee: [],
+      employee: [],
+      payang_user: [],
       user_has_farm: [],
-      id,
+      id
     };
   },
   methods: {
@@ -123,22 +128,20 @@ export default {
       this.farm = data.data;
       // console.log(data.data);
     },
-     async getemployee() {
-      const { data } = await axios.get( 
+    async getemployee() {
+      const { data } = await axios.get(
         "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
       );
       this.employee = data.data;
       // console.log(data.data);
     },
-     async getnameEmployee() {
+    async getnameEmployee() {
       const { data } = await axios.get(
         "http://localhost:3000/payang_user/4da0b5f4-3ce8-4951-891d-d7c9ee233671"
       );
       this.nameEmployee = data.data;
       // console.log(data.data);
     },
-  
-
 
     showNotif() {
       this.$q
@@ -147,20 +150,20 @@ export default {
           message: "Would you delete the data? ",
           cancel: true,
           persistent: true,
-          html: true,
+          html: true
         })
         .onOk(() => {
           // console.log(">>>> OK");
           this.$router.push({
-            path: "/Myfarm" , query: { id: farm.user_id }  , 
+            path: "/Myfarm",
+            query: { id: farm.user_id }
           });
         });
-    },
-  },
+    }
+  }
 };
 </script>
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>
 
 <style scoped>
 .box_detail {

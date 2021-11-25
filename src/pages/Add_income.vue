@@ -67,12 +67,14 @@
     <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
       <div class="row">
         <div class="col">
-          <q-input filled v-model="weight_rubber" label="น้ำหนักยาง">
+          <q-input filled v-model="weight_rubber" label="น้ำหนักยาง"
+           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกน้ำหนักยาง']">
             <template v-slot:prepend> กก. </template>
           </q-input>
         </div>
         <div class="col q-ml-md">
-          <q-input filled v-model="percent" color="teal" label="เปอร์เซ็น">
+          <q-input filled v-model="percent" color="teal" label="เปอร์เซ็น"
+           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเปอร์เซ็น']">
             <template v-slot:prepend> % </template>
           </q-input>
         </div>
@@ -80,12 +82,14 @@
       <div class="row">
         <div class="row">
           <div class="col">
-            <q-input filled v-model="dry_rubber" label="เนื้อยางแห้ง">
+            <q-input filled v-model="dry_rubber" label="เนื้อยางแห้ง"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อยางแห้ง']">
               <template v-slot:prepend> ก. </template>
             </q-input>
           </div>
           <div class="col q-ml-md">
-            <q-input filled v-model="rubber_price" label="ราคาน้ำยาง">
+            <q-input filled v-model="rubber_price" label="ราคาน้ำยาง"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกราคาน้ำยาง']">
               <template v-slot:prepend> บ./กก. </template>
             </q-input>
           </div>
@@ -95,9 +99,10 @@
         <div class="col">
           <q-input
             filled
-            v-model="totalprice"
+            v-model="amount"
             color="teal"
             label="รวมจำนวนเงิน"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']"
           >
             <template v-slot:prepend> ฿ </template>
           </q-input>
@@ -105,12 +110,15 @@
       </div>
       <div class="row">
         <div class="col">
-          <q-input filled v-model="stores" label="ชื่อร้านค้า">
+          <q-input filled v-model="store_in" label="ชื่อร้านค้า"
+          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า']">
             <template v-slot:prepend> กก. </template>
           </q-input>
         </div>
         <div class="col q-ml-md">
-          <q-input filled v-model="tel_stores" label="เบอร์โทรร้านค้า">
+          <q-input filled v-model="telstore_in" label="เบอร์โทรร้านค้า"
+          mask= "###-###-####"
+          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรร้านค้า']">
             <template v-slot:prepend> </template>
           </q-input>
         </div>
@@ -126,7 +134,7 @@
 
       <div class="sharemoney" v-if="selectshare">
         <strong>
-          <q-select
+          <!-- <q-select
             filled
             v-model="employee"
             :options="optionsemployee"
@@ -135,14 +143,14 @@
             <template v-slot:prepend>
               <q-icon name="person" />
             </template>
-          </q-select>
+          </q-select> -->
 
           <div class="row">
-            <div class="col text-center q-my-md">% การแบ่ง</div>
+            <div class="col text-center q-my-md" style="font-size: 20px">% การแบ่ง</div>
             <div class="col q-my-md">
               <q-select
                 filled
-                v-model="share"
+                v-model="percen_split"
                 :options="optionspercent"
                 label="% ที่เจ้าของได้"
               />
@@ -169,6 +177,7 @@
 </template>
 <script>
 import axios from "axios";
+import { date } from "quasar";
 export default {
   data() {
     return {
@@ -178,13 +187,13 @@ export default {
       percent: "",
       dry_rubber: "",
       rubber_price: "",
-      totalprice: "",
-      stores: null,
-      tel_stores: "",
-      // options: ["ดาวน้ำยางสด", "ไก่น้ำยางสด", "อื่นๆ"],
+      amount: "",
+      store_in: "",
+      telstore_in: "",
       note: "",
       selectshare: false,
       share: "",
+      percen_split:"",
       optionspercent: ["60", "55", "50"],
       employee: "",
       optionsemployee: [],
@@ -196,32 +205,35 @@ export default {
   },
 
   mounted() {
-    this.getemployee();
+    // this.getemployee();
   },
   methods: {
-    async getemployee() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
-      );
-      this.employees = data.data;
+     formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+    // async getemployee() {
+    //   const { data } = await axios.get(
+    //     "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
+    //   );
+    //   this.employees = data.data;
 
-      const listemployee = this.employees.map((data) => {
-        const obj = {};
-        obj["user_id"] = data.user_id;
+    //   const listemployee = this.employees.map((data) => {
+    //     const obj = {};
+    //     obj["user_id"] = data.user_id;
 
-        this.name = this.getempname(data.user_id);
+    //     this.name = this.getempname(data.user_id);
 
 
-        Promise.all(this.name);
+    //     Promise.all(this.name);
 
         
-        // console.log(this.name);
-        obj["fname"] = this.name;
-        return obj;
-      });
+    //     // console.log(this.name);
+    //     obj["fname"] = this.name;
+    //     return obj;
+    //   });
 
-      console.log(listemployee);
-    },
+    //   console.log(listemployee);
+    // },
     async getempname(user_id) {
       const { data } = await axios.get(
         "http://localhost:3000/payang_user/" + user_id
@@ -230,32 +242,42 @@ export default {
       console.log(this.listemployeename.fname);
       return this.listemployeename.fname;
     },
+    sharemoney:function(amount,percen_split){
+      // console.warn("amount : "+amount)
+      // console.warn("percen_split : "+percen_split)
+      var amount_net = 0;
+      if(percen_split == 60){
+        amount_net = amount * 0.6;
+      } else if (percen_split == 55){
+        amount_net = amount * 0.55;
+      } else {
+        amount_net = amount * 0.5;
+      }
+      // console.warn("amount_net : "+amount_net)
+      return amount_net;
+    },
+    
     onSubmit() {
+      this.amount_net = this.sharemoney(this.amount,this.percen_split)
       axios.post(
         `http://localhost:3000/income/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
         {
           date_income: this.date_income,
-          amount: this.totalprice,
-          amount_net: this.totalprice * 0.6,
+          amount: this.amount,
+          amount_net: this.amount_net,
           weight: this.weight_rubber,
           percen_rubber: this.percent,
           dry_rubber: this.dry_rubber,
-          percen_split: "60",
+          percen_split: this.percen_split,
           rubber_price: this.rubber_price,
           note: this.note,
           farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
           user_id: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
+          store_in: this.store_in,
+          telstore_in: this.telstore_in
         }
-      );
-      axios
-        .post(
-          `http://localhost:3000/store_income/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09`,
-          {
-            store: this.stores,
-            tel: this.tel_stores,
-            farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
-          }
-        )
+      )
+      
         .then((response) => {
           console.log(response);
         });
@@ -263,6 +285,7 @@ export default {
         path: "/account_calendar",
       });
     },
+    
   },
 };
 </script>

@@ -27,10 +27,9 @@
       <div class="detail-income q-pa-md shadow-2">
         <div class="row">
           <div class="col">
-            <div class="row" style="font-size: 18px">เจ้าของสวน :</div>
-
+            <div class="row" style="font-size: 18px">เจ้าของสวน : {{ incomes.farm.fname }}</div>
             <div class="row q-pb-md" style="font-size: 18px">
-              สวน : {{ farms.farm_name }}
+              สวน : {{ incomes.farm.farm_name }}
             </div>
           </div>
 
@@ -60,12 +59,12 @@
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-pt-md" style="font-size: 18px">
-          ร้าน : ดาว น้ำยางสด,แผ่น
+          ร้าน : {{incomes.store_in}}
         </div>
         <div class="row" style="font-size: 18px">
           ผู้ได้รับส่วนแบ่ง : กนกวรรณ
         </div>
-        <div class="row" style="font-size: 18px">%ส่วนแบ่ง : 60-40</div>
+        <div class="row" style="font-size: 18px">%ส่วนแบ่ง : {{incomes.percen_split}}</div>
         <div class="row">
           <div class="col q-pt-md" style="font-size: 18px">รวมรายรับสุทธิ</div>
           <div class="text-right" style="font-size: 30px">
@@ -74,7 +73,7 @@
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="q-pt-md" style="font-size: 18px">
-          บันทึก : ส่วนแบ่งตามที่ตกลงกันไว้
+          บันทึก : {{incomes.note}}
         </div>
         <div class="col q-pa-md self-center">
           <div class="row">
@@ -119,7 +118,7 @@ export default {
   data() {
     return {
       incomes: {},
-      farms: {},
+     
     };
   },
   mounted() {
@@ -136,7 +135,7 @@ export default {
       );
       this.incomes = data.data;
 
-      console.log(data);
+      console.log(data.data);
     },
    
 

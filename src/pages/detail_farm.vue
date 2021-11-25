@@ -25,7 +25,7 @@
               @click="
                 $router.push({
                   name: 'edit_detail_farm',
-                  query: { id: farm.farm_id },
+                  query: { id: farm.farm_id, idu: employee[0].user_id },
                 })
               "
               round
@@ -38,18 +38,30 @@
               round
               color="deep-orange-13"
               icon="delete"
-              @click="showNotif"
+              @click="
+                DeleteEvent();
+                $router.push({
+                  name: 'myfarm',
+                  query: { id: farm.user_id },
+                });
+              "
             />
           </div>
         </div>
 
-        <div>เจ้าของสวน : {{farm.fname}} {{farm.lname}} </div>
-        <div>สวน : {{farm.farm_name}} </div>
-        <div>ที่อยู่ : {{ farm.address }} อ.{{ farm.address_district }} จ.{{
-              farm.address_province
-            }} </div>
+        <div>เจ้าของสวน : {{ farm.fname }} {{ farm.lname }}</div>
+        <div>สวน : {{ farm.farm_name }}</div>
+        <div>
+          ที่อยู่ : {{ farm.address }} อ.{{ farm.address_district }} จ.{{
+            farm.address_province
+          }}
+        </div>
+        <div>วันที่ปลูกยาง : {{ formatDate(farm.planing_date) }}</div>
+        <div>พันธุ์ยาง : {{ farm.rubber_variety.varieties }}</div>
         <div>เนื้อที่ปลูก : {{ farm.area }} ไร่</div>
-        <div v-if="nameEmployee">ผู้ดูแล : {{nameEmployee.fname}} {{nameEmployee.lname}} </div>
+        <div v-if="nameEmployee">
+          ผู้ดูแล : {{ nameEmployee.fname }} {{ nameEmployee.lname }}
+        </div>
       </div>
     </div>
 
@@ -62,7 +74,12 @@
     <div class="q-pa-md q-gutter-sm self-center">
       <div>
         <q-btn
-          @click="$router.push({ name: 'account_calendar', query:{ id:farm.farm_id}})"
+          @click="
+            $router.push({
+              name: 'account_calendar',
+              query: { id: farm.farm_id },
+            })
+          "
           unelevated
           rounded
           label="รายละเอียดบัญชี"
@@ -74,7 +91,9 @@
 
       <div>
         <q-btn
-          @click="$router.push({ name: 'calender_farm' , query:{ id:farm.farm_id}  })"
+          @click="
+            $router.push({ name: 'calender_farm', query: { id: farm.farm_id } })
+          "
           unelevated
           rounded
           label="เรียกดูตารางการทำงาน"
@@ -90,32 +109,42 @@
 <script>
 import graph_farm from "../components/graph_farm.vue";
 import axios from "axios";
+import { date } from "quasar";
 
 export default {
-
   async mounted() {
-    this.getfarm();
-    this.getemployee();
-    this.getnameEmployee();
+    await this.getfarm();
+    await this.getemployee();
+    await this.getnameEmployee();
+    //  this.DeleteEvent();
+    // await this.getrubber_var();
   },
   components: {
     graph_farm,
   },
   data() {
-    const id = { id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09" };
+    const id = { id: this.$route.query.id };
     return {
       leftDrawerOpen: false,
       model: null,
       secondModel: "graph_farm",
-      farm : {},
-      nameEmployee : [],
-      employee : [],
-      payang_user: [] ,
+      farm: {
+        rubber_variety:{}
+      },
+      nameEmployee: [],
+      employee: [],
+      payang_user: [],
       user_has_farm: [],
       id,
+      allrubber: {},
+      date: " ",
     };
   },
   methods: {
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+
     async getfarm() {
       const { data } = await axios.get(
         "http://localhost:3000/farm/" + this.$route.query.id
@@ -123,39 +152,58 @@ export default {
       this.farm = data.data;
       // console.log(data.data);
     },
-     async getemployee() {
-      const { data } = await axios.get( 
+    async getemployee() {
+      const { data } = await axios.get(
         "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
       );
       this.employee = data.data;
       // console.log(data.data);
     },
-     async getnameEmployee() {
+    async getnameEmployee() {
       const { data } = await axios.get(
-        "http://localhost:3000/payang_user/4da0b5f4-3ce8-4951-891d-d7c9ee233671"
+        "http://localhost:3000/payang_user/" + this.employee[0].user_id
       );
       this.nameEmployee = data.data;
       // console.log(data.data);
     },
-  
 
+    // async getrubber_var() {
+    //   const { data } = await axios.get(
+    //     "http://localhost:3000/rubber_varieties/"+ this.farm.rubber_varieties_id
+    //   );
+    //   this.allrubber = data.data;
 
-    showNotif() {
-      this.$q
-        .dialog({
-          title: "Confirm",
-          message: "Would you delete the data? ",
-          cancel: true,
-          persistent: true,
-          html: true,
-        })
-        .onOk(() => {
-          // console.log(">>>> OK");
-          this.$router.push({
-            path: "/Myfarm" , query: { id: farm.user_id }  , 
-          });
+    // },
+
+    DeleteEvent() {
+      axios
+        .delete("http://localhost:3000/farm/delete/" + this.$route.query.id)
+        .then((response) => {
+          // console.log(response);
         });
     },
+
+    // async DeleteEvent() {
+    //   this.$q
+    //     .dialog({
+    //       title: "Confirm",
+    //       message: "Would you delete the data? ",
+    //       cancel: true,
+    //       persistent: true,
+    //       html: true,
+    //     })
+    //     .onOk(() => {
+    //       axios.delete(
+    //         "http://localhost:3000/farm/delete/" + this.$route.query.id
+    //       );
+    //     });
+    //     this.$router.push({
+    //     path: "/myfarm",
+    //     query: {
+    //       id: farm.user_id
+    //     },
+    //   });
+    // },
   },
 };
 </script>
@@ -165,6 +213,6 @@ export default {
 <style scoped>
 .box_detail {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 </style>

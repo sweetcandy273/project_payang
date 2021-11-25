@@ -61,9 +61,7 @@
         <div class="row q-pt-md" style="font-size: 18px">
           ร้าน : {{incomes.store_in}}
         </div>
-        <div class="row" style="font-size: 18px">
-          ผู้ได้รับส่วนแบ่ง : กนกวรรณ
-        </div>
+        
         <div class="row" style="font-size: 18px">%ส่วนแบ่ง : {{incomes.percen_split}}</div>
         <div class="row">
           <div class="col q-pt-md" style="font-size: 18px">รวมรายรับสุทธิ</div>
@@ -117,7 +115,9 @@ export default {
   name: "farms",
   data() {
     return {
-      incomes: {},
+      incomes: {
+        farm:{}
+      },
      
     };
   },

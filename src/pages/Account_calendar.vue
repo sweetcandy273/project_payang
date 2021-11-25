@@ -35,13 +35,30 @@
     <div class="col font q-mx-md q-mt-md" style="font-size: 22px">
       {{ date }}
     </div>
-    <div class="q-ma-md">
-      <div :key="index" v-for="(data, index) in incomes">
-        <div class="row font q-pt-md">
-          <div class="greencircle"></div>
-          <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
-          <div class="col text-right" style="font-size: 18px">
-            {{ data.amount_net }}
+    
+    <div :key="index" v-for="(data, index) in incomes">
+      <div class="row font q-pt-md">
+        <div class="greencircle"></div>
+        <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
+        <div class="col text-right" style="font-size: 18px">
+          {{ data.amount }}
+        </div>
+      </div>
+      <div
+        class="calendar-income q-pa-md"
+        @click="
+          $router.push({
+            path: 'detail_income',
+            query: {
+              id: data.in_id,
+            },
+          })
+        "
+      >
+        <div class="row font">
+          <div class="col" style="font-size: 16px">ร้านดาว น้ำยางสด, แผ่น</div>
+          <div class="col-3 text-right" style="font-size: 16px">
+            {{ data.amount }}
           </div>
         </div>
         <div
@@ -171,23 +188,16 @@ export default {
       }
     },
     async getExpenditure() {
-      try {
-        this.$q.loading.show();
-        const { data } = await axios.get(
-          "http://localhost:3000/expenditure/listbyfarm/" + this.$route.query.id
-        );
-        this.listAllexpenditure = data.data;
-        this.date = this.formatDate(new Date());
-        const listEvent = data.data.map(data => {
-          return this.formatDate(data.date_expenditure);
-        });
-        this.events.push(...listEvent);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
-    }
+      const { data } = await axios.get(
+        "http://localhost:3000/income/listbyfarm/"+ this.$route.query.id
+      );
+      this.listAllexpenditure = data.data;
+      this.date = this.formatDate(new Date());
+      const listEvent = data.data.map((data) => {
+        return this.formatDate(data.date_expenditure);
+      });
+      this.events.push(...listEvent);
+    },
   },
   watch: {
     date(value) {

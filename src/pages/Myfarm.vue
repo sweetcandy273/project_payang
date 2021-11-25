@@ -51,7 +51,10 @@
           <div class="stylearea">{{ farm.area }} ไร่</div>
         </div>
       </div>
-      <hr width="250" />
+      <div class="q-mt-md">
+        <hr width="250" />
+      </div>
+      
     </div>
 
     <div class="add_farm text-center fixed-bottom q-pa-xl">
@@ -64,7 +67,7 @@
         @click="
           $router.push({
             name: 'add_detail_farm',
-            query: { id: $route.query.id }
+            query: { id: $route.query.id , }
           })
         "
       />

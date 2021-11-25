@@ -42,18 +42,16 @@
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-py-md">
-          <div class="col" style="font-size: 30px"> {{ expenditures.date_expenditure }}</div>
+          <div class="col-8" style="font-size: 28px">{{ expenditures.title_type }} </div>
           <div class="col text-right q-pt-md" style="font-size: 18px">
-           
+           {{ expenditures.date_expenditure }}
           </div>
         </div>
         <div class="row" style="font-size: 20px">
         ส่วน:  {{expenditures.type}}   
         </div>
-        <div class="row" style="font-size: 18px">
-        กิจกรรม:  {{ expenditures.title_type }}
-        </div>
-        <div class="text-right" style="font-size: 28px">จำนวนเงิน:  {{ expenditures.amount }}</div>
+      
+        <div class="text-right" style="font-size: 28px">{{ expenditures.amount }}</div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-pt-md" style="font-size: 18px">
           ร้าน :   {{ expenditures.store_expen }}

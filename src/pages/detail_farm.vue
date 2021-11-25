@@ -7,7 +7,7 @@
             src="../assets/close.png"
             style="width: 22px; height: 22px"
             @click="
-              $router.push({ name: 'myfarm', query: { id: farm.user_id } })
+              $router.push({ name: 'myfarm', query: { id: farm.owner } })
             "
           />
         </div>
@@ -25,7 +25,7 @@
               @click="
                 $router.push({
                   name: 'edit_detail_farm',
-                  query: { id: farm.farm_id, idu: employee[0].user_id },
+                  query: { id: farm.farm_id, idu: employee[0].owner },
                 })
               "
               round
@@ -42,7 +42,7 @@
                 DeleteFarm();
                 $router.push({
                   name: 'myfarm',
-                  query: { id: farm.user_id },
+                  query: { id: farm.owner },
                 });
               "
             />
@@ -161,7 +161,7 @@ export default {
     },
     async getnameEmployee() {
       const { data } = await axios.get(
-        "http://localhost:3000/payang_user/" + this.employee[0].user_id
+        "http://localhost:3000/payang_user/" + this.employee[0].employee
       );
       this.nameEmployee = data.data;
       // console.log(data.data);

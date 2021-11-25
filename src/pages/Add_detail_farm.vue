@@ -348,7 +348,7 @@ export default {
           this.employee.user_id,
         {
           farm_id: this.create_farm.farm_id,
-          user_id: this.employee.user_id,
+          employee: this.employee.user_id,
         }
       );
       console.log(data.data);

@@ -1,9 +1,21 @@
 <template>
   <div>
-    <!-- <q-img src="../assets/bg-starter.png" width="100%"> -->
-    <div class="text-black items-center" style="background: none">
-      <div class="q-pa-md">
-        <img class="logo" alt="Payang logo" src="../assets/payang_icon.png" />
+    <div class="q-pa-md">
+      <img
+        class="logo"
+        alt="Payang logo"
+        src="../assets/payang_icon.png"
+        style="width: 30%"
+      />
+    </div>
+
+    <div>
+      <div class="row q-pa-md text-center">
+        <div class="col">
+          <div class="text-md">วางแผนการเพาะปลูก</div>
+
+          <div class="text-lr">สวนยาง</div>
+        </div>
       </div>
 
       <div class="row q-pa-md">
@@ -15,12 +27,15 @@
             <q-img src="../assets/order.png" style="width: 50%" />
           </div>
         </div>
-        <div class="col-1 self-center">
-          <q-icon
-            @click="$router.push({ name: 'starter_intro2' })"
-            name="arrow_forward_ios"
-            size="50px"
-          ></q-icon>
+        <div class="col self-center">
+          <div>
+            <img
+              class=""
+              alt="back-right"
+              src="../assets/back-right.png"
+              style="width: 100px"
+            />
+          </div>
         </div>
       </div>
 

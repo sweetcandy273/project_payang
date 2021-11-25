@@ -1,37 +1,35 @@
 <template>
-  <div class="font">
+  <div>
     <q-header class="shadow-2">
       <q-toolbar class="text-center row">
-        <div class="col flex">
-          <img
-            src="../assets/close.png"
-            style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'detail_farm' })"
-          />
+        <div
+          class="col self-center font"
+          @click="$router.push({ name: 'Detail_farm' })"
+        >
+          <q-icon name="close" />
         </div>
 
         <div class="col-6 font header-title">ข้อมูลสวน</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
-
     <div class="q-pa-md font">
-      <q-form class="q-gutter-md">
+      <q-form @submit="onSubmit" class="q-gutter-md">
         <div>
-          เจ้าของสวน :
-          <div class="row justify-between">
+          <div class="row">
             <div class="col q-pr-md">
               <q-input
-                color="teal"
-                filled
+                v-model="fname"
                 label="ชื่อ"
-                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) || 'กรุณากรอกชื่อจริงของผู้ใช้งาน',
+                ]"
               />
             </div>
-            <div class="col">
+            <div class="col q-pr-md">
               <q-input
-                color="teal"
-                filled
+                v-model="lname"
                 label="นามสกุล"
                 :rules="[
                   (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
@@ -40,203 +38,102 @@
             </div>
           </div>
 
-          ชื่อสวน :
           <q-input
-            color="teal"
-            filled
+            v-model="farm_name"
             label="ชื่อสวน"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
-          >
-          </q-input>
+            :rules="[
+              (val) =>
+                (val && val.length > 0 && val.length == 10) ||
+                'กรุณากรอกชื่อสวน',
+            ]"
+          />
 
-          ที่อยู่ :
           <q-input
-            color="teal"
-            filled
+            v-model="address"
             label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
           />
 
-          <div class="row">
-            <div class="col q-pr-md">
-              <q-input
-                color="teal"
-                filled
-                label="เขต/อำเภอ"
-                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
-              />
-            </div>
-            <div class="col">
-              <q-input
-                color="teal"
-                filled
-                label="จังหวัด"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
-                ]"
-              />
-            </div>
-          </div>
-
-          เนื้อที่ปลูก :
+          
           <q-input
-            color="teal"
-            filled
-            label="เนื้อที่ปลูก"
-            :rules="[
-              (val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก',
-            ]"
+            v-model="arae"
+            label="เนื้อที่ปลูก(ไร่):"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกพื้นที่']"
           />
         </div>
+
+
+        
+      
+
+        
+
+          
+
+
+       
+
       </q-form>
-
-      <div>ผู้ดูแล :</div>
-      <div class="box_editeAdmin">
-        <div class="row justify-between">
-          <div class="col q-pr-md">
-            <q-input
-              color="teal"
-              filled
-              label="ชื่อ"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
-            />
-          </div>
-          <div class="col">
-            <q-input
-              color="teal"
-              filled
-              label="นามสกุล"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
-            />
-          </div>
-        </div>
-        <q-input
-          color="teal"
-          filled
-          label="เบอร์โทรศัพท์"
-          :rules="[
-            (val) =>
-              (val && val.length > 0 && val.length == 10) ||
-              'กรุณากรอกเบอร์โทรศัพท์',
-          ]"
-        >
-          <template v-slot:append>
-            <q-icon name="call" />
-          </template>
-        </q-input>
-        <q-input
-          color="teal"
-          filled
-          label="เบอร์โทรศัพท์ฉุกเฉิน"
-          :rules="[
-            (val) =>
-              (val && val.length > 0 && val.length == 10) ||
-              'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน',
-          ]"
-        >
-          <template v-slot:append>
-            <q-icon name="call" />
-          </template>
-        </q-input>
-
-        <q-input
-          color="teal"
-          filled
-          label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
-        />
-
-        <div class="row">
-          <div class="col q-pr-md">
-            <q-input
-              color="teal"
-              filled
-              label="เขต/อำเภอ"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
-            />
-          </div>
-          <div class="col">
-            <q-input
-              color="teal"
-              filled
-              label="จังหวัด"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
-            />
-          </div>
-        </div>
-
-        <div class="row justify-center">
-          <div class="q-pa-md self-center">
-            <q-btn
-              round
-              color="deep-orange-13"
-              icon="delete"
-              @click="showNotif"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="q-pa-md q-gutter-sm self-center">
-      <q-btn
-        @click="onSubmit()"
-        unelevated
-        rounded
-        label="บันทึก"
-        class="shadow-2 text-white"
-      />
     </div>
   </div>
 </template>
 
+
+
+
 <script>
-import axios from "axios";
+import Vue from "vue";
+import VueCompositionAPI from "@vue/composition-api";
+
+Vue.use(VueCompositionAPI);
+import { ref } from "@vue/composition-api";
+
 export default {
+  setup() {
+    return {
+      fname: ref("ชนิกานต์"),
+      lname: ref("ปิยะพงษ์"),
+      farm_name: ref("สวนภูเก็ต"),
+      arae: ref("20"),
+      address: ref("112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ "),
+      address_district: ref("เมืองภูเก็ต"),
+      address_province: ref("ภูเก็ต"),
+      fname_admin: ref(""),
+      lname_admin: ref(""),
+      number_admin: ref(""),
+      number_am_admin: ref(""),
+      address_province_admin: ref(""),
+      selectshare: false,
+    };
+  },
   methods: {
     onSubmit() {
-      
-      // const { data } = await axios.put(
-      //   "http://localhost:3000/farm/update/" + this.$route.query.id,
-      //   {
-      //     fname: this.payang_user.fname,
-      //     lname: this.payang_user.lname,
-      //     phone_number: this.payang_user.phone_number,
-      //     email: this.payang_user.email,
-      //     address: this.payang_user.address,
-      //     address_district: this.payang_user.address_district,
-      //     address_province: this.payang_user.address_province,
-      //     zip_code: this.payang_user.zip_code,
-      //   }
-      // );
-      // this.payang_user = data.data;
-      // console.log(data.data);
-
-      this.$router.push({
-        path: "/home",
-      });
+      console.log(this.fname);
     },
   },
 };
 </script>
 
 
-
-<style scoped src="../css/home.css">
-</style>
-<style scoped>
-.box_editeAdmin {
-  background-color: #e9e9e9;
-  border-radius: 15px;
-  padding-top: 15px;
-  padding-right: 15px;
-  padding-bottom: 5px;
-  padding-left: 15px;
+<style>
+.bg {
+  background: #dae5de;
 }
-</style>
-<style scoped>
-.box_detail {
-  background-color: #acd6c1;
-  border-radius: 15px;
+
+.q-toolbar {
+  background-color: #4e7971;
+}
+
+.header-title {
+  font-size: 25px;
+}
+
+.font {
+  font-family: "Kanit", sans-serif;
+}
+
+.q-btn {
+  width: 100%;
+  background-color: #4e7971;
 }
 </style>

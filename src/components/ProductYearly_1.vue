@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="font" style="font-size: 30px">กรกฎาคม</div>
+    <div class="font" style="font-size: 30px">2021</div>
     <div class="row font q-px-md seft-center text-center">
       <div class="col-2 seft-center">
         <img
@@ -10,23 +10,15 @@
           style="width: 50px"
         />
       </div>
-      <div class="col" >
-        <div style="font-size: 20px;">น้ำยางสด</div>
-        <q-img src="../assets/rubber-cup.png" style="">
-          <div class="absolute-full flex flex-center text-black bg-product-all">
-            0.00
-          </div>
-        </q-img>
+      <div class="col">
+        <div>น้ำยางสด</div>
+        <div class="product-all">0.00</div>
 
         <div>กิโลกรัม</div>
       </div>
       <div class="col">
-        <div style="font-size: 20px;">รายรับ</div>
-        <q-img src="../assets/money.png" style="">
-          <div class="absolute-full flex flex-center text-black bg-product-all">
-            0.00
-          </div>
-        </q-img>
+        <div>รายรับ</div>
+        <div class="product-all">0.00</div>
         <div>บาท</div>
       </div>
       <div class="col-2 seft-center">
@@ -39,11 +31,11 @@
       </div>
     </div>
     <div class="q-pa-md font">
-      <div class="account-all q-pa-md shadow-2">
+      <div class="account-all-yearly q-pa-md shadow-2">
         <div class="row">
           <div class="col-10">
             <div style="font-size: 25px">สรุปบัญชีรวมทั้งหมด</div>
-            <div style="font-size: 22px">ประจำเดือน กรกฎาคม</div>
+            <div style="font-size: 20px">ประจำปี</div>
           </div>
           <div class="col">
             <div>
@@ -57,11 +49,22 @@
             <div>บัญชี</div>
           </div>
         </div>
-
-        <Doughnut-chart
-          :chart-data="datacollection"
-          class="q-pa-md chart"
-        ></Doughnut-chart>
+        <div>
+          <!-- <div style="font-size: 25px">2021</div> -->
+          <div id="app">
+            <div id="chart-container">
+              <fusioncharts
+             
+                :type="type"
+                :width="width"
+                :height="height"
+                :dataformat="dataFormat"
+                :dataSource="dataSource"
+              >
+              </fusioncharts>
+            </div>
+          </div>
+        </div>
 
         <div class="row items-end">
           <div class="col text-left" style="font-size: 20px; color: #06be3b">
@@ -96,50 +99,63 @@
             <div>บ.</div>
           </div>
         </div>
-
-        <q-separator
-          color="#4e7971"
-          style="
-            height: 2px;
-            border-width: 0;
-            color: #4e7971;
-            background-color: #4e7971;
-          "
-          inset
-        />
+        <div>
+          <hr
+            style="
+              height: 2px;
+              border-width: 0;
+              color: #4e7971;
+              background-color: #4e7971;
+            "
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
-import DoughnutChart from "../components/Chart.js";
+import Vue from "vue";
+import VueFusionCharts from "vue-fusioncharts";
+import FusionCharts from "fusioncharts";
+import Doughnut2d from "fusioncharts/fusioncharts.charts";
+import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
+
+Vue.use(VueFusionCharts, FusionCharts, Doughnut2d, FusionTheme);
+
+const chartData = [
+  {
+    label: "รายรับ",
+    value: "100",
+  },
+  {
+    label: "รายจ่าย",
+    value: "20",
+  },
+];
+const dataSource = {
+  chart: {
+    showpercentvalues: "1",
+    defaultcenterlabel: "2021",
+    aligncaptionwithcanvas: "0",
+    captionpadding: "0",
+    decimals: "1",
+  
+    theme: "fusion",
+  },
+  data: chartData,
+};
 
 export default {
-  components: { DoughnutChart },
+  name: "app",
   data() {
     return {
-      datacollection: null,
-      // loaded: false,
+      type: "doughnut2d",
+
+      width: "100%",
+      height: "300",
+      dataFormat: "json",
+      dataSource,
     };
-  },
-  mounted() {
-    this.fillData();
-  },
-  methods: {
-    fillData() {
-      this.datacollection = {
-        labels: ["รายรับ", "รายจ่าย"],
-        // centerlabel: 2021,
-        datasets: [
-          {
-            label: ["รายรับ", "รายจ่าย"],
-            backgroundColor: ["#06BE3B", "#B01717"],
-            data: [20, 5],
-          },
-        ],
-      };
-    },
   },
 };
 </script>
@@ -151,21 +167,18 @@ export default {
 
 .product-all {
   font-size: 25px;
-  overflow: hidden;
-  position: relative;
+
+  /* width: 114px;
+  height: 90px; */
+  background-size: 100%;
+
+  background-repeat: none;
+  /* background-image: url("../img/rubber-cup.png"); */
 }
 
-.account-all {
+.account-all-yearly {
   background-color: #c5dba8;
   border-radius: 20px;
 }
 
-.chart {
-  /* height: 300px; */
-  width: 310px;
-}
-.bg-product-all {
-  background: none;
-  font-size: 25px;
-}
 </style>

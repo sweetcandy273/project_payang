@@ -21,7 +21,7 @@
           v-model="date"
           color="green"
           :events="events"
-          :event-color="(date) => (date[9] % 2 === 0 ? 'teal' : 'green')"
+          :event-color="(date) => (date[9] % 2 === 0 ? 'red' : 'red')"
         />
       </div>
     </q-splitter>
@@ -29,85 +29,86 @@
     <div class="col font q-mx-md q-mt-md" style="font-size: 22px">
       {{ date }}
     </div>
-    <div :key="index" v-for="(data, index) in incomes">
-      <div class="row font q-pt-md">
-        <div class="greencircle"></div>
-        <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
-        <div class="col text-right" style="font-size: 18px">
-          {{ data.amount_net }}
-        </div>
-      </div>
-      <div
-        class="calendar-income q-pa-md"
-        @click="
-          $router.push({
-            path: 'detail_income',
-            query: {
-              id: data.in_id,
-            },
-          })
-        "
-      >
-        <div class="row font">
-          <div class="col" style="font-size: 16px">
-            ร้าน: {{ data.store_in }}
+    <div class="q-ma-md">
+      <div :key="index" v-for="(data, index) in incomes">
+        <div class="row font q-pt-md">
+          <div class="greencircle"></div>
+          <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
+          <div class="col text-right" style="font-size: 18px">
+            {{ data.amount_net }}
           </div>
         </div>
-        <div class="row font" style="font-size: 16px">
-          น้ำยางสด: {{ data.weight }} กก. เปอร์เซ็น: {{ data.percen_rubber }}%
-          แห้ง: {{ data.dry_rubber }}
-        </div>
-        <div class="row font" style="font-size: 16px">
-          ราคายาง: {{ data.rubber_price }} บ./กก.
-        </div>
-        <div class="row font">
-          <div class="col" style="font-size: 16px">
-          ส่วนแบ่ง: {{ data.percen_split }}
+        <div
+          class="calendar-income q-pa-md"
+          @click="
+            $router.push({
+              path: 'detail_income',
+              query: {
+                id: data.in_id,
+              },
+            })
+          "
+        >
+          <div class="row font">
+            <div class="col" style="font-size: 16px">
+              ร้าน: {{ data.store_in }}
+            </div>
           </div>
-        </div>
-        <div class="row font" style="font-size: 16px">
-          จำนวนเงินทั้งหมด: {{ data.amount }}
+          <div class="row font" style="font-size: 16px">
+            น้ำยางสด: {{ data.weight }} กก. เปอร์เซ็น: {{ data.percen_rubber }}%
+            แห้ง: {{ data.dry_rubber }}
+          </div>
+          <div class="row font" style="font-size: 16px">
+            ราคายาง: {{ data.rubber_price }} บ./กก.
+          </div>
+          <div class="row font">
+            <div class="col" style="font-size: 16px">
+              ส่วนแบ่ง: {{ data.percen_split }}
+            </div>
+          </div>
+          <div class="row font" style="font-size: 16px">
+            จำนวนเงินทั้งหมด: {{ data.amount }}
+          </div>
         </div>
       </div>
     </div>
-
     <div :key="index" v-for="(data, index) in expenditures">
-      <div class="row font q-pt-md">
-        <div class="redcircle"></div>
-        <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>
-        <div class="col text-right" style="font-size: 18px">
-          {{ data.amount }}
-        </div>
-      </div>
-      <div
-        class="calendar-expenditure q-pa-md"
-        @click="
-          $router.push({
-            path: 'detail_expenditure',
-            query: {
-              id: data.expen_id,
-            },
-          })
-        "
-      >
-        <div class="row font">
-          <div class="col" style="font-size: 16px">
-            ร้าน: {{ data.store_expen }}
-          </div>
-          <div class="col-3 text-right" style="font-size: 16px">
+      <div class="q-ma-md">
+        <div class="row font q-pt-md">
+          <div class="redcircle"></div>
+          <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>
+          <div class="col text-right" style="font-size: 18px">
             {{ data.amount }}
           </div>
         </div>
-        <div class="row font" style="font-size: 16px">
-          ส่วน: {{ data.type }}
+        <div
+          class="calendar-expenditure q-pa-md"
+          @click="
+            $router.push({
+              path: 'detail_expenditure',
+              query: {
+                id: data.expen_id,
+              },
+            })
+          "
+        >
+          <div class="row font">
+            <div class="col" style="font-size: 16px">
+              ร้าน: {{ data.store_expen }}
+            </div>
+            <div class="col-3 text-right" style="font-size: 16px">
+              {{ data.amount }}
+            </div>
+          </div>
+          <div class="row font" style="font-size: 16px">
+            ส่วน: {{ data.type }}
+          </div>
+          <div class="row font" style="font-size: 16px">
+            กิจกรรม: {{ data.title_type }}
+          </div>
         </div>
-        <div class="row font" style="font-size: 16px">
-          กิจกรรม: {{ data.title_type }}
-        </div>
-        <div class="row font" style="font-size: 16px">กนกวรรณ</div>
       </div>
     </div>
-
     <div class="add-account text-right fixed-bottom q-pa-md">
       <q-btn
         unelevated

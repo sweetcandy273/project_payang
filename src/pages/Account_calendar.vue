@@ -29,6 +29,7 @@
     <div class="col font q-mx-md q-mt-md" style="font-size: 22px">
       {{ date }}
     </div>
+    
     <div :key="index" v-for="(data, index) in incomes">
       <div class="row font q-pt-md">
         <div class="greencircle"></div>
@@ -156,7 +157,7 @@ export default {
     },
     async getExpenditure() {
       const { data } = await axios.get(
-        "http://localhost:3000/listbyfarm/a07f9bfa-e8b2-4125-8036-acf3d7048e09"
+        "http://localhost:3000/income/listbyfarm/"+ this.$route.query.id
       );
       this.listAllexpenditure = data.data;
       this.date = this.formatDate(new Date());

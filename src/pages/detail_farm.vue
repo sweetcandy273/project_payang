@@ -1,15 +1,16 @@
 <template>
-  <div>
+  <div class="font" v-if="farm">
     <q-header class="shadow-2">
       <q-toolbar class="text-center row">
-        <div
-          class="col self-center font"
-          @click="$router.push({ name: 'myfarm' })"
-        >
-          <q-icon name="close" />
+        <div class="col flex">
+          <img
+            src="../assets/close.png"
+            style="width: 22px; height: 22px"
+            @click="$router.push({ name: 'myfarm', query: { id: farm.owner } })"
+          />
         </div>
 
-        <div class="col-6 font header-title">ข้อมูลสวน</div>
+        <div class="col-6 font header-title">ข้อมูลสวน </div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -18,69 +19,93 @@
         <div>
           <div class="q-pa-md q-gutter-sm">
 
-            <div class="back-gd .col-auto">
-
-            
-              
-                <div class="row justify-end" >
-                <div
-                  class=".col-auto "
-                  @click="$router.push({ name: 'Edit_detail_farm' })"
-                >
-                  <q-btn 
-                  size="15px"
-                  round color="amber-8" 
-                  icon="edit" />
-                </div>
-                <div class=".col-auto "
-                 @click="$router.push({ name: 'noti' })"
-                >
-                  <q-btn 
-                  size="15px"
-                  round color="red-6" 
-                  icon="delete" />
-                </div>
-              </div>
-
-              
-              
-            
-
-            <div class="greeninfor">
-              นางสาวสวย นามสกุล สวยที่สุด
-              สวน : สวนภูเก็ต
-              ที่อยู่ : 112/1 ซอยหล่อโรง ถนนระนอง
-              ตำบลตลาดเหนือ อำเภอเมืองภูเก็ต
-              เนื้อที่ปลูก : 1.10000 ไร่
-              ผู้ดูแล : กนกวรรณ น้ำสงวน
-            </div>
-
-            </div>
-
-
-            <div>
-              <q-btn
-                unelevated
-                rounded
-                label="รายละเอียดบัญชี"
-                type="submit"
-                color="green-2"
-                class="shadow-2 text-black"
-              />
-            </div>
-            <div>
-              <q-btn
-                unelevated
-                rounded
-                label="เรียกดูตารางการทำงาน"
-                type="submit"
-                color="light-blue-3"
-                class="shadow-2 text-black"
-              />
-            </div>
+    <div class="q-pa-md self-center">
+      <div class="box_detail q-pa-md self-center">
+        <div class="row justify-end">
+          <div class="column">
+            <q-btn
+              @click="
+                $router.push({
+                  name: 'edit_detail_farm',
+                  query: { id: farm.farm_id, idu: employee[0].owner },
+                })
+              "
+              round
+              color="orange-4"
+              icon="edit"
+            />
+          </div>
+          <div class="column">
+            <q-btn
+              round
+              color="deep-orange-13"
+              icon="delete"
+              @click="
+                DeleteFarm();
+                $router.push({
+                  name: 'myfarm',
+                  query: { id: farm.owner },
+                });
+              "
+            />
           </div>
         </div>
-      </q-form>
+
+        <div>เจ้าของสวน : {{ farm.fname }} {{ farm.lname }}</div>
+        <div>สวน : {{ farm.farm_name }}</div>
+        <div>
+          ที่อยู่ : {{ farm.address }} อ.{{ farm.address_district }} จ.{{
+            farm.address_province
+          }}
+        </div>
+        <div>วันที่ปลูกยาง : {{ formatDate(farm.planing_date) }}</div>
+        <div>พันธุ์ยาง : {{ farm.rubber_variety.varieties }}</div>
+        <div>เนื้อที่ปลูก : {{ farm.area }} ไร่</div>
+        <div v-if="nameEmployee">
+          ผู้ดูแล : {{ nameEmployee.fname }} {{ nameEmployee.lname }}
+        </div>
+      </div>
+    </div>
+
+              
+              
+            
+
+    <div v-if="secondModel == 'graph_farm'" class="text-center" id="graph_farm">
+      <graph_farm :item="id" />
+    </div>
+
+    <div class="q-pa-md q-gutter-sm self-center">
+      <div>
+        <q-btn
+          @click="
+            $router.push({
+              name: 'account_calendar',
+              query: { id: farm.farm_id, owner: farm.owner },
+            })
+          "
+          unelevated
+          rounded
+          label="รายละเอียดบัญชี"
+          type="submit"
+          class="shadow-2 text-white"
+          color="green-4"
+        />
+      </div>
+
+      <div>
+        <q-btn
+          @click="
+            $router.push({ name: 'calender_farm', query: { id: farm.farm_id } })
+          "
+          unelevated
+          rounded
+          label="เรียกดูตารางการทำงาน"
+          type="submit"
+          class="shadow-2 text-white"
+          color="light-blue-6"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -89,64 +114,107 @@
 
 
 <script>
-import Vue from "vue";
-import VueCompositionAPI from "@vue/composition-api";
-
-Vue.use(VueCompositionAPI);
-import { ref } from "@vue/composition-api";
+import graph_farm from "../components/graph_farm.vue";
+import axios from "axios";
+import { date } from "quasar";
 
 export default {
-  setup() {
+  async mounted() {
+    await this.getfarm();
+    await this.getemployee();
+    await this.getnameEmployee();
+    // await this.deletemp();
+    
+    //  this.DeleteEvent();
+    // await this.getrubber_var();
+  },
+  components: {
+    graph_farm,
+  },
+  data() {
+    const id = { id: this.$route.query.id };
     return {
-      fname: ref("ชนิกานต์"),
-      lname: ref("ปิยะพงษ์"),
-      farm_name: ref("สวนภูเก็ต"),
-      arae: ref("20"),
-      address: ref("112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ "),
-      address_district: ref("เมืองภูเก็ต"),
-      address_province: ref("ภูเก็ต"),
-      fname_admin: ref(""),
-      lname_admin: ref(""),
-      number_admin: ref(""),
-      number_am_admin: ref(""),
-      address_province_admin: ref(""),
-      selectshare: false,
+      leftDrawerOpen: false,
+      model: null,
+      secondModel: "graph_farm",
+      farm: {
+        rubber_variety: {},
+      },
+      nameEmployee: [],
+      employee: [],
+      payang_user: [],
+      user_has_farm: [],
+      id,
+      allrubber: {},
+      date: " ",
     };
   },
   methods: {
-    onSubmit() {
-      console.log(this.fname);
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+
+    async getfarm() {
+      const { data } = await axios.get(
+        "http://localhost:3000/farm/" + this.$route.query.id
+      );
+      this.farm = data.data;
+      // console.log(data.data);
+    },
+    async getemployee() {
+      const { data } = await axios.get(
+        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
+      );
+      this.employee = data.data;
+      // console.log(data.data);
+    },
+    async getnameEmployee() {
+      const { data } = await axios.get(
+        "http://localhost:3000/payang_user/" + this.employee[0].employee
+      );
+      this.nameEmployee = data.data;
+      // console.log(employee[0].employee);
+    },
+
+    // async deletemp() {
+    //   axios.delete(
+    //     "http://localhost:3000/payang_user/delete/" + this.employee[0].employee
+    //   );
+    // },
+    async DeleteFarm() {
+      axios.delete("http://localhost:3000/farm/delete/" + this.employee[0].farm_id);
+      // await this.deletemp();
     },
   },
+
+  // async DeleteEvent() {
+  //   this.$q
+  //     .dialog({
+  //       title: "Confirm",
+  //       message: "Would you delete the data? ",
+  //       cancel: true,
+  //       persistent: true,
+  //       html: true,
+  //     })
+  //     .onOk(() => {
+  //       axios.delete(
+  //         "http://localhost:3000/farm/delete/" + this.$route.query.id
+  //       );
+  //     });
+  //     this.$router.push({
+  //     path: "/myfarm",
+  //     query: {
+  //       id: farm.user_id
+  //     },
+  //   });
+  // },
 };
 </script>
+<style scoped src="../css/home.css"></style>
 
-
-<style>
-.bg {
-  background: #dae5de;
+<style scoped>
+.box_detail {
+  background-color: white;
+  border-radius: 20px;
 }
-
-.q-toolbar {
-  background-color: #4e7971;
-}
-
-.header-title {
-  font-size: 25px;
-}
-
-.font {
-  font-family: "Kanit", sans-serif;
-}
-
-.q-btn {
-  width: 100%;
-  background-color: #4e7971;
-}
-.back-gd{
-  background-color: #79BD9A;
-  padding: 13px;
-  border-radius: 25px;
-}
-
 </style>

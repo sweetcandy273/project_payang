@@ -6,7 +6,7 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'detail_farm' })"
+            @click="$router.push({ name: 'detail_farm' , query: { id: $route.query.id } })"
           />
         </div>
 
@@ -115,7 +115,7 @@
         round
         style="background: #4e7971; color: white; width: 50px; height: 50px"
         icon="add"
-        @click="$router.push({ name: 'add_income' })"
+        @click="$router.push({ name: 'add_income' , query: { id: $route.query.id } })"
       />
     </div>
   </q-page>

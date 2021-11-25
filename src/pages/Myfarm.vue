@@ -49,17 +49,27 @@
                 1 ไร่
             </div>
         </div>
-    </div> 
+      </div>
+      <div class="q-mt-md">
+        <hr width="250" />
+      </div>
+      
     </div>
-    
-    
-       <div class="row justify-center">
-       <div class=".col-auto" 
-        @click="$router.push({ name: 'Add_detail_farm' })"> 
-      <q-btn 
-      size="15px"
-      round color="teal-9" 
-      icon="add" />  
+
+    <div class="add_farm text-center fixed-bottom q-pa-xl">
+      <!-- ส่ง params user_id -->
+      <q-btn
+        unelevated
+        round
+        style="background: #4e7971; color: white; width: 50px; height: 50px"
+        icon="add"
+        @click="
+          $router.push({
+            name: 'add_detail_farm',
+            query: { id: $route.query.id , }
+          })
+        "
+      />
     </div>
     </div>
    
@@ -68,10 +78,19 @@
 
     
 
-</div>
-
-</template>
-
+  methods: {
+    async getlistfarm() {
+      const { data } = await axios.get(
+        "http://localhost:3000/farm/list/" + this.$route.query.id
+      );
+      this.farms = data.data;
+      // console.log(data.data);
+    },
+     
+ 
+ 
+  }
+};
 </script>
 
 <style>

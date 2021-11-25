@@ -1,21 +1,8 @@
 <template>
   <div>
-    <div class="q-pa-md">
-      <img
-        class="logo"
-        alt="Payang logo"
-        src="../assets/payang_icon.png"
-        style="width: 30%"
-      />
-    </div>
-
-    <div>
-      <div class="row q-pa-md text-center">
-        <div class="col">
-          <div class="text-md">วางแผนการเพาะปลูก</div>
-
-          <div class="text-lr">สวนยาง</div>
-        </div>
+    <div class="text-black items-center" style="background: none">
+      <div class="q-pa-md">
+        <img class="logo" alt="Payang logo" src="../assets/payang_icon.png" />
       </div>
 
       <div class="row q-pa-md">
@@ -43,12 +30,9 @@
         <router-link to="/login" class="text-black">ข้าม ></router-link>
       </div>
     </div>
-    <!-- </q-img> -->
   </div>
 </template>
 
-<script>
-</script>
+<script></script>
 
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>

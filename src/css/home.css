@@ -26,8 +26,26 @@
     font-size: 25px;
 }
 
-.q-pa-md{
-    text-align: center;
+.font{
+    font-family: 'Kanit', sans-serif;
+
+}
+
+.q-btn {
+    height: 45px;
+    width: 100%;
+    background-color: #4e7971;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 30%;
+}
+
+.payang {
+    
+    font-size: 25px;
 }
 
 .font{

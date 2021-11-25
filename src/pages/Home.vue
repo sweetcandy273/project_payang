@@ -1,18 +1,7 @@
 <template>
   <div>
     <q-header class="shadow-2">
-      <!-- <q-toolbar>
-        <q-space></q-space>
-        <q-btn flat round dense icon="search" class="q-mr-xs" />
-        <q-btn flat round dense icon="group_add" />
-      </q-toolbar> -->
-      <q-toolbar class="text-center row">
-        <!-- <div
-          class="col self-center font"
-          @click="$router.push({ name: 'setting' })"
-        >
-          ตั้งค่า
-        </div> -->
+      <q-toolbar class="row flex">
         <div
           class="col self-center font"
           @click="leftDrawerOpen = !leftDrawerOpen"
@@ -47,7 +36,14 @@
             alt=""
             src="../assets/pen.png"
             style="width: 30px"
-            @click="$router.push({ name: 'edit_userinformation' })"
+            @click="
+              $router.push({
+                name: 'edit_userinformation',
+                query: {
+                  id: payang_user.user_id
+                }
+              })
+            "
           />
         </div>
       </q-toolbar>
@@ -70,7 +66,23 @@
         </div>
         <div>payang01@gmail.com</div>
         <div><strong>ที่อยู่</strong></div>
-        <div>112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ อำเภอเมืองภูเก็ต จังหวัดภูเก็ต 83000</div>
+        <div>
+          {{ payang_user.address }} อ.{{ payang_user.address_district }} จ.{{
+            payang_user.address_province
+          }}
+          {{ payang_user.zip_code }}
+        </div>
+        <div class="row q-mt-xl">
+          <div class="col text-left"><strong>รหัสผ่าน</strong></div>
+          <div class="col text-right">
+            <q-btn
+              flat
+              style="color: #FFFFFF"
+              label="เปลี่ยน"
+              @click="changePassword()"
+            />
+          </div>
+        </div>
       </div>
 
       <div class="q-pa-md font text-center">
@@ -91,6 +103,7 @@
         <div class="row text-center">
           <div class="col font" style="font-size: 25px">
             Payang App
+            <div hidden>{{ user_id }}</div>
             <q-icon name="info" style="color: #5db075">
               <q-popup-proxy :offset="[10, 10]">
                 <q-banner class="bg-while font">
@@ -151,14 +164,24 @@
           ]"
         />
       </div>
-    </div>
-
-    <div>
-      <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
-        <ProductYearly />
+      <div v-if="secondModel == ''" class="text-center font">
+        เลือกรูปแบบการดูผลผลิต
+        <div style="font-size:20px">
+          เลือกดูรายรับ รายจ่าย กำไร และผลผลิตเป็นรายปีหรือรายเดือน
+        </div>
+        <div class="q-mt-lg">
+          <q-img src="../assets/forest.png" width="40%"> </q-img>
+        </div>
       </div>
-      <div v-else class="text-center">
-        <ProductMonthly />
+      <div v-else-if="secondModel == 'yearly'" id="yearly">
+        <ProductYearly :item="id" />
+      </div>
+      <div
+        v-else-if="secondModel == 'monthly'"
+        id="monthly"
+        class="text-center"
+      >
+        <ProductMonthly :item="id" />
       </div>
     </div>
   </div>
@@ -171,26 +194,126 @@
 
 import ProductYearly from "../components/ProductYearly.vue";
 import ProductMonthly from "../components/ProductMonthly.vue";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import { getAuth, signOut, deleteUser } from "firebase/auth";
 
 export default {
-  // name: "yearly",
   components: {
     ProductYearly,
     ProductMonthly,
   },
+  computed: {
+    user_id() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.currentId = user.uid;
+          this.id = { id: user.uid };
+        }
+      });
+
+      this.currentId = this.$route.query.id;
+      this.id = { id: this.$route.query.id };
+
+      return this.$route.query.id;
+    }
+  },
+
+  watch: {
+    currentId(val) {
+      if (val) {
+        this.getUser();
+      }
+    }
+  },
 
   data() {
     return {
+      currentId: "",
+
+      id: { id: this.$route.query.id },
+      payang_user: [],
+
       leftDrawerOpen: false,
       model: null,
-      secondModel: "yearly",
+      secondModel: ""
     };
   },
+
   methods: {
-    toggle(data) {
-      // console.log(data);
+    async getUser() {
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          "/payang_user/" + this.currentId
+        );
+        this.payang_user = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
-  },
+
+    changePassword() {
+      firebase
+        .auth()
+        .sendPasswordResetEmail(this.payang_user.email)
+        .then(() => {
+          alert("Email สำหรับการเปลี่ยนรหัสผ่านได้ถูกส่งไปแล้ว");
+          this.$router.push({
+            name: "login"
+          });
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          if (errorCode == "auth/invalid-email") {
+            alert("Email ไม่ถูกต้องตามหลัก");
+          } else if (errorCode == "auth/user-not-found") {
+            alert("ไม่มีข้อมูล Email ในระบบ");
+          }
+        });
+    },
+    confirm() {
+      this.$q
+        .dialog({
+          title: "ยืนยันการลบบัญชีผู้ใช้",
+          message:
+            'ระบบจะทำการลบข้อมูลเกี่ยวกับบัญชีผู้ใช้นี้ทั้งหมด <span class="text-red font"><strong>หากยืนยันการลบบัญชีผู้ใช้แล้ว ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
+          cancel: true,
+          persistent: true,
+          html: true
+        })
+        .onOk(() => {
+          const auth = getAuth();
+          const user = auth.currentUser;
+
+          deleteUser(user)
+            .then(() => {
+              this.$router.push({
+                name: "starter"
+              });
+            })
+            .catch(error => {
+              alert("พบปัญหาระหว่างการกระทำ:" + error);
+            });
+        })
+
+        .onCancel(() => {})
+        .onDismiss(() => {});
+    },
+    logout() {
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          // this.$forceUpdate();
+          this.$router.push({
+            name: "login"
+          });
+        })
+        .catch(err => alert(err.message));
+    }
+  }
 };
 </script>
 

@@ -1,23 +1,15 @@
 <template>
   <div>
     <q-header class="shadow-2">
-      <!-- <q-toolbar>
-        <q-space></q-space>
-        <q-btn flat round dense icon="search" class="q-mr-xs" />
-        <q-btn flat round dense icon="group_add" />
-      </q-toolbar> -->
-      <q-toolbar class="text-center row">
-        <!-- <div
-          class="col self-center font"
-          @click="$router.push({ name: 'setting' })"
-        >
-          ตั้งค่า
-        </div> -->
-        <div
-          class="col self-center font"
-          @click="$router.push({ name: 'home' })"
-        >
-          กลับ
+      <q-toolbar class="row">
+        <div class="col flex">
+          <img
+            src="../assets/close.png"
+            style="width: 22px; height: 22px"
+            @click="
+              $router.push({ name: 'home', query: { id: payang_user.user_id } })
+            "
+          />
         </div>
 
         <div class="col-6 font header-title">ข้อมูลผู้ใช้</div>
@@ -34,19 +26,14 @@
               <q-input
                 v-model="fname"
                 label="ชื่อ"
-                :rules="[
-                  (val) =>
-                    (val && val.length > 0) || 'กรุณากรอกชื่อจริงของผู้ใช้งาน',
-                ]"
+                :rules="[val => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
               />
             </div>
             <div class="col q-pr-md">
               <q-input
                 v-model="lname"
                 label="นามสกุล"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
-                ]"
+                :rules="[val => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
               />
             </div>
           </div>
@@ -55,20 +42,22 @@
             v-model="phone_number"
             label="เบอร์โทรศัพท์"
             :rules="[
-              (val) =>
+              val =>
                 (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์',
+                'กรุณากรอกเบอร์โทรศัพท์'
             ]"
           />
           <q-input
             v-model="email"
             label="อีเมล"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอีเมล']"
-          />
+            :rules="[val => (val && val.length > 0) || 'กรุณากรอกอีเมล']"
+          >
+            <template v-slot:append> @ </template>
+          </q-input>
           <q-input
             v-model="address"
             label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
+            :rules="[val => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
           />
 
           <div class="row">
@@ -76,18 +65,14 @@
               <q-input
                 v-model="address_district"
                 label="เขต/อำเภอ"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกเขต/อำเภอ',
-                ]"
+                :rules="[val => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
               />
             </div>
             <div class="col q-pr-md">
               <q-input
                 v-model="address_province"
                 label="จังหวัด"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
-                ]"
+                :rules="[val => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
               />
             </div>
           </div>
@@ -95,9 +80,7 @@
           <q-input
             v-model="zip_code"
             label="รหัสไปรษณีย์ "
-            :rules="[
-              (val) => (val && val.length > 0) || 'กรุณากรอกรหัสไปรษณีย์',
-            ]"
+            :rules="[val => (val && val.length > 0) || 'กรุณากรอกรหัสไปรษณีย์']"
           />
         </div>
 
@@ -126,44 +109,34 @@ import { ref } from "@vue/composition-api";
 export default {
   setup() {
     return {
-      fname: ref("ชนิกานต์"),
-      lname: ref("ปิยะพงษ์"),
-      phone_number: ref("0812222222"),
-      email: ref("payang01@gmail.com"),
-      address: ref("112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ "),
-      address_district: ref("เมืองภูเก็ต"),
-      address_province: ref("ภูเก็ต"),
-      zip_code: ref("83000"),
+      payang_user: []
     };
   },
   methods: {
-    onSubmit() {
-      //บันทึกข้อมูลลง database ใช้ this.ตัวแปร น้าาา
-      console.log(this.fname);
-    },
-  },
+    async onSubmit() {
+      const { data } = await axios.put(
+        "http://localhost:3000/payang_user/update/" + this.$route.query.id,
+        {
+          fname: this.payang_user.fname,
+          lname: this.payang_user.lname,
+          phone_number: this.payang_user.phone_number,
+          email: this.payang_user.email,
+          address: this.payang_user.address,
+          address_district: this.payang_user.address_district,
+          address_province: this.payang_user.address_province,
+          zip_code: this.payang_user.zip_code
+        }
+      );
+      this.payang_user = data.data;
+      // console.log(data.data);
+
+      this.$router.push({
+        path: "/home",
+        query: { id: this.payang_user.user_id }
+      });
+    }
+  }
 };
 </script>
 
-<style>
-.bg {
-  background: #dae5de;
-}
-
-.q-toolbar {
-  background-color: #4e7971;
-}
-
-.header-title {
-  font-size: 25px;
-}
-
-.font {
-  font-family: "Kanit", sans-serif;
-}
-
-.q-btn {
-  width: 100%;
-  background-color: #4e7971;
-}
-</style>
+<style scoped src="../css/home.css"></style>

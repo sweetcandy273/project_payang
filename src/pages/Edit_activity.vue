@@ -55,21 +55,15 @@
           </template>
         </q-input>
       </div>
-            <div class="q-mt-lg text-center " >
-              <q-btn
-              round
-              style="background: #4e7971; color: white; width: 50px; height: 50px"
-              color="deep-orange-13"
-              icon="delete"
-              @click="
-                DeleteEvent();
-                $router.push({
-                  name: 'myfarm',
-                  query: { id: farm.user_id },
-                });
-              "
-            />
-         </div>
+      <div class="q-mt-lg text-center">
+        <q-btn
+          round
+          style="background: #4e7971; color: white; width: 50px; height: 50px"
+          color="deep-orange-13"
+          icon="delete"
+          @click="DeleteEven()"
+        />
+      </div>
 
       <div class="add-account self-center fixed-bottom q-pa-md">
         <q-btn
@@ -112,13 +106,44 @@ export default {
       );
 
       this.activity_in_farms = data.data;
-      this.activity_in_farms.date = this.formatDate(this.activity_in_farms.date);
+      this.activity_in_farms.date = this.formatDate(
+      this.activity_in_farms.date
+      );
+    },
+
+    deletefunc() {
+      axios.delete(
+        "http://localhost:3000/activity_in_farm/delete/" + this.$route.query.ida
+      );
+      this.$router.push({
+        name: "calender_farm",
+        query: { id: this.$route.query.idf },
+      });
+    },
+
+    DeleteEven() {
+      this.$q
+        .dialog({
+          title: "ยืนยันการลบกิจกรรม",
+          message:
+            'ระบบจะทำการลบข้อมูลกิจกรรม <span class="text-red font"><strong>หากยืนยันการลบข้อมูลกิจกรรม ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
+          cancel: true,
+          persistent: true,
+          html: true,
+        })
+        .onOk(() => {
+          this.deletefunc();
+        })
+
+        .onCancel(() => {})
+        .onDismiss(() => {});
     },
 
     async onSubmit() {
       console.log(this.activity_in_farms);
       const { data } = await axios.put(
-        "http://localhost:3000/activity_in_farm/update/" + this.$route.query.id,
+        "http://localhost:3000/activity_in_farm/update/" +
+          this.$route.query.ida,
         {
           date: this.activity_in_farms.date,
           activity: this.activity_in_farms.activity,
@@ -128,7 +153,7 @@ export default {
       this.$router.push({
         path: "/calender_farm",
         query: {
-          id: this.activity_in_farm.act_farm_id,
+          id: this.$route.query.idf,
         },
       });
     },

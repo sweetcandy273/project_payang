@@ -39,7 +39,7 @@
               color="deep-orange-13"
               icon="delete"
               @click="
-                DeleteEvent();
+                DeleteFarm();
                 $router.push({
                   name: 'myfarm',
                   query: { id: farm.user_id },
@@ -129,7 +129,7 @@ export default {
       model: null,
       secondModel: "graph_farm",
       farm: {
-        rubber_variety:{}
+        rubber_variety: {},
       },
       nameEmployee: [],
       employee: [],
@@ -167,21 +167,13 @@ export default {
       // console.log(data.data);
     },
 
-    // async getrubber_var() {
-    //   const { data } = await axios.get(
-    //     "http://localhost:3000/rubber_varieties/"+ this.farm.rubber_varieties_id
-    //   );
-    //   this.allrubber = data.data;
-
-    // },
-
-    DeleteEvent() {
+    DeleteFarm() {
       axios
-        .delete("http://localhost:3000/farm/delete/" + this.$route.query.id)
-        .then((response) => {
-          // console.log(response);
-        });
+        .delete("http://localhost:3000/farm/delete/" + this.$route.query.id)   
     },
+
+
+
 
     // async DeleteEvent() {
     //   this.$q

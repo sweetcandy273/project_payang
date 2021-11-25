@@ -44,6 +44,7 @@
     <div class="font q-px-md">
       <q-input
         filled
+        readonly
         v-model="incomes.date_income"
         color="teal"
        

@@ -69,7 +69,7 @@
       </div>
     </div>
 
-    <div :key="index + 10000" v-for="(data, index) in expenditures">
+    <div :key="index + 1000" v-for="(data, index) in expenditures">
       <div class="text-right">
         <div class="font" style="font-size: 20px">
           {{ data.farm.farm_name }}

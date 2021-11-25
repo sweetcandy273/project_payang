@@ -118,7 +118,7 @@ export default {
   name: "farms",
   data() {
     return {
-      incomes: {}
+      incomes: { farm: {} }
     };
   },
   mounted() {

@@ -101,7 +101,9 @@ export default {
   name: "expenditures",
   data() {
     return {
-      expenditures: {}
+      expenditures: {
+        farm: {}
+      }
     };
   },
   mounted() {

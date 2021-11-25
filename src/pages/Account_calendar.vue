@@ -72,7 +72,7 @@
         </div>
       </div>
     </div>
-    <div :key="index" v-for="(data, index) in expenditures">
+    <div :key="index + 1000" v-for="(data, index) in expenditures">
       <div class="q-ma-md">
         <div class="row font q-pt-md">
           <div class="redcircle"></div>

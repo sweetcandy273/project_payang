@@ -83,7 +83,7 @@
                 icon="edit"
                 @click="
                   $router.push({
-                    path: 'edit_income',
+                    path: 'edit_income', 
                     query: {
                       id: incomes.in_id
                     }

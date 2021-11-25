@@ -77,7 +77,7 @@
           @click="
             $router.push({
               name: 'account_calendar',
-              query: { id: farm.farm_id },
+              query: { id: farm.farm_id , owner: farm.owner },
             })
           "
           unelevated

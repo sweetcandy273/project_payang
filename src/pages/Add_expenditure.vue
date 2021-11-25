@@ -9,7 +9,7 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'account_calendar' })"
+            @click="$router.push({ name: 'account_calendar' , query: { id: $route.query.id }})"
           />
         </div>
         
@@ -26,7 +26,7 @@
         rounded
         style="background: #2d9cdb; color: white; opacity: 0.5"
         label="รายรับ"
-        @click="$router.push({ name: 'add_income' })"
+        @click="$router.push({ name: 'add_income' , query: { id: $route.query.id } })"
       />
       <q-btn
         class="col"
@@ -34,6 +34,7 @@
         rounded
         style="background: #f2994a; color: white"
         label="รายจ่าย"
+        @click="$router.push({ name: 'add_expenditure' , query: { id: $route.query.id } })"
       />
     </div>
     
@@ -82,10 +83,10 @@
         class="text-center"
         id="maintenance"
       >
-        <Maintenance />
+        <Maintenance :item="id" />
       </div>
       <div v-else class="text-center">
-        <Equipment />
+        <Equipment :item="id" />
       </div>
     </div>
   </div>
@@ -96,9 +97,11 @@ import Maintenance from "../components/Maintenance.vue";
 import Equipment from "../components/Equipment.vue";
 export default {
   data(){
-    return{
+    const id = { id: this.$route.query.id };
+    return{  
       date_expenditure:"",
       type:"",
+      id,
     };
   },
   components: {

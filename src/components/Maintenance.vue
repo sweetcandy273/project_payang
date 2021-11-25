@@ -119,15 +119,15 @@ export default {
     },
     submitExpen(){
        console.log(this.date_expenditure);
-      axios.post(`http://localhost:3000/expenditure/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
+      axios.post(`http://localhost:3000/expenditure/create/${this.$route.query.id}/${this.$route.query.owner}`,
         {
               date_expenditure: this.date_expenditure,
           amount: this.totalprice,
           note: this.note,
           type:"Maintenance",
           title_type:this.title,
-          farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
-          user_id: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
+          farm_id: this.$route.query.id,
+          user_id: this.$route.query.owner,
           employee:"",
           store_expen :this.store_expen ,
           telstore_expen:this.telstore_expen,
@@ -139,6 +139,7 @@ export default {
         });
       this.$router.push({
         path: "/account_calendar",
+        query: { id: this.$route.query.id }
       });
       
     },

@@ -48,7 +48,7 @@
         style="font-size: 15px"
         @click="
           $router.push({
-            name: 'Edit_activity',
+            name: 'edit_activity',
             query: {
               ida: data.act_farm_id,
               idf: data.farm_id

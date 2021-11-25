@@ -161,6 +161,11 @@ const routes = [
         path: "change_password",
         name: "change_password",
         component: () => import("pages/change_password.vue")
+      },
+      {
+        path: "edit_activity",
+        name: "edit_activity",
+        component: () => import("pages/Edit_activity.vue")
       }
     ]
   },

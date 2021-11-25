@@ -6,13 +6,11 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="
-              $router.push({ name: 'myfarm', query: { id: farm.owner } })
-            "
+            @click="$router.push({ name: 'myfarm', query: { id: farm.owner } })"
           />
         </div>
 
-        <div class="col-6 font header-title">ข้อมูลสวน</div>
+        <div class="col-6 font header-title">ข้อมูลสวน </div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -77,7 +75,7 @@
           @click="
             $router.push({
               name: 'account_calendar',
-              query: { id: farm.farm_id , owner: farm.owner },
+              query: { id: farm.farm_id, owner: farm.owner },
             })
           "
           unelevated
@@ -116,11 +114,13 @@ export default {
     await this.getfarm();
     await this.getemployee();
     await this.getnameEmployee();
+    // await this.deletemp();
+    
     //  this.DeleteEvent();
     // await this.getrubber_var();
   },
   components: {
-    graph_farm
+    graph_farm,
   },
   data() {
     const id = { id: this.$route.query.id };
@@ -164,39 +164,41 @@ export default {
         "http://localhost:3000/payang_user/" + this.employee[0].employee
       );
       this.nameEmployee = data.data;
-      // console.log(data.data);
+      // console.log(employee[0].employee);
     },
 
-    DeleteFarm() {
-      axios
-        .delete("http://localhost:3000/farm/delete/" + this.$route.query.id)   
-    },
-
-
-
-
-    // async DeleteEvent() {
-    //   this.$q
-    //     .dialog({
-    //       title: "Confirm",
-    //       message: "Would you delete the data? ",
-    //       cancel: true,
-    //       persistent: true,
-    //       html: true,
-    //     })
-    //     .onOk(() => {
-    //       axios.delete(
-    //         "http://localhost:3000/farm/delete/" + this.$route.query.id
-    //       );
-    //     });
-    //     this.$router.push({
-    //     path: "/myfarm",
-    //     query: {
-    //       id: farm.user_id
-    //     },
-    //   });
+    // async deletemp() {
+    //   axios.delete(
+    //     "http://localhost:3000/payang_user/delete/" + this.employee[0].employee
+    //   );
     // },
+    async DeleteFarm() {
+      axios.delete("http://localhost:3000/farm/delete/" + this.employee[0].farm_id);
+      // await this.deletemp();
+    },
   },
+
+  // async DeleteEvent() {
+  //   this.$q
+  //     .dialog({
+  //       title: "Confirm",
+  //       message: "Would you delete the data? ",
+  //       cancel: true,
+  //       persistent: true,
+  //       html: true,
+  //     })
+  //     .onOk(() => {
+  //       axios.delete(
+  //         "http://localhost:3000/farm/delete/" + this.$route.query.id
+  //       );
+  //     });
+  //     this.$router.push({
+  //     path: "/myfarm",
+  //     query: {
+  //       id: farm.user_id
+  //     },
+  //   });
+  // },
 };
 </script>
 <style scoped src="../css/home.css"></style>

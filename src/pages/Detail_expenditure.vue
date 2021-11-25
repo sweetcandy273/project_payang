@@ -8,9 +8,7 @@
         <div class="col flexed text-left">
           <q-icon
             @click="$router.push({ path: 'account_calendar',
-            query: {
-                  id: expenditures.expen_id,
-                }, })"
+            })"
             name="arrow_back_ios"
             size="30px"
           ></q-icon>
@@ -25,10 +23,10 @@
         <div class="row">
           <div class="col">
             <div class="row" style="font-size: 18px">
-              เจ้าของสวน : 
+              เจ้าของสวน : {{ expenditures.farm.fname }}
             </div>
             <div class="row q-pb-md" style="font-size: 18px">
-              สวน : 
+              สวน : {{ expenditures.farm.farm_name }}
             </div>
           </div>
           <div class="col-4 text-right">
@@ -73,9 +71,7 @@
               color="orange-4"
               icon="edit"
               @click="$router.push({ path: 'edit_expenditure',
-              query:{
-                 id: expenditures.expen_id,
-              } })"
+               })"
             />
             
             <q-btn
@@ -111,10 +107,10 @@ export default {
     },
     async getExpen() {
       const { data } = await axios.get(
-        `http://localhost:3000/expenditure/${this.$route.query.id}`
+        `http://localhost:3000/expenditure/show/${this.$route.query.id}`
       );
       this.expenditures = data.data;
-      console.log(data);
+      console.log(data.data);
     },
     Notidelete() {
       axios.delete(

@@ -34,7 +34,7 @@ export default function(/* { store, ssrContext } */) {
     if (requireAuth && currentUser) {
       next();
     } else if (requireAuth && !currentUser) {
-      next({ name: "login" });
+      next({ name: "starter" });
     } else {
       next();
     }

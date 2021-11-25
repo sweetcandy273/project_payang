@@ -27,9 +27,9 @@
       <div class="detail-income q-pa-md shadow-2">
         <div class="row">
           <div class="col">
-            <div class="row" style="font-size: 18px">เจ้าของสวน :</div>
+            <div class="row" style="font-size: 18px">เจ้าของสวน : {{ incomes.farm.fname }}</div>
             <div class="row q-pb-md" style="font-size: 18px">
-              สวน : {{ farms.farm_name }}
+              สวน : {{ incomes.farm.farm_name }}
             </div>
           </div>
 
@@ -118,7 +118,7 @@ export default {
   data() {
     return {
       incomes: {},
-      farms: {},
+     
     };
   },
   mounted() {
@@ -135,7 +135,7 @@ export default {
       );
       this.incomes = data.data;
 
-      console.log(data);
+      console.log(data.data);
     },
    
 

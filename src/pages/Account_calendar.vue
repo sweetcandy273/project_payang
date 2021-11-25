@@ -147,7 +147,7 @@ export default {
     },
     async getIncome() {
       const { data } = await axios.get(
-        `http://localhost:3000/income/a07f9bfa-e8b2-4125-8036-acf3d7048e09`
+        `http://localhost:3000/income/`+ this.$route.query.id
       );
 
       this.listAllincome = data.data;
@@ -159,7 +159,7 @@ export default {
     },
     async getExpenditure() {
       const { data } = await axios.get(
-        "http://localhost:3000/expenditure/listbyfarm/a07f9bfa-e8b2-4125-8036-acf3d7048e09"
+        "http://localhost:3000/expenditure/listbyfarm/"+ this.$route.query.id
       );
       this.listAllexpenditure = data.data;
       this.date = this.formatDate(new Date());

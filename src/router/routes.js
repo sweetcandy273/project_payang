@@ -13,6 +13,7 @@ const routes = [
       { path: 'add_detail_farm', name: 'add_detail_farm', component: () => import('pages/Add_detail_farm.vue') },
       { path: 'edit_detail_farm', name: 'edit_detail_farm', component: () => import('pages/Edit_detail_farm.vue') },
       { path: 'detail_farm', name: 'detail_farm', component: () => import('pages/detail_farm.vue') },
+      { path: 'Edit_activity', name: 'Edit_activity', component: () => import('pages/Edit_activity.vue') },
       { path: 'calender_farm', name: 'calender_farm', component: () => import('pages/Calendar_farm.vue') },
       { path: 'add_calender_farm', name: 'add_calender_farm', component: () => import('pages/Add_Calendar_farm.vue') },
       { path: 'other', name: 'other', component: () => import('pages/Add_income.vue') },

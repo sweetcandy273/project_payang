@@ -1,147 +1,152 @@
 <template>
-  <div class="font">
+  <div>
     <q-header class="shadow-2">
       <q-toolbar class="text-center row">
-        <div class="col flex">
-          <img
-            src="../assets/close.png"
-            style="width: 22px; height: 22px"
-            @click="
-              $router.push({ name: 'myfarm', query: { id: farm.user_id } })
-            "
-          />
+        <div
+          class="col self-center font"
+          @click="$router.push({ name: 'myfarm' })"
+        >
+          <q-icon name="close" />
         </div>
 
         <div class="col-6 font header-title">ข้อมูลสวน</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
+    <div class="q-pa-md font">
+      <q-form @submit="onSubmit" class="q-gutter-md">
+        <div>
+          <div class="q-pa-md q-gutter-sm">
 
-    <div class="q-pa-md self-center">
-      <div class="box_detail q-pa-md self-center">
-        <div class="row justify-end">
-          <div class="column">
-            <q-btn
-              @click="
-                $router.push({
-                  name: 'edit_detail_farm',
-                  query: { id: farm.farm_id },
-                })
-              "
-              round
-              color="orange-4"
-              icon="edit"
-            />
-          </div>
-          <div class="column">
-            <q-btn
-              round
-              color="deep-orange-13"
-              icon="delete"
-              @click="showNotif"
-            />
+            <div class="back-gd .col-auto">
+
+            
+              
+                <div class="row justify-end" >
+                <div
+                  class=".col-auto "
+                  @click="$router.push({ name: 'Edit_detail_farm' })"
+                >
+                  <q-btn 
+                  size="15px"
+                  round color="amber-8" 
+                  icon="edit" />
+                </div>
+                <div class=".col-auto "
+                 @click="$router.push({ name: 'noti' })"
+                >
+                  <q-btn 
+                  size="15px"
+                  round color="red-6" 
+                  icon="delete" />
+                </div>
+              </div>
+
+              
+              
+            
+
+            <div class="greeninfor">
+              นางสาวสวย นามสกุล สวยที่สุด
+              สวน : สวนภูเก็ต
+              ที่อยู่ : 112/1 ซอยหล่อโรง ถนนระนอง
+              ตำบลตลาดเหนือ อำเภอเมืองภูเก็ต
+              เนื้อที่ปลูก : 1.10000 ไร่
+              ผู้ดูแล : กนกวรรณ น้ำสงวน
+            </div>
+
+            </div>
+
+
+            <div>
+              <q-btn
+                unelevated
+                rounded
+                label="รายละเอียดบัญชี"
+                type="submit"
+                color="green-2"
+                class="shadow-2 text-black"
+              />
+            </div>
+            <div>
+              <q-btn
+                unelevated
+                rounded
+                label="เรียกดูตารางการทำงาน"
+                type="submit"
+                color="light-blue-3"
+                class="shadow-2 text-black"
+              />
+            </div>
           </div>
         </div>
-
-        <div>เจ้าของสวน :</div>
-        <div>สวน :</div>
-        <div>ที่อยู่ :</div>
-        <div>เนื้อที่ปลูก : ไร่</div>
-        <div>ผู้ดูแล :</div>
-      </div>
-    </div>
-
-    <div></div>
-
-    <div v-if="secondModel == 'yearly'" class="text-center" id="yearly">
-      <graph_farm />
-    </div>
-
-    <div class="q-pa-md q-gutter-sm self-center">
-      <div>
-        <q-btn
-          @click="
-            $router.push({
-              name: 'account_calendar',
-              query: { id: farm.farm_id },
-            })
-          "
-          unelevated
-          rounded
-          label="รายละเอียดบัญชี"
-          type="submit"
-          class="shadow-2 text-white"
-          color="green-4"
-        />
-      </div>
-
-      <div>
-        <q-btn
-          @click="$router.push({ name: 'calender_farm' })"
-          unelevated
-          rounded
-          label="เรียกดูตารางการทำงาน"
-          type="submit"
-          class="shadow-2 text-white"
-          color="light-blue-6"
-        />
-      </div>
+      </q-form>
     </div>
   </div>
 </template>
 
+
+
+
 <script>
-import graph_farm from "../components/graph_farm.vue";
-import axios from "axios";
+import Vue from "vue";
+import VueCompositionAPI from "@vue/composition-api";
+
+Vue.use(VueCompositionAPI);
+import { ref } from "@vue/composition-api";
 
 export default {
-  data() {
+  setup() {
     return {
-      user_has_farm: [],
-      farm: [],
-    };
-  },
-  async mounted() {
-    this.getfarm();
-  },
-  components: {
-    graph_farm,
-  },
-  data() {
-    return {
-      idp: "20c676fe-dead-48bd-a445-e5178603c041",
-      leftDrawerOpen: false,
-      model: null,
-      secondModel: "yearly",
+      fname: ref("ชนิกานต์"),
+      lname: ref("ปิยะพงษ์"),
+      farm_name: ref("สวนภูเก็ต"),
+      arae: ref("20"),
+      address: ref("112/1 ซอยหล่อโรง ถนนระนอง ตำบลตลาดเหนือ "),
+      address_district: ref("เมืองภูเก็ต"),
+      address_province: ref("ภูเก็ต"),
+      fname_admin: ref(""),
+      lname_admin: ref(""),
+      number_admin: ref(""),
+      number_am_admin: ref(""),
+      address_province_admin: ref(""),
+      selectshare: false,
     };
   },
   methods: {
-    async getfarm() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm/a07f9bfa-e8b2-4125-8036-acf3d7048e09"
-      );
-      this.farm = data.data;
-      console.log(data.data);
-    },
-
-    showNotif() {
-      this.$q.dialog({
-        title: "Confirm",
-        message: "Would you delete the data? ",
-        cancel: true,
-        persistent: true,
-      });
-      return { confirm };
+    onSubmit() {
+      console.log(this.fname);
     },
   },
 };
 </script>
-<style scoped src="../css/home.css">
-</style>
 
-<style scoped>
-.box_detail {
-  background-color: white;
-  border-radius: 10px;
+
+<style>
+.bg {
+  background: #dae5de;
 }
+
+.q-toolbar {
+  background-color: #4e7971;
+}
+
+.header-title {
+  font-size: 25px;
+}
+
+.font {
+  font-family: "Kanit", sans-serif;
+}
+
+.q-btn {
+  width: 100%;
+  background-color: #4e7971;
+}
+.back-gd{
+  background-color: #79BD9A;
+  padding: 13px;
+  border-radius: 25px;
+}
+
 </style>

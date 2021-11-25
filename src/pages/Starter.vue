@@ -1,24 +1,22 @@
 <template>
   <div>
-    <q-img src="../assets/bg-starter.png" width="100%">
-      <div style="background: none">
-        <div class="fixed-center text-center">
-          <div>
-            <img
-              class="logo-starter"
-              alt="Payang logo"
-              src="../assets/payang_icon.png"
-            />
-          </div>
-          <div class="q-pt-xl"></div>
+    <div style="background: none">
+      <div class="fixed-center text-center">
+        <div>
+          <img
+            class="logo-starter"
+            alt="Payang logo"
+            src="../assets/payang_icon.png"
+          />
         </div>
-
-        <div class="fixed-bottom text-center q-pb-md text-black font">
-          <div>PayangTeam</div>
-          <div>@PSU Phuket</div>
-        </div>
+        <div class="q-pt-xl"></div>
       </div>
-    </q-img>
+
+      <div class="fixed-bottom text-center q-pb-md text-black font">
+        <div>PayangTeam</div>
+        <div>@PSU Phuket</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -31,7 +29,4 @@ export default {
 };
 </script>
 
-<style scoped src="../css/home.css">
-
-
-</style>
+<style scoped src="../css/home.css"></style>

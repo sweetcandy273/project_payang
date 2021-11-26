@@ -261,8 +261,6 @@ export default {
     currentId(val) {
       if (val) {
         this.getday();
-        // this.cratefarm();
-        // this.createEmp();
         this.getrubber_var();
       }
     }
@@ -356,7 +354,7 @@ export default {
       this.employee = data.data;
     },
     async createfarm_emp() {
-      const { data } = await this.$axios.post(
+      await this.$axios.post(
         "/farm_has_employee/create/" +
           this.create_farm.farm_id +
           "/" +
@@ -366,7 +364,6 @@ export default {
           employee: this.employee.user_id
         }
       );
-      // console.log(data.data);
     },
 
     async getrubber_var() {

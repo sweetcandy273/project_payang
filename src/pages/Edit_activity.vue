@@ -100,8 +100,8 @@ export default {
     },
 
     async getactivity() {
-      const { data } = await axios.get(
-        "http://localhost:3000/activity_in_farm/findactivity/" +
+      const { data } = await this.$axios.get(
+        "/activity_in_farm/findactivity/" +
           this.$route.query.ida
       );
 
@@ -111,18 +111,15 @@ export default {
       );
     },
 
-    deletefunc() {
-      axios.delete(
-        "http://localhost:3000/activity_in_farm/delete/" + this.$route.query.ida
+    async deletefunc() {
+      await this.$axios.delete(
+        "/activity_in_farm/delete/" + this.$route.query.ida
       );
-      this.$router.push({
-        name: "calender_farm",
-        query: { id: this.$route.query.idf },
-      });
+      
     },
 
-    DeleteEven() {
-      this.$q
+   DeleteEven() {
+        this.$q
         .dialog({
           title: "ยืนยันการลบกิจกรรม",
           message:
@@ -132,15 +129,18 @@ export default {
           html: true,
         })
         .onOk(() => {
-          this.deletefunc();
+          this.deletefunc()
+          this.$router.push({
+          name: "calender_farm",
+          query: { id: this.$route.query.idf },
+          });
         })
-
         .onCancel(() => {})
         .onDismiss(() => {});
     },
 
     async onSubmit() {
-      console.log(this.activity_in_farms);
+   
       const { data } = await axios.put(
         "http://localhost:3000/activity_in_farm/update/" +
           this.$route.query.ida,

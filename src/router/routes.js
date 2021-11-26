@@ -103,6 +103,13 @@ const routes = [
         component: () => import("pages/Edit_income.vue")
       },
       {
+        path: "edit_activity",
+        name: "edit_activity",
+        meta: { requiresAuth: true },
+        component: () => import("pages/Edit_activity.vue")
+      },
+
+      {
         path: "edit_expenditure",
         name: "edit_expenditure",
         meta: { requiresAuth: true },
@@ -143,12 +150,6 @@ const routes = [
         name: "check_expenditure",
         meta: { requiresAuth: true },
         component: () => import("pages/Check_expenditure.vue")
-      },
-      {
-        path: "complete_account",
-        name: "complete_account",
-        meta: { requiresAuth: true },
-        component: () => import("pages/Complete_account.vue")
       },
 
       {

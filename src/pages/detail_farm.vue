@@ -23,7 +23,7 @@
               @click="
                 $router.push({
                   name: 'edit_detail_farm',
-                  query: { id: farm.farm_id, idu: employee[0].owner },
+                  query: { id: farm.farm_id, idu: employee[0].owner }
                 })
               "
               round
@@ -40,7 +40,7 @@
                 DeleteFarm();
                 $router.push({
                   name: 'myfarm',
-                  query: { id: farm.owner },
+                  query: { id: farm.owner }
                 });
               "
             />
@@ -75,7 +75,7 @@
           @click="
             $router.push({
               name: 'account_calendar',
-              query: { id: farm.farm_id, owner: farm.owner },
+              query: { id: farm.farm_id, owner: farm.owner }
             })
           "
           unelevated
@@ -115,12 +115,12 @@ export default {
     await this.getemployee();
     await this.getnameEmployee();
     // await this.deletemp();
-    
+
     //  this.DeleteEvent();
     // await this.getrubber_var();
   },
   components: {
-    graph_farm,
+    graph_farm
   },
   data() {
     const id = { id: this.$route.query.id };
@@ -129,7 +129,7 @@ export default {
       model: null,
       secondModel: "graph_farm",
       farm: {
-        rubber_variety: {},
+        rubber_variety: {}
       },
       nameEmployee: [],
       employee: [],
@@ -137,7 +137,7 @@ export default {
       user_has_farm: [],
       id,
       allrubber: {},
-      date: " ",
+      date: " "
     };
   },
   methods: {
@@ -150,60 +150,32 @@ export default {
         "http://localhost:3000/farm/" + this.$route.query.id
       );
       this.farm = data.data;
-      // console.log(data.data);
     },
     async getemployee() {
       const { data } = await axios.get(
         "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
       );
       this.employee = data.data;
-      // console.log(data.data);
     },
     async getnameEmployee() {
       const { data } = await axios.get(
         "http://localhost:3000/payang_user/" + this.employee[0].employee
       );
       this.nameEmployee = data.data;
-      // console.log(employee[0].employee);
     },
 
-     async DeleteEmp() {
-      axios.delete("http://localhost:3000/farm_has_employee/delete/" + this.$route.query.id);
-      // await this.deletemp();
+    async DeleteEmp() {
+      axios.delete(
+        "http://localhost:3000/farm_has_employee/delete/" + this.$route.query.id
+      );
     },
-  
-
-    
 
     async DeleteFarm() {
       axios.delete("http://localhost:3000/farm/delete/" + this.$route.query.id);
-      // await this.deletemp();
-      await this.DeleteEmp();
-    },
-     
-  },
 
-  // async DeleteEvent() {
-  //   this.$q
-  //     .dialog({
-  //       title: "Confirm",
-  //       message: "Would you delete the data? ",
-  //       cancel: true,
-  //       persistent: true,
-  //       html: true,
-  //     })
-  //     .onOk(() => {
-  //       axios.delete(
-  //         "http://localhost:3000/farm/delete/" + this.$route.query.id
-  //       );
-  //     });
-  //     this.$router.push({
-  //     path: "/myfarm",
-  //     query: {
-  //       id: farm.user_id
-  //     },
-  //   });
-  // },
+      await this.DeleteEmp();
+    }
+  }
 };
 </script>
 <style scoped src="../css/home.css"></style>

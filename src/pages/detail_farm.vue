@@ -106,7 +106,7 @@
 
 <script>
 import graph_farm from "../components/graph_farm.vue";
-import axios from "axios";
+
 import { date } from "quasar";
 
 export default {
@@ -114,10 +114,6 @@ export default {
     await this.getfarm();
     await this.getemployee();
     await this.getnameEmployee();
-    // await this.deletemp();
-
-    //  this.DeleteEvent();
-    // await this.getrubber_var();
   },
   components: {
     graph_farm
@@ -146,32 +142,30 @@ export default {
     },
 
     async getfarm() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm/" + this.$route.query.id
-      );
+      const { data } = await this.$axios.get("/farm/" + this.$route.query.id);
       this.farm = data.data;
     },
     async getemployee() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
+      const { data } = await this.$axios.get(
+        "/farm_has_employee/list/" + this.$route.query.id
       );
       this.employee = data.data;
     },
     async getnameEmployee() {
-      const { data } = await axios.get(
-        "http://localhost:3000/payang_user/" + this.employee[0].employee
+      const { data } = await this.$axios.get(
+        "/payang_user/" + this.employee[0].employee
       );
       this.nameEmployee = data.data;
     },
 
     async DeleteEmp() {
-      axios.delete(
-        "http://localhost:3000/farm_has_employee/delete/" + this.$route.query.id
+      await this.$axios.delete(
+        "/farm_has_employee/delete/" + this.$route.query.id
       );
     },
 
     async DeleteFarm() {
-      axios.delete("http://localhost:3000/farm/delete/" + this.$route.query.id);
+      await this.$axios.delete("/farm/delete/" + this.$route.query.id);
 
       await this.DeleteEmp();
     }

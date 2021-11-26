@@ -103,6 +103,13 @@ const routes = [
         component: () => import("pages/Edit_income.vue")
       },
       {
+        path: "edit_activity",
+        name: "edit_activity",
+        meta: { requiresAuth: true },
+        component: () => import("pages/Edit_activity.vue")
+      },
+
+      {
         path: "edit_expenditure",
         name: "edit_expenditure",
         meta: { requiresAuth: true },

@@ -226,7 +226,7 @@ export default {
         this.monthget = this.month;
       }
       const { data } = await this.$axios.get(
-        "/income/productmonthly/" +
+        "/income/productmonthlybyowner/" +
           this.year_now +
           "/" +
           this.monthget +

@@ -117,9 +117,7 @@
 
       <div
         class="row myfarm font shadow-2"
-        @click="
-          $router.push({ name: 'myfarm', query: { id: payang_user.user_id } })
-        "
+        @click="$router.push({ name: 'myfarm' })"
       >
         <div class="col-6 q-pa-md self-center">
           <div style="font-size: 20px">สวนของฉัน</div>

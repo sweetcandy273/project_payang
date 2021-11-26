@@ -6,9 +6,7 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="
-              $router.push({ name: 'home', query: { id: payang_user.user_id } })
-            "
+            @click="$router.push({ name: 'home' })"
           />
         </div>
 
@@ -45,9 +43,12 @@
             filled
             v-model="payang_user.phone_number"
             label="เบอร์โทรศัพท์"
+            mask="###-###-####"
             :rules="[
               val =>
-                (val && val.length > 0 && val.length == 10) ||
+                val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
+              val =>
+                (val && val.length > 0 && val.length == 12) ||
                 'กรุณากรอกเบอร์โทรศัพท์'
             ]"
           >

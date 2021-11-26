@@ -13,7 +13,7 @@
               $router.push({
                 name: 'account_calendar',
                 query: {
-                  id: expenditures.expen_id,
+                  id: expenditures.expen_id ,
                 },
               })
             "

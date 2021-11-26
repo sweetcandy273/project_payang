@@ -18,7 +18,7 @@
     </q-header>
 
     <div class="q-pa-md font">
-      <q-form @submit="onSubmit()" >
+      <q-form @submit="onSubmit" >
         <div class="row justify-between">
           <div class="col q-pr-md">
             <q-input
@@ -351,7 +351,7 @@ export default {
           employee: this.employee.user_id,
         }
       );
-      console.log(data.data);
+      // console.log(data.data);
     },
 
     async getrubber_var() {

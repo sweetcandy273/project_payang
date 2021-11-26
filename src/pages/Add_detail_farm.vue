@@ -6,9 +6,7 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="
-              $router.push({ name: 'myfarm', query: { id: $route.query.id } })
-            "
+            @click="$router.push({ name: 'myfarm' })"
           />
         </div>
 
@@ -18,7 +16,8 @@
     </q-header>
 
     <div class="q-pa-md font">
-      <q-form @submit="onSubmit()" >
+      <div hidden>{{ user_id }}</div>
+      <q-form @submit="onSubmit()">
         <div class="row justify-between">
           <div class="col q-pr-md">
             <q-input
@@ -26,7 +25,7 @@
               filled
               v-model="fname"
               label="ชื่อ"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
+              :rules="[val => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
             />
           </div>
           <div class="col">
@@ -35,7 +34,7 @@
               filled
               v-model="lname"
               label="นามสกุล"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
+              :rules="[val => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
             />
           </div>
         </div>
@@ -44,7 +43,7 @@
           filled
           v-model="farm_name"
           label="ชื่อสวน"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
+          :rules="[val => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
         >
         </q-input>
 
@@ -53,7 +52,7 @@
           filled
           v-model="address"
           label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
+          :rules="[val => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
         />
 
         <div class="row">
@@ -63,7 +62,7 @@
               filled
               v-model="address_district"
               label="เขต/อำเภอ"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
+              :rules="[val => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
             />
           </div>
           <div class="col">
@@ -72,7 +71,7 @@
               filled
               v-model="address_province"
               label="จังหวัด"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
+              :rules="[val => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
             />
           </div>
         </div>
@@ -129,7 +128,7 @@
           v-model="area"
           filled
           label="เนื้อที่ปลูก"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก']"
+          :rules="[val => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก']"
         />
 
         <div class="add_employee">
@@ -148,7 +147,7 @@
                 v-model="fname_emp"
                 filled
                 label="ชื่อ"
-                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
+                :rules="[val => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
               />
             </div>
             <div class="col">
@@ -157,9 +156,7 @@
                 v-model="lname_emp"
                 filled
                 label="นามสกุล"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
-                ]"
+                :rules="[val => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
               />
             </div>
           </div>
@@ -169,9 +166,9 @@
             v-model="phone_number_emp"
             label="เบอร์โทรศัพท์"
             :rules="[
-              (val) =>
+              val =>
                 (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์',
+                'กรุณากรอกเบอร์โทรศัพท์'
             ]"
           >
             <template v-slot:append>
@@ -184,9 +181,9 @@
             filled
             label="เบอร์โทรศัพท์ฉุกเฉิน"
             :rules="[
-              (val) =>
+              val =>
                 (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน',
+                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน'
             ]"
           >
             <template v-slot:append>
@@ -199,7 +196,7 @@
             filled
             v-model="address_emp"
             label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
+            :rules="[val => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
           />
 
           <div class="row">
@@ -209,7 +206,7 @@
                 v-model="address_district_emp"
                 filled
                 label="เขต/อำเภอ"
-                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
+                :rules="[val => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
               />
             </div>
             <div class="col">
@@ -218,9 +215,7 @@
                 v-model="address_province_emp"
                 filled
                 label="จังหวัด"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
-                ]"
+                :rules="[val => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
               />
             </div>
           </div>
@@ -235,25 +230,49 @@
             class="shadow-2 text-white"
           />
         </div>
-
       </q-form>
     </div>
   </div>
 </template>
 <script>
-import axios from "axios";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+
 import { date } from "quasar";
 
 export default {
-  async mounted() {
-    this.getday();
-    this.cratefarm();
-    this.createEmp();
-    this.getrubber_var();
-    
+  computed: {
+    user_id() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.currentId = user.uid;
+          this.id = { id: user.uid };
+        }
+      });
+
+      this.currentId = this.$route.query.id;
+      this.id = { id: this.$route.query.id };
+
+      return this.$route.query.id;
+    }
   },
+
+  watch: {
+    currentId(val) {
+      if (val) {
+        this.getday();
+        // this.cratefarm();
+        // this.createEmp();
+        this.getrubber_var();
+      }
+    }
+  },
+
   data() {
     return {
+      currentId: "",
+      id: { id: this.$route.query.id },
+
       splitterModel: 50,
       date: "",
       data: [],
@@ -280,7 +299,7 @@ export default {
       address_emp: "",
       address_district_emp: "",
       address_province_emp: "",
-      employee: {},
+      employee: {}
     };
   },
   methods: {
@@ -294,7 +313,7 @@ export default {
       update(() => {
         const rubber_varieties_id = val.toLowerCase();
         this.rubberOption = this.rubberList.filter(
-          (v) => v.label.toLowerCase().indexOf(rubber_varieties_id) > -1
+          v => v.label.toLowerCase().indexOf(rubber_varieties_id) > -1
         );
       });
     },
@@ -308,8 +327,8 @@ export default {
     },
 
     async cratefarm() {
-      const { data } = await axios.post(
-        "http://localhost:3000/farm/create/" + this.$route.query.id,
+      const { data } = await this.$axios.post(
+        "/farm/create/" + this.currentId,
         {
           farm_name: this.farm_name,
           fname: this.fname,
@@ -319,49 +338,43 @@ export default {
           planing_date: this.planing_date,
           address: this.address,
           address_district: this.address_district,
-          address_province: this.address_province,
+          address_province: this.address_province
         }
       );
       this.create_farm = data.data;
     },
     async createEmp() {
-      const { data } = await axios.post(
-        "http://localhost:3000/payang_user/create_emp/",
-        {
-          fname: this.fname_emp,
-          lname: this.lname_emp,
-          phone_number: this.phone_number_emp,
-          e_number: this.e_number_emp,
-          address: this.address_emp,
-          address_district: this.address_district_emp,
-          address_province: this.address_province_emp,
-        }
-      );
+      const { data } = await this.$axios.post("/payang_user/create_emp/", {
+        fname: this.fname_emp,
+        lname: this.lname_emp,
+        phone_number: this.phone_number_emp,
+        e_number: this.e_number_emp,
+        address: this.address_emp,
+        address_district: this.address_district_emp,
+        address_province: this.address_province_emp
+      });
       this.employee = data.data;
-      // console.log(data.data);
     },
     async createfarm_emp() {
-      const { data } = await axios.post(
-        "http://localhost:3000/farm_has_employee/create/" +
+      const { data } = await this.$axios.post(
+        "/farm_has_employee/create/" +
           this.create_farm.farm_id +
           "/" +
           this.employee.user_id,
         {
           farm_id: this.create_farm.farm_id,
-          employee: this.employee.user_id,
+          employee: this.employee.user_id
         }
       );
       console.log(data.data);
     },
 
     async getrubber_var() {
-      const { data } = await axios.get(
-        "http://localhost:3000/rubber_varieties"
-      );
-      // console.log(data);
-      this.rubberList = data.data.map((rubber) => ({
+      const { data } = await this.$axios.get("/rubber_varieties");
+
+      this.rubberList = data.data.map(rubber => ({
         label: rubber.varieties,
-        value: rubber.rubber_varieties_id,
+        value: rubber.rubber_varieties_id
       }));
     },
 
@@ -370,16 +383,12 @@ export default {
       await this.cratefarm();
       await this.createfarm_emp();
 
-    this.$router.push({
-        path: "/myfarm",
-        query: {
-          id: this.$route.query.id,
-        },
+      this.$router.push({
+        name: "myfarm"
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>

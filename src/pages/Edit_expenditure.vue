@@ -9,10 +9,16 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'account_calendar' })"
+            @click="
+              $router.push({
+                name: 'account_calendar',
+                query: {
+                  id: expenditures.expen_id,
+                },
+              })
+            "
           />
         </div>
-        
 
         <div class="col-6 font header-title">แก้ไขบัญชี</div>
         <div class="col self-center"></div>
@@ -35,7 +41,6 @@
         label="รายจ่าย"
       />
     </div>
-    
 
     <div class="q-py-md text-center">
       <q-btn-toggle
@@ -95,32 +100,33 @@ import { date } from "quasar";
 import Editmaintenance from "../components/Editmaintenance.vue";
 import Editequipment from "../components/Editequipment.vue";
 export default {
-  data(){
-    return{
-      date_expenditure:"",
-      type:"",
-      // expens:{},
+  data() {
+    return {
+      date_expenditure: "",
+      type: "",
+      expenditures: {},
     };
   },
   components: {
     Editequipment,
     Editmaintenance,
   },
- 
-  methods:{
-   
-     formatDate(dateString) {
+
+  mounted() {
+    this.getExpen();
+    // this.getfarm();
+  },
+  methods: {
+    formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
-    // async getExpen() {
-    //   const { data } = await axios.get(
-    //     `http://localhost:3000/expenditure/${this.$route.query.id}`
-    //   );
-    //   this.expens = data.data;
-    //   console.log(this.expens.type);
-      
-    // },
-},
+    async getExpen() {
+      const { data } = await axios.get(
+        `http://localhost:3000/expenditure/${this.$route.query.id}`
+      );
+      this.expenditures = data.data;
+    },
+  },
 };
 </script>
 

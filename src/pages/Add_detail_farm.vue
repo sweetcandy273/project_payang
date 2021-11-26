@@ -18,7 +18,7 @@
     </q-header>
 
     <div class="q-pa-md font">
-      <q-form @submit="onSubmit" class="q-gutter-md">
+      <q-form @submit="onSubmit()" >
         <div class="row justify-between">
           <div class="col q-pr-md">
             <q-input
@@ -194,6 +194,14 @@
             </template>
           </q-input>
 
+          <q-input
+            color="teal"
+            filled
+            v-model="address_emp"
+            label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
+          />
+
           <div class="row">
             <div class="col q-pr-md">
               <q-input
@@ -227,6 +235,7 @@
             class="shadow-2 text-white"
           />
         </div>
+
       </q-form>
     </div>
   </div>
@@ -241,6 +250,7 @@ export default {
     this.cratefarm();
     this.createEmp();
     this.getrubber_var();
+    
   },
   data() {
     return {
@@ -267,9 +277,10 @@ export default {
       lname_emp: "",
       phone_number_emp: "",
       e_number_emp: "",
+      address_emp: "",
       address_district_emp: "",
       address_province_emp: "",
-      create_emp: [],
+      employee: {},
     };
   },
   methods: {
@@ -277,8 +288,6 @@ export default {
       if (val === "") {
         update(() => {
           this.rubberOption = this.rubberList;
-          // here you have access to "ref" which
-          // is the Vue reference of the QSelect
         });
         return;
       }
@@ -289,6 +298,7 @@ export default {
         );
       });
     },
+
     async getday() {
       this.planing_date = this.formatDate(new Date());
     },
@@ -305,15 +315,14 @@ export default {
           fname: this.fname,
           lname: this.lname,
           area: this.area,
-          // rubber_varieties_id: this.create_farm.rubber_varieties_id,
-          planing_date: this.create_farm.planing_date,
+          rubber_varieties_id: this.rubber_varieties_id,
+          planing_date: this.planing_date,
           address: this.address,
           address_district: this.address_district,
           address_province: this.address_province,
         }
       );
       this.create_farm = data.data;
-      // console.log(data.data);
     },
     async createEmp() {
       const { data } = await axios.post(
@@ -321,37 +330,52 @@ export default {
         {
           fname: this.fname_emp,
           lname: this.lname_emp,
-          // email: this.create_emp.email,
           phone_number: this.phone_number_emp,
           e_number: this.e_number_emp,
           address: this.address_emp,
           address_district: this.address_district_emp,
           address_province: this.address_province_emp,
-          // zip_code: this.create_emp.zip_code,
         }
       );
-      this.create_emp = data.data;
+      this.employee = data.data;
+      // console.log(data.data);
+    },
+    async createfarm_emp() {
+      const { data } = await axios.post(
+        "http://localhost:3000/farm_has_employee/create/" +
+          this.create_farm.farm_id +
+          "/" +
+          this.employee.user_id,
+        {
+          farm_id: this.create_farm.farm_id,
+          employee: this.employee.user_id,
+        }
+      );
       console.log(data.data);
     },
+
     async getrubber_var() {
       const { data } = await axios.get(
         "http://localhost:3000/rubber_varieties"
       );
-      console.log(data);
-      this.rubberList = data.data.map(rubber=>({
+      // console.log(data);
+      this.rubberList = data.data.map((rubber) => ({
         label: rubber.varieties,
         value: rubber.rubber_varieties_id,
-      }))
+      }));
     },
 
     async onSubmit() {
-      this.cratefarm()
-        this.createEmp()
+      await this.createEmp();
+      await this.cratefarm();
+      await this.createfarm_emp();
 
-        this.$router.push({
-          path: "/Myfarm",
-          query: { id: $route.query.id },
-        });
+    this.$router.push({
+        path: "/myfarm",
+        query: {
+          id: this.$route.query.id,
+        },
+      });
     },
   },
 };

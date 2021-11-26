@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="font">
     <q-header>
       <q-toolbar class="text-center row font">
         <div class="col flexed text-left">
@@ -7,7 +7,7 @@
             @click="
               $router.push({
                 name: 'detail_farm',
-                query: { id: $route.query.id },
+                query: { id: farm.farm_id },
               })
             "
             name="arrow_back_ios"
@@ -20,90 +20,62 @@
       </q-toolbar>
     </q-header>
 
-    <div class="q-pa-md q-mx-md">
-      <q-splitter v-model="splitterModel" horizontal>
-        <template v-slot:before>
-          <div class="row justify-center q-pa-md">
-            <div class="">
-              <q-date
-                v-model="date"
-                color="green"
-                :events="events"
-                :event-color="(date) => (date[9] % 2 === 0 ? 'teal' : 'green')"
-              />
-            </div>
-          </div>
-        </template>
-
-        <template v-slot:after>
-          <div class="col font q-mx-md q-mt-md" style="font-size: 22px">
-            {{ date }}
-          </div>
-    <div :key="index" v-for="(data, index) in activity_in_farm">
-      <div class="row font q-pt-md">
-        <div class="greencircle"></div>
-        <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
-        <div class="col text-right" style="font-size: 18px">
-          {{ data.amount }}
+    <q-splitter v-model="splitterModel" horizontal>
+      <div class="row justify-center q-pa-md">
+        <div class="">
+          <q-date
+            v-model="date"
+            color="green"
+            :events="events"
+            :event-color="(date) => (date[9] % 2 === 0 ? 'teal' : 'green')"
+          />
         </div>
       </div>
+    </q-splitter>
+
+    <div class="q-pa-md self-center">
+    <div class="boxactivity">
+      <div class="row">
+        <div class="col q-mx-md q-mt-md" style="font-size: 22px">
+          {{ date }}
+        </div>
+      </div>
+
       <div
-        class="calendar-income q-pa-md"
+        class="q-mx-md q-mt-md"
+        :key="index"
+        v-for="(data, index) in activity_in_farms"
+        style="font-size: 15px"
         @click="
           $router.push({
-            path: 'detail_income',
+            name: 'Edit_activity',
             query: {
-              id: data.in_id,
+              ida: data.act_farm_id,
+              idf: data.farm_id
             },
           })
         "
       >
-        <div class="row font">
-          <div class="col" style="font-size: 16px">ร้านดาว น้ำยางสด, แผ่น</div>
-          <div class="col-3 text-right" style="font-size: 16px">
-            {{ data.amount }}
-          </div>
-        </div>
-        <div class="row font" style="font-size: 16px">
-          น้ำยางสด {{ data.weight }} กก. {{ data.percen_rubber }} % แห้ง
-          {{ data.dry_rubber }}
-        </div>
-        <div class="row font" style="font-size: 16px">
-          ราคายาง {{ data.rubber_price }} บ./กก.
-        </div>
-        <div class="row font">
-          <div class="col" style="font-size: 16px">
-            {{ data.employee }} ส่วนแบ่ง {{ data.percen_split }}
-          </div>
-          <div class="col-3 text-right" style="font-size: 16px">
-            {{ data.amount_net }}
-          </div>
-        </div>
+        {{ data.activity }}
       </div>
     </div>
-          <div class="add-account text-center fixed-bottom q-pa-xl">
-            <q-btn
-              unelevated
-              round
-              style="
-                background: #4e7971;
-                color: white;
-                width: 50px;
-                height: 50px;
-              "
-              icon="add"
-              @click="
-                $router.push({
-                  name: 'Add_calender_farm',
-                  query: {
-                    id: data.farm_id,
-                  },
-                })
-              "
-            />
-          </div>
-        </template>
-      </q-splitter>
+    </div>
+
+ 
+
+    <div class=" text-center fixed-bottom q-pa-xl">
+      <q-btn
+        unelevated
+        round
+        style="background: #4e7971; color: white; width: 50px; height: 50px"
+        icon="add"
+        @click="
+          $router.push({
+            name: 'add_calender_farm',
+            query: { id: farm.farm_id },
+          })
+        "
+      />
     </div>
   </div>
 </template>
@@ -118,47 +90,49 @@ export default {
       splitterModel: 50,
       date: "",
       events: [],
+      activity_in_farms: [],
+      listAllactivity: [],
+      farm: {},
     };
   },
   mounted() {
-    // this.getactivity();
+    this.getactivity();
+    this.getfarm();
   },
   methods: {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
-  },
 
-  // async getactivity() {
-  //   const { data } = await axios.get(
-  //     `http://localhost:3000/activity_in_farm/list/` + this.$route.query.id
-  //   );
-  //   this.listAllactivity = data.data;
-  //   this.date = this.formatDate(new Date());
-  //   const listEvent = data.data.map((data) => {
-  //     return this.formatDate(data.date);
-  //   });
-  //   this.events.push(...listEvent);
-  // },
-  async getEmployee() {
-    const { data } = await axios.get(
-      "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
-    );
-    this.listAllemployee = data.data;
-    this.date = this.formatDate(new Date());
-    const listEvent = data.data.map((data) => {
-      return this.formatDate(data.date_expenditure);
-    });
-    this.events.push(...listEvent);
-  },
-    watch: {
-    date(value) {
-      this.incomes = this.listAllincome.filter((data) => {
-        // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
-        return date.formatDate(value, "YYYY-MM-DD") == data.date;
+    async getactivity() {
+      const { data } = await axios.get(
+        "http://localhost:3000/activity_in_farm/list/" + this.$route.query.id
+      );
+      // console.log(data.data);
+      this.listAllactivity = data.data;
+      this.date = this.formatDate(new Date());
+      this.events = data.data.map((data) => {
+        return this.formatDate(data.date);
       });
-      this.expenditures = this.listAllexpenditure.filter((data) => {
-        return date.formatDate(value, "YYYY-MM-DD") == data.date_expenditure;
+    },
+
+    async getfarm() {
+      const { data } = await axios.get(
+        "http://localhost:3000/farm/" + this.$route.query.id
+      );
+      this.farm = data.data;
+    },
+  },
+  watch: {
+    date(value) {
+      this.activity_in_farms = this.listAllactivity.filter((data) => {
+        // console.log(
+        //   date.formatDate(value, "YYYY/MM/DD"),
+        //   this.formatDate(data.date)
+        // );
+        return (
+          date.formatDate(value, "YYYY/MM/DD") == this.formatDate(data.date)
+        );
       });
     },
   },
@@ -167,6 +141,13 @@ export default {
 <style scoped src="../css/home.css">
 </style>
 <style scoped>
+
+.boxactivity {
+  border-radius: 20px;
+  background: white;
+  padding: 2px 4px 15px 4px;
+  margin: 2px 2px 2px 2px;
+}
 .greencircle {
   width: 21px;
   height: 21px;

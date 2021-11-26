@@ -9,7 +9,7 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'account_calendar' })"
+            @click="$router.push({ name: 'account_calendar' , query: { id: $route.query.id } })"
           />
         </div>
 
@@ -25,6 +25,7 @@
         rounded
         style="background: #2d9cdb; color: white"
         label="รายรับ"
+        @click="$router.push({ name: 'add_income' , query: { id: $route.query.id } })"
       />
       <q-btn
         class="col"
@@ -32,7 +33,7 @@
         rounded
         style="background: #f2994a; color: white; opacity: 0.5"
         label="รายจ่าย"
-        @click="$router.push({ name: 'add_expenditure' })"
+        @click="$router.push({ name: 'add_expenditure' , query: { id: $route.query.id } })"
       />
     </div>
     <div class="font q-px-md">
@@ -102,7 +103,7 @@
             v-model="amount"
             color="teal"
             label="รวมจำนวนเงิน"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']" mask="#####.##"
           >
             <template v-slot:prepend> ฿ </template>
           </q-input>
@@ -260,7 +261,7 @@ export default {
     onSubmit() {
       this.amount_net = this.sharemoney(this.amount,this.percen_split)
       axios.post(
-        `http://localhost:3000/income/create/a07f9bfa-e8b2-4125-8036-acf3d7048e09/4da0b5f4-3ce8-4951-891d-d7c9ee233671`,
+        `http://localhost:3000/income/create/${this.$route.query.id}/${this.$route.query.owner}` ,
         {
           date_income: this.date_income,
           amount: this.amount,
@@ -271,8 +272,8 @@ export default {
           percen_split: this.percen_split,
           rubber_price: this.rubber_price,
           note: this.note,
-          farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
-          user_id: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
+          farm_id: this.$route.query.id,
+          user_id: this.$route.query.owner,
           store_in: this.store_in,
           telstore_in: this.telstore_in
         }
@@ -283,6 +284,7 @@ export default {
         });
       this.$router.push({
         path: "/account_calendar",
+        query: { id: this.$route.query.id }
       });
     },
     

@@ -6,13 +6,11 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="
-              $router.push({ name: 'myfarm', query: { id: farm.user_id } })
-            "
+            @click="$router.push({ name: 'myfarm', query: { id: farm.owner } })"
           />
         </div>
 
-        <div class="col-6 font header-title">ข้อมูลสวน</div>
+        <div class="col-6 font header-title">ข้อมูลสวน </div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -25,7 +23,7 @@
               @click="
                 $router.push({
                   name: 'edit_detail_farm',
-                  query: { id: farm.farm_id }
+                  query: { id: farm.farm_id, idu: employee[0].owner },
                 })
               "
               round
@@ -38,7 +36,13 @@
               round
               color="deep-orange-13"
               icon="delete"
-              @click="showNotif"
+              @click="
+                DeleteFarm();
+                $router.push({
+                  name: 'myfarm',
+                  query: { id: farm.owner },
+                });
+              "
             />
           </div>
         </div>
@@ -50,6 +54,8 @@
             farm.address_province
           }}
         </div>
+        <div>วันที่ปลูกยาง : {{ formatDate(farm.planing_date) }}</div>
+        <div>พันธุ์ยาง : {{ farm.rubber_variety.varieties }}</div>
         <div>เนื้อที่ปลูก : {{ farm.area }} ไร่</div>
         <div v-if="nameEmployee">
           ผู้ดูแล : {{ nameEmployee.fname }} {{ nameEmployee.lname }}
@@ -69,9 +75,7 @@
           @click="
             $router.push({
               name: 'account_calendar',
-              query: {
-                id: farm.farm_id
-              }
+              query: { id: farm.farm_id, owner: farm.owner },
             })
           "
           unelevated
@@ -103,31 +107,44 @@
 <script>
 import graph_farm from "../components/graph_farm.vue";
 import axios from "axios";
+import { date } from "quasar";
 
 export default {
   async mounted() {
-    this.getfarm();
-    this.getemployee();
-    this.getnameEmployee();
+    await this.getfarm();
+    await this.getemployee();
+    await this.getnameEmployee();
+    // await this.deletemp();
+    
+    //  this.DeleteEvent();
+    // await this.getrubber_var();
   },
   components: {
-    graph_farm
+    graph_farm,
   },
   data() {
-    const id = { id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09" };
+    const id = { id: this.$route.query.id };
     return {
       leftDrawerOpen: false,
       model: null,
       secondModel: "graph_farm",
-      farm: {},
+      farm: {
+        rubber_variety: {},
+      },
       nameEmployee: [],
       employee: [],
       payang_user: [],
       user_has_farm: [],
-      id
+      id,
+      allrubber: {},
+      date: " ",
     };
   },
   methods: {
+    formatDate(dateString) {
+      return date.formatDate(dateString, "YYYY/MM/DD");
+    },
+
     async getfarm() {
       const { data } = await axios.get(
         "http://localhost:3000/farm/" + this.$route.query.id
@@ -144,30 +161,44 @@ export default {
     },
     async getnameEmployee() {
       const { data } = await axios.get(
-        "http://localhost:3000/payang_user/4da0b5f4-3ce8-4951-891d-d7c9ee233671"
+        "http://localhost:3000/payang_user/" + this.employee[0].employee
       );
       this.nameEmployee = data.data;
-      // console.log(data.data);
+      // console.log(employee[0].employee);
     },
 
-    showNotif() {
-      this.$q
-        .dialog({
-          title: "Confirm",
-          message: "Would you delete the data? ",
-          cancel: true,
-          persistent: true,
-          html: true
-        })
-        .onOk(() => {
-          // console.log(">>>> OK");
-          this.$router.push({
-            path: "/Myfarm",
-            query: { id: farm.user_id }
-          });
-        });
-    }
-  }
+    // async deletemp() {
+    //   axios.delete(
+    //     "http://localhost:3000/payang_user/delete/" + this.employee[0].employee
+    //   );
+    // },
+    async DeleteFarm() {
+      axios.delete("http://localhost:3000/farm/delete/" + this.employee[0].farm_id);
+      // await this.deletemp();
+    },
+  },
+
+  // async DeleteEvent() {
+  //   this.$q
+  //     .dialog({
+  //       title: "Confirm",
+  //       message: "Would you delete the data? ",
+  //       cancel: true,
+  //       persistent: true,
+  //       html: true,
+  //     })
+  //     .onOk(() => {
+  //       axios.delete(
+  //         "http://localhost:3000/farm/delete/" + this.$route.query.id
+  //       );
+  //     });
+  //     this.$router.push({
+  //     path: "/myfarm",
+  //     query: {
+  //       id: farm.user_id
+  //     },
+  //   });
+  // },
 };
 </script>
 <style scoped src="../css/home.css"></style>
@@ -175,6 +206,6 @@ export default {
 <style scoped>
 .box_detail {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 </style>

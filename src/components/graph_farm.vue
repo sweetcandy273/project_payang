@@ -39,6 +39,7 @@ const timeStamp = Date.now();
 
 const date_now = date.formatDate(timeStamp, "YYYY-MM-DD");
 const year_now = date_now.slice(0, 4);
+const month_now = date_now.slice(5, 7);
 
 import LineChart from "./LineChart.js";
 
@@ -48,77 +49,67 @@ export default {
   components: { LineChart },
   data() {
     return {
-      owner: "",
+      
       productyearly: {},
-      product: 0.0,
+      product: 0,
 
       year: year_now,
       year_now: year_now,
+
+      month_now: month_now,
 
       farm_id: "",
 
       productmonthly: {},
       monthget: "",
       datacollection: null,
-
-      Jan: 0.0,
-      Feb: 0.0,
-      Mar: 0.0,
-      Apr: 0.0,
-      May: 0.0,
-      June: 0.0,
-      Jul: 0.0,
-      Aug: 0.0,
-      Sep: 0.0,
-      Oct: 0.0,
-      Nov: 0.0,
-      Dec: 0.0,
-
+      totalProductPerMonths: [],
     };
   },
+
   async mounted() {
     this.farm_id = this.item.id;
     // console.log(this.farm_id);
-    // await this.getproductyearly();
-    await this.fillData
-    (this.Jan,
-    this.Feb,
-    this.Mar,
-    this.Apr,
-    this.May,
-    this.June,
-    this.Jul,
-    this.Aug,
-    this.Sep,
-    this.Oct,
-    this.Nov,
-    this.Dec);
+    await this.getproductyearly();
+    await this.getproductmountly();
+    this.fillData();
   },
   methods: {
-    clickback() {
+    async clickback() {
       this.year = this.year - 1;
-      this.getproductyearly();
+      await this.getproductyearly();
+      await this.getproductmountly();
+      this.fillData();
     },
-    clicknext() {
+    async clicknext() {
       if (this.year < this.year_now) {
         this.year = this.year + 1;
-        this.getproductyearly();
+        await this.getproductyearly();
+        await this.getproductmountly();
+        this.fillData();
+      }
+    },
+    async getproductmountly() {
+      const { data } = await this.$axios.get(
+        "/income/productmonthly/" + this.year + "/" + this.farm_id
+      );
+
+      this.totalProductPerMonths = data.data.map((m) => m.total);
+    },
+
+    async getproductyearly() {
+      const { data } = await this.$axios.get(
+        "/income/productyearlybyfarm/" + this.year + "/" + this.farm_id
+      );
+      this.productyearly = data.data;
+
+      if (this.productyearly === "NaN") {
+        this.product = parseFloat(Number(0.0)).toFixed(2);
+      } else {
+        this.product = parseFloat(Number(this.productyearly)).toFixed(2);
       }
     },
 
-    // async getproductyearly() {
-    //   const { data } = await this.$axios.get(
-    //     "/income/productyearlybyfarm/" + this.year + "/" + this.farm_id
-    //   );
-    //   this.productyearly = data.data;
-    //   console.log(data.data);
-    //   if (this.productyearly === "NaN") {
-    //     this.product = parseFloat(Number(0.0)).toFixed(2);
-    //   } else {
-    //     this.product = parseFloat(Number(this.productyearly)).toFixed(2);
-    //   }
-    // },
- 
     fillData() {
       this.datacollection = {
         labels: [
@@ -138,9 +129,7 @@ export default {
         datasets: [
           {
             label: "น้ำยางสด : กิโลกรัม",
-            data: [
-              
-            ],
+            data: this.totalProductPerMonths,
             fill: false,
             borderColor: "#4e7971",
             backgroundColor: "#2554FF",

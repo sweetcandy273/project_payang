@@ -60,12 +60,8 @@
         <div class="row q-pt-md" style="font-size: 18px">
           ร้าน : {{ incomes.store_in }}
         </div>
-        <div class="row" style="font-size: 18px">
-          ผู้ได้รับส่วนแบ่ง : กนกวรรณ
-        </div>
-        <div class="row" style="font-size: 18px">
-          %ส่วนแบ่ง : {{ incomes.percen_split }}
-        </div>
+        
+        <div class="row" style="font-size: 18px">%ส่วนแบ่ง : {{incomes.percen_split}}</div>
         <div class="row">
           <div class="col q-pt-md" style="font-size: 18px">รวมรายรับสุทธิ</div>
           <div class="text-right" style="font-size: 30px">
@@ -87,7 +83,7 @@
                 icon="edit"
                 @click="
                   $router.push({
-                    path: 'edit_income',
+                    path: 'edit_income', 
                     query: {
                       id: incomes.in_id
                     }
@@ -118,7 +114,10 @@ export default {
   name: "farms",
   data() {
     return {
-      incomes: { farm: {} }
+      incomes: {
+        farm:{}
+      },
+     
     };
   },
   mounted() {

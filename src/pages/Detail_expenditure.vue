@@ -8,8 +8,8 @@
               $router.push({
                 path: 'account_calendar',
                 query: {
-                  id: expenditures.farm_id
-                }
+                  id: expenditures.expen_id,
+                },
               })
             "
             name="arrow_back_ios"
@@ -61,9 +61,6 @@
         <div class="row q-pt-md" style="font-size: 18px">
           ร้าน : {{ expenditures.store_expen }}
         </div>
-        <div class="row q-pb-md" style="font-size: 18px">
-          ผู้รับผิดชอบ : กนกวรรณ
-        </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="q-pt-md" style="font-size: 18px">
           บันทึก : {{ expenditures.note }}
@@ -77,7 +74,14 @@
                 style="width: 50px; height: 50px"
                 color="orange-4"
                 icon="edit"
-                @click="$router.push({ path: 'edit_expenditure' })"
+                @click="
+                  $router.push({
+                    path: 'edit_expenditure',
+                    query: {
+                      id: expenditures.expen_id,
+                    },
+                  })
+                "
               />
 
               <q-btn
@@ -102,8 +106,8 @@ export default {
   data() {
     return {
       expenditures: {
-        farm: {}
-      }
+        farm:{}
+      },
     };
   },
   mounted() {
@@ -128,8 +132,8 @@ export default {
       this.$router.push({
         path: "/account_calendar"
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped src="../css/home.css"></style>

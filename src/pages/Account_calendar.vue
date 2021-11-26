@@ -6,12 +6,7 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="
-              $router.push({
-                name: 'detail_farm',
-                query: { id: $route.query.id }
-              })
-            "
+            @click="$router.push({ name: 'detail_farm' , query: { id: $route.query.id } })"
           />
         </div>
 
@@ -21,13 +16,12 @@
     </q-header>
 
     <q-splitter v-model="splitterModel" horizontal>
-      <div class="row justify-center">
+      <div class="row justify-center q-pa-md">
         <q-date
           v-model="date"
           color="green"
           :events="events"
-          :event-color="date => (date[9] % 2 === 0 ? 'red' : 'red')"
-          today-btn
+          :event-color="(date) => (date[9] % 2 === 0 ? 'red' : 'red')"
         />
       </div>
     </q-splitter>
@@ -50,8 +44,8 @@
             $router.push({
               path: 'detail_income',
               query: {
-                id: data.in_id
-              }
+                id: data.in_id,
+              },
             })
           "
         >
@@ -93,8 +87,8 @@
             $router.push({
               path: 'detail_expenditure',
               query: {
-                id: data.expen_id
-              }
+                id: data.expen_id,
+              },
             })
           "
         >
@@ -121,7 +115,7 @@
         round
         style="background: #4e7971; color: white; width: 50px; height: 50px"
         icon="add"
-        @click="$router.push({ name: 'add_income' })"
+        @click="$router.push({ name: 'add_income' , query: { id: $route.query.id } })"
       />
     </div>
   </q-page>
@@ -137,10 +131,10 @@ export default {
       incomes: [],
       expenditures: [],
       splitterModel: 50,
-      date: "",
+      date: " ",
       events: [],
       listAllincome: [],
-      listAllexpenditure: []
+      listAllexpenditure: [],
     };
   },
   mounted() {
@@ -152,63 +146,45 @@ export default {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getIncome() {
-      try {
-        this.$q.loading.show();
-        const { data } = await axios.get(
-          `http://localhost:3000/income/` + this.$route.query.id
-        );
+      const { data } = await axios.get(
+        `http://localhost:3000/income/`+ this.$route.query.id
+      );
 
-        this.listAllincome = data.data;
-        this.date = this.formatDate(new Date());
-        const listEvent = data.data.map(data => {
-          return this.formatDate(data.date_income);
-        });
-        this.events.push(...listEvent);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
+      this.listAllincome = data.data;
+      this.date = this.formatDate(new Date());
+      const listEvent = data.data.map((data) => {
+        return this.formatDate(data.date_income);
+      });
+      this.events.push(...listEvent);
     },
     async getExpenditure() {
-      try {
-        this.$q.loading.show();
-        const { data } = await axios.get(
-          "http://localhost:3000/expenditure/listbyfarm/" + this.$route.query.id
-        );
-        this.listAllexpenditure = data.data;
-        this.date = this.formatDate(new Date());
-        const listEvent = data.data.map(data => {
-          return this.formatDate(data.date_expenditure);
-        });
-        this.events.push(...listEvent);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
-    }
+      const { data } = await axios.get(
+        "http://localhost:3000/expenditure/listbyfarm/"+ this.$route.query.id
+      );
+      this.listAllexpenditure = data.data;
+      this.date = this.formatDate(new Date());
+      const listEvent = data.data.map((data) => {
+        return this.formatDate(data.date_expenditure);
+      });
+      this.events.push(...listEvent);
+    },
   },
   watch: {
     date(value) {
-      this.incomes = this.listAllincome.filter(data => {
+      this.incomes = this.listAllincome.filter((data) => {
         // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
         return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
       });
-      this.expenditures = this.listAllexpenditure.filter(data => {
+      this.expenditures = this.listAllexpenditure.filter((data) => {
         return date.formatDate(value, "YYYY-MM-DD") == data.date_expenditure;
       });
-    }
-  }
+    },
+  },
 };
 </script>
-<style scoped src="../css/home.css"></style>
+<style scoped src="../css/home.css">
+</style>
 <style scoped>
-.q-date {
-  width: 90%;
-  font-family: "Kanit", sans-serif;
-}
-
 .greencircle {
   width: 21px;
   height: 21px;

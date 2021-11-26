@@ -1,9 +1,6 @@
 <template>
   <div>
     <q-header>
-      <!-- <q-toolbar>
-        <q-space></q-space>
-      </q-toolbar>  -->
       <q-toolbar class="text-center row">
         <div class="col flex">
           <img
@@ -13,8 +10,8 @@
               $router.push({
                 name: 'account_calendar',
                 query: {
-                  id: expenditures.expen_id ,
-                },
+                  id: expenditures.expen_id
+                }
               })
             "
           />
@@ -51,7 +48,7 @@
         unelevated
         :options="[
           { value: 'Maintenance', slot: 'Maintenance' },
-          { value: 'Equipment', slot: 'Equipment' },
+          { value: 'Equipment', slot: 'Equipment' }
         ]"
       >
         <template v-slot:Maintenance>
@@ -95,7 +92,6 @@
   </div>
 </template>
 <script>
-// import axios from "axios";
 import { date } from "quasar";
 import Editmaintenance from "../components/Editmaintenance.vue";
 import Editequipment from "../components/Editequipment.vue";
@@ -104,31 +100,29 @@ export default {
     return {
       date_expenditure: "",
       type: "",
-      expenditures: {},
+      expenditures: {}
     };
   },
   components: {
     Editequipment,
-    Editmaintenance,
+    Editmaintenance
   },
 
   mounted() {
     this.getExpen();
-    // this.getfarm();
   },
   methods: {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getExpen() {
-      const { data } = await axios.get(
-        `http://localhost:3000/expenditure/${this.$route.query.id}`
+      const { data } = await this.$axios.get(
+        `/expenditure/${this.$route.query.id}`
       );
       this.expenditures = data.data;
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>

@@ -118,11 +118,6 @@
 </template>
 
 <script>
-// import Vue from "vue";
-// import VueCompositionAPI from "@vue/composition-api";
-import axios from "axios";
-// Vue.use(VueCompositionAPI);
-
 export default {
   data() {
     return {
@@ -130,35 +125,48 @@ export default {
     };
   },
   async mounted() {
-    const { data } = await axios.get(
-      "http://localhost:3000/payang_user/" + this.$route.query.id
-    );
-    this.payang_user = data.data;
-    // console.log(data.data);
+    try {
+      this.$q.loading.show();
+
+      const { data } = await this.$axios.get(
+        "/payang_user/" + this.$route.query.id
+      );
+      this.payang_user = data.data;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.$q.loading.hide();
+    }
   },
 
   methods: {
     async onSubmit() {
-      const { data } = await axios.put(
-        "http://localhost:3000/payang_user/update/" + this.$route.query.id,
-        {
-          fname: this.payang_user.fname,
-          lname: this.payang_user.lname,
-          phone_number: this.payang_user.phone_number,
-          email: this.payang_user.email,
-          address: this.payang_user.address,
-          address_district: this.payang_user.address_district,
-          address_province: this.payang_user.address_province,
-          zip_code: this.payang_user.zip_code
-        }
-      );
-      this.payang_user = data.data;
-      // console.log(data.data);
+      try {
+        this.$q.loading.show();
 
-      this.$router.push({
-        path: "/home",
-        query: { id: this.payang_user.user_id }
-      });
+        const { data } = await this.$axios.put(
+          "/payang_user/update/" + this.$route.query.id,
+          {
+            fname: this.payang_user.fname,
+            lname: this.payang_user.lname,
+            phone_number: this.payang_user.phone_number,
+            email: this.payang_user.email,
+            address: this.payang_user.address,
+            address_district: this.payang_user.address_district,
+            address_province: this.payang_user.address_province,
+            zip_code: this.payang_user.zip_code
+          }
+        );
+        this.payang_user = data.data;
+
+        this.$router.push({
+          name: "home"
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     }
   }
 };

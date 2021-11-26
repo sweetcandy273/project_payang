@@ -282,7 +282,6 @@ export default {
       const auth = getAuth();
       signOut(auth)
         .then(() => {
-          // this.$forceUpdate();
           this.$router.push({
             name: "login"
           });

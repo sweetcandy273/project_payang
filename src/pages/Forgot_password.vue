@@ -42,11 +42,6 @@
 </template>
 
 <script>
-// import Vue from "vue";
-// import VueCompositionAPI from "@vue/composition-api";
-
-// Vue.use(VueCompositionAPI);
-
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 

@@ -142,7 +142,6 @@ export default {
     },
     date(value) {
       this.incomes = this.listAllincome.filter(data => {
-        // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
         return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
       });
       this.expenditures = this.listAllexpenditure.filter(data => {

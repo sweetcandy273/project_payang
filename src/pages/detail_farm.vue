@@ -111,9 +111,17 @@ import { date } from "quasar";
 
 export default {
   async mounted() {
-    await this.getfarm();
-    await this.getemployee();
-    await this.getnameEmployee();
+    try {
+      this.$q.loading.show();
+
+      await this.getfarm();
+      await this.getemployee();
+      await this.getnameEmployee();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.$q.loading.hide();
+    }
   },
   components: {
     graph_farm
@@ -142,20 +150,43 @@ export default {
     },
 
     async getfarm() {
-      const { data } = await this.$axios.get("/farm/" + this.$route.query.id);
-      this.farm = data.data;
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get("/farm/" + this.$route.query.id);
+        this.farm = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
     async getemployee() {
-      const { data } = await this.$axios.get(
-        "/farm_has_employee/list/" + this.$route.query.id
-      );
-      this.employee = data.data;
+      try {
+        this.$q.loading.show();
+
+        const { data } = await this.$axios.get(
+          "/farm_has_employee/list/" + this.$route.query.id
+        );
+        this.employee = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
     async getnameEmployee() {
-      const { data } = await this.$axios.get(
-        "/payang_user/" + this.employee[0].employee
-      );
-      this.nameEmployee = data.data;
+      try {
+        this.$q.loading.show();
+
+        const { data } = await this.$axios.get(
+          "/payang_user/" + this.employee[0].employee
+        );
+        this.nameEmployee = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
 
     async DeleteEmp() {
@@ -166,7 +197,6 @@ export default {
 
     async DeleteFarm() {
       await this.$axios.delete("/farm/delete/" + this.$route.query.id);
-
       await this.DeleteEmp();
     }
   }

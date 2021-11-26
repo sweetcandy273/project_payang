@@ -60,8 +60,10 @@
         <div class="row q-pt-md" style="font-size: 18px">
           ร้าน : {{ incomes.store_in }}
         </div>
-        
-        <div class="row" style="font-size: 18px">%ส่วนแบ่ง : {{incomes.percen_split}}</div>
+
+        <div class="row" style="font-size: 18px">
+          %ส่วนแบ่ง : {{ incomes.percen_split }}
+        </div>
         <div class="row">
           <div class="col q-pt-md" style="font-size: 18px">รวมรายรับสุทธิ</div>
           <div class="text-right" style="font-size: 30px">
@@ -83,7 +85,7 @@
                 icon="edit"
                 @click="
                   $router.push({
-                    path: 'edit_income', 
+                    path: 'edit_income',
                     query: {
                       id: incomes.in_id
                     }
@@ -107,7 +109,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 import { date } from "quasar";
 export default {
   name: "incomes",
@@ -115,38 +116,26 @@ export default {
   data() {
     return {
       incomes: {
-        farm:{}
-      },
-     
+        farm: {}
+      }
     };
   },
   mounted() {
     this.getIncome();
-    // this.getfarm();
   },
   methods: {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getIncome() {
-      const { data } = await axios.get(
-        `http://localhost:3000/income/findincome/${this.$route.query.id}`
+      const { data } = await this.$axios.get(
+        `/income/findincome/${this.$route.query.id}`
       );
       this.incomes = data.data;
-
-      console.log(data.data);
     },
 
-    // async getfarm() {
-    //   const { data} = await axios.get(
-    //     `http://localhost:3000/farm/${this.$route.query.id}`
-    //   );
-    //   this.farms = data.data;
-    // },
     Notidelete() {
-      axios.delete(
-        `http://localhost:3000/income/delete/${this.$route.query.id}`
-      );
+      this.$axios.delete(`/income/delete/${this.$route.query.id}`);
       this.$router.push({
         path: "/account_calendar"
       });
@@ -155,7 +144,6 @@ export default {
   watch: {
     date(value) {
       this.incomes = this.listAllincome.filter(data => {
-        // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
         return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
       });
     }

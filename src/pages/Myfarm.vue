@@ -54,11 +54,9 @@
       <div class="q-mt-md">
         <hr width="250" />
       </div>
-      
     </div>
 
     <div class="add_farm text-center fixed-bottom q-pa-xl">
-      <!-- ส่ง params user_id -->
       <q-btn
         unelevated
         round
@@ -67,7 +65,7 @@
         @click="
           $router.push({
             name: 'add_detail_farm',
-            query: { id: $route.query.id , }
+            query: { id: $route.query.id }
           })
         "
       />
@@ -76,7 +74,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -90,15 +87,18 @@ export default {
 
   methods: {
     async getlistfarm() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm/list/" + this.$route.query.id
-      );
-      this.farms = data.data;
-      // console.log(data.data);
-    },
-     
- 
- 
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          "/farm/list/" + this.$route.query.id
+        );
+        this.farms = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
+    }
   }
 };
 </script>

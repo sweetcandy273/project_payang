@@ -7,7 +7,7 @@
             @click="
               $router.push({
                 name: 'calender_farm',
-                query: { id: $route.query.id },
+                query: { id: $route.query.id }
               })
             "
             name="arrow_back_ios"
@@ -27,7 +27,7 @@
         </div>
 
         <div class="q-px-md font">
-          <q-input color="teal" filled v-model="date" mask="date">
+          <q-input color="teal" filled v-model="date" mask="date" class="font">
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer" color="teal">
                 <q-popup-proxy
@@ -60,11 +60,8 @@
   </div>
 </template>
 
-
-
 <script>
 import axios from "axios";
-import { date } from "quasar";
 
 export default {
   data() {
@@ -72,49 +69,55 @@ export default {
       date: "",
       activity: " ",
       farm_id: " ",
-      farm: {},
+      farm: {}
     };
   },
-  mounted(){
+  mounted() {
     this.getfarm();
   },
   methods: {
-    onSubmit() {
-      axios
-        .post("http://localhost:3000/activity_in_farm/create", {
-          date: this.date,
-          activity: this.activity,
-          farm_id: this.$route.query.id,
-        })
-        .then((response) => {
-          console.log(response);
+    async onSubmit() {
+      try {
+        this.$q.loading.show();
+        await this.$axios
+          .post("/activity_in_farm/create", {
+            date: this.date,
+            activity: this.activity,
+            farm_id: this.$route.query.id
+          })
+          .then(response => {
+            console.log(response);
+          });
+        this.$router.push({
+          path: "/calender_farm",
+          query: {
+            id: this.$route.query.id
+          }
         });
-      this.$router.push({
-        path: "/calender_farm",
-        query: {
-          id: this.$route.query.id,
-        },
-      });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
-     async getfarm() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm/" + this.$route.query.id
-      );
-      this.farm = data.data;
-      
-    },
-  },
-  
+    async getfarm() {
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get("/farm/" + this.$route.query.id);
+        this.farm = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
+    }
+  }
 };
 </script>
 
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>
 <style scoped>
 .other {
   float: right;
 }
 </style>
-
-
-

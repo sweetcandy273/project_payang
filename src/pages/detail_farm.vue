@@ -10,7 +10,7 @@
           />
         </div>
 
-        <div class="col-6 font header-title">ข้อมูลสวน </div>
+        <div class="col-6 font header-title">ข้อมูลสวน</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -167,15 +167,20 @@ export default {
       // console.log(employee[0].employee);
     },
 
-    // async deletemp() {
-    //   axios.delete(
-    //     "http://localhost:3000/payang_user/delete/" + this.employee[0].employee
-    //   );
-    // },
-    async DeleteFarm() {
-      axios.delete("http://localhost:3000/farm/delete/" + this.employee[0].farm_id);
+     async DeleteEmp() {
+      axios.delete("http://localhost:3000/farm_has_employee/delete/" + this.$route.query.id);
       // await this.deletemp();
     },
+  
+
+    
+
+    async DeleteFarm() {
+      axios.delete("http://localhost:3000/farm/delete/" + this.$route.query.id);
+      // await this.deletemp();
+      await this.DeleteEmp();
+    },
+     
   },
 
   // async DeleteEvent() {

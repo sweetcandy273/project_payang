@@ -9,7 +9,7 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'account_calendar' , query: { id: $route.query.id } })"
+            @click="$router.push({ name: 'account_calendar' , query: { id: $route.query.id, owner: $route.query.owner } })"
           />
         </div>
 
@@ -25,7 +25,7 @@
         rounded
         style="background: #2d9cdb; color: white"
         label="รายรับ"
-        @click="$router.push({ name: 'add_income' , query: { id: $route.query.id } })"
+        @click="$router.push({ name: 'add_income' , query: { id: $route.query.id, owner: $route.query.owner } })"
       />
       <q-btn
         class="col"
@@ -33,7 +33,7 @@
         rounded
         style="background: #f2994a; color: white; opacity: 0.5"
         label="รายจ่าย"
-        @click="$router.push({ name: 'add_expenditure' , query: { id: $route.query.id } })"
+        @click="$router.push({ name: 'add_expenditure' , query: { id: $route.query.id, owner: $route.query.owner } })"
       />
     </div>
     <div class="font q-px-md">
@@ -69,13 +69,18 @@
       <div class="row">
         <div class="col">
           <q-input filled v-model="weight_rubber" label="น้ำหนักยาง"
-           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกน้ำหนักยาง']">
+           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกน้ำหนักยาง']" 
+              fill-mask="0"
+              reverse-fill-mask
+              mask="#.##">
             <template v-slot:prepend> กก. </template>
           </q-input>
         </div>
         <div class="col q-ml-md">
           <q-input filled v-model="percent" color="teal" label="เปอร์เซ็น"
-           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเปอร์เซ็น']">
+           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเปอร์เซ็น']" fill-mask="0"
+              reverse-fill-mask
+              mask="#.##">
             <template v-slot:prepend> % </template>
           </q-input>
         </div>
@@ -84,13 +89,17 @@
         <div class="row">
           <div class="col">
             <q-input filled v-model="dry_rubber" label="เนื้อยางแห้ง"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อยางแห้ง']">
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อยางแห้ง']" fill-mask="0"
+              reverse-fill-mask
+              mask="#.##">
               <template v-slot:prepend> ก. </template>
             </q-input>
           </div>
           <div class="col q-ml-md">
             <q-input filled v-model="rubber_price" label="ราคาน้ำยาง"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกราคาน้ำยาง']">
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกราคาน้ำยาง']" fill-mask="0"
+              reverse-fill-mask
+              mask="#.##">
               <template v-slot:prepend> บ./กก. </template>
             </q-input>
           </div>
@@ -103,7 +112,9 @@
             v-model="amount"
             color="teal"
             label="รวมจำนวนเงิน"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']" mask="#####.##"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']" fill-mask="0"
+              reverse-fill-mask
+              mask="#.##"
           >
             <template v-slot:prepend> ฿ </template>
           </q-input>
@@ -111,9 +122,9 @@
       </div>
       <div class="row">
         <div class="col">
-          <q-input filled v-model="store_in" label="ชื่อร้านค้า"
+          <q-input filled v-model="store_in" label="ชื่อร้านค้า" icon="home"
           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า']">
-            <template v-slot:prepend> กก. </template>
+            <template v-slot:prepend ></template>
           </q-input>
         </div>
         <div class="col q-ml-md">
@@ -235,14 +246,14 @@ export default {
 
     //   console.log(listemployee);
     // },
-    async getempname(user_id) {
-      const { data } = await axios.get(
-        "http://localhost:3000/payang_user/" + user_id
-      );
-      this.listemployeename = data.data;
-      console.log(this.listemployeename.fname);
-      return this.listemployeename.fname;
-    },
+    // async getempname(user_id) {
+    //   const { data } = await axios.get(
+    //     "http://localhost:3000/payang_user/" + user_id
+    //   );
+    //   this.listemployeename = data.data;
+    //   console.log(this.listemployeename.fname);
+    //   return this.listemployeename.fname;
+    // },
     sharemoney:function(amount,percen_split){
       // console.warn("amount : "+amount)
       // console.warn("percen_split : "+percen_split)
@@ -273,18 +284,18 @@ export default {
           rubber_price: this.rubber_price,
           note: this.note,
           farm_id: this.$route.query.id,
-          user_id: this.$route.query.owner,
+          owner: this.$route.query.owner,
           store_in: this.store_in,
           telstore_in: this.telstore_in
         }
       )
       
         .then((response) => {
-          console.log(response);
+          // console.log(response);
         });
       this.$router.push({
         path: "/account_calendar",
-        query: { id: this.$route.query.id }
+        query: { id: this.$route.query.id, owner: this.$route.query.owner }
       });
     },
     

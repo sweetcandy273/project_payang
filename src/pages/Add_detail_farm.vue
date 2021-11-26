@@ -366,7 +366,7 @@ export default {
           employee: this.employee.user_id
         }
       );
-      console.log(data.data);
+      // console.log(data.data);
     },
 
     async getrubber_var() {

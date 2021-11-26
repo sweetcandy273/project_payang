@@ -39,14 +39,18 @@
         </div>
         <div class="row">
           <div class="col">
-            <q-input filled v-model="expens.amount" label="รวมจำนวนเงิน">
+            <q-input filled v-model="expens.amount" label="รวมจำนวนเงิน"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']" fill-mask="0"
+              reverse-fill-mask
+              mask="#.##">
               <template v-slot:prepend> ฿ </template>
             </q-input>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <q-input filled v-model="expens.store_expen" label="ชื่อร้านค้า">
+            <q-input filled v-model="expens.store_expen" label="ชื่อร้านค้า" 
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า']" >>
               <template v-slot:prepend> Bann </template>
             </q-input>
           </div>
@@ -55,6 +59,8 @@
               filled
               v-model="expens.telstore_expen"
               label="เบอร์โทรร้านค้า"
+              mask= "###-###-####"
+          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรร้านค้า']"
             >
               <template v-slot:prepend> </template>
             </q-input>
@@ -110,10 +116,7 @@ export default {
       ],
       
       selectshare: false,
-      employee: "",
-     
-      optionsemployee: ["-", "กนกวรรณ", "ชนิกานต์", "อรไท"],
-
+    
       expens: {},
      
     };
@@ -144,9 +147,8 @@ export default {
           note: this.expens.note,
           type: "Equipment",
           title_type: this.expens.title_type,
-          farm_id: "a07f9bfa-e8b2-4125-8036-acf3d7048e09",
-          owner: "4da0b5f4-3ce8-4951-891d-d7c9ee233671",
-          employee: "",
+          farm_id: this.$route.query.id,
+          owner: this.$route.query.owner,
           store_expen: this.expens.store_expen,
           telstore_expen: this.expens.telstore_expen,
         }
@@ -156,7 +158,7 @@ export default {
       this.$router.push({
         path: "/account_calendar",
         query: {
-          id: this.expens.expen_id,
+          id: this.expens.expen_id,owner: this.$route.query.owner 
         },
       });
     },

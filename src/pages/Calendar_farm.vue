@@ -7,7 +7,7 @@
             @click="
               $router.push({
                 name: 'detail_farm',
-                query: { id: farm.farm_id },
+                query: { id: farm.farm_id }
               })
             "
             name="arrow_back_ios"
@@ -21,47 +21,44 @@
     </q-header>
 
     <q-splitter v-model="splitterModel" horizontal>
-      <div class="row justify-center q-pa-md">
-        <div class="">
-          <q-date
-            v-model="date"
-            color="green"
-            :events="events"
-            :event-color="(date) => (date[9] % 2 === 0 ? 'teal' : 'green')"
-          />
-        </div>
+      <div class="row justify-center">
+        <q-date
+          v-model="date"
+          color="green"
+          :events="events"
+          :event-color="date => (date[9] % 2 === 0 ? 'teal' : 'green')"
+          today-btn
+        />
       </div>
     </q-splitter>
 
     <div class="q-pa-md self-center">
-    <div class="boxactivity">
-      <div class="row">
-        <div class="col q-mx-md q-mt-md" style="font-size: 22px">
-          {{ date }}
+      <div class="boxactivity">
+        <div class="row">
+          <div class="col q-mx-md q-mt-md" style="font-size: 22px">
+            {{ date }}
+          </div>
+        </div>
+
+        <div
+          class="q-mx-md q-mt-md"
+          :key="index"
+          v-for="(data, index) in activity_in_farms"
+          style="font-size: 15px"
+          @click="
+            $router.push({
+              name: 'edit_activity',
+              query: {
+                ida: data.act_farm_id,
+                idf: data.farm_id
+              }
+            })
+          "
+        >
+          {{ data.activity }}
         </div>
       </div>
-
-      <div
-        class="q-mx-md q-mt-md"
-        :key="index"
-        v-for="(data, index) in activity_in_farms"
-        style="font-size: 15px"
-        @click="
-          $router.push({
-            name: 'Edit_activity',
-            query: {
-              ida: data.act_farm_id,
-              idf: data.farm_id
-            },
-          })
-        "
-      >
-        {{ data.activity }}
-      </div>
     </div>
-    </div>
-
- 
 
     <div class=" text-center fixed-bottom q-pa-xl">
       <q-btn
@@ -72,16 +69,15 @@
         @click="
           $router.push({
             name: 'add_calender_farm',
-            query: { id: farm.farm_id },
+            query: { id: farm.farm_id }
           })
         "
       />
     </div>
   </div>
 </template>
- 
+
 <script>
-import axios from "axios";
 import { date } from "quasar";
 
 export default {
@@ -92,7 +88,7 @@ export default {
       events: [],
       activity_in_farms: [],
       listAllactivity: [],
-      farm: {},
+      farm: {}
     };
   },
   mounted() {
@@ -105,43 +101,54 @@ export default {
     },
 
     async getactivity() {
-      const { data } = await axios.get(
-        "http://localhost:3000/activity_in_farm/list/" + this.$route.query.id
-      );
-      // console.log(data.data);
-      this.listAllactivity = data.data;
-      this.date = this.formatDate(new Date());
-      this.events = data.data.map((data) => {
-        return this.formatDate(data.date);
-      });
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          "/activity_in_farm/list/" + this.$route.query.id
+        );
+
+        this.listAllactivity = data.data;
+        this.date = this.formatDate(new Date());
+        this.events = data.data.map(data => {
+          return this.formatDate(data.date);
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
 
     async getfarm() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm/" + this.$route.query.id
-      );
-      this.farm = data.data;
-    },
+      try {
+        this.$q.loading.show();
+
+        const { data } = await this.$axios.get("/farm/" + this.$route.query.id);
+        this.farm = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
+    }
   },
   watch: {
     date(value) {
-      this.activity_in_farms = this.listAllactivity.filter((data) => {
-        // console.log(
-        //   date.formatDate(value, "YYYY/MM/DD"),
-        //   this.formatDate(data.date)
-        // );
+      this.activity_in_farms = this.listAllactivity.filter(data => {
         return (
           date.formatDate(value, "YYYY/MM/DD") == this.formatDate(data.date)
         );
       });
-    },
-  },
+    }
+  }
 };
 </script>
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>
 <style scoped>
-
+.q-date {
+  width: 90%;
+  font-family: "Kanit", sans-serif;
+}
 .boxactivity {
   border-radius: 20px;
   background: white;

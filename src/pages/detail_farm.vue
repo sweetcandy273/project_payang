@@ -10,7 +10,7 @@
           />
         </div>
 
-        <div class="col-6 font header-title">ข้อมูลสวน</div>
+        <div class="col-6 font header-title">ข้อมูลสวน </div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -23,7 +23,7 @@
               @click="
                 $router.push({
                   name: 'edit_detail_farm',
-                  query: { id: farm.farm_id, idu: employee[0].owner },
+                  query: { id: farm.farm_id , idu: employee[0].employee },
                 })
               "
               round
@@ -86,7 +86,7 @@
           color="green-4"
         />
       </div>
-
+    
       <div>
         <q-btn
           @click="

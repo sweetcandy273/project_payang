@@ -345,7 +345,7 @@ export default {
         "http://localhost:3000/farm_has_employee/create/" +
           this.create_farm.farm_id +
           "/" +
-          this.employee.user_id,
+          this.$route.query.idu,
         {
           farm_id: this.create_farm.farm_id,
           employee: this.employee.user_id,

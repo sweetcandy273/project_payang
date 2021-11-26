@@ -40,7 +40,9 @@
       <div class="row">
         <div class="col">
           <q-input filled v-model="totalprice" label="รวมจำนวนเงิน"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']">
+          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']" fill-mask="0"
+              reverse-fill-mask
+              mask="#.##">
             <template v-slot:prepend> ฿ </template>
           </q-input>
         </div>
@@ -108,8 +110,7 @@ export default {
       store_expen: "",
       telstore_expen: "",
       selectshare: false,
-      employee: "",
-      optionsemployee: ["-", "กนกวรรณ", "ชนิกานต์", "อรไท"],
+     
       
     };
   },
@@ -127,8 +128,8 @@ export default {
           type:"Maintenance",
           title_type:this.title,
           farm_id: this.$route.query.id,
-          user_id: this.$route.query.owner,
-          employee:"",
+          owner: this.$route.query.owner,
+          
           store_expen :this.store_expen ,
           telstore_expen:this.telstore_expen,
         }
@@ -139,7 +140,7 @@ export default {
         });
       this.$router.push({
         path: "/account_calendar",
-        query: { id: this.$route.query.id }
+        query: { id: this.$route.query.id ,owner: this.$route.query.owner}
       });
       
     },

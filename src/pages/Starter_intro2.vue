@@ -15,11 +15,14 @@
         </div>
         <div class="col-10">
           <div class="text-center font items-center">
-            <div style="font-size: 20px">วางแผนและ</div>
-            <div style="font-size: 20px">สรุปบัญชีทางการเงิน</div>
-            <div style="font-size: 45px">ภายในสวนยาง</div>
-            <div style="font-size: 20px">ที่อยู่ในการดูแล</div>
-            <q-img src="../assets/accounting.png" style="width: 50%" />
+            <div class="q-pa-md">
+              <div style="font-size: 20px">วางแผนและ</div>
+              <div style="font-size: 20px">สรุปบัญชีทางการเงิน</div>
+              <div style="font-size: 45px">ภายในสวนยาง</div>
+              <div style="font-size: 20px">ที่อยู่ในการดูแล</div>
+            </div>
+
+            <q-img src="../assets/accounting.png" />
           </div>
         </div>
         <div class="col-1"></div>
@@ -41,3 +44,21 @@
 <script></script>
 
 <style scoped src="../css/home.css"></style>
+<style>
+@media only screen and (max-width: 2500px) {
+  .q-img {
+    width: 20%;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .q-img {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .q-img {
+    width: 60%;
+  }
+}
+</style>

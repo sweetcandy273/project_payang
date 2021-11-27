@@ -9,9 +9,12 @@
         <div class="col-1"></div>
         <div class="col-10">
           <div class="text-center font items-center">
-            <div style="font-size: 30px">วางแผนการเพาะปลูก</div>
-            <div style="font-size: 45px">สวนยาง</div>
-            <q-img src="../assets/order.png" style="width: 50%" />
+            <div class="q-pa-md">
+              <div style="font-size: 30px">วางแผนการเพาะปลูก</div>
+              <div style="font-size: 45px">สวนยาง</div>
+            </div>
+
+            <q-img class="" src="../assets/order.png" />
           </div>
         </div>
         <div class="col-1 self-center">
@@ -33,3 +36,21 @@
 <script></script>
 
 <style scoped src="../css/home.css"></style>
+<style>
+@media only screen and (max-width: 2500px) {
+  .q-img {
+    width: 20%;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .q-img {
+    width: 60%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .q-img {
+    width: 70%;
+  }
+}
+</style>

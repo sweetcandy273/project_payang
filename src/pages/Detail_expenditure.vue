@@ -8,7 +8,8 @@
               $router.push({
                 path: 'account_calendar',
                 query: {
-                  id: expenditures.expen_id,
+                  id: expens.farm_id,
+                  
                 },
               })
             "
@@ -26,10 +27,10 @@
         <div class="row">
           <div class="col">
             <div class="row" style="font-size: 18px">
-              เจ้าของสวน : {{ expenditures.farm.fname }}
+              เจ้าของสวน : {{ expens.farm.fname }}
             </div>
             <div class="row q-pb-md" style="font-size: 18px">
-              สวน : {{ expenditures.farm.farm_name }}
+              สวน : {{ expens.farm.farm_name }}
             </div>
           </div>
           <div class="col-4 text-right">
@@ -44,26 +45,26 @@
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-py-md">
           <div class="col-8" style="font-size: 28px">
-            {{ expenditures.title_type }}
+            {{ expens.title_type }}
           </div>
           <div class="col text-right q-pt-md" style="font-size: 18px">
-            {{ expenditures.date_expenditure }}
+            {{ expens.date_expenditure }}
           </div>
         </div>
         <div class="row" style="font-size: 20px">
-          ส่วน: {{ expenditures.type }}
+          ส่วน: {{ expens.type }}
         </div>
 
         <div class="text-right" style="font-size: 28px">
-          {{ expenditures.amount }}
+          {{ expens.amount }}
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-pt-md" style="font-size: 18px">
-          ร้าน : {{ expenditures.store_expen }}
+          ร้าน : {{ expens.store_expen }}
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="q-pt-md" style="font-size: 18px">
-          บันทึก : {{ expenditures.note }}
+          บันทึก : {{ expens.note }}
         </div>
         <div class="col q-pa-md self-center">
           <div class="row">
@@ -78,7 +79,7 @@
                   $router.push({
                     path: 'edit_expenditure',
                     query: {
-                      id: expenditures.expen_id,
+                      id: expens.expen_id,
                     },
                   })
                 "
@@ -102,10 +103,10 @@
 <script>
 import axios from "axios";
 export default {
-  name: "expenditures",
+  name: "expens",
   data() {
     return {
-      expenditures: {
+      expens: {
         farm:{}
       },
     };
@@ -122,7 +123,7 @@ export default {
       const { data } = await axios.get(
         `http://localhost:3000/expenditure/show/${this.$route.query.id}`
       );
-      this.expenditures = data.data;
+      this.expens = data.data;
       console.log(data.data);
     },
     Notidelete() {

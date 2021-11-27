@@ -18,7 +18,7 @@
     </q-header>
 
     <div class="q-pa-md font">
-      <q-form @submit="onSubmit" >
+      <q-form @submit="onSubmit">
         <div class="row justify-between">
           <div class="col q-pr-md">
             <q-input
@@ -235,7 +235,6 @@
             class="shadow-2 text-white"
           />
         </div>
-
       </q-form>
     </div>
   </div>
@@ -247,10 +246,7 @@ import { date } from "quasar";
 export default {
   async mounted() {
     this.getday();
-    this.cratefarm();
-    this.createEmp();
     this.getrubber_var();
-    
   },
   data() {
     return {
@@ -280,10 +276,21 @@ export default {
       address_emp: "",
       address_district_emp: "",
       address_province_emp: "",
-      employee: {},
+      create_employee: [],
     };
   },
   methods: {
+    async getrubber_var() {
+      const { data } = await axios.get(
+        "http://localhost:3000/rubber_varieties"
+      );
+      // console.log(data);
+      this.rubberList = data.data.map((rubber) => ({
+        label: rubber.varieties,
+        value: rubber.rubber_varieties_id,
+      }));
+    },
+
     filterRubber(val, update) {
       if (val === "") {
         update(() => {
@@ -337,7 +344,7 @@ export default {
           address_province: this.address_province_emp,
         }
       );
-      this.employee = data.data;
+      this.create_employee = data.data;
       // console.log(data.data);
     },
     async createfarm_emp() {
@@ -345,32 +352,21 @@ export default {
         "http://localhost:3000/farm_has_employee/create/" +
           this.create_farm.farm_id +
           "/" +
-          this.$route.query.idu,
+          this.create_employee.user_id,
         {
           farm_id: this.create_farm.farm_id,
-          employee: this.employee.user_id,
+          employee: this.create_employee.user_id,
         }
       );
       // console.log(data.data);
     },
 
-    async getrubber_var() {
-      const { data } = await axios.get(
-        "http://localhost:3000/rubber_varieties"
-      );
-      // console.log(data);
-      this.rubberList = data.data.map((rubber) => ({
-        label: rubber.varieties,
-        value: rubber.rubber_varieties_id,
-      }));
-    },
-
     async onSubmit() {
-      await this.createEmp();
       await this.cratefarm();
+      await this.createEmp();
       await this.createfarm_emp();
 
-    this.$router.push({
+      this.$router.push({
         path: "/myfarm",
         query: {
           id: this.$route.query.id,

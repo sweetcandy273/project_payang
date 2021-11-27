@@ -8,8 +8,9 @@
               $router.push({
                 path: 'account_calendar',
                 query: {
-                  id: expenditures.expen_id,
-                },
+                  id: expenditures.farm_id,
+                  owner: expenditures.owner
+                }
               })
             "
             name="arrow_back_ios"
@@ -78,8 +79,8 @@
                   $router.push({
                     path: 'edit_expenditure',
                     query: {
-                      id: expenditures.expen_id,
-                    },
+                      id: expenditures.expen_id
+                    }
                   })
                 "
               />
@@ -100,40 +101,39 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 export default {
   name: "expenditures",
   data() {
     return {
       expenditures: {
-        farm:{}
-      },
+        farm: {}
+      }
     };
   },
   mounted() {
     this.getExpen();
-    // this.getfarm();
   },
   methods: {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getExpen() {
-      const { data } = await axios.get(
-        `http://localhost:3000/expenditure/show/${this.$route.query.id}`
+      const { data } = await this.$axios.get(
+        `/expenditure/show/${this.$route.query.id}`
       );
       this.expenditures = data.data;
-      console.log(data.data);
     },
-    Notidelete() {
-      axios.delete(
-        `http://localhost:3000/expenditure/delete/${this.$route.query.id}`
-      );
+    async Notidelete() {
+      await this.$axios.delete(`/expenditure/delete/${this.$route.query.id}`);
       this.$router.push({
-        path: "/account_calendar"
+        path: "/account_calendar",
+        query: {
+          id: expenditures.farm_id,
+          owner: expenditures.owner
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped src="../css/home.css"></style>

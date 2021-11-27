@@ -8,7 +8,8 @@
               $router.push({
                 path: 'account_calendar',
                 query: {
-                  id: incomes.farm_id
+                  id: incomes.farm_id,
+                  owner: incomes.owner
                 }
               })
             "
@@ -134,10 +135,14 @@ export default {
       this.incomes = data.data;
     },
 
-    Notidelete() {
-      this.$axios.delete(`/income/delete/${this.$route.query.id}`);
-      this.$router.push({
-        path: "/account_calendar"
+    async Notidelete() {
+      await this.$axios.delete(`/income/delete/${this.$route.query.id}`);
+      await this.$router.push({
+        path: "/account_calendar",
+        query: {
+          id: this.incomes.farm_id,
+          owner: this.incomes.owner
+        }
       });
     }
   },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-form>
+    <q-form @submit.prevent="onSubmit" class="q-gutter-md">
       <div class="font q-px-md">
         <q-input
           filled
@@ -39,19 +39,32 @@
         </div>
         <div class="row">
           <div class="col">
-            <q-input filled v-model="expens.amount" label="รวมจำนวนเงิน"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']" fill-mask="0"
+            <q-input
+              filled
+              v-model="expens.amount"
+              label="รวมจำนวนเงิน"
+              :rules="[
+                (val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน',
+              ]"
+              fill-mask="0"
               reverse-fill-mask
-              mask="#.##">
+              mask="#.##"
+            >
               <template v-slot:prepend> ฿ </template>
             </q-input>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <q-input filled v-model="expens.store_expen" label="ชื่อร้านค้า" 
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า']" >>
-              <template v-slot:prepend> Bann </template>
+            <q-input
+              filled
+              v-model="expens.store_expen"
+              label="ชื่อร้านค้า"
+              :rules="[
+                (val) => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า',
+              ]"
+              >
+              <template v-slot:prepend></template>
             </q-input>
           </div>
           <div class="col q-ml-md">
@@ -59,14 +72,16 @@
               filled
               v-model="expens.telstore_expen"
               label="เบอร์โทรร้านค้า"
-              mask= "###-###-####"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรร้านค้า']"
+              mask="###-###-####"
+              :rules="[
+                (val) => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรร้านค้า',
+              ]"
             >
-              <template v-slot:prepend> </template>
+              <template v-slot:prepend></template>
             </q-input>
           </div>
         </div>
-<!-- 
+        <!-- 
         <div class="share text-left">
           <q-select
             filled
@@ -91,7 +106,7 @@
             label="บันทึก"
             class="shadow-2 text-white"
             style="width: 100%; background-color: #4e7971"
-            @click="onSubmit()"
+            type="submit"
           />
         </div>
       </div>
@@ -101,10 +116,10 @@
 
 <script>
 import axios from "axios";
+import { date } from "quasar";
 export default {
   data() {
     return {
-     
       title: "",
       titleoption: [
         "ต้นยางพารา",
@@ -114,16 +129,15 @@ export default {
         "ถังน้ำ",
         "แกลลอนใส่น้ำยาง",
       ],
-      
+
       selectshare: false,
-    
+
       expens: {},
-     
     };
   },
   mounted() {
     this.getExpen();
-    
+
     // this.getfarm();
   },
   methods: {
@@ -132,10 +146,9 @@ export default {
     },
     async getExpen() {
       const { data } = await axios.get(
-        `http://localhost:3000/expenditure/${this.$route.query.id}`
+        `http://localhost:3000/expenditure/show/${this.$route.query.id}`
       );
       this.expens = data.data;
-      
     },
 
     async onSubmit() {
@@ -143,12 +156,10 @@ export default {
         "http://localhost:3000/expenditure/update/" + this.$route.query.id,
         {
           date_expenditure: this.expens.date_expenditure,
-          amount: this.expens.totalprice,
+          amount: this.expens.amount,
           note: this.expens.note,
-          type: "Equipment",
+          type:this.expens.type,
           title_type: this.expens.title_type,
-          farm_id: this.$route.query.id,
-          owner: this.$route.query.owner,
           store_expen: this.expens.store_expen,
           telstore_expen: this.expens.telstore_expen,
         }
@@ -158,7 +169,8 @@ export default {
       this.$router.push({
         path: "/account_calendar",
         query: {
-          id: this.expens.expen_id,owner: this.$route.query.owner 
+           id: this.expens.farm_id,
+          owner: this.expens.owner
         },
       });
     },

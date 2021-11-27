@@ -8,8 +8,8 @@
               $router.push({
                 path: 'account_calendar',
                 query: {
-                  id: incomes.farm_id
-                }
+                  id: incomes.farm_id,
+                },
               })
             "
             name="arrow_back_ios"
@@ -60,8 +60,10 @@
         <div class="row q-pt-md" style="font-size: 18px">
           ร้าน : {{ incomes.store_in }}
         </div>
-        
-        <div class="row" style="font-size: 18px">%ส่วนแบ่ง : {{incomes.percen_split}}</div>
+
+        <div class="row" style="font-size: 18px">
+          %ส่วนแบ่ง : {{ incomes.percen_split }}
+        </div>
         <div class="row">
           <div class="col q-pt-md" style="font-size: 18px">รวมรายรับสุทธิ</div>
           <div class="text-right" style="font-size: 30px">
@@ -83,10 +85,10 @@
                 icon="edit"
                 @click="
                   $router.push({
-                    path: 'edit_income', 
+                    name: 'edit_income',
                     query: {
-                      id: incomes.in_id
-                    }
+                      id: incomes.in_id,
+                    },
                   })
                 "
               />
@@ -115,9 +117,8 @@ export default {
   data() {
     return {
       incomes: {
-        farm:{}
+        farm: {},
       },
-     
     };
   },
   mounted() {
@@ -148,18 +149,18 @@ export default {
         `http://localhost:3000/income/delete/${this.$route.query.id}`
       );
       this.$router.push({
-        path: "/account_calendar"
+        path: "/account_calendar",
       });
-    }
+    },
   },
   watch: {
     date(value) {
-      this.incomes = this.listAllincome.filter(data => {
+      this.incomes = this.listAllincome.filter((data) => {
         // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
         return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped src="../css/home.css"></style>

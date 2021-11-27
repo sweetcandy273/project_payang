@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-form>
+     <q-form @submit.prevent="submitExpen" class="q-gutter-md">
       <div class="font q-px-md">
       <q-input
         filled
@@ -88,7 +88,7 @@
           label="บันทึก"
           class="shadow-2 text-white"
           style="width: 100%; background-color: #4e7971"
-          @click="submitExpen()"
+          type="submit"
         />
       </div>
     </div>

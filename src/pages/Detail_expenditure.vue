@@ -90,7 +90,7 @@
                 style="width: 50px; height: 50px"
                 color="deep-orange-13"
                 icon="delete"
-                @click="Notidelete()"
+                @click="DeleteEven()"
               />
             </div>
           </div>
@@ -129,11 +129,27 @@ export default {
       axios.delete(
         `http://localhost:3000/expenditure/delete/${this.$route.query.id}`
       );
-      this.$router.push({
-        path: "/account_calendar"
-      });
     },
   },
+    DeleteEven() {
+      this.$q
+        .dialog({
+          title: "ยืนยันการลบรายจ่าย",
+          message:
+            'ระบบจะทำการลบข้อมูลรายจ่าย <span class="text-red font"><strong>หากยืนยันการลบข้อมูลรายจ่าย ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
+          cancel: true,
+          persistent: true,
+          html: true,
+        })
+        .onOk(() => {
+          this.Notidelete();
+          this.$router.push({
+            name: "account_calendar",
+          });
+        })
+        .onCancel(() => {})
+        .onDismiss(() => {});
+    },
 };
 </script>
 <style scoped src="../css/home.css"></style>

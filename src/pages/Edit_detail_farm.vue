@@ -108,7 +108,7 @@
         <div>พันธุ์ยาง :</div>
         <q-select
           filled
-          v-model="farm.rubber_varieties_id"
+          v-model="farm.rubber_variety.varieties"
           :options="rubberOption"
           @filter="filterRubber"
           map-options
@@ -129,16 +129,16 @@
         <q-input color="teal" filled v-model="farm.area" label="เนื้อที่ปลูก" />
       </div>
 
-      <div class="q-pa-md font" v-if="nameEmployee">
+      <div class="q-pa-md font" v-if="employee.length > 0">
         <div>ผู้ดูแล :</div>
 
-        <div class="box_editeAdmin q-pa-md font">
+        <div class="box_editeAdmin q-pa-md font" >
           <div class="row justify-between">
-            <div class="col q-pr-md">
+            <div class="col q-pr-md" >
               <q-input
                 color="teal"
-                v-model="nameEmployee.fname"
                 filled
+                v-model="nameEmployee.fname"
                 label="ชื่อ"
                 :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
               />
@@ -146,8 +146,8 @@
             <div class="col">
               <q-input
                 color="teal"
-                v-model="nameEmployee.lname"
                 filled
+                v-model="nameEmployee.lname"
                 label="นามสกุล"
                 :rules="[
                   (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
@@ -216,9 +216,22 @@
               />
             </div>
           </div>
+          <div class="q-pa-md text-center">
+            <q-btn
+              round
+              style="
+                background: #4e7971;
+                color: white;
+                width: 50px;
+                height: 50px;
+              "
+              color="deep-orange-13"
+              icon="delete"
+              @click="DeleteEven()"
+            />
+          </div>
         </div>
       </div>
-
       <div class="q-pa-md font">
         <q-btn
           unelevated
@@ -238,23 +251,26 @@ import { date } from "quasar";
 
 export default {
   async mounted() {
-    this.getfarm();
-    this.getnameEmployee();
-    this.getemployee();
-    this.getrubber_var();
-    this.updateEmp();
-    this.updateFarm();
+    await this.getfarm();
+    await this.getemployee();
+    // await this.getnameEmployee();
+    await this.getrubber_var();
+    // await this.DeleteEven();
+
+    // this.updateEmp();
+    await this.updateFarm();
   },
 
   data() {
     return {
-      farm: [],
+     farm: {
+        rubber_variety: {},
+      },
       payang_user: [],
       nameEmployee: [],
-      employee: [],
       user_has_farm: [],
       planing_date: " ",
-      
+      employee: [],
       rubberList: [],
       rubberOption: [],
       rubber_varieties_id: [],
@@ -266,8 +282,6 @@ export default {
       if (val === "") {
         update(() => {
           this.rubberOption = this.rubberList;
-          // here you have access to "ref" which
-          // is the Vue reference of the QSelect
         });
         return;
       }
@@ -290,7 +304,6 @@ export default {
       const { data } = await axios.get(
         "http://localhost:3000/rubber_varieties"
       );
-      // console.log(data);
       this.rubberList = data.data.map((rubber) => ({
         label: rubber.varieties,
         value: rubber.rubber_varieties_id,
@@ -302,26 +315,26 @@ export default {
         "http://localhost:3000/farm/" + this.$route.query.id
       );
       this.farm = data.data;
-      // console.log(data.data);
     },
     async getemployee() {
       const { data } = await axios.get(
         "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
       );
       this.employee = data.data;
-      // console.log(data.data);
+      if(this.employee.length > 0){
+        await this.getnameEmployee();
+      }
     },
-
     async getnameEmployee() {
       const { data } = await axios.get(
-        "http://localhost:3000/payang_user/" + this.$route.query.idu
+        "http://localhost:3000/payang_user/" + this.employee[0].employee
       );
       this.nameEmployee = data.data;
-      // console.log(data.data);
     },
+
     async updateEmp() {
       const { data } = await axios.put(
-        "http://localhost:3000/payang_user/update/" + this.$route.query.idu,
+        "http://localhost:3000/payang_user/update/" + this.employee[0].employee,
         {
           fname: this.nameEmployee.fname,
           lname: this.nameEmployee.lname,
@@ -333,7 +346,6 @@ export default {
         }
       );
     },
-
     async updateFarm() {
       const { data } = await axios.put(
         "http://localhost:3000/farm/update/" + this.$route.query.id,
@@ -350,7 +362,38 @@ export default {
         }
       );
     },
+    async deletefunc() {
+      axios.delete(
+        "http://localhost:3000/farm_has_employee/delete/" + this.$route.query.id
+      );
+    },
+    async DeleteEmp_payang() {
+      axios.delete(
+        "http://localhost:3000/payang_user/delete/" + this.$route.query.employee[0].employee
+      );
+    },
 
+    DeleteEven() {
+      this.$q
+        .dialog({
+          title: "ยืนยันการลบผู้ดูแล",
+          message:
+            'ระบบจะทำการลบข้อมูลผู้ดูแล <span class="text-red font"><strong>หากยืนยันการลบข้อมูลผู้ดูแล ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
+          cancel: true,
+          persistent: true,
+          html: true,
+        })
+        .onOk(() => {
+          this.deletefunc();
+          this.DeleteEmp_payang();
+          this.$router.push({
+            name: "detail_farm",
+            query: { id: this.$route.query.id },
+          });
+        })
+        .onCancel(() => {})
+        .onDismiss(() => {});
+    },
     async onSubmit() {
       await this.updateEmp();
       await this.updateFarm();
@@ -363,8 +406,6 @@ export default {
   },
 };
 </script>
-
-
 
 <style scoped src="../css/home.css">
 </style>

@@ -10,7 +10,7 @@
           />
         </div>
 
-        <div class="col-6 font header-title">รายการเดินบัญชีรวม</div>
+        <div class="col-6 font header-title">รายการบัญชีรวม</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>

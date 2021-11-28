@@ -128,8 +128,10 @@
           color="teal"
           v-model="area"
           filled
+          type="number" 
+          float-label="Number"
           label="เนื้อที่ปลูก"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก']"
+          :rules="[(val) => (val && val.length  > 0 ) || 'กรุณากรอกเนื้อที่ปลูก']"
         />
 
         <div class="add_employee">
@@ -159,6 +161,7 @@
                 label="นามสกุล"
                 :rules="[
                   (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
+
                 ]"
               />
             </div>
@@ -168,10 +171,12 @@
             filled
             v-model="phone_number_emp"
             label="เบอร์โทรศัพท์"
+            type="number" 
+            float-label="Number"
             :rules="[
               (val) =>
                 (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์',
+                'กรุณากรอกเบอร์โทรศัพท์เป็นตัวเลข',
             ]"
           >
             <template v-slot:append>
@@ -183,10 +188,12 @@
             v-model="e_number_emp"
             filled
             label="เบอร์โทรศัพท์ฉุกเฉิน"
+            type="number" 
+            float-label="Number"
             :rules="[
               (val) =>
                 (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน',
+                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉินเป็นตัวเลข',
             ]"
           >
             <template v-slot:append>

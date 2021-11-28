@@ -150,9 +150,13 @@
               filled
               v-model="incomes.telstore_in"
               label="เบอร์โทรร้านค้า"
-              required
+              mask="###-###-####"
               :rules="[
-                val => (val && val.length == 10) || 'กรุณากรอกเบอร์โทรร้านค้า'
+                val =>
+                  val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
+                val =>
+                  (val && val.length > 0 && val.length == 12) ||
+                  'กรุณากรอกเบอร์โทรศัพท์'
               ]"
             >
               <template v-slot:prepend> </template>

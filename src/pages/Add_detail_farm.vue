@@ -167,8 +167,6 @@
             filled
             v-model="phone_number_emp"
             label="เบอร์โทรศัพท์"
-            type="number"
-            float-label="Number"
             mask="###-###-####"
             :rules="[
               val =>
@@ -187,8 +185,6 @@
             v-model="e_number_emp"
             filled
             label="เบอร์โทรศัพท์ฉุกเฉิน"
-            type="number"
-            float-label="Number"
             mask="###-###-####"
             :rules="[
               val =>

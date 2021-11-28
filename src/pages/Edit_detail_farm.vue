@@ -27,7 +27,7 @@
               filled
               v-model="farm.fname"
               label="ชื่อ"
-              :rules="[val => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
             />
           </div>
           <div class="col">
@@ -36,7 +36,7 @@
               filled
               v-model="farm.lname"
               label="นามสกุล"
-              :rules="[val => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
             />
           </div>
         </div>
@@ -47,7 +47,7 @@
           filled
           v-model="farm.farm_name"
           label="ชื่อสวน"
-          :rules="[val => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
+          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
         >
         </q-input>
 
@@ -57,7 +57,7 @@
           filled
           v-model="farm.address"
           label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
-          :rules="[val => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
+          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
         />
         <div class="row">
           <div class="col q-pr-md">
@@ -66,7 +66,7 @@
               filled
               v-model="farm.address_district"
               label="เขต/อำเภอ"
-              :rules="[val => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
             />
           </div>
           <div class="col">
@@ -75,7 +75,7 @@
               filled
               v-model="farm.address_province"
               label="จังหวัด"
-              :rules="[val => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
+              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
             />
           </div>
         </div>
@@ -137,6 +137,15 @@
         />
       </div>
 
+      <!-- <div class="q-pa-mx text-center">
+        <q-btn
+          round
+          style="background: #4e7971; color: white; width: 50px; height: 50px"
+          icon="add"
+          @click="onSubmit()"
+        />
+      </div> -->
+
       <div class="q-pa-md font" v-if="employee.length > 0">
         <div>ผู้ดูแล :</div>
 
@@ -148,7 +157,7 @@
                 filled
                 v-model="nameEmployee.fname"
                 label="ชื่อ"
-                :rules="[val => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
+                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
               />
             </div>
             <div class="col">
@@ -157,7 +166,9 @@
                 filled
                 v-model="nameEmployee.lname"
                 label="นามสกุล"
-                :rules="[val => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
+                ]"
               />
             </div>
           </div>
@@ -166,15 +177,13 @@
             filled
             v-model="nameEmployee.phone_number"
             label="เบอร์โทรศัพท์"
-            type="number"
-            float-label="Number"
-            mask="##########"
+            mask="###-###-####"
             :rules="[
-              val =>
+              (val) =>
                 val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
-              val =>
-                (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์'
+              (val) =>
+                (val && val.length > 0 && val.length == 12) ||
+                'กรุณากรอกเบอร์โทรศัพท์',
             ]"
           >
             <template v-slot:append>
@@ -186,15 +195,13 @@
             filled
             v-model="nameEmployee.e_number"
             label="เบอร์โทรศัพท์ฉุกเฉินเป็นตัวเลข"
-            type="number"
-            float-label="Number"
-            mask="##########"
+            mask="###-###-####"
             :rules="[
-              val =>
+              (val) =>
                 val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
-              val =>
-                (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน'
+              (val) =>
+                (val && val.length > 0 && val.length == 12) ||
+                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน',
             ]"
           >
             <template v-slot:append>
@@ -207,7 +214,7 @@
             filled
             v-model="nameEmployee.address"
             label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
-            :rules="[val => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
           />
 
           <div class="row">
@@ -217,7 +224,7 @@
                 filled
                 v-model="nameEmployee.address_district"
                 label="เขต/อำเภอ"
-                :rules="[val => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
+                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
               />
             </div>
             <div class="col">
@@ -226,7 +233,9 @@
                 filled
                 v-model="nameEmployee.address_province"
                 label="จังหวัด"
-                :rules="[val => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
+                ]"
               />
             </div>
           </div>
@@ -246,6 +255,7 @@
           </div>
         </div>
       </div>
+
       <div class="q-pa-md font">
         <q-btn
           unelevated
@@ -264,18 +274,23 @@ import { date } from "quasar";
 
 export default {
   async mounted() {
-    await this.getfarm();
-    await this.getemployee();
-
-    await this.getrubber_var();
-
-    await this.updateFarm();
+    try {
+      this.$q.loading.show();
+      await this.getfarm();
+      await this.getemployee();
+      await this.getrubber_var();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.$q.loading.hide();
+    }
   },
+
 
   data() {
     return {
       farm: {
-        rubber_variety: {}
+        rubber_variety: {},
       },
       payang_user: [],
       nameEmployee: [],
@@ -284,7 +299,7 @@ export default {
       employee: [],
       rubberList: [],
       rubberOption: [],
-      rubber_varieties_id: []
+      rubber_varieties_id: [],
     };
   },
 
@@ -299,7 +314,7 @@ export default {
       update(() => {
         const rubber_varieties_id = val.toLowerCase();
         this.rubberOption = this.rubberList.filter(
-          v => v.label.toLowerCase().indexOf(rubber_varieties_id) > -1
+          (v) => v.label.toLowerCase().indexOf(rubber_varieties_id) > -1
         );
       });
     },
@@ -313,9 +328,9 @@ export default {
 
     async getrubber_var() {
       const { data } = await this.$axios.get("/rubber_varieties");
-      this.rubberList = data.data.map(rubber => ({
+      this.rubberList = data.data.map((rubber) => ({
         label: rubber.varieties,
-        value: rubber.rubber_varieties_id
+        value: rubber.rubber_varieties_id,
       }));
     },
 
@@ -333,7 +348,6 @@ export default {
     async getemployee() {
       try {
         this.$q.loading.show();
-
         const { data } = await this.$axios.get(
           "/farm_has_employee/list/" + this.$route.query.id
         );
@@ -354,6 +368,20 @@ export default {
       this.nameEmployee = data.data;
     },
 
+    async createEmp() {
+      const { data } = await this.$axios.post("/payang_user/create_emp/", {
+        fname: this.fname_emp,
+        lname: this.lname_emp,
+        phone_number: this.phone_number_emp,
+        e_number: this.e_number_emp,
+        address: this.address_emp,
+        address_district: this.address_district_emp,
+        address_province: this.address_province_emp,
+      });
+      this.create_employee = data.data;
+      // console.log(data.data);
+    },
+
     async updateEmp() {
       await this.$axios.put(
         "/payang_user/update/" + this.employee[0].employee,
@@ -364,7 +392,7 @@ export default {
           e_number: this.nameEmployee.e_number,
           address: this.nameEmployee.address,
           address_district: this.nameEmployee.address_district,
-          address_province: this.nameEmployee.address_province
+          address_province: this.nameEmployee.address_province,
         }
       );
     },
@@ -378,7 +406,7 @@ export default {
         planing_date: this.farm.planing_date,
         address: this.farm.address,
         address_district: this.farm.address_district,
-        address_province: this.farm.address_province
+        address_province: this.farm.address_province,
       });
     },
     async deletefunc() {
@@ -398,29 +426,32 @@ export default {
             'ระบบจะทำการลบข้อมูลผู้ดูแล <span class="text-red font"><strong>หากยืนยันการลบข้อมูลผู้ดูแล ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
           cancel: true,
           persistent: true,
-          html: true
+          html: true,
         })
         .onOk(() => {
           this.deletefunc();
           this.DeleteEmp_payang();
           this.$router.push({
             name: "detail_farm",
-            query: { id: this.$route.query.id }
+            query: { id: this.$route.query.id },
           });
         })
         .onCancel(() => {})
         .onDismiss(() => {});
     },
     async onSubmit() {
-      await this.updateEmp();
+      
+      if (this.employee.length > 0) {
+        await this.updateEmp();
+        }
       await this.updateFarm();
 
       this.$router.push({
         path: "/detail_farm",
-        query: { id: this.farm.farm_id }
+        query: { id: this.farm.farm_id },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

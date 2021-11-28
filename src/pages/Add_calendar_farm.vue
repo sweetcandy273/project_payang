@@ -33,7 +33,7 @@
         </div>
 
         <div class="q-px-md font">
-          <q-input color="teal" filled v-model="date" mask="date">
+          <q-input color="teal" filled v-model="date" mask="date" :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกปฎิทิน']">
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer" color="teal">
                 <q-popup-proxy
@@ -70,24 +70,21 @@
 
 <script>
 import axios from "axios";
-import { date } from "quasar";
 
 export default {
   data() {
     return {
       date: "",
       activity: " ",
-      farm_id: " ",
-      farm: {},
     };
   },
   mounted() {
-    this.getfarm();
+
   },
   methods: {
     onSubmit() {
       axios
-        .post("http://localhost:3000/activity_in_farm/create", {
+        .post("http://localhost:3000/activity_in_farm/create",{
           date: this.date,
           activity: this.activity,
           farm_id: this.$route.query.id,
@@ -101,12 +98,6 @@ export default {
           id: this.$route.query.id,
         },
       });
-    },
-    async getfarm() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm/" + this.$route.query.id
-      );
-      this.farm = data.data;
     },
   },
 };

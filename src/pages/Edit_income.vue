@@ -8,7 +8,7 @@
             style="width: 22px; height: 22px"
             @click="
               $router.push({
-                path: 'detail_income',
+                name: 'detail_income',
                 query: {
                   id: incomes.in_id
                 }
@@ -16,7 +16,7 @@
             "
           />
         </div>
-        <div class="col-6 font header-title">แก้ไข</div>
+        <div class="col-6 font header-title text-center">แก้ไขบัญชี</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -37,131 +37,168 @@
         label="รายจ่าย"
       />
     </div>
-    <div class="font q-px-md">
-      <q-input filled readonly v-model="incomes.date_income" color="teal">
-        <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy
-              ref="qDateProxy"
-              transition-show="scale"
-              transition-hide="scale"
-            >
-              <q-date v-model="incomes.date_income" color="green">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="white" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-    </div>
+    <q-form @submit.prevent="onSubmit" class="q-gutter-md">
+      <div class="font q-px-md">
+        <q-input filled readonly v-model="incomes.date_income" color="teal">
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy
+                ref="qDateProxy"
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date v-model="incomes.date_income" color="green">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="white" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </div>
 
-    <div class="text-center">
-      <div class="font q-pa-md" style="font-size: 25px">ระบุข้อมูลน้ำยางสด</div>
-    </div>
-    <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
-      <div class="row">
-        <div class="col">
-          <q-input filled v-model="incomes.weight" label="น้ำหนักยาง">
-            <template v-slot:prepend> กก. </template>
-          </q-input>
-        </div>
-        <div class="col q-ml-md">
-          <q-input
-            filled
-            v-model="incomes.percen_rubber"
-            color="teal"
-            label="เปอร์เซ็น"
-          >
-            <template v-slot:prepend> % </template>
-          </q-input>
+      <div class="text-center">
+        <div class="font" style="font-size: 25px">
+          ระบุข้อมูลน้ำยางสด
         </div>
       </div>
-      <div class="row">
+      <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
         <div class="row">
           <div class="col">
-            <q-input filled v-model="incomes.dry_rubber" label="เนื้อยางแห้ง">
-              <template v-slot:prepend> ก. </template>
+            <q-input
+              filled
+              fill-mask="0"
+              reverse-fill-mask
+              v-model="incomes.weight"
+              label="น้ำหนักยาง"
+              required
+            >
+              <template v-slot:prepend> กก. </template>
             </q-input>
           </div>
           <div class="col q-ml-md">
-            <q-input filled v-model="incomes.rubber_price" label="ราคาน้ำยาง">
-              <template v-slot:prepend> บ./กก. </template>
+            <q-input
+              filled
+              fill-mask="0"
+              reverse-fill-mask
+              v-model="incomes.percen_rubber"
+              color="teal"
+              label="เปอร์เซ็น"
+              required
+            >
+              <template v-slot:prepend> % </template>
             </q-input>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <q-input
-            filled
-            v-model="incomes.amount"
-            color="teal"
-            label="รวมจำนวนเงิน"
-          >
-            <template v-slot:prepend> ฿ </template>
-          </q-input>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <q-input filled v-model="incomes.store_in" label="ชื่อร้านค้า">
-            <template v-slot:prepend> กก. </template>
-          </q-input>
-        </div>
-        <div class="col q-ml-md">
-          <q-input
-            filled
-            v-model="incomes.telstore_in"
-            label="เบอร์โทรร้านค้า"
-            mask="###-###-####"
-          >
-            <template v-slot:prepend> </template>
-          </q-input>
-        </div>
-      </div>
-
-      <div class="share">
-        <q-checkbox
-          v-model="selectshare"
-          style="font-size: 16px"
-          label="ผู้รับผิดชอบ"
-        />
-      </div>
-
-      <div class="sharemoney" v-if="selectshare">
-        <strong>
+        <div class="row">
           <div class="row">
-            <div class="col text-center q-my-md" style="font-size: 20px">
+            <div class="col">
+              <q-input
+                filled
+                fill-mask="0"
+                reverse-fill-mask
+                v-model="incomes.dry_rubber"
+                label="เนื้อยางแห้ง"
+                required
+              >
+                <template v-slot:prepend> ก. </template>
+              </q-input>
+            </div>
+            <div class="col q-ml-md">
+              <q-input
+                filled
+                fill-mask="0"
+                reverse-fill-mask
+                v-model="incomes.rubber_price"
+                label="ราคาน้ำยาง"
+                required
+              >
+                <template v-slot:prepend> บ./กก. </template>
+              </q-input>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-input
+              filled
+              fill-mask="0"
+              reverse-fill-mask
+              v-model="incomes.amount"
+              color="teal"
+              label="รวมจำนวนเงิน"
+              required
+            >
+              <template v-slot:prepend> ฿ </template>
+            </q-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-input
+              filled
+              v-model="incomes.store_in"
+              label="ชื่อร้านค้า"
+              required
+            >
+              <template v-slot:prepend></template>
+            </q-input>
+          </div>
+          <div class="col q-ml-md">
+            <q-input
+              filled
+              v-model="incomes.telstore_in"
+              label="เบอร์โทรร้านค้า"
+              required
+              :rules="[
+                val => (val && val.length == 10) || 'กรุณากรอกเบอร์โทรร้านค้า'
+              ]"
+            >
+              <template v-slot:prepend> </template>
+            </q-input>
+          </div>
+        </div>
+
+        <div class="sharemoney">
+          <div class="row">
+            <div class="col text-center" style="font-size: 20px">
               % การแบ่ง
             </div>
-            <div class="col q-my-md">
+            <div class="col">
               <q-select
                 filled
+                required
                 v-model="incomes.percen_split"
                 :options="optionspercent"
                 label="% ที่เจ้าของได้"
               />
             </div>
           </div>
-        </strong>
-      </div>
-      <div class="col">
-        <q-input filled v-model="incomes.note" color="teal" label="บันทึก" />
-      </div>
+        </div>
+        <div class="col">
+          <q-input
+            filled
+            v-model="incomes.note"
+            color="teal"
+            label="บันทึก"
+            required
+          />
+        </div>
 
-      <div class="submit row q-gutter-sm flex-center">
-        <q-btn
-          unelevated
-          rounded
-          @click="onSubmit()"
-          label="บันทึก"
-          class="shadow-2 text-white"
-          style="width: 100%; background-color: #4e7971"
-        />
+        <div class="submit row q-gutter-sm flex-center">
+          <q-btn
+            unelevated
+            rounded
+            value="onSubmit"
+            type="submit"
+            label="บันทึก"
+            class="shadow-2 text-white"
+            style="width: 100%; background-color: #4e7971"
+          />
+        </div>
       </div>
-    </div>
+    </q-form>
   </div>
 </template>
 <script>
@@ -170,8 +207,7 @@ export default {
   data() {
     return {
       selectshare: false,
-      optionspercent: ["60", "55", "50"],
-      optionsemployee: ["กนกวรรณ", "ชนิกานต์", "อรไท"],
+      optionspercent: ["60", "55", "50", "-"],
       edit_income: {},
       incomes: {}
     };
@@ -192,13 +228,17 @@ export default {
       this.incomes.date_income = this.formatDate(this.incomes.date_income);
     },
     sharemoney: function(amount, percen_split) {
+      // console.warn("amount : "+amount)
+      // console.warn("percen_split : "+percen_split)
       var amount_net = 0;
       if (percen_split == 60) {
-        amount_net = amount * 0.6;
+        amount_net = (amount / 100) * 60;
       } else if (percen_split == 55) {
-        amount_net = amount * 0.55;
+        amount_net = (amount / 100) * 55;
+      } else if (percen_split == 50) {
+        amount_net = (amount / 100) * 50;
       } else {
-        amount_net = amount * 0.5;
+        amount_net = amount * 1;
       }
       return amount_net;
     },
@@ -221,8 +261,6 @@ export default {
           percen_split: this.incomes.percen_split,
           rubber_price: this.incomes.rubber_price,
           note: this.incomes.note,
-          farm_id: this.$route.query.id,
-          owner: this.$route.query.owner,
           store_in: this.incomes.store_in,
           telstore_in: this.incomes.telstore_in
         }
@@ -232,8 +270,8 @@ export default {
       this.$router.push({
         path: "/account_calendar",
         query: {
-          id: this.incomes.in_id,
-          owner: this.$route.query.owner
+          id: this.incomes.farm_id,
+          owner: this.incomes.owner
         }
       });
     }

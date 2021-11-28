@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-form>
+    <q-form @submit.prevent="submitExpen" class="q-gutter-md">
       <div class="font q-px-md">
         <q-input
           filled
@@ -39,42 +39,49 @@
         </div>
         <div class="row">
           <div class="col">
-            <q-input filled v-model="totalprice" label="รวมจำนวนเงิน"
-             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']" fill-mask="0"
+            <q-input
+              filled
+              v-model="totalprice"
+              label="รวมจำนวนเงิน"
+              :rules="[
+                (val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน',
+              ]"
+              fill-mask="0"
               reverse-fill-mask
-              mask="#.##">
+              mask="#.##"
+            >
               <template v-slot:prepend> ฿ </template>
             </q-input>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <q-input filled v-model="store_expen" label="ชื่อร้านค้า"
-             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า']" >
+            <q-input
+              filled
+              v-model="store_expen"
+              label="ชื่อร้านค้า"
+              :rules="[
+                (val) => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า',
+              ]"
+            >
               <template v-slot:prepend> กก. </template>
             </q-input>
           </div>
           <div class="col q-ml-md">
-            <q-input filled v-model="telstore_expen" label="เบอร์โทรร้านค้า"
-             mask= "###-###-####"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรร้านค้า']">
+            <q-input
+              filled
+              v-model="telstore_expen"
+              label="เบอร์โทรร้านค้า"
+              :rules="[
+                (val) =>
+                  (val && val.length > 0 && val.length == 10) ||
+                  'กรุณากรอกเบอร์โทรร้านค้า',
+              ]"
+            >
               <template v-slot:prepend> </template>
             </q-input>
           </div>
         </div>
-
-        <!-- <div class="share text-left">
-          <q-select
-            filled
-            v-model="employee"
-            :options="optionsemployee"
-            label="ผู้รับผิดชอบ"
-          >
-            <template v-slot:prepend>
-              <q-icon name="person" />
-            </template>
-          </q-select>
-        </div> -->
 
         <div class="col">
           <q-input filled v-model="note" label="บันทึก" />
@@ -87,8 +94,7 @@
             label="บันทึก"
             class="shadow-2 text-white"
             style="width: 100%; background-color: #4e7971"
-            @click="submitExpen()"
-
+            type="submit"
           />
         </div>
       </div>
@@ -115,10 +121,9 @@ export default {
         "แกลลอนใส่น้ำยาง",
       ],
       selectshare: false,
-     
+
       store_expen: "",
       telstore_expen: "",
-     
     };
   },
   methods: {
@@ -138,7 +143,7 @@ export default {
             title_type: this.title,
             farm_id: this.$route.query.id,
             owner: this.$route.query.owner,
-          
+
             store_expen: this.store_expen,
             telstore_expen: this.telstore_expen,
           }
@@ -147,8 +152,8 @@ export default {
           console.log(response);
         });
       this.$router.push({
-        path: "/account_calendar", 
-        query: { id: this.$route.query.id,owner: this.$route.query.owner }
+        path: "/account_calendar",
+        query: { id: this.$route.query.id, owner: this.$route.query.owner },
       });
     },
   },

@@ -107,8 +107,9 @@
 
         <div>พันธุ์ยาง :</div>
         <q-select
+          color="teal"
           filled
-          v-model="farm.rubber_varieties_id"
+          v-model="farm.rubber_variety.varieties"
           :options="rubberOption"
           @filter="filterRubber"
           map-options
@@ -126,10 +127,17 @@
         </q-select>
 
         <div>เนื้อที่ปลูก :</div>
-        <q-input color="teal" filled v-model="farm.area" label="เนื้อที่ปลูก" />
+        <q-input
+          color="teal"
+          filled
+          v-model="farm.area"
+          type="number"
+          float-label="Number"
+          label="เนื้อที่ปลูก"
+        />
       </div>
 
-      <div class="q-pa-md font" v-if="nameEmployee">
+      <div class="q-pa-md font" v-if="employee.length > 0">
         <div>ผู้ดูแล :</div>
 
         <div class="box_editeAdmin q-pa-md font">
@@ -137,8 +145,8 @@
             <div class="col q-pr-md">
               <q-input
                 color="teal"
-                v-model="nameEmployee.fname"
                 filled
+                v-model="nameEmployee.fname"
                 label="ชื่อ"
                 :rules="[val => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
               />
@@ -146,8 +154,8 @@
             <div class="col">
               <q-input
                 color="teal"
-                v-model="nameEmployee.lname"
                 filled
+                v-model="nameEmployee.lname"
                 label="นามสกุล"
                 :rules="[val => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
               />
@@ -158,10 +166,12 @@
             filled
             v-model="nameEmployee.phone_number"
             label="เบอร์โทรศัพท์"
+            type="number"
+            float-label="Number"
             :rules="[
               val =>
                 (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์'
+                'กรุณากรอกเบอร์โทรศัพท์เป็นตัวเลข'
             ]"
           >
             <template v-slot:append>
@@ -172,7 +182,9 @@
             color="teal"
             filled
             v-model="nameEmployee.e_number"
-            label="เบอร์โทรศัพท์ฉุกเฉิน"
+            label="เบอร์โทรศัพท์ฉุกเฉินเป็นตัวเลข"
+            type="number"
+            float-label="Number"
             :rules="[
               val =>
                 (val && val.length > 0 && val.length == 10) ||
@@ -212,9 +224,22 @@
               />
             </div>
           </div>
+          <div class="q-pa-md text-center">
+            <q-btn
+              round
+              style="
+                background: #4e7971;
+                color: white;
+                width: 50px;
+                height: 50px;
+              "
+              color="deep-orange-13"
+              icon="delete"
+              @click="DeleteEven()"
+            />
+          </div>
         </div>
       </div>
-
       <div class="q-pa-md font">
         <q-btn
           unelevated
@@ -233,23 +258,26 @@ import { date } from "quasar";
 
 export default {
   async mounted() {
-    this.getfarm();
-    this.getnameEmployee();
-    this.getemployee();
-    this.getrubber_var();
-    this.updateEmp();
-    this.updateFarm();
+    await this.getfarm();
+    await this.getemployee();
+    // await this.getnameEmployee();
+    await this.getrubber_var();
+    // await this.DeleteEven();
+
+    // this.updateEmp();
+    await this.updateFarm();
   },
 
   data() {
     return {
-      farm: [],
+      farm: {
+        rubber_variety: {}
+      },
       payang_user: [],
       nameEmployee: [],
-      employee: [],
       user_has_farm: [],
       planing_date: " ",
-
+      employee: [],
       rubberList: [],
       rubberOption: [],
       rubber_varieties_id: []
@@ -280,8 +308,9 @@ export default {
     },
 
     async getrubber_var() {
-      const { data } = await this.$axios.get("/rubber_varieties");
-
+      const { data } = await axios.get(
+        "http://localhost:3000/rubber_varieties"
+      );
       this.rubberList = data.data.map(rubber => ({
         label: rubber.varieties,
         value: rubber.rubber_varieties_id
@@ -289,58 +318,41 @@ export default {
     },
 
     async getfarm() {
-      try {
-        this.$q.loading.show();
-
-        const { data } = await this.$axios.get("/farm/" + this.$route.query.id);
-        this.farm = data.data;
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
+      const { data } = await axios.get(
+        "http://localhost:3000/farm/" + this.$route.query.id
+      );
+      this.farm = data.data;
     },
     async getemployee() {
-      try {
-        this.$q.loading.show();
-
-        const { data } = await this.$axios.get(
-          "/farm_has_employee/list/" + this.$route.query.id
-        );
-        this.employee = data.data;
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
+      const { data } = await axios.get(
+        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
+      );
+      this.employee = data.data;
+      if (this.employee.length > 0) {
+        await this.getnameEmployee();
       }
     },
-
     async getnameEmployee() {
-      try {
-        this.$q.loading.show();
-
-        const { data } = await this.$axios.get(
-          "/payang_user/" + this.$route.query.idu
-        );
-        this.nameEmployee = data.data;
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
+      const { data } = await axios.get(
+        "http://localhost:3000/payang_user/" + this.employee[0].employee
+      );
+      this.nameEmployee = data.data;
     },
+
     async updateEmp() {
-      await this.$axios.put("/payang_user/update/" + this.$route.query.idu, {
-        fname: this.nameEmployee.fname,
-        lname: this.nameEmployee.lname,
-        phone_number: this.nameEmployee.phone_number,
-        e_number: this.nameEmployee.e_number,
-        address: this.nameEmployee.address,
-        address_district: this.nameEmployee.address_district,
-        address_province: this.nameEmployee.address_province
-      });
+      const { data } = await axios.put(
+        "http://localhost:3000/payang_user/update/" + this.employee[0].employee,
+        {
+          fname: this.nameEmployee.fname,
+          lname: this.nameEmployee.lname,
+          phone_number: this.nameEmployee.phone_number,
+          e_number: this.nameEmployee.e_number,
+          address: this.nameEmployee.address,
+          address_district: this.nameEmployee.address_district,
+          address_province: this.nameEmployee.address_province
+        }
+      );
     },
-
     async updateFarm() {
       await this.$axios.put("/farm/update/" + this.$route.query.id, {
         farm_name: this.farm.farm_name,
@@ -354,7 +366,39 @@ export default {
         address_province: this.farm.address_province
       });
     },
+    async deletefunc() {
+      axios.delete(
+        "http://localhost:3000/farm_has_employee/delete/" + this.$route.query.id
+      );
+    },
+    async DeleteEmp_payang() {
+      axios.delete(
+        "http://localhost:3000/payang_user/delete/" +
+          this.$route.query.employee[0].employee
+      );
+    },
 
+    DeleteEven() {
+      this.$q
+        .dialog({
+          title: "ยืนยันการลบผู้ดูแล",
+          message:
+            'ระบบจะทำการลบข้อมูลผู้ดูแล <span class="text-red font"><strong>หากยืนยันการลบข้อมูลผู้ดูแล ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
+          cancel: true,
+          persistent: true,
+          html: true
+        })
+        .onOk(() => {
+          this.deletefunc();
+          this.DeleteEmp_payang();
+          this.$router.push({
+            name: "detail_farm",
+            query: { id: this.$route.query.id }
+          });
+        })
+        .onCancel(() => {})
+        .onDismiss(() => {});
+    },
     async onSubmit() {
       await this.updateEmp();
       await this.updateFarm();

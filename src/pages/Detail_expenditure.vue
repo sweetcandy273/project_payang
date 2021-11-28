@@ -8,8 +8,7 @@
               $router.push({
                 path: 'account_calendar',
                 query: {
-                  id: expenditures.farm_id,
-                  owner: expenditures.owner
+                  id: expens.farm_id
                 }
               })
             "
@@ -27,10 +26,10 @@
         <div class="row">
           <div class="col">
             <div class="row" style="font-size: 18px">
-              เจ้าของสวน : {{ expenditures.farm.fname }}
+              เจ้าของสวน : {{ expens.farm.fname }}
             </div>
             <div class="row q-pb-md" style="font-size: 18px">
-              สวน : {{ expenditures.farm.farm_name }}
+              สวน : {{ expens.farm.farm_name }}
             </div>
           </div>
           <div class="col-4 text-right">
@@ -45,26 +44,24 @@
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-py-md">
           <div class="col-8" style="font-size: 28px">
-            {{ expenditures.title_type }}
+            {{ expens.title_type }}
           </div>
           <div class="col text-right q-pt-md" style="font-size: 18px">
-            {{ expenditures.date_expenditure }}
+            {{ expens.date_expenditure }}
           </div>
         </div>
-        <div class="row" style="font-size: 20px">
-          ส่วน: {{ expenditures.type }}
-        </div>
+        <div class="row" style="font-size: 20px">ส่วน: {{ expens.type }}</div>
 
         <div class="text-right" style="font-size: 28px">
-          {{ expenditures.amount }}
+          {{ expens.amount }}
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="row q-pt-md" style="font-size: 18px">
-          ร้าน : {{ expenditures.store_expen }}
+          ร้าน : {{ expens.store_expen }}
         </div>
         <q-separator style="background: #000000; height: 2px" />
         <div class="q-pt-md" style="font-size: 18px">
-          บันทึก : {{ expenditures.note }}
+          บันทึก : {{ expens.note }}
         </div>
         <div class="col q-pa-md self-center">
           <div class="row">
@@ -79,7 +76,7 @@
                   $router.push({
                     path: 'edit_expenditure',
                     query: {
-                      id: expenditures.expen_id
+                      id: expens.expen_id
                     }
                   })
                 "
@@ -91,7 +88,7 @@
                 style="width: 50px; height: 50px"
                 color="deep-orange-13"
                 icon="delete"
-                @click="Notidelete()"
+                @click="DeleteEven()"
               />
             </div>
           </div>
@@ -102,10 +99,10 @@
 </template>
 <script>
 export default {
-  name: "expenditures",
+  name: "expens",
   data() {
     return {
-      expenditures: {
+      expens: {
         farm: {}
       }
     };
@@ -117,21 +114,40 @@ export default {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
+
+    Notidelete() {
+      axios.delete(
+        `http://localhost:3000/expenditure/delete/${this.$route.query.id}`
+      );
+    },
+    DeleteEven() {
+      this.$q
+        .dialog({
+          title: "ยืนยันการลบรายจ่าย",
+          message:
+            'ระบบจะทำการลบข้อมูลรายจ่าย <span class="text-red font"><strong>หากยืนยันการลบข้อมูลรายจ่าย ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
+          cancel: true,
+          persistent: true,
+          html: true
+        })
+        .onOk(() => {
+          this.Notidelete();
+          this.$router.push({
+            name: "account_calendar",
+            query: {
+              id: this.$route.query.idf
+            }
+          });
+        })
+        .onCancel(() => {})
+        .onDismiss(() => {});
+    },
     async getExpen() {
       const { data } = await this.$axios.get(
         `/expenditure/show/${this.$route.query.id}`
       );
-      this.expenditures = data.data;
-    },
-    async Notidelete() {
-      await this.$axios.delete(`/expenditure/delete/${this.$route.query.id}`);
-      this.$router.push({
-        path: "/account_calendar",
-        query: {
-          id: expenditures.farm_id,
-          owner: expenditures.owner
-        }
-      });
+      this.expens = data.data;
+      console.log(data.data);
     }
   }
 };

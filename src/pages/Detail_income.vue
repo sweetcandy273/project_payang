@@ -8,8 +8,7 @@
               $router.push({
                 path: 'account_calendar',
                 query: {
-                  id: incomes.farm_id,
-                  owner: incomes.owner
+                  id: incomes.farm_id
                 }
               })
             "
@@ -86,21 +85,20 @@
                 icon="edit"
                 @click="
                   $router.push({
-                    path: 'edit_income',
+                    name: 'edit_income',
                     query: {
                       id: incomes.in_id
                     }
                   })
                 "
               />
-
               <q-btn
                 unelevated
                 round
                 style="width: 50px; height: 50px"
                 color="deep-orange-13"
                 icon="delete"
-                @click="Notidelete()"
+                @click="DeleteEven()"
               />
             </div>
           </div>
@@ -128,27 +126,45 @@ export default {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
+
+    Notidelete() {
+      axios.delete(
+        `http://localhost:3000/income/delete/${this.$route.query.id}`
+      );
+    },
+    DeleteEven() {
+      this.$q
+        .dialog({
+          title: "ยืนยันการลบรายรับ",
+          message:
+            'ระบบจะทำการลบข้อมูลรายรับ <span class="text-red font"><strong>หากยืนยันการลบข้อมูลรายรับ ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
+          cancel: true,
+          persistent: true,
+          html: true
+        })
+        .onOk(() => {
+          this.Notidelete();
+          this.$router.push({
+            path: "/account_calendar",
+            query: {
+              id: this.$route.query.idf
+            }
+          });
+        })
+        .onCancel(() => {})
+        .onDismiss(() => {});
+    },
     async getIncome() {
       const { data } = await this.$axios.get(
         `/income/findincome/${this.$route.query.id}`
       );
       this.incomes = data.data;
-    },
-
-    async Notidelete() {
-      await this.$axios.delete(`/income/delete/${this.$route.query.id}`);
-      await this.$router.push({
-        path: "/account_calendar",
-        query: {
-          id: this.incomes.farm_id,
-          owner: this.incomes.owner
-        }
-      });
     }
   },
   watch: {
     date(value) {
       this.incomes = this.listAllincome.filter(data => {
+        // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
         return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
       });
     }

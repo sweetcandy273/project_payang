@@ -27,6 +27,7 @@
           v-model="activity_in_farms.activity"
           color="teal"
           label="ประเภทกิจกรรม"
+          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกประเภทกิจกรรม']"
         >
         </q-input>
       </div>

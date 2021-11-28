@@ -23,7 +23,7 @@
               @click="
                 $router.push({
                   name: 'edit_detail_farm',
-                  query: { id: farm.farm_id, idu: employee[0].owner }
+                  query: { id: farm.farm_id }
                 })
               "
               round
@@ -36,13 +36,7 @@
               round
               color="deep-orange-13"
               icon="delete"
-              @click="
-                DeleteFarm();
-                $router.push({
-                  name: 'myfarm',
-                  query: { id: farm.owner }
-                });
-              "
+              @click="DeleteEven()"
             />
           </div>
         </div>
@@ -57,7 +51,7 @@
         <div>วันที่ปลูกยาง : {{ formatDate(farm.planing_date) }}</div>
         <div>พันธุ์ยาง : {{ farm.rubber_variety.varieties }}</div>
         <div>เนื้อที่ปลูก : {{ farm.area }} ไร่</div>
-        <div v-if="nameEmployee">
+        <div v-if="employee.length > 0">
           ผู้ดูแล : {{ nameEmployee.fname }} {{ nameEmployee.lname }}
         </div>
       </div>
@@ -86,7 +80,6 @@
           color="green-4"
         />
       </div>
-
       <div>
         <q-btn
           @click="
@@ -148,56 +141,56 @@ export default {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
-
     async getfarm() {
-      try {
-        this.$q.loading.show();
-        const { data } = await this.$axios.get("/farm/" + this.$route.query.id);
-        this.farm = data.data;
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
+      const { data } = await axios.get(
+        "http://localhost:3000/farm/" + this.$route.query.id
+      );
+      this.farm = data.data;
     },
     async getemployee() {
-      try {
-        this.$q.loading.show();
-
-        const { data } = await this.$axios.get(
-          "/farm_has_employee/list/" + this.$route.query.id
-        );
-        this.employee = data.data;
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
+      const { data } = await axios.get(
+        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
+      );
+      this.employee = data.data;
+      if (this.employee.length > 0) {
+        await this.getnameEmployee();
       }
     },
     async getnameEmployee() {
-      try {
-        this.$q.loading.show();
-
-        const { data } = await this.$axios.get(
-          "/payang_user/" + this.employee[0].employee
-        );
-        this.nameEmployee = data.data;
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
+      const { data } = await axios.get(
+        "http://localhost:3000/payang_user/" + this.employee[0].employee
+      );
+      this.nameEmployee = data.data;
     },
 
     async DeleteEmp() {
-      await this.$axios.delete(
-        "/farm_has_employee/delete/" + this.$route.query.id
+      axios.delete(
+        "http://localhost:3000/farm_has_employee/delete/" + this.$route.query.id
       );
     },
-
     async DeleteFarm() {
-      await this.$axios.delete("/farm/delete/" + this.$route.query.id);
+      axios.delete("http://localhost:3000/farm/delete/" + this.$route.query.id);
       await this.DeleteEmp();
+    },
+    DeleteEven() {
+      this.$q
+        .dialog({
+          title: "ยืนยันการลบกิจกรรม",
+          message:
+            'ระบบจะทำการลบข้อมูลกิจกรรม <span class="text-red font"><strong>หากยืนยันการลบข้อมูลกิจกรรม ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
+          cancel: true,
+          persistent: true,
+          html: true
+        })
+        .onOk(() => {
+          this.DeleteFarm();
+          this.$router.push({
+            name: "myfarm",
+            query: { id: this.farm.owner }
+          });
+        })
+        .onCancel(() => {})
+        .onDismiss(() => {});
     }
   }
 };

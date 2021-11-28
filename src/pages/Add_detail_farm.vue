@@ -103,6 +103,7 @@
 
         <div>พันธุ์ยาง :</div>
         <q-select
+          color="teal"
           filled
           v-model="rubber_varieties_id"
           :options="rubberOption"
@@ -127,6 +128,8 @@
           color="teal"
           v-model="area"
           filled
+          type="number"
+          float-label="Number"
           label="เนื้อที่ปลูก"
           :rules="[val => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก']"
         />
@@ -165,10 +168,12 @@
             filled
             v-model="phone_number_emp"
             label="เบอร์โทรศัพท์"
+            type="number"
+            float-label="Number"
             :rules="[
               val =>
                 (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์'
+                'กรุณากรอกเบอร์โทรศัพท์เป็นตัวเลข'
             ]"
           >
             <template v-slot:append>
@@ -180,10 +185,12 @@
             v-model="e_number_emp"
             filled
             label="เบอร์โทรศัพท์ฉุกเฉิน"
+            type="number"
+            float-label="Number"
             :rules="[
               val =>
                 (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน'
+                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉินเป็นตัวเลข'
             ]"
           >
             <template v-slot:append>
@@ -241,20 +248,9 @@ import "firebase/compat/auth";
 import { date } from "quasar";
 
 export default {
-  computed: {
-    user_id() {
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          this.currentId = user.uid;
-          this.id = { id: user.uid };
-        }
-      });
-
-      this.currentId = this.$route.query.id;
-      this.id = { id: this.$route.query.id };
-
-      return this.$route.query.id;
-    }
+  async mounted() {
+    this.getday();
+    this.getrubber_var();
   },
 
   watch: {
@@ -297,10 +293,21 @@ export default {
       address_emp: "",
       address_district_emp: "",
       address_province_emp: "",
-      employee: {}
+      create_employee: []
     };
   },
   methods: {
+    async getrubber_var() {
+      const { data } = await axios.get(
+        "http://localhost:3000/rubber_varieties"
+      );
+      // console.log(data);
+      this.rubberList = data.data.map(rubber => ({
+        label: rubber.varieties,
+        value: rubber.rubber_varieties_id
+      }));
+    },
+
     filterRubber(val, update) {
       if (val === "") {
         update(() => {
@@ -342,46 +349,44 @@ export default {
       this.create_farm = data.data;
     },
     async createEmp() {
-      const { data } = await this.$axios.post("/payang_user/create_emp/", {
-        fname: this.fname_emp,
-        lname: this.lname_emp,
-        phone_number: this.phone_number_emp,
-        e_number: this.e_number_emp,
-        address: this.address_emp,
-        address_district: this.address_district_emp,
-        address_province: this.address_province_emp
-      });
-      this.employee = data.data;
+      const { data } = await axios.post(
+        "http://localhost:3000/payang_user/create_emp/",
+        {
+          fname: this.fname_emp,
+          lname: this.lname_emp,
+          phone_number: this.phone_number_emp,
+          e_number: this.e_number_emp,
+          address: this.address_emp,
+          address_district: this.address_district_emp,
+          address_province: this.address_province_emp
+        }
+      );
+      this.create_employee = data.data;
+      // console.log(data.data);
     },
     async createfarm_emp() {
       await this.$axios.post(
         "/farm_has_employee/create/" +
           this.create_farm.farm_id +
           "/" +
-          this.employee.user_id,
+          this.create_employee.user_id,
         {
           farm_id: this.create_farm.farm_id,
-          employee: this.employee.user_id
+          employee: this.create_employee.user_id
         }
       );
     },
 
-    async getrubber_var() {
-      const { data } = await this.$axios.get("/rubber_varieties");
-
-      this.rubberList = data.data.map(rubber => ({
-        label: rubber.varieties,
-        value: rubber.rubber_varieties_id
-      }));
-    },
-
     async onSubmit() {
-      await this.createEmp();
       await this.cratefarm();
+      await this.createEmp();
       await this.createfarm_emp();
 
       this.$router.push({
-        name: "myfarm"
+        path: "/myfarm",
+        query: {
+          id: this.$route.query.id
+        }
       });
     }
   }

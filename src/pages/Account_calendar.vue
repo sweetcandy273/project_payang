@@ -45,7 +45,8 @@
             $router.push({
               path: 'detail_income',
               query: {
-                id: data.in_id
+                id: data.in_id,
+                idf: $route.query.id
               }
             })
           "
@@ -88,7 +89,8 @@
             $router.push({
               path: 'detail_expenditure',
               query: {
-                id: data.expen_id
+                id: data.expen_id,
+                idf: $route.query.id
               }
             })
           "

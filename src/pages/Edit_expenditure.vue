@@ -8,9 +8,9 @@
             style="width: 22px; height: 22px"
             @click="
               $router.push({
-                name: 'account_calendar',
+                path: 'detail_expenditure',
                 query: {
-                  id: expenditures.expen_id
+                  id: expens.expen_id
                 }
               })
             "
@@ -45,6 +45,7 @@
         toggle-color="green"
         toggle-text-color="black"
         rounded
+        readonly
         unelevated
         :options="[
           { value: 'Maintenance', slot: 'Maintenance' },
@@ -92,6 +93,7 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 import { date } from "quasar";
 import Editmaintenance from "../components/Editmaintenance.vue";
 import Editequipment from "../components/Editequipment.vue";
@@ -100,7 +102,7 @@ export default {
     return {
       date_expenditure: "",
       type: "",
-      expenditures: {}
+      expens: {}
     };
   },
   components: {
@@ -116,10 +118,11 @@ export default {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getExpen() {
-      const { data } = await this.$axios.get(
-        `/expenditure/${this.$route.query.id}`
+      const { data } = await axios.get(
+        `http://localhost:3000/expenditure/show/${this.$route.query.id}`
       );
-      this.expenditures = data.data;
+      this.expens = data.data;
+      this.type = this.expens.type;
     }
   }
 };

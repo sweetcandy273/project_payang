@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-form>
+    <q-form @submit.prevent="onSubmit" class="q-gutter-md">
       <div class="font q-px-md">
         <q-input
           filled
@@ -34,6 +34,7 @@
               v-model="expens.title_type"
               :options="titleoption"
               label="ตัวเลือก"
+              required
             />
           </div>
         </div>
@@ -43,12 +44,9 @@
               filled
               v-model="expens.amount"
               label="รวมจำนวนเงิน"
-              :rules="[
-                val => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน'
-              ]"
               fill-mask="0"
               reverse-fill-mask
-              mask="#.##"
+              required
             >
               <template v-slot:prepend> ฿ </template>
             </q-input>
@@ -60,11 +58,9 @@
               filled
               v-model="expens.store_expen"
               label="ชื่อร้านค้า"
-              :rules="[
-                val => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า'
-              ]"
+              required
             >
-              <template v-slot:prepend icon="home"></template>
+              <template v-slot:prepend></template>
             </q-input>
           </div>
           <div class="col q-ml-md">
@@ -72,9 +68,9 @@
               filled
               v-model="expens.telstore_expen"
               label="เบอร์โทรร้านค้า"
-              mask="###-###-####"
+              required
               :rules="[
-                val => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรร้านค้า'
+                val => (val && val.length == 10) || 'กรุณากรอกเบอร์โทรร้านค้า'
               ]"
             >
               <template v-slot:prepend> </template>
@@ -93,7 +89,7 @@
             label="บันทึก"
             class="shadow-2 text-white"
             style="width: 100%; background-color: #4e7971"
-            @click="onSubmit()"
+            type="submit"
           />
         </div>
       </div>
@@ -108,6 +104,7 @@ export default {
       title: "",
       titleoption: ["ปุ๋ย", "ตัดหญ้า", "ตัดกาฝาก"],
       selectshare: false,
+
       expens: {}
     };
   },
@@ -120,7 +117,7 @@ export default {
     },
     async getExpen() {
       const { data } = await this.$axios.get(
-        `/expenditure/${this.$route.query.id}`
+        `/expenditure/show/${this.$route.query.id}`
       );
       this.expens = data.data;
     },
@@ -130,12 +127,10 @@ export default {
         "/expenditure/update/" + this.$route.query.id,
         {
           date_expenditure: this.expens.date_expenditure,
-          amount: this.expens.totalprice,
+          amount: this.expens.amount,
+          type: this.expens.type,
           note: this.expens.note,
-          type: "Maintenance",
           title_type: this.expens.title_type,
-          farm_id: this.$route.query.id,
-          owner: this.$route.query.owner,
           store_expen: this.expens.store_expen,
           telstore_expen: this.expens.telstore_expen
         }
@@ -145,8 +140,8 @@ export default {
       this.$router.push({
         path: "/account_calendar",
         query: {
-          id: this.expens.expen_id,
-          owner: this.$route.query.owner
+          id: this.expens.farm_id,
+          owner: this.expens.owner
         }
       });
     }

@@ -6,7 +6,9 @@
   "author": "aum <sweetcandy.aum@gmail.com>",
   "private": true,
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "deploy":"quasar build -m pwa && firebase deploy"
+    
   },
   "dependencies": {
     "@quasar/cli": "^1.2.2",

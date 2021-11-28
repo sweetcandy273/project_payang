@@ -76,17 +76,17 @@
 </template>
 
 <script>
+
+
 export default {
   data() {
     return {
       date: "",
-      activity: "",
-      farm_id: "",
-      farm: {}
+      activity: " ",
     };
   },
   mounted() {
-    this.getfarm();
+
   },
   methods: {
     async onSubmit() {
@@ -105,8 +105,8 @@ export default {
           id: this.$route.query.id
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

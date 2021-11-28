@@ -16,7 +16,6 @@
     </q-header>
 
     <div class="q-pa-md font">
-      <div hidden>{{ user_id }}</div>
       <q-form @submit="onSubmit()">
         <div class="row justify-between">
           <div class="col q-pr-md">
@@ -334,7 +333,7 @@ export default {
 
     async cratefarm() {
       const { data } = await this.$axios.post(
-        "/farm/create/" + this.currentId,
+        "/farm/create/" + this.$route.query.id,
         {
           farm_name: this.farm_name,
           fname: this.fname,

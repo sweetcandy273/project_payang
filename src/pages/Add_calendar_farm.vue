@@ -22,7 +22,13 @@
     <div>
       <q-form @submit="onSubmit()">
         <div class="box-dropActivitytype q-pa-md">
-          <q-input filled v-model="activity" color="teal" label="ประเภทกิจกรรม">
+          <q-input
+            filled
+            v-model="activity"
+            color="teal"
+            label="ประเภทกิจกรรม"
+            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกประเภทกิจกรรม']"
+          >
           </q-input>
         </div>
 
@@ -75,7 +81,7 @@ export default {
       farm: {},
     };
   },
-  mounted(){
+  mounted() {
     this.getfarm();
   },
   methods: {
@@ -96,15 +102,13 @@ export default {
         },
       });
     },
-     async getfarm() {
+    async getfarm() {
       const { data } = await axios.get(
         "http://localhost:3000/farm/" + this.$route.query.id
       );
       this.farm = data.data;
-      
     },
   },
-  
 };
 </script>
 

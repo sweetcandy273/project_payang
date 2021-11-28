@@ -107,6 +107,7 @@
 
         <div>พันธุ์ยาง :</div>
         <q-select
+          color="teal"
           filled
           v-model="farm.rubber_variety.varieties"
           :options="rubberOption"
@@ -172,7 +173,7 @@
             :rules="[
               (val) =>
                 (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์',
+                'กรุณากรอกเบอร์โทรศัพท์เป็นตัวเลข',
             ]"
           >
             <template v-slot:append>
@@ -183,7 +184,7 @@
             color="teal"
             filled
             v-model="nameEmployee.e_number"
-            label="เบอร์โทรศัพท์ฉุกเฉิน"
+            label="เบอร์โทรศัพท์ฉุกเฉินเป็นตัวเลข"
             type="number"
             float-label="Number"
             :rules="[

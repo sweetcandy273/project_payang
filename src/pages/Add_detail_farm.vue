@@ -104,6 +104,7 @@
 
         <div>พันธุ์ยาง :</div>
         <q-select
+          color="teal"
           filled
           v-model="rubber_varieties_id"
           :options="rubberOption"
@@ -128,10 +129,10 @@
           color="teal"
           v-model="area"
           filled
-          type="number" 
+          type="number"
           float-label="Number"
           label="เนื้อที่ปลูก"
-          :rules="[(val) => (val && val.length  > 0 ) || 'กรุณากรอกเนื้อที่ปลูก']"
+          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเนื้อที่ปลูก']"
         />
 
         <div class="add_employee">
@@ -161,7 +162,6 @@
                 label="นามสกุล"
                 :rules="[
                   (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
-
                 ]"
               />
             </div>
@@ -171,7 +171,7 @@
             filled
             v-model="phone_number_emp"
             label="เบอร์โทรศัพท์"
-            type="number" 
+            type="number"
             float-label="Number"
             :rules="[
               (val) =>
@@ -188,7 +188,7 @@
             v-model="e_number_emp"
             filled
             label="เบอร์โทรศัพท์ฉุกเฉิน"
-            type="number" 
+            type="number"
             float-label="Number"
             :rules="[
               (val) =>

@@ -168,10 +168,13 @@
             label="เบอร์โทรศัพท์"
             type="number"
             float-label="Number"
+            mask="##########"
             :rules="[
               val =>
+                val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
+              val =>
                 (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์เป็นตัวเลข'
+                'กรุณากรอกเบอร์โทรศัพท์'
             ]"
           >
             <template v-slot:append>
@@ -185,7 +188,10 @@
             label="เบอร์โทรศัพท์ฉุกเฉินเป็นตัวเลข"
             type="number"
             float-label="Number"
+            mask="##########"
             :rules="[
+              val =>
+                val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
               val =>
                 (val && val.length > 0 && val.length == 10) ||
                 'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน'
@@ -260,11 +266,9 @@ export default {
   async mounted() {
     await this.getfarm();
     await this.getemployee();
-    // await this.getnameEmployee();
-    await this.getrubber_var();
-    // await this.DeleteEven();
 
-    // this.updateEmp();
+    await this.getrubber_var();
+
     await this.updateFarm();
   },
 

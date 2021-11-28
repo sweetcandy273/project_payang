@@ -46,7 +46,7 @@
                 transition-show="scale"
                 transition-hide="scale"
               >
-                <q-date v-model="activity_in_farms.date" color="green">
+                <q-date v-model="activity_in_farms.date" color="green"  class="font">
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="white" flat />
                   </div>
@@ -88,7 +88,9 @@ import { date } from "quasar";
 export default {
   data() {
     return {
-      activity_in_farms: {},
+      activity_in_farms: {
+        date:""
+      },
     };
   },
   mounted() {

@@ -170,10 +170,13 @@
             label="เบอร์โทรศัพท์"
             type="number"
             float-label="Number"
+            mask="###-###-####"
             :rules="[
               val =>
-                (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์เป็นตัวเลข'
+                val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
+              val =>
+                (val && val.length > 0 && val.length == 12) ||
+                'กรุณากรอกเบอร์โทรศัพท์'
             ]"
           >
             <template v-slot:append>
@@ -187,10 +190,13 @@
             label="เบอร์โทรศัพท์ฉุกเฉิน"
             type="number"
             float-label="Number"
+            mask="###-###-####"
             :rules="[
               val =>
-                (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉินเป็นตัวเลข'
+                val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
+              val =>
+                (val && val.length > 0 && val.length == 12) ||
+                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน'
             ]"
           >
             <template v-slot:append>
@@ -242,9 +248,6 @@
   </div>
 </template>
 <script>
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-
 import { date } from "quasar";
 
 export default {
@@ -299,7 +302,7 @@ export default {
   methods: {
     async getrubber_var() {
       const { data } = await this.$axios.get("/rubber_varieties");
-      // console.log(data);
+
       this.rubberList = data.data.map(rubber => ({
         label: rubber.varieties,
         value: rubber.rubber_varieties_id

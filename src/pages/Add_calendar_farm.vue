@@ -35,7 +35,14 @@
         </div>
 
         <div class="q-px-md font">
-          <q-input color="teal" filled v-model="date" mask="date" class="font">
+          <q-input
+            color="teal"
+            filled
+            v-model="date"
+            mask="date"
+            class="font"
+            :rules="['date']"
+          >
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer" color="teal">
                 <q-popup-proxy
@@ -43,7 +50,7 @@
                   transition-show="scale"
                   transition-hide="scale"
                 >
-                  <q-date v-model="date" color="green">
+                  <q-date v-model="date" color="green" class="font">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="white" flat />
                     </div>
@@ -73,8 +80,8 @@ export default {
   data() {
     return {
       date: "",
-      activity: " ",
-      farm_id: " ",
+      activity: "",
+      farm_id: "",
       farm: {}
     };
   },
@@ -83,28 +90,21 @@ export default {
   },
   methods: {
     async onSubmit() {
-      try {
-        this.$q.loading.show();
-        await this.$axios
-          .post("/activity_in_farm/create", {
-            date: this.date,
-            activity: this.activity,
-            farm_id: this.$route.query.id
-          })
-          .then(response => {
-            console.log(response);
-          });
-        this.$router.push({
-          path: "/calender_farm",
-          query: {
-            id: this.$route.query.id
-          }
+      await this.$axios
+        .post("/activity_in_farm/create", {
+          date: this.date,
+          activity: this.activity,
+          farm_id: this.$route.query.id
+        })
+        .then(response => {
+          // console.log(response);
         });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
+      this.$router.push({
+        path: "/calender_farm",
+        query: {
+          id: this.$route.query.id
+        }
+      });
     }
   }
 };

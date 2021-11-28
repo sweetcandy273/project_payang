@@ -1,9 +1,6 @@
 <template>
   <div>
     <q-header>
-      <!-- <q-toolbar>
-        <q-space></q-space>
-      </q-toolbar>  -->
       <q-toolbar class="row">
         <div class="col flex">
           <img
@@ -184,10 +181,13 @@
               filled
               v-model="telstore_in"
               label="เบอร์โทรร้านค้า"
+              mask="###-###-####"
               :rules="[
                 val =>
-                  (val && val.length > 0 && val.length == 10) ||
-                  'กรุณากรอกเบอร์โทรร้านค้า'
+                  val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
+                val =>
+                  (val && val.length > 0 && val.length == 12) ||
+                  'กรุณากรอกเบอร์โทรศัพท์'
               ]"
             >
               <template v-slot:prepend> </template>

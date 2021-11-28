@@ -15,7 +15,7 @@
           ></q-icon>
         </div>
 
-        <div class="col-6 font header-title">สวนภูเก็ต</div>
+        <div class="col-6 font header-title">ตารางกิจกรรม</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>

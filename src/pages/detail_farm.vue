@@ -142,34 +142,44 @@ export default {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getfarm() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm/" + this.$route.query.id
-      );
-      this.farm = data.data;
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get("/farm/" + this.$route.query.id);
+        this.farm = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
     async getemployee() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
-      );
-      this.employee = data.data;
-      if (this.employee.length > 0) {
-        await this.getnameEmployee();
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          "/farm_has_employee/list/" + this.$route.query.id
+        );
+        this.employee = data.data;
+        if (this.employee.length > 0) {
+          await this.getnameEmployee();
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
       }
     },
     async getnameEmployee() {
-      const { data } = await axios.get(
-        "http://localhost:3000/payang_user/" + this.employee[0].employee
+      const { data } = await this.$axios.get(
+        "/payang_user/" + this.employee[0].employee
       );
       this.nameEmployee = data.data;
     },
 
     async DeleteEmp() {
-      axios.delete(
-        "http://localhost:3000/farm_has_employee/delete/" + this.$route.query.id
-      );
+      this.$axios.delete("/farm_has_employee/delete/" + this.$route.query.id);
     },
     async DeleteFarm() {
-      axios.delete("http://localhost:3000/farm/delete/" + this.$route.query.id);
+      this.$axios.delete("/farm/delete/" + this.$route.query.id);
       await this.DeleteEmp();
     },
     DeleteEven() {

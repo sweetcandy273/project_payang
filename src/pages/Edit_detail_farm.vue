@@ -308,9 +308,7 @@ export default {
     },
 
     async getrubber_var() {
-      const { data } = await axios.get(
-        "http://localhost:3000/rubber_varieties"
-      );
+      const { data } = await this.$axios.get("/rubber_varieties");
       this.rubberList = data.data.map(rubber => ({
         label: rubber.varieties,
         value: rubber.rubber_varieties_id
@@ -318,30 +316,43 @@ export default {
     },
 
     async getfarm() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm/" + this.$route.query.id
-      );
-      this.farm = data.data;
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get("/farm/" + this.$route.query.id);
+        this.farm = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
     async getemployee() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
-      );
-      this.employee = data.data;
-      if (this.employee.length > 0) {
-        await this.getnameEmployee();
+      try {
+        this.$q.loading.show();
+
+        const { data } = await this.$axios.get(
+          "/farm_has_employee/list/" + this.$route.query.id
+        );
+        this.employee = data.data;
+        if (this.employee.length > 0) {
+          await this.getnameEmployee();
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
       }
     },
     async getnameEmployee() {
-      const { data } = await axios.get(
-        "http://localhost:3000/payang_user/" + this.employee[0].employee
+      const { data } = await this.$axios.get(
+        "/payang_user/" + this.employee[0].employee
       );
       this.nameEmployee = data.data;
     },
 
     async updateEmp() {
-      const { data } = await axios.put(
-        "http://localhost:3000/payang_user/update/" + this.employee[0].employee,
+      await this.$axios.put(
+        "/payang_user/update/" + this.employee[0].employee,
         {
           fname: this.nameEmployee.fname,
           lname: this.nameEmployee.lname,
@@ -367,14 +378,11 @@ export default {
       });
     },
     async deletefunc() {
-      axios.delete(
-        "http://localhost:3000/farm_has_employee/delete/" + this.$route.query.id
-      );
+      this.$axios.delete("/farm_has_employee/delete/" + this.$route.query.id);
     },
     async DeleteEmp_payang() {
-      axios.delete(
-        "http://localhost:3000/payang_user/delete/" +
-          this.$route.query.employee[0].employee
+      this.$axios.delete(
+        "/payang_user/delete/" + this.$route.query.employee[0].employee
       );
     },
 

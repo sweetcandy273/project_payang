@@ -128,9 +128,7 @@ export default {
     },
 
     Notidelete() {
-      axios.delete(
-        `http://localhost:3000/income/delete/${this.$route.query.id}`
-      );
+      this.$axios.delete(`/income/delete/${this.$route.query.id}`);
     },
     DeleteEven() {
       this.$q
@@ -155,10 +153,17 @@ export default {
         .onDismiss(() => {});
     },
     async getIncome() {
-      const { data } = await this.$axios.get(
-        `/income/findincome/${this.$route.query.id}`
-      );
-      this.incomes = data.data;
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          `/income/findincome/${this.$route.query.id}`
+        );
+        this.incomes = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     }
   },
   watch: {

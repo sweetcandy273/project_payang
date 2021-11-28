@@ -221,15 +221,20 @@ export default {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getIncome() {
-      const { data } = await this.$axios.get(
-        `/income/findincome/${this.$route.query.id}`
-      );
-      this.incomes = data.data;
-      this.incomes.date_income = this.formatDate(this.incomes.date_income);
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          `/income/findincome/${this.$route.query.id}`
+        );
+        this.incomes = data.data;
+        this.incomes.date_income = this.formatDate(this.incomes.date_income);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
     sharemoney: function(amount, percen_split) {
-      // console.warn("amount : "+amount)
-      // console.warn("percen_split : "+percen_split)
       var amount_net = 0;
       if (percen_split == 60) {
         amount_net = (amount / 100) * 60;

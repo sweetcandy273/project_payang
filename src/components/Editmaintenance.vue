@@ -116,10 +116,18 @@ export default {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getExpen() {
-      const { data } = await this.$axios.get(
-        `/expenditure/show/${this.$route.query.id}`
-      );
-      this.expens = data.data;
+      try {
+        this.$q.loading.show();
+
+        const { data } = await this.$axios.get(
+          `/expenditure/show/${this.$route.query.id}`
+        );
+        this.expens = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
 
     async onSubmit() {

@@ -93,7 +93,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 import { date } from "quasar";
 import Editmaintenance from "../components/Editmaintenance.vue";
 import Editequipment from "../components/Editequipment.vue";
@@ -118,11 +117,18 @@ export default {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getExpen() {
-      const { data } = await axios.get(
-        `http://localhost:3000/expenditure/show/${this.$route.query.id}`
-      );
-      this.expens = data.data;
-      this.type = this.expens.type;
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          `/expenditure/show/${this.$route.query.id}`
+        );
+        this.expens = data.data;
+        this.type = this.expens.type;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     }
   }
 };

@@ -298,9 +298,7 @@ export default {
   },
   methods: {
     async getrubber_var() {
-      const { data } = await axios.get(
-        "http://localhost:3000/rubber_varieties"
-      );
+      const { data } = await this.$axios.get("/rubber_varieties");
       // console.log(data);
       this.rubberList = data.data.map(rubber => ({
         label: rubber.varieties,
@@ -349,18 +347,15 @@ export default {
       this.create_farm = data.data;
     },
     async createEmp() {
-      const { data } = await axios.post(
-        "http://localhost:3000/payang_user/create_emp/",
-        {
-          fname: this.fname_emp,
-          lname: this.lname_emp,
-          phone_number: this.phone_number_emp,
-          e_number: this.e_number_emp,
-          address: this.address_emp,
-          address_district: this.address_district_emp,
-          address_province: this.address_province_emp
-        }
-      );
+      const { data } = await this.$axios.post("/payang_user/create_emp/", {
+        fname: this.fname_emp,
+        lname: this.lname_emp,
+        phone_number: this.phone_number_emp,
+        e_number: this.e_number_emp,
+        address: this.address_emp,
+        address_district: this.address_district_emp,
+        address_province: this.address_province_emp
+      });
       this.create_employee = data.data;
       // console.log(data.data);
     },

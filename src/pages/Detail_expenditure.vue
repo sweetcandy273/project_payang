@@ -116,9 +116,7 @@ export default {
     },
 
     Notidelete() {
-      axios.delete(
-        `http://localhost:3000/expenditure/delete/${this.$route.query.id}`
-      );
+      this.$axios.delete(`/expenditure/delete/${this.$route.query.id}`);
     },
     DeleteEven() {
       this.$q
@@ -143,11 +141,17 @@ export default {
         .onDismiss(() => {});
     },
     async getExpen() {
-      const { data } = await this.$axios.get(
-        `/expenditure/show/${this.$route.query.id}`
-      );
-      this.expens = data.data;
-      console.log(data.data);
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          `/expenditure/show/${this.$route.query.id}`
+        );
+        this.expens = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     }
   }
 };

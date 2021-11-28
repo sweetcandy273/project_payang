@@ -34,6 +34,7 @@
               v-model="expens.title_type"
               :options="titleoption"
               label="ตัวเลือก"
+              required
             />
           </div>
         </div>
@@ -48,7 +49,6 @@
               ]"
               fill-mask="0"
               reverse-fill-mask
-              mask="#.##"
             >
               <template v-slot:prepend> ฿ </template>
             </q-input>
@@ -60,10 +60,8 @@
               filled
               v-model="expens.store_expen"
               label="ชื่อร้านค้า"
-              :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า',
-              ]"
-              >
+              required
+            >
               <template v-slot:prepend></template>
             </q-input>
           </div>
@@ -72,9 +70,10 @@
               filled
               v-model="expens.telstore_expen"
               label="เบอร์โทรร้านค้า"
-              mask="###-###-####"
+              required
               :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรร้านค้า',
+                (val) =>
+                  (val && val.length == 10) || 'กรุณากรอกเบอร์โทรร้านค้า',
               ]"
             >
               <template v-slot:prepend></template>
@@ -158,7 +157,7 @@ export default {
           date_expenditure: this.expens.date_expenditure,
           amount: this.expens.amount,
           note: this.expens.note,
-          type:this.expens.type,
+          type: this.expens.type,
           title_type: this.expens.title_type,
           store_expen: this.expens.store_expen,
           telstore_expen: this.expens.telstore_expen,
@@ -169,8 +168,8 @@ export default {
       this.$router.push({
         path: "/account_calendar",
         query: {
-           id: this.expens.farm_id,
-          owner: this.expens.owner
+          id: this.expens.farm_id,
+          owner: this.expens.owner,
         },
       });
     },

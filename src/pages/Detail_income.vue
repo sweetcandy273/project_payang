@@ -148,7 +148,7 @@ export default {
           this.$router.push({
             path: "/account_calendar",
             query: {
-              id: this.$route.query.idf 
+              id: this.$route.query.idf,
             },
           });
         })

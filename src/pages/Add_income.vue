@@ -79,7 +79,9 @@
       </div>
 
       <div class="text-center">
-        <div class="font q-pa-md" style="font-size: 25px">ระบุข้อมูลน้ำยางสด</div>
+        <div class="font" style="font-size: 25px">
+          ระบุข้อมูลน้ำยางสด
+        </div>
       </div>
 
       <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
@@ -186,9 +188,10 @@
               filled
               v-model="telstore_in"
               label="เบอร์โทรร้านค้า"
-              mask="###-###-####"
               :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรร้านค้า',
+                (val) =>
+                  (val && val.length > 0 && val.length == 10) ||
+                  'กรุณากรอกเบอร์โทรร้านค้า',
               ]"
             >
               <template v-slot:prepend> </template>
@@ -196,20 +199,12 @@
           </div>
         </div>
 
-        <!-- <div class="share">
-        <q-checkbox
-          v-model="selectshare"
-          style="font-size: 16px"
-          label="ผู้รับผิดชอบ"
-        />
-      </div> -->
-
         <div class="sharemoney">
           <div class="row">
-            <div class="col text-center q-my-md" style="font-size: 20px">
+            <div class="col text-center" style="font-size: 20px">
               % การแบ่ง
             </div>
-            <div class="col q-my-md">
+            <div class="col">
               <q-select
                 filled
                 v-model="percen_split"
@@ -266,7 +261,6 @@ export default {
       share: "",
       percen_split: "",
       optionspercent: ["60", "55", "50", "-"],
-     
     };
   },
 
@@ -311,11 +305,11 @@ export default {
       // console.warn("percen_split : "+percen_split)
       var amount_net = 0;
       if (percen_split == 60) {
-        amount_net = amount * 0.6;
+        amount_net = (amount / 100) * 60;
       } else if (percen_split == 55) {
-        amount_net = amount * 0.55;
+        amount_net = (amount / 100) * 55;
       } else if (percen_split == 50) {
-        amount_net = amount * 0.5;
+        amount_net = (amount / 100) * 50;
       } else {
         amount_net = amount * 1;
       }

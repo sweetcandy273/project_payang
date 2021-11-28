@@ -1,6 +1,6 @@
 <template>
   <div>
-     <q-form @submit.prevent="onSubmit" class="q-gutter-md">
+    <q-form @submit.prevent="onSubmit" class="q-gutter-md">
       <div class="font q-px-md">
         <q-input
           filled
@@ -26,44 +26,60 @@
           </template>
         </q-input>
       </div>
-    <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
-      <div class="row q-pt-md">
-        <div class="col">
-          <q-select
-            filled
-            v-model="expens.title_type"
-            :options="titleoption"
-            label="ตัวเลือก"
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <q-input filled v-model="expens.amount" label="รวมจำนวนเงิน"
-           :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน']" fill-mask="0"
-              reverse-fill-mask
-              mask="#.##">
-            <template v-slot:prepend> ฿ </template>
-          </q-input>
-        </div>
-      </div>
-      <div class="row">
+      <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
+        <div class="row q-pt-md">
           <div class="col">
-            <q-input filled v-model="expens.store_expen" label="ชื่อร้านค้า" 
-             :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า']">
+            <q-select
+              filled
+              v-model="expens.title_type"
+              :options="titleoption"
+              label="ตัวเลือก"
+              required
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-input
+              filled
+              v-model="expens.amount"
+              label="รวมจำนวนเงิน"
+              fill-mask="0"
+              reverse-fill-mask
+              required
+            >
+              <template v-slot:prepend> ฿ </template>
+            </q-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <q-input
+              filled
+              v-model="expens.store_expen"
+              label="ชื่อร้านค้า"
+              required
+            >
               <template v-slot:prepend></template>
             </q-input>
           </div>
           <div class="col q-ml-md">
-            <q-input filled v-model="expens.telstore_expen" label="เบอร์โทรร้านค้า"
-             mask= "###-###-####"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรร้านค้า']">
-              <template v-slot:prepend>  </template>
+            <q-input
+              filled
+              v-model="expens.telstore_expen"
+              label="เบอร์โทรร้านค้า"
+              required
+              :rules="[
+                (val) =>
+                  (val && val.length == 10) || 'กรุณากรอกเบอร์โทรร้านค้า',
+              ]"
+            >
+              <template v-slot:prepend> </template>
             </q-input>
           </div>
         </div>
 
-      <!-- <div class="share text-left">
+        <!-- <div class="share text-left">
         <q-select
           filled
           v-model="employee"
@@ -76,21 +92,21 @@
         </q-select>
       </div> -->
 
-      <div class="col">
-        <q-input filled v-model="expens.note" label="บันทึก" />
-      </div>
+        <div class="col">
+          <q-input filled v-model="expens.note" label="บันทึก" />
+        </div>
 
-      <div class="submit row q-gutter-sm flex-center font">
-        <q-btn
-          unelevated
-          rounded
-          label="บันทึก"
-          class="shadow-2 text-white"
-          style="width: 100%; background-color: #4e7971"
-          type="submit"
-        />
+        <div class="submit row q-gutter-sm flex-center font">
+          <q-btn
+            unelevated
+            rounded
+            label="บันทึก"
+            class="shadow-2 text-white"
+            style="width: 100%; background-color: #4e7971"
+            type="submit"
+          />
+        </div>
       </div>
-    </div>
     </q-form>
   </div>
 </template>
@@ -100,11 +116,10 @@ import axios from "axios";
 export default {
   data() {
     return {
-      
       title: "",
       titleoption: ["ปุ๋ย", "ตัดหญ้า", "ตัดกาฝาก"],
       selectshare: false,
-     
+
       expens: {},
     };
   },
@@ -120,7 +135,6 @@ export default {
         `http://localhost:3000/expenditure/show/${this.$route.query.id}`
       );
       this.expens = data.data;
-      
     },
 
     async onSubmit() {
@@ -129,7 +143,7 @@ export default {
         {
           date_expenditure: this.expens.date_expenditure,
           amount: this.expens.amount,
-          type:this.expens.type,
+          type: this.expens.type,
           note: this.expens.note,
           title_type: this.expens.title_type,
           store_expen: this.expens.store_expen,
@@ -142,8 +156,7 @@ export default {
         path: "/account_calendar",
         query: {
           id: this.expens.farm_id,
-          owner: this.expens.owner
-
+          owner: this.expens.owner,
         },
       });
     },

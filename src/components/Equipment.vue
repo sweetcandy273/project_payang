@@ -72,28 +72,16 @@
               filled
               v-model="telstore_expen"
               label="เบอร์โทรร้านค้า"
-              mask="###-###-####"
               :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรร้านค้า',
+                (val) =>
+                  (val && val.length > 0 && val.length == 10) ||
+                  'กรุณากรอกเบอร์โทรร้านค้า',
               ]"
             >
               <template v-slot:prepend> </template>
             </q-input>
           </div>
         </div>
-
-        <!-- <div class="share text-left">
-          <q-select
-            filled
-            v-model="employee"
-            :options="optionsemployee"
-            label="ผู้รับผิดชอบ"
-          >
-            <template v-slot:prepend>
-              <q-icon name="person" />
-            </template>
-          </q-select>
-        </div> -->
 
         <div class="col">
           <q-input filled v-model="note" label="บันทึก" />

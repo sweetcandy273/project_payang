@@ -9,7 +9,6 @@
                 path: 'account_calendar',
                 query: {
                   id: expens.farm_id,
-                  
                 },
               })
             "
@@ -51,9 +50,7 @@
             {{ expens.date_expenditure }}
           </div>
         </div>
-        <div class="row" style="font-size: 20px">
-          ส่วน: {{ expens.type }}
-        </div>
+        <div class="row" style="font-size: 20px">ส่วน: {{ expens.type }}</div>
 
         <div class="text-right" style="font-size: 28px">
           {{ expens.amount }}
@@ -107,7 +104,7 @@ export default {
   data() {
     return {
       expens: {
-        farm:{}
+        farm: {},
       },
     };
   },
@@ -119,19 +116,12 @@ export default {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
-    async getExpen() {
-      const { data } = await axios.get(
-        `http://localhost:3000/expenditure/show/${this.$route.query.id}`
-      );
-      this.expens = data.data;
-      console.log(data.data);
-    },
+
     Notidelete() {
       axios.delete(
         `http://localhost:3000/expenditure/delete/${this.$route.query.id}`
       );
     },
-  },
     DeleteEven() {
       this.$q
         .dialog({
@@ -146,11 +136,22 @@ export default {
           this.Notidelete();
           this.$router.push({
             name: "account_calendar",
+            query: {
+              id: this.$route.query.idf 
+            },
           });
         })
         .onCancel(() => {})
         .onDismiss(() => {});
     },
+    async getExpen() {
+      const { data } = await axios.get(
+        `http://localhost:3000/expenditure/show/${this.$route.query.id}`
+      );
+      this.expens = data.data;
+      console.log(data.data);
+    },
+  },
 };
 </script>
 <style scoped src="../css/home.css"></style>

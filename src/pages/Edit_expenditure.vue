@@ -1,9 +1,6 @@
 <template>
   <div>
     <q-header>
-      <!-- <q-toolbar>
-        <q-space></q-space>
-      </q-toolbar>  -->
       <q-toolbar class="text-center row">
         <div class="col flex">
           <img
@@ -13,8 +10,8 @@
               $router.push({
                 path: 'detail_expenditure',
                 query: {
-                 id: expens.expen_id,
-                },
+                  id: expens.expen_id
+                }
               })
             "
           />
@@ -52,7 +49,7 @@
         unelevated
         :options="[
           { value: 'Maintenance', slot: 'Maintenance' },
-          { value: 'Equipment', slot: 'Equipment' },
+          { value: 'Equipment', slot: 'Equipment' }
         ]"
       >
         <template v-slot:Maintenance>
@@ -96,7 +93,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 import { date } from "quasar";
 import Editmaintenance from "../components/Editmaintenance.vue";
 import Editequipment from "../components/Editequipment.vue";
@@ -105,32 +101,37 @@ export default {
     return {
       date_expenditure: "",
       type: "",
-      expens: {},
+      expens: {}
     };
   },
   components: {
     Editequipment,
-    Editmaintenance,
+    Editmaintenance
   },
 
   mounted() {
     this.getExpen();
-    
   },
   methods: {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getExpen() {
-      const { data } = await axios.get(
-        `http://localhost:3000/expenditure/show/${this.$route.query.id}`
-      );
-      this.expens = data.data;
-      this.type = this.expens.type;
-    },
-  },
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          `/expenditure/show/${this.$route.query.id}`
+        );
+        this.expens = data.data;
+        this.type = this.expens.type;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
+    }
+  }
 };
 </script>
 
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>

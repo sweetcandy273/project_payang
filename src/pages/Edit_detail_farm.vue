@@ -27,7 +27,7 @@
               filled
               v-model="farm.fname"
               label="ชื่อ"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
+              :rules="[val => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
             />
           </div>
           <div class="col">
@@ -36,7 +36,7 @@
               filled
               v-model="farm.lname"
               label="นามสกุล"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
+              :rules="[val => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
             />
           </div>
         </div>
@@ -47,7 +47,7 @@
           filled
           v-model="farm.farm_name"
           label="ชื่อสวน"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
+          :rules="[val => (val && val.length > 0) || 'กรุณากรอกชื่อสวน']"
         >
         </q-input>
 
@@ -57,7 +57,7 @@
           filled
           v-model="farm.address"
           label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
-          :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
+          :rules="[val => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
         />
         <div class="row">
           <div class="col q-pr-md">
@@ -66,7 +66,7 @@
               filled
               v-model="farm.address_district"
               label="เขต/อำเภอ"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
+              :rules="[val => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
             />
           </div>
           <div class="col">
@@ -75,7 +75,7 @@
               filled
               v-model="farm.address_province"
               label="จังหวัด"
-              :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
+              :rules="[val => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
             />
           </div>
         </div>
@@ -148,7 +148,7 @@
                 filled
                 v-model="nameEmployee.fname"
                 label="ชื่อ"
-                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
+                :rules="[val => (val && val.length > 0) || 'กรุณากรอกชื่อ']"
               />
             </div>
             <div class="col">
@@ -157,9 +157,7 @@
                 filled
                 v-model="nameEmployee.lname"
                 label="นามสกุล"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกนามสกุล',
-                ]"
+                :rules="[val => (val && val.length > 0) || 'กรุณากรอกนามสกุล']"
               />
             </div>
           </div>
@@ -170,10 +168,13 @@
             label="เบอร์โทรศัพท์"
             type="number"
             float-label="Number"
+            mask="##########"
             :rules="[
-              (val) =>
+              val =>
+                val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
+              val =>
                 (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์เป็นตัวเลข',
+                'กรุณากรอกเบอร์โทรศัพท์'
             ]"
           >
             <template v-slot:append>
@@ -187,10 +188,13 @@
             label="เบอร์โทรศัพท์ฉุกเฉินเป็นตัวเลข"
             type="number"
             float-label="Number"
+            mask="##########"
             :rules="[
-              (val) =>
+              val =>
+                val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
+              val =>
                 (val && val.length > 0 && val.length == 10) ||
-                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน',
+                'กรุณากรอกเบอร์โทรศัพท์ฉุกเฉิน'
             ]"
           >
             <template v-slot:append>
@@ -203,7 +207,7 @@
             filled
             v-model="nameEmployee.address"
             label="ที่อยู่ (บ้านเลขที่ หมู่ที่ ตรอก/ซอย แขวง/ตำบล)"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
+            :rules="[val => (val && val.length > 0) || 'กรุณากรอกที่อยู่']"
           />
 
           <div class="row">
@@ -213,7 +217,7 @@
                 filled
                 v-model="nameEmployee.address_district"
                 label="เขต/อำเภอ"
-                :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
+                :rules="[val => (val && val.length > 0) || 'กรุณากรอกอำเภอ']"
               />
             </div>
             <div class="col">
@@ -222,9 +226,7 @@
                 filled
                 v-model="nameEmployee.address_province"
                 label="จังหวัด"
-                :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกจังหวัด',
-                ]"
+                :rules="[val => (val && val.length > 0) || 'กรุณากรอกจังหวัด']"
               />
             </div>
           </div>
@@ -258,25 +260,22 @@
 </template>
 
 <script>
-import axios from "axios";
 import { date } from "quasar";
 
 export default {
   async mounted() {
     await this.getfarm();
     await this.getemployee();
-    // await this.getnameEmployee();
-    await this.getrubber_var();
-    // await this.DeleteEven();
 
-    // this.updateEmp();
+    await this.getrubber_var();
+
     await this.updateFarm();
   },
 
   data() {
     return {
       farm: {
-        rubber_variety: {},
+        rubber_variety: {}
       },
       payang_user: [],
       nameEmployee: [],
@@ -285,7 +284,7 @@ export default {
       employee: [],
       rubberList: [],
       rubberOption: [],
-      rubber_varieties_id: [],
+      rubber_varieties_id: []
     };
   },
 
@@ -300,7 +299,7 @@ export default {
       update(() => {
         const rubber_varieties_id = val.toLowerCase();
         this.rubberOption = this.rubberList.filter(
-          (v) => v.label.toLowerCase().indexOf(rubber_varieties_id) > -1
+          v => v.label.toLowerCase().indexOf(rubber_varieties_id) > -1
         );
       });
     },
@@ -313,40 +312,51 @@ export default {
     },
 
     async getrubber_var() {
-      const { data } = await axios.get(
-        "http://localhost:3000/rubber_varieties"
-      );
-      this.rubberList = data.data.map((rubber) => ({
+      const { data } = await this.$axios.get("/rubber_varieties");
+      this.rubberList = data.data.map(rubber => ({
         label: rubber.varieties,
-        value: rubber.rubber_varieties_id,
+        value: rubber.rubber_varieties_id
       }));
     },
 
     async getfarm() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm/" + this.$route.query.id
-      );
-      this.farm = data.data;
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get("/farm/" + this.$route.query.id);
+        this.farm = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
     async getemployee() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
-      );
-      this.employee = data.data;
-      if (this.employee.length > 0) {
-        await this.getnameEmployee();
+      try {
+        this.$q.loading.show();
+
+        const { data } = await this.$axios.get(
+          "/farm_has_employee/list/" + this.$route.query.id
+        );
+        this.employee = data.data;
+        if (this.employee.length > 0) {
+          await this.getnameEmployee();
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
       }
     },
     async getnameEmployee() {
-      const { data } = await axios.get(
-        "http://localhost:3000/payang_user/" + this.employee[0].employee
+      const { data } = await this.$axios.get(
+        "/payang_user/" + this.employee[0].employee
       );
       this.nameEmployee = data.data;
     },
 
     async updateEmp() {
-      const { data } = await axios.put(
-        "http://localhost:3000/payang_user/update/" + this.employee[0].employee,
+      await this.$axios.put(
+        "/payang_user/update/" + this.employee[0].employee,
         {
           fname: this.nameEmployee.fname,
           lname: this.nameEmployee.lname,
@@ -354,35 +364,29 @@ export default {
           e_number: this.nameEmployee.e_number,
           address: this.nameEmployee.address,
           address_district: this.nameEmployee.address_district,
-          address_province: this.nameEmployee.address_province,
+          address_province: this.nameEmployee.address_province
         }
       );
     },
     async updateFarm() {
-      const { data } = await axios.put(
-        "http://localhost:3000/farm/update/" + this.$route.query.id,
-        {
-          farm_name: this.farm.farm_name,
-          fname: this.farm.fname,
-          lname: this.farm.lname,
-          area: this.farm.area,
-          rubber_varieties_id: this.farm.rubber_varieties_id,
-          planing_date: this.farm.planing_date,
-          address: this.farm.address,
-          address_district: this.farm.address_district,
-          address_province: this.farm.address_province,
-        }
-      );
+      await this.$axios.put("/farm/update/" + this.$route.query.id, {
+        farm_name: this.farm.farm_name,
+        fname: this.farm.fname,
+        lname: this.farm.lname,
+        area: this.farm.area,
+        rubber_varieties_id: this.farm.rubber_varieties_id,
+        planing_date: this.farm.planing_date,
+        address: this.farm.address,
+        address_district: this.farm.address_district,
+        address_province: this.farm.address_province
+      });
     },
     async deletefunc() {
-      axios.delete(
-        "http://localhost:3000/farm_has_employee/delete/" + this.$route.query.id
-      );
+      this.$axios.delete("/farm_has_employee/delete/" + this.$route.query.id);
     },
     async DeleteEmp_payang() {
-      axios.delete(
-        "http://localhost:3000/payang_user/delete/" +
-          this.$route.query.employee[0].employee
+      this.$axios.delete(
+        "/payang_user/delete/" + this.$route.query.employee[0].employee
       );
     },
 
@@ -394,14 +398,14 @@ export default {
             'ระบบจะทำการลบข้อมูลผู้ดูแล <span class="text-red font"><strong>หากยืนยันการลบข้อมูลผู้ดูแล ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
           cancel: true,
           persistent: true,
-          html: true,
+          html: true
         })
         .onOk(() => {
           this.deletefunc();
           this.DeleteEmp_payang();
           this.$router.push({
             name: "detail_farm",
-            query: { id: this.$route.query.id },
+            query: { id: this.$route.query.id }
           });
         })
         .onCancel(() => {})
@@ -413,15 +417,14 @@ export default {
 
       this.$router.push({
         path: "/detail_farm",
-        query: { id: this.farm.farm_id },
+        query: { id: this.farm.farm_id }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>
 <style scoped>
 .box_editeAdmin {
   background-color: #e9e9e9;

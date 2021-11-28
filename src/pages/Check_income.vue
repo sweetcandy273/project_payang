@@ -1,9 +1,6 @@
 <template>
   <div>
     <q-header>
-      <!-- <q-toolbar>
-        <q-space></q-space>
-      </q-toolbar>  -->
       <q-toolbar class="text-center row">
         <div class="col flexed text-left">
           <q-icon
@@ -83,7 +80,7 @@
 export default {
   data() {
     return {};
-  },
+  }
 };
 </script>
 <style scoped src="../css/home.css"></style>

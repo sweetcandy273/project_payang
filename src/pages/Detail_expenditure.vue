@@ -8,8 +8,8 @@
               $router.push({
                 path: 'account_calendar',
                 query: {
-                  id: expens.farm_id,
-                },
+                  id: expens.farm_id
+                }
               })
             "
             name="arrow_back_ios"
@@ -76,8 +76,8 @@
                   $router.push({
                     path: 'edit_expenditure',
                     query: {
-                      id: expens.expen_id,
-                    },
+                      id: expens.expen_id
+                    }
                   })
                 "
               />
@@ -98,19 +98,17 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 export default {
   name: "expens",
   data() {
     return {
       expens: {
-        farm: {},
-      },
+        farm: {}
+      }
     };
   },
   mounted() {
     this.getExpen();
-    // this.getfarm();
   },
   methods: {
     formatDate(dateString) {
@@ -118,9 +116,7 @@ export default {
     },
 
     Notidelete() {
-      axios.delete(
-        `http://localhost:3000/expenditure/delete/${this.$route.query.id}`
-      );
+      this.$axios.delete(`/expenditure/delete/${this.$route.query.id}`);
     },
     DeleteEven() {
       this.$q
@@ -130,28 +126,34 @@ export default {
             'ระบบจะทำการลบข้อมูลรายจ่าย <span class="text-red font"><strong>หากยืนยันการลบข้อมูลรายจ่าย ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
           cancel: true,
           persistent: true,
-          html: true,
+          html: true
         })
         .onOk(() => {
           this.Notidelete();
           this.$router.push({
             name: "account_calendar",
             query: {
-              id: this.$route.query.idf 
-            },
+              id: this.$route.query.idf
+            }
           });
         })
         .onCancel(() => {})
         .onDismiss(() => {});
     },
     async getExpen() {
-      const { data } = await axios.get(
-        `http://localhost:3000/expenditure/show/${this.$route.query.id}`
-      );
-      this.expens = data.data;
-      console.log(data.data);
-    },
-  },
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          `/expenditure/show/${this.$route.query.id}`
+        );
+        this.expens = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
+    }
+  }
 };
 </script>
 <style scoped src="../css/home.css"></style>

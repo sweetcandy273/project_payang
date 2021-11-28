@@ -44,7 +44,7 @@
               v-model="totalprice"
               label="รวมจำนวนเงิน"
               :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน',
+                val => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน'
               ]"
               fill-mask="0"
               reverse-fill-mask
@@ -61,7 +61,7 @@
               v-model="store_expen"
               label="ชื่อร้านค้า"
               :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า',
+                val => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า'
               ]"
             >
               <template v-slot:prepend> กก. </template>
@@ -74,26 +74,17 @@
               label="เบอร์โทรร้านค้า"
               mask="###-###-####"
               :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรร้านค้า',
+                val =>
+                  val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
+                val =>
+                  (val && val.length > 0 && val.length == 12) ||
+                  'กรุณากรอกเบอร์โทรศัพท์'
               ]"
             >
               <template v-slot:prepend> </template>
             </q-input>
           </div>
         </div>
-
-        <!-- <div class="share text-left">
-          <q-select
-            filled
-            v-model="employee"
-            :options="optionsemployee"
-            label="ผู้รับผิดชอบ"
-          >
-            <template v-slot:prepend>
-              <q-icon name="person" />
-            </template>
-          </q-select>
-        </div> -->
 
         <div class="col">
           <q-input filled v-model="note" label="บันทึก" />
@@ -115,7 +106,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { date } from "quasar";
 export default {
   data() {
@@ -130,12 +120,12 @@ export default {
         "มีดกรีดยาง",
         "ถ้วยรองน้ำยาง",
         "ถังน้ำ",
-        "แกลลอนใส่น้ำยาง",
+        "แกลลอนใส่น้ำยาง"
       ],
       selectshare: false,
 
       store_expen: "",
-      telstore_expen: "",
+      telstore_expen: ""
     };
   },
   methods: {
@@ -144,9 +134,9 @@ export default {
     },
     submitExpen() {
       console.log(this.date_expenditure);
-      axios
+      this.$axios
         .post(
-          `http://localhost:3000/expenditure/create/${this.$route.query.id}/${this.$route.query.owner}`,
+          `/expenditure/create/${this.$route.query.id}/${this.$route.query.owner}`,
           {
             date_expenditure: this.date_expenditure,
             amount: this.totalprice,
@@ -157,19 +147,18 @@ export default {
             owner: this.$route.query.owner,
 
             store_expen: this.store_expen,
-            telstore_expen: this.telstore_expen,
+            telstore_expen: this.telstore_expen
           }
         )
-        .then((response) => {
+        .then(response => {
           console.log(response);
         });
       this.$router.push({
         path: "/account_calendar",
-        query: { id: this.$route.query.id, owner: this.$route.query.owner },
+        query: { id: this.$route.query.id, owner: this.$route.query.owner }
       });
-    },
-  },
+    }
+  }
 };
 </script>
-<style  scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>

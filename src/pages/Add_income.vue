@@ -1,9 +1,6 @@
 <template>
   <div>
     <q-header>
-      <!-- <q-toolbar>
-        <q-space></q-space>
-      </q-toolbar>  -->
       <q-toolbar class="row">
         <div class="col flex">
           <img
@@ -12,7 +9,7 @@
             @click="
               $router.push({
                 name: 'account_calendar',
-                query: { id: $route.query.id, owner: $route.query.owner },
+                query: { id: $route.query.id, owner: $route.query.owner }
               })
             "
           />
@@ -33,7 +30,7 @@
         @click="
           $router.push({
             name: 'add_income',
-            query: { id: $route.query.id, owner: $route.query.owner },
+            query: { id: $route.query.id, owner: $route.query.owner }
           })
         "
       />
@@ -46,7 +43,7 @@
         @click="
           $router.push({
             name: 'add_expenditure',
-            query: { id: $route.query.id, owner: $route.query.owner },
+            query: { id: $route.query.id, owner: $route.query.owner }
           })
         "
       />
@@ -79,7 +76,9 @@
       </div>
 
       <div class="text-center">
-        <div class="font q-pa-md" style="font-size: 25px">ระบุข้อมูลน้ำยางสด</div>
+        <div class="font" style="font-size: 25px">
+          ระบุข้อมูลน้ำยางสด
+        </div>
       </div>
 
       <div class="q-gutter-y-md q-px-md font" style="max-width: 100%">
@@ -89,9 +88,7 @@
               filled
               v-model="weight_rubber"
               label="น้ำหนักยาง"
-              :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกน้ำหนักยาง',
-              ]"
+              :rules="[val => (val && val.length > 0) || 'กรุณากรอกน้ำหนักยาง']"
               fill-mask="0"
               reverse-fill-mask
               mask="#.##"
@@ -105,9 +102,7 @@
               v-model="percent"
               color="teal"
               label="เปอร์เซ็น"
-              :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกเปอร์เซ็น',
-              ]"
+              :rules="[val => (val && val.length > 0) || 'กรุณากรอกเปอร์เซ็น']"
               fill-mask="0"
               reverse-fill-mask
               mask="#.##"
@@ -124,7 +119,7 @@
                 v-model="dry_rubber"
                 label="เนื้อยางแห้ง"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกเนื้อยางแห้ง',
+                  val => (val && val.length > 0) || 'กรุณากรอกเนื้อยางแห้ง'
                 ]"
                 fill-mask="0"
                 reverse-fill-mask
@@ -139,7 +134,7 @@
                 v-model="rubber_price"
                 label="ราคาน้ำยาง"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณากรอกราคาน้ำยาง',
+                  val => (val && val.length > 0) || 'กรุณากรอกราคาน้ำยาง'
                 ]"
                 fill-mask="0"
                 reverse-fill-mask
@@ -158,7 +153,7 @@
               color="teal"
               label="รวมจำนวนเงิน"
               :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน',
+                val => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน'
               ]"
               fill-mask="0"
               reverse-fill-mask
@@ -175,7 +170,7 @@
               v-model="store_in"
               label="ชื่อร้านค้า"
               :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า',
+                val => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า'
               ]"
             >
               <template v-slot:prepend></template>
@@ -188,7 +183,11 @@
               label="เบอร์โทรร้านค้า"
               mask="###-###-####"
               :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรร้านค้า',
+                val =>
+                  val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
+                val =>
+                  (val && val.length > 0 && val.length == 12) ||
+                  'กรุณากรอกเบอร์โทรศัพท์'
               ]"
             >
               <template v-slot:prepend> </template>
@@ -196,27 +195,19 @@
           </div>
         </div>
 
-        <!-- <div class="share">
-        <q-checkbox
-          v-model="selectshare"
-          style="font-size: 16px"
-          label="ผู้รับผิดชอบ"
-        />
-      </div> -->
-
         <div class="sharemoney">
           <div class="row">
-            <div class="col text-center q-my-md" style="font-size: 20px">
+            <div class="col text-center" style="font-size: 20px">
               % การแบ่ง
             </div>
-            <div class="col q-my-md">
+            <div class="col">
               <q-select
                 filled
                 v-model="percen_split"
                 :options="optionspercent"
                 label="% ที่เจ้าของได้"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'กรุณาเลือกส่วนแบ่ง',
+                  val => (val && val.length > 0) || 'กรุณาเลือกส่วนแบ่ง'
                 ]"
               />
             </div>
@@ -228,7 +219,7 @@
             v-model="note"
             color="teal"
             label="บันทึก"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกข้อมูล']"
+            :rules="[val => (val && val.length > 0) || 'กรุณากรอกข้อมูล']"
           />
         </div>
 
@@ -247,7 +238,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 import { date } from "quasar";
 export default {
   data() {
@@ -265,8 +255,7 @@ export default {
       selectshare: false,
       share: "",
       percen_split: "",
-      optionspercent: ["60", "55", "50", "-"],
-     
+      optionspercent: ["60", "55", "50", "-"]
     };
   },
 
@@ -277,57 +266,27 @@ export default {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
-    // async getemployee() {
-    //   const { data } = await axios.get(
-    //     "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
-    //   );
-    //   this.employees = data.data;
 
-    //   const listemployee = this.employees.map((data) => {
-    //     const obj = {};
-    //     obj["user_id"] = data.user_id;
-
-    //     this.name = this.getempname(data.user_id);
-
-    //     Promise.all(this.name);
-
-    //     // console.log(this.name);
-    //     obj["fname"] = this.name;
-    //     return obj;
-    //   });
-
-    //   console.log(listemployee);
-    // },
-    // async getempname(user_id) {
-    //   const { data } = await axios.get(
-    //     "http://localhost:3000/payang_user/" + user_id
-    //   );
-    //   this.listemployeename = data.data;
-    //   console.log(this.listemployeename.fname);
-    //   return this.listemployeename.fname;
-    // },
-    sharemoney: function (amount, percen_split) {
-      // console.warn("amount : "+amount)
-      // console.warn("percen_split : "+percen_split)
+    sharemoney: function(amount, percen_split) {
       var amount_net = 0;
       if (percen_split == 60) {
-        amount_net = amount * 0.6;
+        amount_net = (amount / 100) * 60;
       } else if (percen_split == 55) {
-        amount_net = amount * 0.55;
+        amount_net = (amount / 100) * 55;
       } else if (percen_split == 50) {
-        amount_net = amount * 0.5;
+        amount_net = (amount / 100) * 50;
       } else {
         amount_net = amount * 1;
       }
-      // console.warn("amount_net : "+amount_net)
+
       return amount_net;
     },
 
     onSubmit() {
       this.amount_net = this.sharemoney(this.amount, this.percen_split);
-      axios
+      this.$axios
         .post(
-          `http://localhost:3000/income/create/${this.$route.query.id}/${this.$route.query.owner}`,
+          `/income/create/${this.$route.query.id}/${this.$route.query.owner}`,
           {
             date_income: this.date_income,
             amount: this.amount,
@@ -341,20 +300,19 @@ export default {
             farm_id: this.$route.query.id,
             owner: this.$route.query.owner,
             store_in: this.store_in,
-            telstore_in: this.telstore_in,
+            telstore_in: this.telstore_in
           }
         )
 
-        .then((response) => {
+        .then(response => {
           // console.log(response);
         });
       this.$router.push({
         path: "/account_calendar",
-        query: { id: this.$route.query.id, owner: this.$route.query.owner },
+        query: { id: this.$route.query.id, owner: this.$route.query.owner }
       });
-    },
-  },
+    }
+  }
 };
 </script>
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>

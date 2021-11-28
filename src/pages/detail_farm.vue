@@ -23,7 +23,7 @@
               @click="
                 $router.push({
                   name: 'edit_detail_farm',
-                  query: { id: farm.farm_id },
+                  query: { id: farm.farm_id }
                 })
               "
               round
@@ -36,9 +36,7 @@
               round
               color="deep-orange-13"
               icon="delete"
-              @click="
-              DeleteEven();
-              "
+              @click="DeleteEven()"
             />
           </div>
         </div>
@@ -71,7 +69,7 @@
           @click="
             $router.push({
               name: 'account_calendar',
-              query: { id: farm.farm_id, owner: farm.owner },
+              query: { id: farm.farm_id, owner: farm.owner }
             })
           "
           unelevated
@@ -101,16 +99,25 @@
 
 <script>
 import graph_farm from "../components/graph_farm.vue";
-import axios from "axios";
+
 import { date } from "quasar";
 
 export default {
   async mounted() {
-    await this.getfarm();
-    await this.getemployee();
+    try {
+      this.$q.loading.show();
+
+      await this.getfarm();
+      await this.getemployee();
+      await this.getnameEmployee();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.$q.loading.hide();
+    }
   },
   components: {
-    graph_farm,
+    graph_farm
   },
   data() {
     const id = { id: this.$route.query.id };
@@ -119,7 +126,7 @@ export default {
       model: null,
       secondModel: "graph_farm",
       farm: {
-        rubber_variety: {},
+        rubber_variety: {}
       },
       nameEmployee: [],
       employee: [],
@@ -127,7 +134,7 @@ export default {
       user_has_farm: [],
       id,
       allrubber: {},
-      date: " ",
+      date: " "
     };
   },
   methods: {
@@ -135,34 +142,44 @@ export default {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getfarm() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm/" + this.$route.query.id
-      );
-      this.farm = data.data;
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get("/farm/" + this.$route.query.id);
+        this.farm = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
     async getemployee() {
-      const { data } = await axios.get(
-        "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
-      );
-      this.employee = data.data;
-      if (this.employee.length > 0) {
-        await this.getnameEmployee();
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          "/farm_has_employee/list/" + this.$route.query.id
+        );
+        this.employee = data.data;
+        if (this.employee.length > 0) {
+          await this.getnameEmployee();
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
       }
     },
     async getnameEmployee() {
-      const { data } = await axios.get(
-        "http://localhost:3000/payang_user/" + this.employee[0].employee
+      const { data } = await this.$axios.get(
+        "/payang_user/" + this.employee[0].employee
       );
       this.nameEmployee = data.data;
     },
 
     async DeleteEmp() {
-      axios.delete(
-        "http://localhost:3000/farm_has_employee/delete/" + this.$route.query.id
-      );
+      this.$axios.delete("/farm_has_employee/delete/" + this.$route.query.id);
     },
     async DeleteFarm() {
-      axios.delete("http://localhost:3000/farm/delete/" + this.$route.query.id);
+      this.$axios.delete("/farm/delete/" + this.$route.query.id);
       await this.DeleteEmp();
     },
     DeleteEven() {
@@ -173,19 +190,19 @@ export default {
             'ระบบจะทำการลบข้อมูลกิจกรรม <span class="text-red font"><strong>หากยืนยันการลบข้อมูลกิจกรรม ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
           cancel: true,
           persistent: true,
-          html: true,
+          html: true
         })
         .onOk(() => {
           this.DeleteFarm();
           this.$router.push({
             name: "myfarm",
-            query: { id: this.farm.owner},
+            query: { id: this.farm.owner }
           });
         })
         .onCancel(() => {})
         .onDismiss(() => {});
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped src="../css/home.css"></style>

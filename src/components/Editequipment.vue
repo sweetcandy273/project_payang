@@ -34,6 +34,7 @@
               v-model="expens.title_type"
               :options="titleoption"
               label="ตัวเลือก"
+              required
             />
           </div>
         </div>
@@ -44,11 +45,10 @@
               v-model="expens.amount"
               label="รวมจำนวนเงิน"
               :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน',
+                val => (val && val.length > 0) || 'กรุณากรอกรวมจำนวนเงิน'
               ]"
               fill-mask="0"
               reverse-fill-mask
-              mask="#.##"
             >
               <template v-slot:prepend> ฿ </template>
             </q-input>
@@ -60,10 +60,8 @@
               filled
               v-model="expens.store_expen"
               label="ชื่อร้านค้า"
-              :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า',
-              ]"
-              >
+              required
+            >
               <template v-slot:prepend></template>
             </q-input>
           </div>
@@ -72,28 +70,15 @@
               filled
               v-model="expens.telstore_expen"
               label="เบอร์โทรร้านค้า"
-              mask="###-###-####"
+              required
               :rules="[
-                (val) => (val && val.length > 0) || 'กรุณากรอกเบอร์โทรร้านค้า',
+                val => (val && val.length == 10) || 'กรุณากรอกเบอร์โทรร้านค้า'
               ]"
             >
               <template v-slot:prepend></template>
             </q-input>
           </div>
         </div>
-        <!-- 
-        <div class="share text-left">
-          <q-select
-            filled
-            v-model="employee"
-            :options="optionsemployee"
-            label="ผู้รับผิดชอบ"
-          >
-            <template v-slot:prepend>
-              <q-icon name="person" />
-            </template>
-          </q-select>
-        </div> -->
 
         <div class="col">
           <q-input filled v-model="expens.note" label="บันทึก" />
@@ -115,8 +100,6 @@
 </template>
 
 <script>
-import axios from "axios";
-import { date } from "quasar";
 export default {
   data() {
     return {
@@ -127,55 +110,59 @@ export default {
         "มีดกรีดยาง",
         "ถ้วยรองน้ำยาง",
         "ถังน้ำ",
-        "แกลลอนใส่น้ำยาง",
+        "แกลลอนใส่น้ำยาง"
       ],
 
       selectshare: false,
 
-      expens: {},
+      expens: {}
     };
   },
   mounted() {
     this.getExpen();
-
-    // this.getfarm();
   },
   methods: {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getExpen() {
-      const { data } = await axios.get(
-        `http://localhost:3000/expenditure/show/${this.$route.query.id}`
-      );
-      this.expens = data.data;
+      try {
+        this.$q.loading.show();
+
+        const { data } = await this.$axios.get(
+          `/expenditure/show/${this.$route.query.id}`
+        );
+        this.expens = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
 
     async onSubmit() {
-      const { data } = await axios.put(
-        "http://localhost:3000/expenditure/update/" + this.$route.query.id,
+      const { data } = await this.$axios.put(
+        "/expenditure/update/" + this.$route.query.id,
         {
           date_expenditure: this.expens.date_expenditure,
           amount: this.expens.amount,
           note: this.expens.note,
-          type:this.expens.type,
+          type: this.expens.type,
           title_type: this.expens.title_type,
           store_expen: this.expens.store_expen,
-          telstore_expen: this.expens.telstore_expen,
+          telstore_expen: this.expens.telstore_expen
         }
       );
       this.expens = data.data;
-      // console.log(data.data);
       this.$router.push({
         path: "/account_calendar",
         query: {
-           id: this.expens.farm_id,
+          id: this.expens.farm_id,
           owner: this.expens.owner
-        },
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
-<style  scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>

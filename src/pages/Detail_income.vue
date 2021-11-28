@@ -8,8 +8,8 @@
               $router.push({
                 path: 'account_calendar',
                 query: {
-                  id: incomes.farm_id,
-                },
+                  id: incomes.farm_id
+                }
               })
             "
             name="arrow_back_ios"
@@ -87,8 +87,8 @@
                   $router.push({
                     name: 'edit_income',
                     query: {
-                      id: incomes.in_id,
-                    },
+                      id: incomes.in_id
+                    }
                   })
                 "
               />
@@ -108,7 +108,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 import { date } from "quasar";
 export default {
   name: "incomes",
@@ -116,8 +115,8 @@ export default {
   data() {
     return {
       incomes: {
-        farm: {},
-      },
+        farm: {}
+      }
     };
   },
   mounted() {
@@ -129,9 +128,7 @@ export default {
     },
 
     Notidelete() {
-      axios.delete(
-        `http://localhost:3000/income/delete/${this.$route.query.id}`
-      );
+      this.$axios.delete(`/income/delete/${this.$route.query.id}`);
     },
     DeleteEven() {
       this.$q
@@ -141,37 +138,42 @@ export default {
             'ระบบจะทำการลบข้อมูลรายรับ <span class="text-red font"><strong>หากยืนยันการลบข้อมูลรายรับ ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
           cancel: true,
           persistent: true,
-          html: true,
+          html: true
         })
         .onOk(() => {
           this.Notidelete();
           this.$router.push({
             path: "/account_calendar",
             query: {
-              id: this.$route.query.idf 
-            },
+              id: this.$route.query.idf
+            }
           });
         })
         .onCancel(() => {})
         .onDismiss(() => {});
     },
     async getIncome() {
-      const { data } = await axios.get(
-        `http://localhost:3000/income/findincome/${this.$route.query.id}`
-      );
-      this.incomes = data.data;
-
-      console.log(data.data);
-    },
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          `/income/findincome/${this.$route.query.id}`
+        );
+        this.incomes = data.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
+    }
   },
   watch: {
     date(value) {
-      this.incomes = this.listAllincome.filter((data) => {
+      this.incomes = this.listAllincome.filter(data => {
         // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
         return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped src="../css/home.css"></style>

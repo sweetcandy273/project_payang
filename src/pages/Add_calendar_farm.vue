@@ -7,7 +7,7 @@
             @click="
               $router.push({
                 name: 'calender_farm',
-                query: { id: $route.query.id },
+                query: { id: $route.query.id }
               })
             "
             name="arrow_back_ios"
@@ -27,13 +27,22 @@
             v-model="activity"
             color="teal"
             label="ประเภทกิจกรรม"
-            :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกประเภทกิจกรรม']"
+            :rules="[
+              val => (val && val.length > 0) || 'กรุณากรอกประเภทกิจกรรม'
+            ]"
           >
           </q-input>
         </div>
 
         <div class="q-px-md font">
-          <q-input color="teal" filled v-model="date" mask="date" :rules="[(val) => (val && val.length > 0) || 'กรุณากรอกปฎิทิน']">
+          <q-input
+            color="teal"
+            filled
+            v-model="date"
+            mask="date"
+            class="font"
+            :rules="['date']"
+          >
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer" color="teal">
                 <q-popup-proxy
@@ -41,7 +50,7 @@
                   transition-show="scale"
                   transition-hide="scale"
                 >
-                  <q-date v-model="date" color="green">
+                  <q-date v-model="date" color="green" class="font">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="white" flat />
                     </div>
@@ -66,10 +75,8 @@
   </div>
 </template>
 
-
-
 <script>
-import axios from "axios";
+
 
 export default {
   data() {
@@ -82,34 +89,30 @@ export default {
 
   },
   methods: {
-    onSubmit() {
-      axios
-        .post("http://localhost:3000/activity_in_farm/create",{
+    async onSubmit() {
+      await this.$axios
+        .post("/activity_in_farm/create", {
           date: this.date,
           activity: this.activity,
-          farm_id: this.$route.query.id,
+          farm_id: this.$route.query.id
         })
-        .then((response) => {
-          console.log(response);
+        .then(response => {
+          // console.log(response);
         });
       this.$router.push({
         path: "/calender_farm",
         query: {
-          id: this.$route.query.id,
-        },
+          id: this.$route.query.id
+        }
       });
     },
   },
 };
 </script>
 
-<style scoped src="../css/home.css">
-</style>
+<style scoped src="../css/home.css"></style>
 <style scoped>
 .other {
   float: right;
 }
 </style>
-
-
-

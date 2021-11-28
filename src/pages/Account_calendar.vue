@@ -125,7 +125,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { date } from "quasar";
 
 export default {
@@ -149,27 +148,42 @@ export default {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getIncome() {
-      const { data } = await axios.get(
-        `http://localhost:3000/income/` + this.$route.query.id
-      );
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+          `/income/` + this.$route.query.id
+        );
 
-      this.listAllincome = data.data;
-      this.date = this.formatDate(new Date());
-      const listEvent = data.data.map(data => {
-        return this.formatDate(data.date_income);
-      });
-      this.events.push(...listEvent);
+        this.listAllincome = data.data;
+        this.date = this.formatDate(new Date());
+        const listEvent = data.data.map(data => {
+          return this.formatDate(data.date_income);
+        });
+        this.events.push(...listEvent);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
     async getExpenditure() {
-      const { data } = await axios.get(
-        "http://localhost:3000/expenditure/listbyfarm/" + this.$route.query.id
-      );
-      this.listAllexpenditure = data.data;
-      this.date = this.formatDate(new Date());
-      const listEvent = data.data.map(data => {
-        return this.formatDate(data.date_expenditure);
-      });
-      this.events.push(...listEvent);
+      try {
+        this.$q.loading.show();
+
+        const { data } = await this.$axios.get(
+          "/expenditure/listbyfarm/" + this.$route.query.id
+        );
+        this.listAllexpenditure = data.data;
+        this.date = this.formatDate(new Date());
+        const listEvent = data.data.map(data => {
+          return this.formatDate(data.date_expenditure);
+        });
+        this.events.push(...listEvent);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     }
   },
   watch: {

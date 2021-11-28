@@ -118,7 +118,12 @@
       <div
         class="row myfarm font shadow-2"
         @click="
-          $router.push({ name: 'myfarm', query: { id: payang_user.user_id } })
+          $router.push({
+            name: 'myfarm',
+            query: {
+              id: payang_user.user_id
+            }
+          })
         "
       >
         <div class="col-6 q-pa-md self-center">
@@ -284,7 +289,6 @@ export default {
       const auth = getAuth();
       signOut(auth)
         .then(() => {
-          // this.$forceUpdate();
           this.$router.push({
             name: "login"
           });

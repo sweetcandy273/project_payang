@@ -10,7 +10,7 @@
           />
         </div>
 
-        <div class="col-6 font header-title">บัญชี</div>
+        <div class="col-6 font header-title">รายการเดินบัญชีรวม</div>
         <div class="col self-center"></div>
       </q-toolbar>
     </q-header>
@@ -21,7 +21,7 @@
           v-model="date"
           color="green"
           :events="events"
-          :event-color="date => (date[9] % 2 === 0 ? 'teal' : 'green')"
+          :event-color="date => (date[9] % 2 === 0 ? 'red' : 'red')"
           today-btn
         />
       </div>
@@ -31,68 +31,73 @@
     <div class="col font q-mx-md q-mt-md" style="font-size: 22px">
       {{ date }}
     </div>
-    <div :key="index" v-for="(data, index) in incomes">
-      <div class="text-right">
-        <div class="font" style="font-size: 20px">
-          {{ data.farm.farm_name }}
-        </div>
-      </div>
-      <div class="row font">
-        <div class="greencircle"></div>
-        <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
-        <div class="col text-right" style="font-size: 18px">
-          {{ data.amount }}
-        </div>
-      </div>
-      <div class="calendar-income q-pa-md">
-        <div class="row font">
-          <div class="col" style="font-size: 16px">ร้านดาว น้ำยางสด, แผ่น</div>
-          <div class="col-3 text-right" style="font-size: 16px">
-            {{ data.amount }}
-          </div>
-        </div>
-        <div class="row font" style="font-size: 16px">
-          น้ำยางสด {{ data.weight }} กก. {{ data.percen_rubber }} % แห้ง
-          {{ data.dry_rubber }}
-        </div>
-        <div class="row font" style="font-size: 16px">
-          ราคายาง {{ data.rubber_price }} บ./กก.
-        </div>
-        <div class="row font">
-          <div class="col" style="font-size: 16px">
-            {{ data.employee }} ส่วนแบ่ง {{ data.percen_split }}
-          </div>
-          <div class="col-3 text-right" style="font-size: 16px">
-            {{ data.amount_net }}
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div :key="index + 1000" v-for="(data, index) in expenditures">
-      <div class="text-right">
-        <div class="font" style="font-size: 20px">
-          {{ data.farm.farm_name }}
+    <div class="q-ma-md">
+      <div :key="index" v-for="(data, index) in incomes">
+        <div class="text-right">
+          <div class="font" style="font-size: 20px">
+            {{ data.farm.farm_name }}
+          </div>
         </div>
-      </div>
-      <div class="row font">
-        <div class="redcircle"></div>
-        <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>
-        <div class="col text-right" style="font-size: 18px">
-          {{ data.amount }}
-        </div>
-      </div>
-      <div class="calendar-expenditure q-pa-md">
         <div class="row font">
-          <div class="col" style="font-size: 16px">ร้านขายอุปกรณ์การช่าง</div>
-          <div class="col-3 text-right" style="font-size: 16px">
+          <div class="greencircle"></div>
+          <div class="col q-ml-xs" style="font-size: 18px">รายรับ</div>
+          <div class="col text-right" style="font-size: 18px">
             {{ data.amount }}
           </div>
         </div>
-        <div class="row font" style="font-size: 16px">
-          {{ data.note }}
+        <div class="calendar-income q-pa-md">
+          <div class="row font">
+            <div class="col" style="font-size: 16px">
+              ร้านดาว น้ำยางสด, แผ่น
+            </div>
+            <div class="col-3 text-right" style="font-size: 16px">
+              {{ data.amount }}
+            </div>
+          </div>
+          <div class="row font" style="font-size: 16px">
+            น้ำยางสด {{ data.weight }} กก. {{ data.percen_rubber }} % แห้ง
+            {{ data.dry_rubber }}
+          </div>
+          <div class="row font" style="font-size: 16px">
+            ราคายาง {{ data.rubber_price }} บ./กก.
+          </div>
+          <div class="row font">
+            <div class="col" style="font-size: 16px">
+              {{ data.employee }} ส่วนแบ่ง {{ data.percen_split }}
+            </div>
+            <div class="col-3 text-right" style="font-size: 16px">
+              {{ data.amount_net }}
+            </div>
+          </div>
         </div>
-        <div class="row font" style="font-size: 16px">กนกวรรณ</div>
+      </div>
+
+      <div :key="index + 1000" v-for="(data, index) in expenditures">
+        <div class="text-right">
+          <div class="font" style="font-size: 20px">
+            {{ data.farm.farm_name }}
+          </div>
+        </div>
+        <div class="row font">
+          <div class="redcircle"></div>
+          <div class="col q-ml-xs" style="font-size: 18px">รายจ่าย</div>
+          <div class="col text-right" style="font-size: 18px">
+            {{ data.amount }}
+          </div>
+        </div>
+        <div class="calendar-expenditure q-pa-md">
+          <div class="row font">
+            <div class="col" style="font-size: 16px">ร้านขายอุปกรณ์การช่าง</div>
+            <div class="col-3 text-right" style="font-size: 16px">
+              {{ data.amount }}
+            </div>
+          </div>
+          <div class="row font" style="font-size: 16px">
+            {{ data.note }}
+          </div>
+          <div class="row font" style="font-size: 16px">กนกวรรณ</div>
+        </div>
       </div>
     </div>
   </q-page>
@@ -142,7 +147,6 @@ export default {
     },
     date(value) {
       this.incomes = this.listAllincome.filter(data => {
-        // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
         return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
       });
       this.expenditures = this.listAllexpenditure.filter(data => {

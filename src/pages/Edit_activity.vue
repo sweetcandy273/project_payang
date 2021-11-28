@@ -46,7 +46,7 @@
                 transition-show="scale"
                 transition-hide="scale"
               >
-                <q-date v-model="activity_in_farms.date" color="green">
+                <q-date v-model="activity_in_farms.date" color="green"  class="font">
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="white" flat />
                   </div>
@@ -83,13 +83,14 @@
 
 
 <script>
-import axios from "axios";
 import { date } from "quasar";
 
 export default {
   data() {
     return {
-      activity_in_farms: {},
+      activity_in_farms: {
+        date:""
+      },
     };
   },
   mounted() {
@@ -101,26 +102,35 @@ export default {
     },
 
     async getactivity() {
-      const { data } = await this.$axios.get(
-        "/activity_in_farm/findactivity/" +
-          this.$route.query.ida
-      );
 
-      this.activity_in_farms = data.data;
-      this.activity_in_farms.date = this.formatDate(
-      this.activity_in_farms.date
-      );
+      try {
+        this.$q.loading.show();
+        const { data } = await this.$axios.get(
+        "/activity_in_farm/findactivity/" + this.$route.query.ida
+        );
+
+        this.activity_in_farms = data.data;
+        this.activity_in_farms.date = this.formatDate(this.activity_in_farms.date);
+        
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
 
     async deletefunc() {
       await this.$axios.delete(
         "/activity_in_farm/delete/" + this.$route.query.ida
       );
-      
+      await this.$router.push({
+        name: "calender_farm",
+        query: { id: this.$route.query.idf },
+      });
     },
 
-   DeleteEven() {
-        this.$q
+    DeleteEven() {
+      this.$q
         .dialog({
           title: "ยืนยันการลบกิจกรรม",
           message:
@@ -130,20 +140,17 @@ export default {
           html: true,
         })
         .onOk(() => {
-          this.deletefunc()
-          this.$router.push({
-          name: "calender_farm",
-          query: { id: this.$route.query.idf },
-          });
+          this.deletefunc();
         })
+
         .onCancel(() => {})
         .onDismiss(() => {});
     },
 
     async onSubmit() {
-   
-      const { data } = await axios.put(
-        "http://localhost:3000/activity_in_farm/update/" +
+      console.log(this.activity_in_farms);
+      const { data } = await this.$axios.put(
+        "/activity_in_farm/update/" +
           this.$route.query.ida,
         {
           date: this.activity_in_farms.date,

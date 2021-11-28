@@ -41,13 +41,12 @@
             filled
             v-model="phone_number"
             label="เบอร์โทรศัพท์"
+            mask="###-###-####"
             :rules="[
-              val =>
-                isNaN(val) == false || 'เบอร์โทรศัพท์จะต้องเป็นตัวเลขเท่านั้น',
               val =>
                 val.charAt(0) == '0' || 'เบอร์โทรศัพท์จะต้องเริ่มต้นด้วย 0',
               val =>
-                (val && val.length > 0 && val.length == 10) ||
+                (val && val.length > 0 && val.length == 12) ||
                 'กรุณากรอกเบอร์โทรศัพท์'
             ]"
           >

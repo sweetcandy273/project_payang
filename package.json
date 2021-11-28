@@ -7,8 +7,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
-    "deploy":"quasar build -m pwa && firebase deploy"
-    
+    "deploy":"quasar build -m pwa && firebase deploy --only hosting:payang-app"
   },
   "dependencies": {
     "@quasar/cli": "^1.2.2",

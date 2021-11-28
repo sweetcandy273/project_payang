@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "target":"payang-app",
     "public": "dist/pwa",
     "ignore": [
       "firebase.json",

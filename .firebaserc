@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "causal-jigsaw-325013"
+  },
+  "targets": {
+    "causal-jigsaw-325013": {
+      "hosting": {
+        "payang-app": [
+          "payang-app"
+        ]
+      }
+    }
   }
 }

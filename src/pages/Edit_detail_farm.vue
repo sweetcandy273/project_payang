@@ -126,15 +126,22 @@
         </q-select>
 
         <div>เนื้อที่ปลูก :</div>
-        <q-input color="teal" filled v-model="farm.area" label="เนื้อที่ปลูก" />
+        <q-input
+          color="teal"
+          filled
+          v-model="farm.area"
+          type="number"
+          float-label="Number"
+          label="เนื้อที่ปลูก"
+        />
       </div>
 
       <div class="q-pa-md font" v-if="employee.length > 0">
         <div>ผู้ดูแล :</div>
 
-        <div class="box_editeAdmin q-pa-md font" >
+        <div class="box_editeAdmin q-pa-md font">
           <div class="row justify-between">
-            <div class="col q-pr-md" >
+            <div class="col q-pr-md">
               <q-input
                 color="teal"
                 filled
@@ -160,6 +167,8 @@
             filled
             v-model="nameEmployee.phone_number"
             label="เบอร์โทรศัพท์"
+            type="number"
+            float-label="Number"
             :rules="[
               (val) =>
                 (val && val.length > 0 && val.length == 10) ||
@@ -175,6 +184,8 @@
             filled
             v-model="nameEmployee.e_number"
             label="เบอร์โทรศัพท์ฉุกเฉิน"
+            type="number"
+            float-label="Number"
             :rules="[
               (val) =>
                 (val && val.length > 0 && val.length == 10) ||
@@ -263,7 +274,7 @@ export default {
 
   data() {
     return {
-     farm: {
+      farm: {
         rubber_variety: {},
       },
       payang_user: [],
@@ -321,7 +332,7 @@ export default {
         "http://localhost:3000/farm_has_employee/list/" + this.$route.query.id
       );
       this.employee = data.data;
-      if(this.employee.length > 0){
+      if (this.employee.length > 0) {
         await this.getnameEmployee();
       }
     },
@@ -369,7 +380,8 @@ export default {
     },
     async DeleteEmp_payang() {
       axios.delete(
-        "http://localhost:3000/payang_user/delete/" + this.$route.query.employee[0].employee
+        "http://localhost:3000/payang_user/delete/" +
+          this.$route.query.employee[0].employee
       );
     },
 

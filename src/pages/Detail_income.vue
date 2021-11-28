@@ -98,7 +98,7 @@
                 style="width: 50px; height: 50px"
                 color="deep-orange-13"
                 icon="delete"
-                @click="Notidelete()"
+                @click="DeleteEven()"
               />
             </div>
           </div>
@@ -127,14 +127,7 @@ export default {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
-    async getIncome() {
-      const { data } = await axios.get(
-        `http://localhost:3000/income/findincome/${this.$route.query.id}`
-      );
-      this.incomes = data.data;
 
-      console.log(data.data);
-    },
     Notidelete() {
       axios.delete(
         `http://localhost:3000/income/delete/${this.$route.query.id}`
@@ -143,7 +136,7 @@ export default {
     DeleteEven() {
       this.$q
         .dialog({
-          title: "ยืนยันการลบรายจ่าย",
+          title: "ยืนยันการลบรายรับ",
           message:
             'ระบบจะทำการลบข้อมูลรายรับ <span class="text-red font"><strong>หากยืนยันการลบข้อมูลรายรับ ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
           cancel: true,
@@ -154,10 +147,21 @@ export default {
           this.Notidelete();
           this.$router.push({
             path: "/account_calendar",
+            query: {
+              id: this.$route.query.idf 
+            },
           });
         })
         .onCancel(() => {})
         .onDismiss(() => {});
+    },
+    async getIncome() {
+      const { data } = await axios.get(
+        `http://localhost:3000/income/findincome/${this.$route.query.id}`
+      );
+      this.incomes = data.data;
+
+      console.log(data.data);
     },
   },
   watch: {

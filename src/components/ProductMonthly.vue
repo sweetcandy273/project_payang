@@ -53,10 +53,12 @@
           </div>
         </div>
         <div v-if="this.profit != 0">
-          <Doughnut-chart
-            :chart-data="datacollection"
-            class="q-pa-md chart"
-          ></Doughnut-chart>
+          <div class="row justify-center">
+            <Doughnut-chart
+              :chart-data="datacollection"
+              class="q-pa-md chart"
+            ></Doughnut-chart>
+          </div>
         </div>
         <div v-else>
           <div class="q-ma-lg text-red" style="font-size: 25px">
@@ -163,7 +165,6 @@ export default {
       product: 0.0,
 
       datacollection: null
-      // loaded: false,
     };
   },
   async mounted() {

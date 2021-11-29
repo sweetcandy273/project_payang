@@ -23,7 +23,7 @@
               @click="
                 $router.push({
                   name: 'edit_detail_farm',
-                  query: { id: farm.farm_id }
+                  query: { id: farm.farm_id },
                 })
               "
               round
@@ -69,7 +69,7 @@
           @click="
             $router.push({
               name: 'account_calendar',
-              query: { id: farm.farm_id, owner: farm.owner }
+              query: { id: farm.farm_id, owner: farm.owner },
             })
           "
           unelevated
@@ -117,7 +117,7 @@ export default {
     }
   },
   components: {
-    graph_farm
+    graph_farm,
   },
   data() {
     const id = { id: this.$route.query.id };
@@ -126,7 +126,7 @@ export default {
       model: null,
       secondModel: "graph_farm",
       farm: {
-        rubber_variety: {}
+        rubber_variety: {},
       },
       nameEmployee: [],
       employee: [],
@@ -134,7 +134,7 @@ export default {
       user_has_farm: [],
       id,
       allrubber: {},
-      date: " "
+      date: " ",
     };
   },
   methods: {
@@ -175,12 +175,16 @@ export default {
       this.nameEmployee = data.data;
     },
 
+    async DeleteEmp_payangUser() {
+      this.$axios.delete("/payang_user/delete/" + this.nameEmployee.user_id);
+    },
     async DeleteEmp() {
       this.$axios.delete("/farm_has_employee/delete/" + this.$route.query.id);
     },
     async DeleteFarm() {
       this.$axios.delete("/farm/delete/" + this.$route.query.id);
       await this.DeleteEmp();
+      await this.DeleteEmp_payangUser();
     },
     DeleteEven() {
       this.$q
@@ -190,19 +194,19 @@ export default {
             'ระบบจะทำการลบข้อมูลกิจกรรม <span class="text-red font"><strong>หากยืนยันการลบข้อมูลกิจกรรม ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
           cancel: true,
           persistent: true,
-          html: true
+          html: true,
         })
         .onOk(() => {
           this.DeleteFarm();
           this.$router.push({
             name: "myfarm",
-            query: { id: this.farm.owner }
+            query: { id: this.farm.owner },
           });
         })
         .onCancel(() => {})
         .onDismiss(() => {});
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped src="../css/home.css"></style>

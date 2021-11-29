@@ -174,12 +174,17 @@ export default {
       );
       this.nameEmployee = data.data;
     },
+
+    async DeleteEmp_payangUser() {
+      this.$axios.delete("/payang_user/delete/" + this.nameEmployee.user_id);
+    },
     async DeleteEmp() {
       this.$axios.delete("/farm_has_employee/delete/" + this.$route.query.id);
     },
     async DeleteFarm() {
       this.$axios.delete("/farm/delete/" + this.$route.query.id);
       await this.DeleteEmp();
+      await this.DeleteEmp_payangUser();
     },
     DeleteEven() {
       this.$q

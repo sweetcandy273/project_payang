@@ -297,8 +297,6 @@ export default {
             percen_split: this.percen_split,
             rubber_price: this.rubber_price,
             note: this.note,
-            farm_id: this.$route.query.id,
-            owner: this.$route.query.owner,
             store_in: this.store_in,
             telstore_in: this.telstore_in
           }

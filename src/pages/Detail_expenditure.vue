@@ -113,8 +113,8 @@ export default {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
 
-    Notidelete() {
-      this.$axios.delete(`/expenditure/delete/${this.$route.query.id}`);
+    async Notidelete() {
+      await this.$axios.delete(`/expenditure/delete/${this.$route.query.id}`);
     },
     async DeleteEven() {
       await this.Notidelete();

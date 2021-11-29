@@ -6,7 +6,12 @@
           <img
             src="../assets/close.png"
             style="width: 22px; height: 22px"
-            @click="$router.push({ name: 'detail_farm' , query: { id: $route.query.id  } })"
+            @click="
+              $router.push({
+                name: 'detail_farm',
+                query: { id: $route.query.id }
+              })
+            "
           />
         </div>
 
@@ -118,7 +123,12 @@
         round
         style="background: #4e7971; color: white; width: 50px; height: 50px"
         icon="add"
-        @click="$router.push({ name: 'add_income' , query: { id: $route.query.id , owner: $route.query.owner  } })"
+        @click="
+          $router.push({
+            name: 'add_income',
+            query: { id: $route.query.id, owner: $route.query.owner }
+          })
+        "
       />
     </div>
   </q-page>
@@ -133,57 +143,48 @@ export default {
       incomes: [],
       expenditures: [],
       splitterModel: 50,
-      date: " ",
+      date: "",
       events: [],
       listAllincome: [],
       listAllexpenditure: []
     };
   },
   mounted() {
-    this.getIncome();
-    this.getExpenditure();
+    try {
+      this.$q.loading.show();
+
+      this.getIncome();
+      this.getExpenditure();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.$q.loading.hide();
+    }
   },
   methods: {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getIncome() {
-      try {
-        this.$q.loading.show();
-        const { data } = await this.$axios.get(
-          `/income/` + this.$route.query.id
-        );
+      const { data } = await this.$axios.get(`/income/` + this.$route.query.id);
 
-        this.listAllincome = data.data;
-        this.date = this.formatDate(new Date());
-        const listEvent = data.data.map(data => {
-          return this.formatDate(data.date_income);
-        });
-        this.events.push(...listEvent);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
+      this.listAllincome = data.data;
+      this.date = this.formatDate(new Date());
+      const listEvent = data.data.map(data => {
+        return this.formatDate(data.date_income);
+      });
+      this.events.push(...listEvent);
     },
     async getExpenditure() {
-      try {
-        this.$q.loading.show();
-
-        const { data } = await this.$axios.get(
-          "/expenditure/listbyfarm/" + this.$route.query.id
-        );
-        this.listAllexpenditure = data.data;
-        this.date = this.formatDate(new Date());
-        const listEvent = data.data.map(data => {
-          return this.formatDate(data.date_expenditure);
-        });
-        this.events.push(...listEvent);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
+      const { data } = await this.$axios.get(
+        "/expenditure/listbyfarm/" + this.$route.query.id
+      );
+      this.listAllexpenditure = data.data;
+      this.date = this.formatDate(new Date());
+      const listEvent = data.data.map(data => {
+        return this.formatDate(data.date_expenditure);
+      });
+      this.events.push(...listEvent);
     }
   },
   watch: {

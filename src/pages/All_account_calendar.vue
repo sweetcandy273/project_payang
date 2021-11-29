@@ -141,8 +141,15 @@ export default {
   watch: {
     currentId(val) {
       if (val) {
-        this.getIncome();
-        this.getExpenditure();
+        try {
+          this.$q.loading.show();
+          this.getIncome();
+          this.getExpenditure();
+        } catch (error) {
+          console.log(error);
+        } finally {
+          this.$q.loading.hide();
+        }
       }
     },
     date(value) {
@@ -160,44 +167,29 @@ export default {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async getIncome() {
-      try {
-        this.$q.loading.show();
+      const { data } = await this.$axios.get(
+        "/income/listbyowner/" + this.currentId
+      );
 
-        const { data } = await this.$axios.get(
-          "/income/listbyowner/" + this.currentId
-        );
+      this.listAllincome = data.data;
 
-        this.listAllincome = data.data;
-
-        this.date = this.formatDate(new Date());
-        const listEvent = data.data.map(data => {
-          return this.formatDate(data.date_income);
-        });
-        this.events.push(...listEvent);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
+      this.date = this.formatDate(new Date());
+      const listEvent = data.data.map(data => {
+        return this.formatDate(data.date_income);
+      });
+      this.events.push(...listEvent);
     },
 
     async getExpenditure() {
-      try {
-        this.$q.loading.show();
-        const { data } = await this.$axios.get(
-          "/expenditure/listbyowner/" + this.currentId
-        );
-        this.listAllexpenditure = data.data;
-        this.date = this.formatDate(new Date());
-        const listEvent = data.data.map(data => {
-          return this.formatDate(data.date_expenditure);
-        });
-        this.events.push(...listEvent);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
+      const { data } = await this.$axios.get(
+        "/expenditure/listbyowner/" + this.currentId
+      );
+      this.listAllexpenditure = data.data;
+      this.date = this.formatDate(new Date());
+      const listEvent = data.data.map(data => {
+        return this.formatDate(data.date_expenditure);
+      });
+      this.events.push(...listEvent);
     }
   }
 };

@@ -64,7 +64,6 @@
                 val => (val && val.length > 0) || 'กรุณากรอกชื่อร้านค้า'
               ]"
             >
-              <template v-slot:prepend> กก. </template>
             </q-input>
           </div>
           <div class="col q-ml-md">
@@ -133,7 +132,6 @@ export default {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
     async submitExpen() {
-      console.log(this.date_expenditure);
       await this.$axios
         .post(
           `/expenditure/create/${this.$route.query.id}/${this.$route.query.owner}`,
@@ -143,16 +141,11 @@ export default {
             note: this.note,
             type: "Equipment",
             title_type: this.title,
-            farm_id: this.$route.query.id,
-            owner: this.$route.query.owner,
-
             store_expen: this.store_expen,
             telstore_expen: this.telstore_expen
           }
         )
-        .then(response => {
-          console.log(response);
-        });
+        .then(response => {});
       await this.$router.push({
         path: "/account_calendar",
         query: { id: this.$route.query.id, owner: this.$route.query.owner }

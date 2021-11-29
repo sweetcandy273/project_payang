@@ -261,6 +261,8 @@ export default {
 
   mounted() {
     // this.getemployee();
+
+    console.log(this.$route.query.owner);
   },
   methods: {
     formatDate(dateString) {

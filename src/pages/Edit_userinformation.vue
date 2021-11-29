@@ -58,6 +58,7 @@
           </q-input>
           <q-input
             color="teal"
+            readonly
             filled
             v-model="payang_user.email"
             label="อีเมล"

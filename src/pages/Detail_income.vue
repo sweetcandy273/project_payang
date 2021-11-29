@@ -125,28 +125,15 @@ export default {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
 
-    Notidelete() {
-      this.$axios.delete(`/income/delete/${this.$route.query.id}`);
+    async Notidelete() {
+      await this.$axios.delete(`/income/delete/${this.$route.query.id}`);
     },
-    DeleteEven() {
-      this.$q
-        .dialog({
-          title: "ยืนยันการลบรายรับ",
-          message:
-            'ระบบจะทำการลบข้อมูลรายรับ <span class="text-red font"><strong>หากยืนยันการลบข้อมูลรายรับ ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
-          cancel: true,
-          persistent: true,
-          html: true
-        })
-        .onOk(() => {
-          this.Notidelete();
-          $router.push({
-            path: "account_calendar",
-            query: { id: incomes.farm_id, owner: incomes.owner }
-          });
-        })
-        .onCancel(() => {})
-        .onDismiss(() => {});
+    async DeleteEven() {
+      await this.Notidelete();
+      await this.$router.push({
+        name: "account_calendar",
+        query: { id: this.incomes.farm_id, owner: this.incomes.owner }
+      });
     },
     async getIncome() {
       try {

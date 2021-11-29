@@ -116,25 +116,12 @@ export default {
     Notidelete() {
       this.$axios.delete(`/expenditure/delete/${this.$route.query.id}`);
     },
-    DeleteEven() {
-      this.$q
-        .dialog({
-          title: "ยืนยันการลบรายจ่าย",
-          message:
-            'ระบบจะทำการลบข้อมูลรายจ่าย <span class="text-red font"><strong>หากยืนยันการลบข้อมูลรายจ่าย ข้อมูลทั้งหมดจะไม่สามารถกู้คืนมาได้อีก</strong></span><br>',
-          cancel: true,
-          persistent: true,
-          html: true
-        })
-        .onOk(() => {
-          this.Notidelete();
-          $router.push({
-            path: "account_calendar",
-            query: { id: expens.farm_id, owner: expens.owner }
-          });
-        })
-        .onCancel(() => {})
-        .onDismiss(() => {});
+    async DeleteEven() {
+      await this.Notidelete();
+      await this.$router.push({
+        name: "account_calendar",
+        query: { id: this.expens.farm_id, owner: this.expens.owner }
+      });
     },
     async getExpen() {
       try {

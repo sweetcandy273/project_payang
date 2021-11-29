@@ -124,9 +124,9 @@ export default {
     formatDate(dateString) {
       return date.formatDate(dateString, "YYYY/MM/DD");
     },
-    submitExpen() {
+    async submitExpen() {
       console.log(this.date_expenditure);
-      this.$axios
+      await this.$axios
         .post(
           `/expenditure/create/${this.$route.query.id}/${this.$route.query.owner}`,
           {
@@ -146,7 +146,7 @@ export default {
         .then(response => {
           console.log(response);
         });
-      this.$router.push({
+      await this.$router.push({
         path: "/account_calendar",
         query: { id: this.$route.query.id, owner: this.$route.query.owner }
       });

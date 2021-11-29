@@ -149,12 +149,12 @@ export default {
       listAllexpenditure: []
     };
   },
-  mounted() {
+  async mounted() {
     try {
       this.$q.loading.show();
 
-      this.getIncome();
-      this.getExpenditure();
+      await this.getIncome();
+      await this.getExpenditure();
     } catch (error) {
       console.log(error);
     } finally {
@@ -189,13 +189,20 @@ export default {
   },
   watch: {
     date(value) {
-      this.incomes = this.listAllincome.filter(data => {
-        // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
-        return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
-      });
-      this.expenditures = this.listAllexpenditure.filter(data => {
-        return date.formatDate(value, "YYYY-MM-DD") == data.date_expenditure;
-      });
+      try {
+        this.$q.loading.show();
+        this.incomes = this.listAllincome.filter(data => {
+          // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
+          return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
+        });
+        this.expenditures = this.listAllexpenditure.filter(data => {
+          return date.formatDate(value, "YYYY-MM-DD") == data.date_expenditure;
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     }
   }
 };

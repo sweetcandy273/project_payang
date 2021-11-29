@@ -7,9 +7,7 @@
             @click="
               $router.push({
                 path: 'account_calendar',
-                query: {
-                  id: incomes.farm_id
-                }
+                query: { id: incomes.farm_id, owner: incomes.owner }
               })
             "
             name="arrow_back_ios"
@@ -142,11 +140,9 @@ export default {
         })
         .onOk(() => {
           this.Notidelete();
-          this.$router.push({
-            path: "/account_calendar",
-            query: {
-              id: this.$route.query.idf
-            }
+          $router.push({
+            path: "account_calendar",
+            query: { id: incomes.farm_id, owner: incomes.owner }
           });
         })
         .onCancel(() => {})
@@ -169,7 +165,6 @@ export default {
   watch: {
     date(value) {
       this.incomes = this.listAllincome.filter(data => {
-        // console.log(data.date_income,"==",date.formatDate(value,"YYYY/MM/DD"));
         return date.formatDate(value, "YYYY-MM-DD") == data.date_income;
       });
     }

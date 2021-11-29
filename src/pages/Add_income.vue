@@ -282,30 +282,26 @@ export default {
       return amount_net;
     },
 
-    onSubmit() {
+    async onSubmit() {
       this.amount_net = this.sharemoney(this.amount, this.percen_split);
-      this.$axios
-        .post(
-          `/income/create/${this.$route.query.id}/${this.$route.query.owner}`,
-          {
-            date_income: this.date_income,
-            amount: this.amount,
-            amount_net: this.amount_net,
-            weight: this.weight_rubber,
-            percen_rubber: this.percent,
-            dry_rubber: this.dry_rubber,
-            percen_split: this.percen_split,
-            rubber_price: this.rubber_price,
-            note: this.note,
-            store_in: this.store_in,
-            telstore_in: this.telstore_in
-          }
-        )
+      await this.$axios.post(
+        `/income/create/${this.$route.query.id}/${this.$route.query.owner}`,
+        {
+          date_income: this.date_income,
+          amount: this.amount,
+          amount_net: this.amount_net,
+          weight: this.weight_rubber,
+          percen_rubber: this.percent,
+          dry_rubber: this.dry_rubber,
+          percen_split: this.percen_split,
+          rubber_price: this.rubber_price,
+          note: this.note,
+          store_in: this.store_in,
+          telstore_in: this.telstore_in
+        }
+      );
 
-        .then(response => {
-          // console.log(response);
-        });
-      this.$router.push({
+      await this.$router.push({
         path: "/account_calendar",
         query: { id: this.$route.query.id, owner: this.$route.query.owner }
       });

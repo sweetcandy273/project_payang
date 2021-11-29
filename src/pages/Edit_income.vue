@@ -257,26 +257,22 @@ export default {
         this.incomes.amount,
         this.incomes.percen_split
       );
-      console.log(this.incomes.date_income);
-      const { data } = await this.$axios.put(
-        "/income/update/" + this.$route.query.id,
-        {
-          date_income: this.incomes.date_income,
-          amount: this.incomes.amount,
-          amount_net: this.incomes.amount_net,
-          weight: this.incomes.weight,
-          percen_rubber: this.incomes.percen_rubber,
-          dry_rubber: this.incomes.dry_rubber,
-          percen_split: this.incomes.percen_split,
-          rubber_price: this.incomes.rubber_price,
-          note: this.incomes.note,
-          store_in: this.incomes.store_in,
-          telstore_in: this.incomes.telstore_in
-        }
-      );
-      this.incomes = data.data;
 
-      this.$router.push({
+      await this.$axios.put("/income/update/" + this.$route.query.id, {
+        date_income: this.incomes.date_income,
+        amount: this.incomes.amount,
+        amount_net: this.incomes.amount_net,
+        weight: this.incomes.weight,
+        percen_rubber: this.incomes.percen_rubber,
+        dry_rubber: this.incomes.dry_rubber,
+        percen_split: this.incomes.percen_split,
+        rubber_price: this.incomes.rubber_price,
+        note: this.incomes.note,
+        store_in: this.incomes.store_in,
+        telstore_in: this.incomes.telstore_in
+      });
+
+      await this.$router.push({
         path: "/account_calendar",
         query: {
           id: this.incomes.farm_id,

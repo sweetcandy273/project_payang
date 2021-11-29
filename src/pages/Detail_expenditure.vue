@@ -7,9 +7,7 @@
             @click="
               $router.push({
                 path: 'account_calendar',
-                query: {
-                  id: expens.farm_id
-                }
+                query: { id: expens.farm_id, owner: expens.owner }
               })
             "
             name="arrow_back_ios"
@@ -130,11 +128,9 @@ export default {
         })
         .onOk(() => {
           this.Notidelete();
-          this.$router.push({
-            name: "account_calendar",
-            query: {
-              id: this.$route.query.idf
-            }
+          $router.push({
+            path: "account_calendar",
+            query: { id: expens.farm_id, owner: expens.owner }
           });
         })
         .onCancel(() => {})
